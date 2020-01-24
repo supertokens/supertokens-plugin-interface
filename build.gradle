@@ -1,0 +1,28 @@
+plugins {
+    id 'java-library'
+}
+
+version = "0.0.1"
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+dependencies {
+    // https://mvnrepository.com/artifact/com.google.code.gson/gson
+    compileOnly group: 'com.google.code.gson', name: 'gson', version: '2.3.1'
+}
+
+jar {
+    baseName 'plugin-interface'
+}
+
+task copyJars(type: Copy) {
+    into "$buildDir/dependencies"
+    from configurations.compile
+}
+
+test {
+    systemProperty 'noSetup', System.getProperty('noSetup')
+}
