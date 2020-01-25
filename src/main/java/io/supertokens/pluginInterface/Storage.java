@@ -52,8 +52,6 @@ public interface Storage {
                           JsonObject userDataInDatabase, long expiry, JsonObject userDataInJWT, long createdAtTime)
             throws StorageQueryException;
 
-    boolean isSessionBlacklisted(String sessionHandle) throws StorageQueryException;
-
     // return number of rows else throw UnsupportedOperationException
     int getNumberOfSessions() throws StorageQueryException;
 
