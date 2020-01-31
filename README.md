@@ -18,5 +18,5 @@ Please see our [Contributing](https://github.com/supertokens/supertokens-plugin-
 ## Contact us
 For any queries, or support requests, please email us at team@supertokens.io, or join our [Discord](supertokens.io/discord) server.
 
-## Authors
-Created with :heart: by the folks at SuperTokens.io. Please feel free to give us feedback at team@supertokens.io, until our website is ready :grinning:
+# Authors
+Created with :heart: by the folks at SuperTokens.io.
