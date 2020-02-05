@@ -3,6 +3,10 @@
 
 # Plugin Interface for SuperTokens Community
 
+<a href="https://supertokens.io/discord">
+<img src="https://img.shields.io/discord/603466164219281420.svg?logo=discord"
+    alt="chat on Discord"></a>
+    
 ## About
 This module is responsible for providing an interface between SuperTokens Community and its plugins.
 
