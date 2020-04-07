@@ -17,11 +17,20 @@
 
 package io.supertokens.pluginInterface;
 
-public enum STORAGE_TYPE {
-    /**
-     * STORAGE_TYPE.SQL: MySQL, PostgreSQL...
-     * STORAGE_TYPE.NOSQL_1: MongoDB
-     */
+public class KeyValueInfoWithLastUpdated {
+    public String value;
+    public long createdAtTime;
+    public String lastUpdatedSign;
 
-    SQL, NOSQL_1
+    public KeyValueInfoWithLastUpdated(String value, long createdAtTime, String lastUpdatedSign) {
+        this.value = value;
+        this.createdAtTime = createdAtTime;
+        this.lastUpdatedSign = lastUpdatedSign;
+    }
+
+    public KeyValueInfoWithLastUpdated(String value, String lastUpdatedSign) {
+        this.value = value;
+        this.createdAtTime = System.currentTimeMillis();
+        this.lastUpdatedSign = lastUpdatedSign;
+    }
 }
