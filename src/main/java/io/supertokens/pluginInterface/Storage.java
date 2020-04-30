@@ -19,7 +19,10 @@ package io.supertokens.pluginInterface;
 
 import com.google.gson.JsonObject;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
+import io.supertokens.pluginInterface.sqlStorage.SQLStorage;
 import io.supertokens.pluginInterface.tokenInfo.PastTokenInfo;
+
+import javax.annotation.Nullable;
 
 public interface Storage {
 
@@ -76,10 +79,6 @@ public interface Storage {
 
     String[] getAllSessionHandlesForUser(String userId) throws StorageQueryException;
 
-    JsonObject getSessionData(String sessionHandle) throws StorageQueryException;
-
-    int updateSessionData(String sessionHandle, JsonObject updatedData) throws StorageQueryException;
-
     void deleteAllExpiredSessions() throws StorageQueryException;
 
     void deletePastOrphanedTokens(long createdBefore) throws StorageQueryException;
@@ -89,4 +88,9 @@ public interface Storage {
     void setKeyValue(String key, KeyValueInfo info) throws StorageQueryException;
 
     void setStorageLayerEnabled(boolean enabled);
+
+    SQLStorage.SessionInfo getSession(String sessionHandle) throws StorageQueryException;
+
+    int updateSession(String sessionHandle, @Nullable JsonObject sessionData, @Nullable JsonObject jwtPayload)
+            throws StorageQueryException;
 }
