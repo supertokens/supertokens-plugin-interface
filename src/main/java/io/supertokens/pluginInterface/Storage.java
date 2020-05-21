@@ -93,4 +93,6 @@ public interface Storage {
 
     int updateSession(String sessionHandle, @Nullable JsonObject sessionData, @Nullable JsonObject jwtPayload)
             throws StorageQueryException;
+
+    boolean canBeUsed(String configFilePath);
 }
