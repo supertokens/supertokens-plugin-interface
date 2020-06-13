@@ -45,13 +45,6 @@ public interface Storage {
     // no need for transaction like feature here.
     void setAppId(String appId) throws StorageQueryException;
 
-    // no need for transaction like feature here.
-    // get stored appId. If nothing is stored, return null
-    String getUserDevProductionMode() throws StorageQueryException;
-
-    // no need for transaction like feature here.
-    void setUserDevProductionMode(String mode) throws StorageQueryException;
-
     // used by the core to do transactions the right way.
     STORAGE_TYPE getType();
 
