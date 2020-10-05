@@ -20,7 +20,6 @@ package io.supertokens.pluginInterface;
 import com.google.gson.JsonObject;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.sqlStorage.SQLStorage;
-import io.supertokens.pluginInterface.tokenInfo.PastTokenInfo;
 
 import javax.annotation.Nullable;
 
@@ -53,14 +52,6 @@ public interface Storage {
 
     void close();
 
-    // returns data from past_tokens table. If not found, returns null
-    PastTokenInfo getPastTokenInfo(String refreshTokenHash2) throws StorageQueryException;
-
-    void insertPastToken(PastTokenInfo info) throws StorageQueryException;
-
-    // return number of rows else throw UnsupportedOperationException
-    int getNumberOfPastTokens() throws StorageQueryException;
-
     void createNewSession(String sessionHandle, String userId, String refreshTokenHash2,
                           JsonObject userDataInDatabase, long expiry, JsonObject userDataInJWT, long createdAtTime)
             throws StorageQueryException;
@@ -73,8 +64,6 @@ public interface Storage {
     String[] getAllSessionHandlesForUser(String userId) throws StorageQueryException;
 
     void deleteAllExpiredSessions() throws StorageQueryException;
-
-    void deletePastOrphanedTokens(long createdBefore) throws StorageQueryException;
 
     KeyValueInfo getKeyValue(String key) throws StorageQueryException;
 
