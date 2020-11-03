@@ -16,18 +16,20 @@
 
 package io.supertokens.pluginInterface.emailpassword;
 
-import io.supertokens.pluginInterface.Storage;
-import io.supertokens.pluginInterface.emailpassword.exceptions.DuplicateEmailException;
-import io.supertokens.pluginInterface.emailpassword.exceptions.DuplicateUserIdException;
-import io.supertokens.pluginInterface.exceptions.StorageQueryException;
+public class UserInfo {
 
-public interface EmailPasswordStorage extends Storage {
+    public final String id;
 
-    void signUp(String userId, String email, String passwordHash, long timeJoined)
-            throws StorageQueryException, DuplicateUserIdException, DuplicateEmailException;
+    public final String email;
 
-    UserInfo getUserInfoUsingId(String id) throws StorageQueryException;
+    public final String passwordHash;
 
-    UserInfo getUserInfoUsingEmail(String email) throws StorageQueryException;
+    public final long timeJoined;
 
+    public UserInfo(String id, String email, String passwordHash, long timeJoined) {
+        this.id = id;
+        this.email = email;
+        this.passwordHash = passwordHash;
+        this.timeJoined = timeJoined;
+    }
 }
