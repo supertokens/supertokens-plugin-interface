@@ -35,4 +35,12 @@ public interface EmailPasswordStorage extends Storage {
     void addPasswordResetToken(PasswordResetTokenInfo passwordResetTokenInfo)
             throws StorageQueryException, UnknownUserIdException, DuplicatePasswordResetTokenException;
 
+    PasswordResetTokenInfo getPasswordResetTokenInfo(String token)
+            throws StorageQueryException;
+
+    void deletePasswordResetTokensOlderThan(long timeMS) throws StorageQueryException;
+
+    PasswordResetTokenInfo[] getAllPasswordResetTokenInfoForUser(String userId)
+            throws StorageQueryException;
+
 }
