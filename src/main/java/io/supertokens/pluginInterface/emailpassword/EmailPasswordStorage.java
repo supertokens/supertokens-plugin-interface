@@ -18,16 +18,29 @@ package io.supertokens.pluginInterface.emailpassword;
 
 import io.supertokens.pluginInterface.Storage;
 import io.supertokens.pluginInterface.emailpassword.exceptions.DuplicateEmailException;
+import io.supertokens.pluginInterface.emailpassword.exceptions.DuplicatePasswordResetTokenException;
 import io.supertokens.pluginInterface.emailpassword.exceptions.DuplicateUserIdException;
+import io.supertokens.pluginInterface.emailpassword.exceptions.UnknownUserIdException;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 
 public interface EmailPasswordStorage extends Storage {
 
-    void signUp(String userId, String email, String passwordHash, long timeJoined)
+    void signUp(UserInfo userInfo)
             throws StorageQueryException, DuplicateUserIdException, DuplicateEmailException;
 
     UserInfo getUserInfoUsingId(String id) throws StorageQueryException;
 
     UserInfo getUserInfoUsingEmail(String email) throws StorageQueryException;
+
+    void addPasswordResetToken(PasswordResetTokenInfo passwordResetTokenInfo)
+            throws StorageQueryException, UnknownUserIdException, DuplicatePasswordResetTokenException;
+
+    PasswordResetTokenInfo getPasswordResetTokenInfo(String token)
+            throws StorageQueryException;
+
+    void deleteExpiredPasswordResetTokens() throws StorageQueryException;
+
+    PasswordResetTokenInfo[] getAllPasswordResetTokenInfoForUser(String userId)
+            throws StorageQueryException;
 
 }
