@@ -17,10 +17,7 @@
 package io.supertokens.pluginInterface.emailpassword;
 
 import io.supertokens.pluginInterface.Storage;
-import io.supertokens.pluginInterface.emailpassword.exceptions.DuplicateEmailException;
-import io.supertokens.pluginInterface.emailpassword.exceptions.DuplicatePasswordResetTokenException;
-import io.supertokens.pluginInterface.emailpassword.exceptions.DuplicateUserIdException;
-import io.supertokens.pluginInterface.emailpassword.exceptions.UnknownUserIdException;
+import io.supertokens.pluginInterface.emailpassword.exceptions.*;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 
 public interface EmailPasswordStorage extends Storage {
@@ -43,4 +40,6 @@ public interface EmailPasswordStorage extends Storage {
     PasswordResetTokenInfo[] getAllPasswordResetTokenInfoForUser(String userId)
             throws StorageQueryException;
 
+    void addEmailVerificationToken(EmailVerificationTokenInfo emailVerificationInfo)
+            throws StorageQueryException, UnknownUserIdException, DuplicateEmailVerificationTokenException;
 }
