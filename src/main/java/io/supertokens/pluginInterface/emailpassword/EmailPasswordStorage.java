@@ -47,4 +47,7 @@ public interface EmailPasswordStorage extends Storage {
             throws StorageQueryException;
 
     void deleteExpiredEmailVerificationTokens() throws StorageQueryException;
+
+    EmailVerificationTokenInfo[] getAllEmailVerificationTokenInfoForUser(String userId)
+            throws StorageQueryException;
 }
