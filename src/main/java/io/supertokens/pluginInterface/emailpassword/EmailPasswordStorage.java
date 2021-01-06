@@ -42,4 +42,9 @@ public interface EmailPasswordStorage extends Storage {
 
     void addEmailVerificationToken(EmailVerificationTokenInfo emailVerificationInfo)
             throws StorageQueryException, UnknownUserIdException, DuplicateEmailVerificationTokenException;
+
+    EmailVerificationTokenInfo getEmailVerificationTokenInfo(String token)
+            throws StorageQueryException;
+
+    void deleteExpiredEmailVerificationTokens() throws StorageQueryException;
 }
