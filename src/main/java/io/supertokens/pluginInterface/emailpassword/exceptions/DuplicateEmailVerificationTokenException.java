@@ -14,29 +14,8 @@
  *    under the License.
  */
 
-package io.supertokens.pluginInterface.emailpassword;
+package io.supertokens.pluginInterface.emailpassword.exceptions;
 
-public class UserInfo {
-
-    public final String id;
-
-    public final String email;
-
-    public final String passwordHash;
-
-    public final long timeJoined;
-
-    public final boolean isEmailVerified;
-
-    public UserInfo(String id, String email, String passwordHash, long timeJoined, boolean isEmailVerified) {
-        this.id = id;
-        this.email = email;
-        this.passwordHash = passwordHash;
-        this.timeJoined = timeJoined;
-        this.isEmailVerified = isEmailVerified;
-    }
-
-    public UserInfo(String id, String email, String passwordHash, long timeJoined) {
-        this(id, email, passwordHash, timeJoined, false);
-    }
+public class DuplicateEmailVerificationTokenException extends EmailPasswordException {
+    private static final long serialVersionUID = -7183235655606906540L;
 }

@@ -1,5 +1,5 @@
 /*
- *    Copyright (c) 2020, VRAI Labs and/or its affiliates. All rights reserved.
+ *    Copyright (c) 2021, VRAI Labs and/or its affiliates. All rights reserved.
  *
  *    This software is licensed under the Apache License, Version 2.0 (the
  *    "License") as published by the Apache Software Foundation.
@@ -16,27 +16,19 @@
 
 package io.supertokens.pluginInterface.emailpassword;
 
-public class UserInfo {
+public class EmailVerificationTokenInfo {
+    public final String userId;
 
-    public final String id;
+    public final String token;
+
+    public final long tokenExpiry;
 
     public final String email;
 
-    public final String passwordHash;
-
-    public final long timeJoined;
-
-    public final boolean isEmailVerified;
-
-    public UserInfo(String id, String email, String passwordHash, long timeJoined, boolean isEmailVerified) {
-        this.id = id;
+    public EmailVerificationTokenInfo(String userId, String token, long tokenExpiry, String email) {
+        this.userId = userId;
+        this.token = token;
+        this.tokenExpiry = tokenExpiry;
         this.email = email;
-        this.passwordHash = passwordHash;
-        this.timeJoined = timeJoined;
-        this.isEmailVerified = isEmailVerified;
-    }
-
-    public UserInfo(String id, String email, String passwordHash, long timeJoined) {
-        this(id, email, passwordHash, timeJoined, false);
     }
 }
