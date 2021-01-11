@@ -20,6 +20,8 @@ import io.supertokens.pluginInterface.Storage;
 import io.supertokens.pluginInterface.emailpassword.exceptions.*;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 
+import javax.annotation.Nonnull;
+
 public interface EmailPasswordStorage extends Storage {
 
     void signUp(UserInfo userInfo)
@@ -50,4 +52,9 @@ public interface EmailPasswordStorage extends Storage {
 
     EmailVerificationTokenInfo[] getAllEmailVerificationTokenInfoForUser(String userId)
             throws StorageQueryException;
+
+    UserInfo[] getUsers(@Nonnull String userId, @Nonnull Long timeJoined, @Nonnull Integer limit,
+                        @Nonnull String timeJoinedOrder) throws StorageQueryException;
+
+    UserInfo[] getUsers(@Nonnull Integer limit, @Nonnull String timeJoinedOrder) throws StorageQueryException;
 }
