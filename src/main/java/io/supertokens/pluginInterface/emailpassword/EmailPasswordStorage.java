@@ -57,4 +57,6 @@ public interface EmailPasswordStorage extends Storage {
                         @Nonnull String timeJoinedOrder) throws StorageQueryException;
 
     UserInfo[] getUsers(@Nonnull Integer limit, @Nonnull String timeJoinedOrder) throws StorageQueryException;
+
+    long getUsersCount() throws StorageQueryException;;
 }
