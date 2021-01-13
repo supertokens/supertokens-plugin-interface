@@ -8,3 +8,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Added RowMapper interface for db queries
 - Email verification related changes
+- User pagination related queries
