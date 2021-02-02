@@ -26,17 +26,10 @@ public class UserInfo {
 
     public final long timeJoined;
 
-    public final boolean isEmailVerified;
-
-    public UserInfo(String id, String email, String passwordHash, long timeJoined, boolean isEmailVerified) {
+    public UserInfo(String id, String email, String passwordHash, long timeJoined) {
         this.id = id;
         this.email = email;
         this.passwordHash = passwordHash;
         this.timeJoined = timeJoined;
-        this.isEmailVerified = isEmailVerified;
-    }
-
-    public UserInfo(String id, String email, String passwordHash, long timeJoined) {
-        this(id, email, passwordHash, timeJoined, false);
     }
 }
