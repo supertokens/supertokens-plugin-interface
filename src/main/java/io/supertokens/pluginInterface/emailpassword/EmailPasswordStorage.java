@@ -17,7 +17,10 @@
 package io.supertokens.pluginInterface.emailpassword;
 
 import io.supertokens.pluginInterface.Storage;
-import io.supertokens.pluginInterface.emailpassword.exceptions.*;
+import io.supertokens.pluginInterface.emailpassword.exceptions.DuplicateEmailException;
+import io.supertokens.pluginInterface.emailpassword.exceptions.DuplicatePasswordResetTokenException;
+import io.supertokens.pluginInterface.emailpassword.exceptions.DuplicateUserIdException;
+import io.supertokens.pluginInterface.emailpassword.exceptions.UnknownUserIdException;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 
 import javax.annotation.Nonnull;
@@ -42,21 +45,11 @@ public interface EmailPasswordStorage extends Storage {
     PasswordResetTokenInfo[] getAllPasswordResetTokenInfoForUser(String userId)
             throws StorageQueryException;
 
-    void addEmailVerificationToken(EmailVerificationTokenInfo emailVerificationInfo)
-            throws StorageQueryException, UnknownUserIdException, DuplicateEmailVerificationTokenException;
-
-    EmailVerificationTokenInfo getEmailVerificationTokenInfo(String token)
-            throws StorageQueryException;
-
-    void deleteExpiredEmailVerificationTokens() throws StorageQueryException;
-
-    EmailVerificationTokenInfo[] getAllEmailVerificationTokenInfoForUser(String userId)
-            throws StorageQueryException;
-
     UserInfo[] getUsers(@Nonnull String userId, @Nonnull Long timeJoined, @Nonnull Integer limit,
                         @Nonnull String timeJoinedOrder) throws StorageQueryException;
 
     UserInfo[] getUsers(@Nonnull Integer limit, @Nonnull String timeJoinedOrder) throws StorageQueryException;
 
-    long getUsersCount() throws StorageQueryException;;
+    long getUsersCount() throws StorageQueryException;
+
 }
