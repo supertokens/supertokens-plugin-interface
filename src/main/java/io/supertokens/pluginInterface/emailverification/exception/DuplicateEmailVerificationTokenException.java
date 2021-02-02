@@ -14,21 +14,10 @@
  *    under the License.
  */
 
-package io.supertokens.pluginInterface.emailpassword;
+package io.supertokens.pluginInterface.emailverification.exception;
 
-public class EmailVerificationTokenInfo {
-    public final String userId;
+import io.supertokens.pluginInterface.emailpassword.exceptions.EmailPasswordException;
 
-    public final String token;
-
-    public final long tokenExpiry;
-
-    public final String email;
-
-    public EmailVerificationTokenInfo(String userId, String token, long tokenExpiry, String email) {
-        this.userId = userId;
-        this.token = token;
-        this.tokenExpiry = tokenExpiry;
-        this.email = email;
-    }
+public class DuplicateEmailVerificationTokenException extends EmailPasswordException {
+    private static final long serialVersionUID = -7183235655606906540L;
 }

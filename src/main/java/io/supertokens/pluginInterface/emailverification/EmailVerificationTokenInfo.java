@@ -1,5 +1,5 @@
 /*
- *    Copyright (c) 2020, VRAI Labs and/or its affiliates. All rights reserved.
+ *    Copyright (c) 2021, VRAI Labs and/or its affiliates. All rights reserved.
  *
  *    This software is licensed under the Apache License, Version 2.0 (the
  *    "License") as published by the Apache Software Foundation.
@@ -14,8 +14,21 @@
  *    under the License.
  */
 
-package io.supertokens.pluginInterface.emailpassword.exceptions;
+package io.supertokens.pluginInterface.emailverification;
 
-public class DuplicateEmailVerificationTokenException extends EmailPasswordException {
-    private static final long serialVersionUID = -7183235655606906540L;
+public class EmailVerificationTokenInfo {
+    public final String userId;
+
+    public final String token;
+
+    public final long tokenExpiry;
+
+    public final String email;
+
+    public EmailVerificationTokenInfo(String userId, String token, long tokenExpiry, String email) {
+        this.userId = userId;
+        this.token = token;
+        this.tokenExpiry = tokenExpiry;
+        this.email = email;
+    }
 }
