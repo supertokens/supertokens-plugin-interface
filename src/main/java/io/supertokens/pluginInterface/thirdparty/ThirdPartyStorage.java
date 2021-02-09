@@ -38,29 +38,6 @@ public interface ThirdPartyStorage extends Storage {
 
     UserInfo[] getUsers(@Nonnull Integer limit, @Nonnull String timeJoinedOrder) throws StorageQueryException;
 
-//    io.supertokens.pluginInterface.emailpassword.UserInfo getUserInfoUsingId(String id) throws StorageQueryException;
-//
-//    io.supertokens.pluginInterface.emailpassword.UserInfo getUserInfoUsingEmail(String email)
-//            throws StorageQueryException;
-//
-//    void addPasswordResetToken(PasswordResetTokenInfo passwordResetTokenInfo)
-//            throws StorageQueryException, UnknownUserIdException, DuplicatePasswordResetTokenException;
-//
-//    PasswordResetTokenInfo getPasswordResetTokenInfo(String token)
-//            throws StorageQueryException;
-//
-//    void deleteExpiredPasswordResetTokens() throws StorageQueryException;
-//
-//    PasswordResetTokenInfo[] getAllPasswordResetTokenInfoForUser(String userId)
-//            throws StorageQueryException;
-//
-//    io.supertokens.pluginInterface.emailpassword.UserInfo[] getUsers(@Nonnull String userId, @Nonnull Long timeJoined,
-//                                                                     @Nonnull Integer limit,
-//                                                                     @Nonnull String timeJoinedOrder)
-//            throws StorageQueryException;
-//
-//    UserInfo[] getUsers(@Nonnull Integer limit, @Nonnull String timeJoinedOrder) throws StorageQueryException;
-//
-//    long getUsersCount() throws StorageQueryException;
+    long getUsersCount() throws StorageQueryException;
 
 }

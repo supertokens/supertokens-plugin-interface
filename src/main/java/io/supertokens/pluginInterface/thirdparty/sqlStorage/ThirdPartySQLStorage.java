@@ -23,17 +23,7 @@ import io.supertokens.pluginInterface.thirdparty.ThirdPartyStorage;
 import io.supertokens.pluginInterface.thirdparty.UserInfo;
 
 public interface ThirdPartySQLStorage extends ThirdPartyStorage, SQLStorage {
-
-    //    PasswordResetTokenInfo[] getAllPasswordResetTokenInfoForUser_Transaction(TransactionConnection con,
-//                                                                             String userId)
-//            throws StorageQueryException;
-//
-//    void deleteAllPasswordResetTokensForUser_Transaction(TransactionConnection con,
-//                                                         String userId) throws StorageQueryException;
-//
-//    void updateUsersPassword_Transaction(TransactionConnection con,
-//                                         String userId, String newPassword) throws StorageQueryException;
-//
+    
     UserInfo getUserInfoUsingId_Transaction(TransactionConnection con, String thirdPartyId, String thirdPartyUserId)
             throws StorageQueryException;
 
