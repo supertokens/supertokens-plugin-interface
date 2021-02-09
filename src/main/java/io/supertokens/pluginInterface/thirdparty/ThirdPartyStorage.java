@@ -26,6 +26,11 @@ public interface ThirdPartyStorage extends Storage {
     void signUp(UserInfo userInfo)
             throws StorageQueryException, DuplicateUserIdException, DuplicateThirdPartyUserException;
 
+    UserInfo getUserInfoUsingId(String thirdPartyId, String thirdPartyUserId)
+            throws StorageQueryException;
+
+    UserInfo getUserInfoUsingId(String userId) throws StorageQueryException;
+
 //    io.supertokens.pluginInterface.emailpassword.UserInfo getUserInfoUsingId(String id) throws StorageQueryException;
 //
 //    io.supertokens.pluginInterface.emailpassword.UserInfo getUserInfoUsingEmail(String email)
