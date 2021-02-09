@@ -21,6 +21,8 @@ import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.thirdparty.exception.DuplicateThirdPartyUserException;
 import io.supertokens.pluginInterface.thirdparty.exception.DuplicateUserIdException;
 
+import javax.annotation.Nonnull;
+
 public interface ThirdPartyStorage extends Storage {
 
     void signUp(UserInfo userInfo)
@@ -30,6 +32,11 @@ public interface ThirdPartyStorage extends Storage {
             throws StorageQueryException;
 
     UserInfo getUserInfoUsingId(String userId) throws StorageQueryException;
+
+    UserInfo[] getUsers(@Nonnull String userId, @Nonnull Long timeJoined, @Nonnull Integer limit,
+                        @Nonnull String timeJoinedOrder) throws StorageQueryException;
+
+    UserInfo[] getUsers(@Nonnull Integer limit, @Nonnull String timeJoinedOrder) throws StorageQueryException;
 
 //    io.supertokens.pluginInterface.emailpassword.UserInfo getUserInfoUsingId(String id) throws StorageQueryException;
 //
