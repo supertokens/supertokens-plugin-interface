@@ -28,15 +28,15 @@ public interface ThirdPartyStorage extends Storage {
     void signUp(UserInfo userInfo)
             throws StorageQueryException, DuplicateUserIdException, DuplicateThirdPartyUserException;
 
-    UserInfo getUserInfoUsingId(String thirdPartyId, String thirdPartyUserId)
+    UserInfo getThirdPartyUserInfoUsingId(String thirdPartyId, String thirdPartyUserId)
             throws StorageQueryException;
 
-    UserInfo getUserInfoUsingId(String userId) throws StorageQueryException;
+    UserInfo getThirdPartyUserInfoUsingId(String userId) throws StorageQueryException;
 
-    UserInfo[] getUsers(@Nonnull String userId, @Nonnull Long timeJoined, @Nonnull Integer limit,
-                        @Nonnull String timeJoinedOrder) throws StorageQueryException;
+    UserInfo[] getThirdPartyUsers(@Nonnull String userId, @Nonnull Long timeJoined, @Nonnull Integer limit,
+                                  @Nonnull String timeJoinedOrder) throws StorageQueryException;
 
-    UserInfo[] getUsers(@Nonnull Integer limit, @Nonnull String timeJoinedOrder) throws StorageQueryException;
+    UserInfo[] getThirdPartyUsers(@Nonnull Integer limit, @Nonnull String timeJoinedOrder) throws StorageQueryException;
 
     long getUsersCount() throws StorageQueryException;
 
