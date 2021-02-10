@@ -38,6 +38,6 @@ public interface ThirdPartyStorage extends Storage {
 
     UserInfo[] getThirdPartyUsers(@Nonnull Integer limit, @Nonnull String timeJoinedOrder) throws StorageQueryException;
 
-    long getUsersCount() throws StorageQueryException;
+    long getThirdPartyUsersCount() throws StorageQueryException;
 
 }
