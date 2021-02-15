@@ -24,10 +24,13 @@ public class UserInfo {
 
     public final long timeJoined;
 
-    public UserInfo(String id, ThirdParty thirdParty, long timeJoined) {
+    public final String email;
+
+    public UserInfo(String id, String email, ThirdParty thirdParty, long timeJoined) {
         this.id = id;
         this.timeJoined = timeJoined;
         this.thirdParty = thirdParty;
+        this.email = email;
     }
 
     public static class ThirdParty {
@@ -35,12 +38,9 @@ public class UserInfo {
 
         public final String userId;
 
-        public final String email;
-
-        public ThirdParty(String id, String userId, String email) {
+        public ThirdParty(String id, String userId) {
             this.id = id;
             this.userId = userId;
-            this.email = email;
         }
     }
 }
