@@ -2,10 +2,9 @@ plugins {
     id 'java-library'
 }
 
-version = "2.6.0"
+version = "2.7.0"
 
 repositories {
-    jcenter()
     mavenCentral()
 }
 
@@ -18,12 +17,12 @@ dependencies {
 }
 
 jar {
-    baseName 'plugin-interface'
+    archiveBaseName.set('plugin-interface')
 }
 
 task copyJars(type: Copy) {
     into "$buildDir/dependencies"
-    from configurations.compile
+    from configurations.runtimeClasspath
 }
 
 test {
