@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.8.0] - 2021-06-21
+### Added
+- Pagination and count functions for all recipes: https://github.com/supertokens/supertokens-core/issues/259
+
 ## [2.6.0] - 2021-02-16
 ### Changed
 - Extracted email verification into its own recipe

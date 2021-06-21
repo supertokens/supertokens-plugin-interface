@@ -49,4 +49,6 @@ public interface Storage {
     void setStorageLayerEnabled(boolean enabled);
 
     boolean canBeUsed(String configFilePath);
+
+    long getUsersCount(String[] includeRecipeIds) throws StorageQueryException;
 }

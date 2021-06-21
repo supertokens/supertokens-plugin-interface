@@ -50,6 +50,7 @@ public interface EmailPasswordStorage extends Storage {
 
     UserInfo[] getUsers(@Nonnull Integer limit, @Nonnull String timeJoinedOrder) throws StorageQueryException;
 
+    @Deprecated
     long getUsersCount() throws StorageQueryException;
 
 }
