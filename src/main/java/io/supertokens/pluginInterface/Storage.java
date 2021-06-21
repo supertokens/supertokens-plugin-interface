@@ -19,6 +19,8 @@ package io.supertokens.pluginInterface;
 
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 
+import javax.annotation.Nullable;
+
 public interface Storage {
 
     // if silent is true, do not log anything out on the console
@@ -50,5 +52,9 @@ public interface Storage {
 
     boolean canBeUsed(String configFilePath);
 
-    long getUsersCount(String[] includeRecipeIds) throws StorageQueryException;
+    long getUsersCount(@Nullable RECIPE_ID[] includeRecipeIds) throws StorageQueryException;
+
+//    UserInfo[] getUsers(@Nonnull Integer limit, @Nonnull String timeJoinedOrder, @Nullable String[] includeRecipeIds,
+//                        @Nullable String userId, @Nullable Long timeJoined)
+//            throws StorageQueryException;
 }
