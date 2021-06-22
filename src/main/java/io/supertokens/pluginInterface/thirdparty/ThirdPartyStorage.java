@@ -33,9 +33,11 @@ public interface ThirdPartyStorage extends Storage {
 
     UserInfo getThirdPartyUserInfoUsingId(String userId) throws StorageQueryException;
 
+    @Deprecated
     UserInfo[] getThirdPartyUsers(@Nonnull String userId, @Nonnull Long timeJoined, @Nonnull Integer limit,
                                   @Nonnull String timeJoinedOrder) throws StorageQueryException;
 
+    @Deprecated
     UserInfo[] getThirdPartyUsers(@Nonnull Integer limit, @Nonnull String timeJoinedOrder) throws StorageQueryException;
 
     @Deprecated

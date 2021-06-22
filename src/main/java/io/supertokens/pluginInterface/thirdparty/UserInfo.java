@@ -16,19 +16,17 @@
 
 package io.supertokens.pluginInterface.thirdparty;
 
-public class UserInfo {
+import io.supertokens.pluginInterface.AuthRecipeUserInfo;
+import io.supertokens.pluginInterface.RECIPE_ID;
 
-    public final String id;
+public class UserInfo extends AuthRecipeUserInfo {
 
     public final ThirdParty thirdParty;
-
-    public final long timeJoined;
 
     public final String email;
 
     public UserInfo(String id, String email, ThirdParty thirdParty, long timeJoined) {
-        this.id = id;
-        this.timeJoined = timeJoined;
+        super(id, timeJoined);
         this.thirdParty = thirdParty;
         this.email = email;
     }
@@ -42,5 +40,10 @@ public class UserInfo {
             this.id = id;
             this.userId = userId;
         }
+    }
+
+    @Override
+    public RECIPE_ID getRecipeId() {
+        return RECIPE_ID.THIRD_PARTY;
     }
 }

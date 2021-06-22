@@ -19,6 +19,7 @@ package io.supertokens.pluginInterface;
 
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public interface Storage {
@@ -54,7 +55,8 @@ public interface Storage {
 
     long getUsersCount(@Nullable RECIPE_ID[] includeRecipeIds) throws StorageQueryException;
 
-//    UserInfo[] getUsers(@Nonnull Integer limit, @Nonnull String timeJoinedOrder, @Nullable String[] includeRecipeIds,
-//                        @Nullable String userId, @Nullable Long timeJoined)
-//            throws StorageQueryException;
+    AuthRecipeUserInfo[] getUsers(@Nonnull Integer limit, @Nonnull String timeJoinedOrder,
+                                  @Nullable RECIPE_ID[] includeRecipeIds,
+                                  @Nullable String userId, @Nullable Long timeJoined)
+            throws StorageQueryException;
 }

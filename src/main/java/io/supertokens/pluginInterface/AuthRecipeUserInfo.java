@@ -16,6 +16,17 @@
 
 package io.supertokens.pluginInterface;
 
-public class UserInfo {
-    
+public abstract class AuthRecipeUserInfo {
+
+    public String id;
+
+    public long timeJoined;
+
+    public AuthRecipeUserInfo(String id, long timeJoined) {
+        this.id = id;
+        this.timeJoined = timeJoined;
+    }
+
+    public abstract RECIPE_ID getRecipeId();
+
 }

@@ -45,9 +45,11 @@ public interface EmailPasswordStorage extends Storage {
     PasswordResetTokenInfo[] getAllPasswordResetTokenInfoForUser(String userId)
             throws StorageQueryException;
 
+    @Deprecated
     UserInfo[] getUsers(@Nonnull String userId, @Nonnull Long timeJoined, @Nonnull Integer limit,
                         @Nonnull String timeJoinedOrder) throws StorageQueryException;
 
+    @Deprecated
     UserInfo[] getUsers(@Nonnull Integer limit, @Nonnull String timeJoinedOrder) throws StorageQueryException;
 
     @Deprecated
