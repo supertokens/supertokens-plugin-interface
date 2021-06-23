@@ -49,4 +49,5 @@ public interface Storage {
     void setStorageLayerEnabled(boolean enabled);
 
     boolean canBeUsed(String configFilePath);
+    
 }

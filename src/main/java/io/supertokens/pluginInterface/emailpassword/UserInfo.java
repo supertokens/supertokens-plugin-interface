@@ -16,20 +16,36 @@
 
 package io.supertokens.pluginInterface.emailpassword;
 
-public class UserInfo {
+import io.supertokens.pluginInterface.RECIPE_ID;
+import io.supertokens.pluginInterface.authRecipe.AuthRecipeUserInfo;
 
-    public final String id;
+public class UserInfo extends AuthRecipeUserInfo {
 
     public final String email;
 
-    public final String passwordHash;
-
-    public final long timeJoined;
+    // using transient, we tell Gson not to include this when creating a JSON
+    public transient final String passwordHash;
 
     public UserInfo(String id, String email, String passwordHash, long timeJoined) {
-        this.id = id;
+        super(id, timeJoined);
         this.email = email;
         this.passwordHash = passwordHash;
-        this.timeJoined = timeJoined;
+    }
+
+    @Override
+    public RECIPE_ID getRecipeId() {
+        return RECIPE_ID.EMAIL_PASSWORD;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other instanceof UserInfo) {
+            UserInfo otherUserInfo = (UserInfo) other;
+            return otherUserInfo.email.equals(this.email) &&
+                    otherUserInfo.passwordHash.equals(this.passwordHash) &&
+                    otherUserInfo.id.equals(this.id) &&
+                    otherUserInfo.timeJoined == this.timeJoined;
+        }
+        return false;
     }
 }

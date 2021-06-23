@@ -16,14 +16,14 @@
 
 package io.supertokens.pluginInterface.thirdparty;
 
-import io.supertokens.pluginInterface.Storage;
+import io.supertokens.pluginInterface.authRecipe.AuthRecipeStorage;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.thirdparty.exception.DuplicateThirdPartyUserException;
 import io.supertokens.pluginInterface.thirdparty.exception.DuplicateUserIdException;
 
 import javax.annotation.Nonnull;
 
-public interface ThirdPartyStorage extends Storage {
+public interface ThirdPartyStorage extends AuthRecipeStorage {
 
     void signUp(UserInfo userInfo)
             throws StorageQueryException, DuplicateUserIdException, DuplicateThirdPartyUserException;
@@ -33,11 +33,14 @@ public interface ThirdPartyStorage extends Storage {
 
     UserInfo getThirdPartyUserInfoUsingId(String userId) throws StorageQueryException;
 
+    @Deprecated
     UserInfo[] getThirdPartyUsers(@Nonnull String userId, @Nonnull Long timeJoined, @Nonnull Integer limit,
                                   @Nonnull String timeJoinedOrder) throws StorageQueryException;
 
+    @Deprecated
     UserInfo[] getThirdPartyUsers(@Nonnull Integer limit, @Nonnull String timeJoinedOrder) throws StorageQueryException;
 
+    @Deprecated
     long getThirdPartyUsersCount() throws StorageQueryException;
 
 }
