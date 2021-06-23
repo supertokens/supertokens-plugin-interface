@@ -19,9 +19,6 @@ package io.supertokens.pluginInterface;
 
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 public interface Storage {
 
     // if silent is true, do not log anything out on the console
@@ -52,11 +49,5 @@ public interface Storage {
     void setStorageLayerEnabled(boolean enabled);
 
     boolean canBeUsed(String configFilePath);
-
-    long getUsersCount(@Nullable RECIPE_ID[] includeRecipeIds) throws StorageQueryException;
-
-    AuthRecipeUserInfo[] getUsers(@Nonnull Integer limit, @Nonnull String timeJoinedOrder,
-                                  @Nullable RECIPE_ID[] includeRecipeIds,
-                                  @Nullable String userId, @Nullable Long timeJoined)
-            throws StorageQueryException;
+    
 }

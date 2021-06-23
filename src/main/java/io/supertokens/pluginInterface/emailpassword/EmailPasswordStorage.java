@@ -16,7 +16,7 @@
 
 package io.supertokens.pluginInterface.emailpassword;
 
-import io.supertokens.pluginInterface.Storage;
+import io.supertokens.pluginInterface.authRecipe.AuthRecipeStorage;
 import io.supertokens.pluginInterface.emailpassword.exceptions.DuplicateEmailException;
 import io.supertokens.pluginInterface.emailpassword.exceptions.DuplicatePasswordResetTokenException;
 import io.supertokens.pluginInterface.emailpassword.exceptions.DuplicateUserIdException;
@@ -25,7 +25,7 @@ import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 
 import javax.annotation.Nonnull;
 
-public interface EmailPasswordStorage extends Storage {
+public interface EmailPasswordStorage extends AuthRecipeStorage {
 
     void signUp(UserInfo userInfo)
             throws StorageQueryException, DuplicateUserIdException, DuplicateEmailException;

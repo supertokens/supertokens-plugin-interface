@@ -16,8 +16,8 @@
 
 package io.supertokens.pluginInterface.emailpassword;
 
-import io.supertokens.pluginInterface.AuthRecipeUserInfo;
 import io.supertokens.pluginInterface.RECIPE_ID;
+import io.supertokens.pluginInterface.authRecipe.AuthRecipeUserInfo;
 
 public class UserInfo extends AuthRecipeUserInfo {
 
