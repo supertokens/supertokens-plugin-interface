@@ -46,4 +46,17 @@ public class UserInfo extends AuthRecipeUserInfo {
     public RECIPE_ID getRecipeId() {
         return RECIPE_ID.THIRD_PARTY;
     }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other instanceof UserInfo) {
+            UserInfo otherUserInfo = (UserInfo) other;
+            return otherUserInfo.email.equals(this.email) &&
+                    otherUserInfo.id.equals(this.id) &&
+                    otherUserInfo.timeJoined == this.timeJoined &&
+                    otherUserInfo.thirdParty.userId.equals(this.thirdParty.userId) &&
+                    otherUserInfo.thirdParty.id.equals(this.thirdParty.id);
+        }
+        return false;
+    }
 }
