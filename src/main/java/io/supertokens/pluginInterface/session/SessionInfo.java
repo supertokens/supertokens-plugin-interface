@@ -19,9 +19,9 @@ package io.supertokens.pluginInterface.session;
 import com.google.gson.JsonObject;
 
 public class SessionInfo {
-    public String sessionHandle;
+    transient public String sessionHandle;
+    transient public String refreshTokenHash2;
     public String userId;
-    public String refreshTokenHash2;
     public JsonObject userDataInDatabase;
     public long expiry;
     public JsonObject userDataInJWT;
