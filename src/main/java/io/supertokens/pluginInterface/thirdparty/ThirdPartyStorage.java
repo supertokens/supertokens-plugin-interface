@@ -43,4 +43,5 @@ public interface ThirdPartyStorage extends AuthRecipeStorage {
     @Deprecated
     long getThirdPartyUsersCount() throws StorageQueryException;
 
+    UserInfo[] getThirdPartyUsersByEmail(@Nonnull String email) throws StorageQueryException;
 }
