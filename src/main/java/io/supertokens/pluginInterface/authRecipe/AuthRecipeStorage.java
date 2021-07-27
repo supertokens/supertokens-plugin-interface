@@ -32,4 +32,6 @@ public interface AuthRecipeStorage extends Storage {
                                   @Nullable RECIPE_ID[] includeRecipeIds,
                                   @Nullable String userId, @Nullable Long timeJoined)
             throws StorageQueryException;
+
+    boolean deleteUser(@Nonnull String userId) throws StorageQueryException;
 }
