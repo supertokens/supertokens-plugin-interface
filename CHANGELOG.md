@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Pagination and count functions for all recipes: https://github.com/supertokens/supertokens-core/issues/259
 - GetUsersByEmail function for ThirdParty recipe: https://github.com/supertokens/supertokens-core/issues/277
+- DeleteUser function for EmailPassword and ThirdParty recipes: https://github.com/supertokens/supertokens-core/issues/273
 
 ## [2.6.0] - 2021-02-16
 ### Changed
