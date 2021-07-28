@@ -20,6 +20,7 @@ package io.supertokens.pluginInterface.authRecipe;
 import io.supertokens.pluginInterface.RECIPE_ID;
 import io.supertokens.pluginInterface.Storage;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
+import io.supertokens.pluginInterface.users.DeleteUserResult;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -33,5 +34,5 @@ public interface AuthRecipeStorage extends Storage {
                                   @Nullable String userId, @Nullable Long timeJoined)
             throws StorageQueryException;
 
-    boolean deleteUser(@Nonnull String userId) throws StorageQueryException;
+    DeleteUserResult deleteUser(@Nonnull String userId) throws StorageQueryException;
 }
