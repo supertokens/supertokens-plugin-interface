@@ -20,6 +20,8 @@ import io.supertokens.pluginInterface.Storage;
 import io.supertokens.pluginInterface.emailverification.exception.DuplicateEmailVerificationTokenException;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 
+import java.util.Optional;
+
 public interface EmailVerificationStorage extends Storage {
 
     void addEmailVerificationToken(EmailVerificationTokenInfo emailVerificationInfo)
@@ -28,7 +30,7 @@ public interface EmailVerificationStorage extends Storage {
     EmailVerificationTokenInfo getEmailVerificationTokenInfo(String token)
             throws StorageQueryException;
 
-    User getUserFromToken(String token) throws StorageQueryException;
+    Optional<User> getUserFromToken(String token) throws StorageQueryException;
 
     void revokeToken(String token) throws StorageQueryException;
 
