@@ -35,5 +35,8 @@ public interface EmailPasswordSQLStorage extends EmailPasswordStorage, SQLStorag
     void updateUsersPassword_Transaction(TransactionConnection con,
                                          String userId, String newPassword) throws StorageQueryException;
 
+    void updateUsersEmail_Transaction(TransactionConnection conn,
+                                      String userId, String email) throws StorageQueryException;
+
     UserInfo getUserInfoUsingId_Transaction(TransactionConnection con, String userId) throws StorageQueryException;
 }
