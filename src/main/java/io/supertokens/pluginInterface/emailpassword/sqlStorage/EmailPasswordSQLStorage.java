@@ -19,6 +19,7 @@ package io.supertokens.pluginInterface.emailpassword.sqlStorage;
 import io.supertokens.pluginInterface.emailpassword.EmailPasswordStorage;
 import io.supertokens.pluginInterface.emailpassword.PasswordResetTokenInfo;
 import io.supertokens.pluginInterface.emailpassword.UserInfo;
+import io.supertokens.pluginInterface.emailpassword.exceptions.DuplicateEmailException;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.sqlStorage.SQLStorage;
 import io.supertokens.pluginInterface.sqlStorage.TransactionConnection;
@@ -36,7 +37,8 @@ public interface EmailPasswordSQLStorage extends EmailPasswordStorage, SQLStorag
                                          String userId, String newPassword) throws StorageQueryException;
 
     void updateUsersEmail_Transaction(TransactionConnection conn,
-                                      String userId, String email) throws StorageQueryException;
+                                      String userId, String email)
+            throws StorageQueryException, DuplicateEmailException;
 
     UserInfo getUserInfoUsingId_Transaction(TransactionConnection con, String userId) throws StorageQueryException;
 }
