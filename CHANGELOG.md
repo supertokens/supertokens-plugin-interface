@@ -10,8 +10,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Pagination and count functions for all recipes: https://github.com/supertokens/supertokens-core/issues/259
 - GetUsersByEmail function for ThirdParty recipe: https://github.com/supertokens/supertokens-core/issues/277
-- 2 email verification functions: unverifyEmail and revokeToken for EmailVerification: https
+- 2 email verification functions: `unverifyEmail` and `revokeAllTokens` for EmailVerification: https
 ://github.com/supertokens/supertokens-core/issues/270 
+- Add change email interface method within transaction: https://github.com/supertokens/supertokens-core/issues/275
 
 ## [2.6.0] - 2021-02-16
 ### Changed
