@@ -23,9 +23,4 @@ public class JWTSymmetricSigningKeyInfo extends JWTSigningKeyInfo{
         super(keyId, createdAtTime, algorithm, keyString);
         this.key = keyString;
     }
-
-    @Override
-    public String getKeyString() {
-        return this.key;
-    }
 }

@@ -20,17 +20,13 @@ public class JWTSigningKeyInfo {
     public String keyId;
     public long createdAtTime;
     public String algorithm;
-    private String keyString;
+    public String keyString;
 
     public JWTSigningKeyInfo(String keyId, long createdAtTime, String algorithm, String keyString) {
         this.keyId = keyId;
         this.createdAtTime = createdAtTime;
         this.algorithm = algorithm;
         this.keyString = keyString;
-    }
-
-    public String getKeyString() {
-        return this.keyString;
     }
 
     public JWTAsymmetricSigningKeyInfo getAsAsymmetric() {

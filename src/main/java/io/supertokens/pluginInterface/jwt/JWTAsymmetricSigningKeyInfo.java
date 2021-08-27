@@ -31,9 +31,4 @@ public class JWTAsymmetricSigningKeyInfo extends JWTSigningKeyInfo{
         this.publicKey = publicKey;
         this.privateKey = privateKey;
     }
-
-    @Override
-    public String getKeyString() {
-        return publicKey + "|" + privateKey;
-    }
 }
