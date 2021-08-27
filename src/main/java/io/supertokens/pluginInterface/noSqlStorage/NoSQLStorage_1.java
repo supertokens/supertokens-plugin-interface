@@ -21,7 +21,6 @@ import io.supertokens.pluginInterface.KeyValueInfoWithLastUpdated;
 import io.supertokens.pluginInterface.Storage;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.jwt.JWTSigningKeyInfo;
-import io.supertokens.pluginInterface.sqlStorage.TransactionConnection;
 
 import java.util.List;
 

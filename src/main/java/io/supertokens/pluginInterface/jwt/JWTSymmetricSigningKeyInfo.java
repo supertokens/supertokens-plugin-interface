@@ -16,28 +16,16 @@
 
 package io.supertokens.pluginInterface.jwt;
 
-public class JWTSigningKeyInfo {
-    public String keyId;
-    public long createdAtTime;
-    public String algorithm;
-    private String keyString;
+public class JWTSymmetricSigningKeyInfo extends JWTSigningKeyInfo{
+    public String key;
 
-    public JWTSigningKeyInfo(String keyId, long createdAtTime, String algorithm, String keyString) {
-        this.keyId = keyId;
-        this.createdAtTime = createdAtTime;
-        this.algorithm = algorithm;
-        this.keyString = keyString;
+    public JWTSymmetricSigningKeyInfo(String keyId, long createdAtTime, String algorithm, String keyString) {
+        super(keyId, createdAtTime, algorithm, keyString);
+        this.key = keyString;
     }
 
+    @Override
     public String getKeyString() {
-        return this.keyString;
-    }
-
-    public JWTAsymmetricSigningKeyInfo getAsAsymmetric() {
-        return JWTAsymmetricSigningKeyInfo.withKeyString(this.keyId, this.createdAtTime, this.algorithm, this.keyString);
-    }
-
-    public JWTSymmetricSigningKeyInfo getAsSymmetric() {
-        return new JWTSymmetricSigningKeyInfo(this.keyId, this.createdAtTime, this.algorithm, this.keyString);
+        return this.key;
     }
 }
