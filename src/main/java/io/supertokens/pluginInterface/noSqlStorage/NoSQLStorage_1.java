@@ -34,6 +34,4 @@ public interface NoSQLStorage_1 extends Storage {
     List<JWTSigningKeyInfo> getJWTSigningKeys_Transaction() throws StorageQueryException;
 
     boolean setJWTSigningKeyInfo_Transaction(JWTSigningKeyInfo keyInfo) throws StorageQueryException;
-
-    JWTSigningKeyInfo getLatestJWTSigningKeyForAlgorithm_Transaction(String algorithm) throws StorageQueryException;
 }

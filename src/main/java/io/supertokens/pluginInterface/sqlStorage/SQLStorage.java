@@ -45,6 +45,4 @@ public interface SQLStorage extends Storage {
     List<JWTSigningKeyInfo> getJWTSigningKeys_Transaction(TransactionConnection con) throws StorageQueryException;
 
     void setJWTSigningKey_Transaction(TransactionConnection con, JWTSigningKeyInfo info) throws StorageQueryException;
-
-    JWTSigningKeyInfo getLatestJWTSigningKeyForAlgorithm_Transaction(TransactionConnection con, String algorithm) throws StorageQueryException;
 }
