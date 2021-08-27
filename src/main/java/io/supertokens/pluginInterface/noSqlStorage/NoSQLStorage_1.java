@@ -21,6 +21,7 @@ import io.supertokens.pluginInterface.KeyValueInfoWithLastUpdated;
 import io.supertokens.pluginInterface.Storage;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.jwt.JWTSigningKeyInfo;
+import io.supertokens.pluginInterface.jwt.exceptions.DuplicateKeyIdException;
 
 import java.util.List;
 
@@ -32,5 +33,6 @@ public interface NoSQLStorage_1 extends Storage {
 
     List<JWTSigningKeyInfo> getJWTSigningKeys_Transaction() throws StorageQueryException;
 
-    boolean setJWTSigningKeyInfo_Transaction(JWTSigningKeyInfo keyInfo) throws StorageQueryException;
+    boolean setJWTSigningKeyInfo_Transaction(JWTSigningKeyInfo keyInfo) throws StorageQueryException,
+            DuplicateKeyIdException;
 }
