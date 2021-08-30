@@ -28,12 +28,4 @@ public class JWTSigningKeyInfo {
         this.algorithm = algorithm;
         this.keyString = keyString;
     }
-
-    public JWTAsymmetricSigningKeyInfo getAsAsymmetric() {
-        return JWTAsymmetricSigningKeyInfo.withKeyString(this.keyId, this.createdAtTime, this.algorithm, this.keyString);
-    }
-
-    public JWTSymmetricSigningKeyInfo getAsSymmetric() {
-        return new JWTSymmetricSigningKeyInfo(this.keyId, this.createdAtTime, this.algorithm, this.keyString);
-    }
 }
