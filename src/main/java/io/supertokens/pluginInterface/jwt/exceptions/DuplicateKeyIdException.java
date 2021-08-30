@@ -16,6 +16,6 @@
 
 package io.supertokens.pluginInterface.jwt.exceptions;
 
-public class DuplicateKeyIdException extends JWTException {
+public class DuplicateKeyIdException extends Exception {
     private static final long serialVersionUID = 4520315018907743145L;
 }
