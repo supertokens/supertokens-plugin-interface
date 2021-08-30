@@ -16,7 +16,7 @@
 
 package io.supertokens.pluginInterface.jwt;
 
-public class JWTSigningKeyInfo {
+public abstract class JWTSigningKeyInfo {
     public String keyId;
     public long createdAtTime;
     public String algorithm;
