@@ -1,5 +1,5 @@
 /*
- *    Copyright (c) 2020, VRAI Labs and/or its affiliates. All rights reserved.
+ *    Copyright (c) 2021, VRAI Labs and/or its affiliates. All rights reserved.
  *
  *    This software is licensed under the Apache License, Version 2.0 (the
  *    "License") as published by the Apache Software Foundation.
@@ -12,18 +12,10 @@
  *    WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  *    License for the specific language governing permissions and limitations
  *    under the License.
- *
  */
 
-package io.supertokens.pluginInterface.noSqlStorage;
+package io.supertokens.pluginInterface.jwt;
 
-import io.supertokens.pluginInterface.KeyValueInfoWithLastUpdated;
 import io.supertokens.pluginInterface.Storage;
-import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 
-public interface NoSQLStorage_1 extends Storage {
-    boolean setKeyValue_Transaction(String key, KeyValueInfoWithLastUpdated info)
-            throws StorageQueryException;
-
-    KeyValueInfoWithLastUpdated getKeyValue_Transaction(String key) throws StorageQueryException;
-}
+public interface JWTRecipeStorage extends Storage { }
