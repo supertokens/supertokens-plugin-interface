@@ -21,10 +21,6 @@ import io.supertokens.pluginInterface.KeyValueInfo;
 import io.supertokens.pluginInterface.Storage;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.exceptions.StorageTransactionLogicException;
-import io.supertokens.pluginInterface.jwt.JWTSigningKeyInfo;
-import io.supertokens.pluginInterface.jwt.exceptions.DuplicateKeyIdException;
-
-import java.util.List;
 
 public interface SQLStorage extends Storage {
     <T> T startTransaction(TransactionLogic<T> logic)
@@ -42,9 +38,4 @@ public interface SQLStorage extends Storage {
         T mainLogicAndCommit(TransactionConnection con)
                 throws StorageQueryException, StorageTransactionLogicException;
     }
-
-    List<JWTSigningKeyInfo> getJWTSigningKeys_Transaction(TransactionConnection con) throws StorageQueryException;
-
-    void setJWTSigningKey_Transaction(TransactionConnection con, JWTSigningKeyInfo info) throws StorageQueryException,
-            DuplicateKeyIdException;
 }
