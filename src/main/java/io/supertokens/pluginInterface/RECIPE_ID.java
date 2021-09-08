@@ -20,7 +20,8 @@ package io.supertokens.pluginInterface;
 public enum RECIPE_ID {
 
     EMAIL_PASSWORD("emailpassword"), THIRD_PARTY("thirdparty"),
-    SESSION("session"), EMAIL_VERIFICATION("emailverification");
+    SESSION("session"), EMAIL_VERIFICATION("emailverification"),
+    JWT("jwt");
 
     private final String name;
 
