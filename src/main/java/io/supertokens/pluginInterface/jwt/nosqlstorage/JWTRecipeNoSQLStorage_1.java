@@ -27,6 +27,9 @@ import java.util.List;
 public interface JWTRecipeNoSQLStorage_1 extends JWTRecipeStorage, NoSQLStorage_1 {
     List<JWTSigningKeyInfo> getJWTSigningKeys_Transaction() throws StorageQueryException;
 
-    boolean setJWTSigningKeyInfo_Transaction(JWTSigningKeyInfo keyInfo) throws StorageQueryException,
+    /**
+     * This function inserts a key into storage if there are no keys available for a given algorithm (RSA, EC etc)
+     */
+    boolean setJWTSigningKeyInfoIfNoKeyForAlgorithmExists_Transaction(JWTSigningKeyInfo keyInfo) throws StorageQueryException,
             DuplicateKeyIdException;
 }
