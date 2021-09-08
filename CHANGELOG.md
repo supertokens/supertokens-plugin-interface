@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.9.0] - 2021-08-08
+### Added
+- JWT recipe related changes
+
 ## [2.8.0] - 2021-06-21
 ### Added
 - Pagination and count functions for all recipes: https://github.com/supertokens/supertokens-core/issues/259
