@@ -37,7 +37,7 @@ public interface SessionSQLStorage extends SessionStorage, SQLStorage {
     void addAccessTokenSigningKey_Transaction(TransactionConnection con, KeyValueInfo info)
             throws StorageQueryException;
 
-    void removeAccessTokenSigningKeysBefore_Transaction(TransactionConnection con, long createdAtTime)
+    void removeAccessTokenSigningKeysBefore_Transaction(TransactionConnection con, long time)
             throws StorageQueryException;
 
     KeyValueInfo getRefreshTokenSigningKey_Transaction(TransactionConnection con)
