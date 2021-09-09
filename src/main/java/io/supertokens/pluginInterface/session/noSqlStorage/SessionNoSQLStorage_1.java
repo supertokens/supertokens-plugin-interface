@@ -16,15 +16,25 @@
 
 package io.supertokens.pluginInterface.session.noSqlStorage;
 
+import io.supertokens.pluginInterface.KeyValueInfo;
 import io.supertokens.pluginInterface.KeyValueInfoWithLastUpdated;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.noSqlStorage.NoSQLStorage_1;
 import io.supertokens.pluginInterface.session.SessionStorage;
 
 public interface SessionNoSQLStorage_1 extends SessionStorage, NoSQLStorage_1 {
-    KeyValueInfoWithLastUpdated getAccessTokenSigningKey_Transaction() throws StorageQueryException;
+    KeyValueInfo[] getAccessTokenSigningKeys_Transaction() throws StorageQueryException;
 
-    boolean setAccessTokenSigningKey_Transaction(KeyValueInfoWithLastUpdated info)
+    boolean addAccessTokenSigningKey_Transaction(KeyValueInfo info, long lastCreated)
+            throws StorageQueryException;
+
+    boolean removeAccessTokenSigningKeysBefore_Transaction(long createdAt)
+            throws StorageQueryException;
+
+    KeyValueInfoWithLastUpdated getLegacyAccessTokenSigningKey_Transaction()
+            throws StorageQueryException;
+
+    void removeLegacyAccessTokenSigningKey_Transaction()
             throws StorageQueryException;
 
     KeyValueInfoWithLastUpdated getRefreshTokenSigningKey_Transaction() throws

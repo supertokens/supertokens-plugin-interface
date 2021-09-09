@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [2.9.0] - 2021-08-08
 ### Added
 - JWT recipe related changes
+- Multiple access token signing key related changes: https://github.com/supertokens/supertokens-core/issues/305
 
 ## [2.8.0] - 2021-06-21
 ### Added
