@@ -28,4 +28,22 @@ public abstract class JWTSigningKeyInfo {
         this.algorithm = algorithm;
         this.keyString = keyString;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        /*
+         * This will always be true when comparing an instance of JWTSymmetricSigningKeyInfo with an
+         * instance of JWTAsymmetricSigningKeyInfo but in that case the key string will not match and
+         * false will be returned
+         */
+        if (obj instanceof JWTSigningKeyInfo) {
+            JWTSigningKeyInfo keyInfo = (JWTSigningKeyInfo) obj;
+
+            return this.createdAtTime == keyInfo.createdAtTime && this.keyId.equals(keyInfo.keyId) &&
+                    this.algorithm.equals(keyInfo.algorithm) &&
+                    this.keyString.equals(keyInfo.keyString);
+        }
+
+        return false;
+    }
 }
