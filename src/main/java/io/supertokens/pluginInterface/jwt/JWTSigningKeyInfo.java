@@ -28,4 +28,21 @@ public abstract class JWTSigningKeyInfo {
         this.algorithm = algorithm;
         this.keyString = keyString;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+
+        JWTSigningKeyInfo keyInfo = (JWTSigningKeyInfo) obj;
+
+        return this.createdAtTime == keyInfo.createdAtTime && this.keyId.equals(keyInfo.keyId) &&
+                this.algorithm.equals(keyInfo.algorithm) &&
+                this.keyString.equals(keyInfo.keyString);
+    }
 }
