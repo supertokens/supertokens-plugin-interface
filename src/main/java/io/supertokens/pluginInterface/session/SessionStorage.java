@@ -40,4 +40,7 @@ public interface SessionStorage extends Storage {
 
     int updateSession(String sessionHandle, @Nullable JsonObject sessionData, @Nullable JsonObject jwtPayload)
             throws StorageQueryException;
+
+    void removeAccessTokenSigningKeysBefore(long time)
+        throws StorageQueryException;
 }

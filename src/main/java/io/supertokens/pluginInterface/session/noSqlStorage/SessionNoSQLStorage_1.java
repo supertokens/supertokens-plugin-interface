@@ -28,9 +28,6 @@ public interface SessionNoSQLStorage_1 extends SessionStorage, NoSQLStorage_1 {
     boolean addAccessTokenSigningKey_Transaction(KeyValueInfo info, long lastCreated)
             throws StorageQueryException;
 
-    boolean removeAccessTokenSigningKeysBefore_Transaction(long time)
-            throws StorageQueryException;
-
     KeyValueInfoWithLastUpdated getLegacyAccessTokenSigningKey_Transaction()
             throws StorageQueryException;
 
