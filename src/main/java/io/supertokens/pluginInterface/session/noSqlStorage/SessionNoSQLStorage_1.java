@@ -34,7 +34,7 @@ public interface SessionNoSQLStorage_1 extends SessionStorage, NoSQLStorage_1 {
      * @return true if the key was successfully added, false otherwise (e.g., there was a key added since lastCreated)
      * @throws StorageQueryException
      */
-    boolean addAccessTokenSigningKey_Transaction(KeyValueInfo info, long lastCreated)
+    boolean addAccessTokenSigningKey_Transaction(KeyValueInfo info, Long lastCreated)
             throws StorageQueryException;
 
     KeyValueInfoWithLastUpdated getLegacyAccessTokenSigningKey_Transaction()
