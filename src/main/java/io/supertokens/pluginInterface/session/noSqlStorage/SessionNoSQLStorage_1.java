@@ -25,6 +25,15 @@ import io.supertokens.pluginInterface.session.SessionStorage;
 public interface SessionNoSQLStorage_1 extends SessionStorage, NoSQLStorage_1 {
     KeyValueInfo[] getAccessTokenSigningKeys_Transaction() throws StorageQueryException;
 
+    /**
+     * Adds a new key we can use to sign access token JWTs. It emulates a transaction by checking if the creation time
+     * of the latest key read by the caller still matches the stored data.
+     * 
+     * @param info The key to be inserted
+     * @param lastCreated The createdAtTime of the latest key known by the caller (the 0th item in the returned array)
+     * @return true if the key was successfully added, false otherwise (e.g., there was a key added since lastCreated)
+     * @throws StorageQueryException
+     */
     boolean addAccessTokenSigningKey_Transaction(KeyValueInfo info, long lastCreated)
             throws StorageQueryException;
 
