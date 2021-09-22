@@ -25,10 +25,16 @@ import io.supertokens.pluginInterface.sqlStorage.TransactionConnection;
 
 public interface SessionSQLStorage extends SessionStorage, SQLStorage {
 
-    KeyValueInfo getAccessTokenSigningKey_Transaction(TransactionConnection con)
+    void removeLegacyAccessTokenSigningKey_Transaction(TransactionConnection con)
+        throws StorageQueryException;
+
+    KeyValueInfo getLegacyAccessTokenSigningKey_Transaction(TransactionConnection con)
+        throws StorageQueryException;
+
+    KeyValueInfo[] getAccessTokenSigningKeys_Transaction(TransactionConnection con)
             throws StorageQueryException;
 
-    void setAccessTokenSigningKey_Transaction(TransactionConnection con, KeyValueInfo info)
+    void addAccessTokenSigningKey_Transaction(TransactionConnection con, KeyValueInfo info)
             throws StorageQueryException;
 
     KeyValueInfo getRefreshTokenSigningKey_Transaction(TransactionConnection con)
