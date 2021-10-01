@@ -32,8 +32,9 @@ public abstract class JWTSigningKeyInfo {
     @Override
     public boolean equals(Object obj) {
         /*
-         * This will always be true when comparing an instance of JWTSymmetricSigningKeyInfo with an instance of
-         * JWTAsymmetricSigningKeyInfo but in that case the key string will not match and false will be returned
+         * This will always be true when comparing an instance of JWTSymmetricSigningKeyInfo with an
+         * instance of JWTAsymmetricSigningKeyInfo but in that case the key string will not match and
+         * false will be returned
          */
         if (obj instanceof JWTSigningKeyInfo) {
             JWTSigningKeyInfo keyInfo = (JWTSigningKeyInfo) obj;
