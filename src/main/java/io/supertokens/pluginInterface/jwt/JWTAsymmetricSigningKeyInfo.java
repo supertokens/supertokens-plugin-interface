@@ -16,11 +16,12 @@
 
 package io.supertokens.pluginInterface.jwt;
 
-public class JWTAsymmetricSigningKeyInfo extends JWTSigningKeyInfo{
+public class JWTAsymmetricSigningKeyInfo extends JWTSigningKeyInfo {
     public String publicKey;
     public String privateKey;
 
-    public JWTAsymmetricSigningKeyInfo(String keyId, long createdAtTime, String algorithm, String publicKey, String privateKey) {
+    public JWTAsymmetricSigningKeyInfo(String keyId, long createdAtTime, String algorithm, String publicKey,
+            String privateKey) {
         super(keyId, createdAtTime, algorithm, publicKey + "|" + privateKey);
         this.publicKey = publicKey;
         this.privateKey = privateKey;

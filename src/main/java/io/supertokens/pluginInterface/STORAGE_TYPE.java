@@ -19,8 +19,7 @@ package io.supertokens.pluginInterface;
 
 public enum STORAGE_TYPE {
     /**
-     * STORAGE_TYPE.SQL: MySQL, PostgreSQL...
-     * STORAGE_TYPE.NOSQL_1: MongoDB
+     * STORAGE_TYPE.SQL: MySQL, PostgreSQL... STORAGE_TYPE.NOSQL_1: MongoDB
      */
 
     SQL, NOSQL_1

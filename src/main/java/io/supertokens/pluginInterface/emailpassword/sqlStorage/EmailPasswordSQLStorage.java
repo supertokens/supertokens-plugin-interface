@@ -26,18 +26,16 @@ import io.supertokens.pluginInterface.sqlStorage.TransactionConnection;
 
 public interface EmailPasswordSQLStorage extends EmailPasswordStorage, SQLStorage {
 
-    PasswordResetTokenInfo[] getAllPasswordResetTokenInfoForUser_Transaction(TransactionConnection con,
-                                                                             String userId)
+    PasswordResetTokenInfo[] getAllPasswordResetTokenInfoForUser_Transaction(TransactionConnection con, String userId)
             throws StorageQueryException;
 
-    void deleteAllPasswordResetTokensForUser_Transaction(TransactionConnection con,
-                                                         String userId) throws StorageQueryException;
+    void deleteAllPasswordResetTokensForUser_Transaction(TransactionConnection con, String userId)
+            throws StorageQueryException;
 
-    void updateUsersPassword_Transaction(TransactionConnection con,
-                                         String userId, String newPassword) throws StorageQueryException;
+    void updateUsersPassword_Transaction(TransactionConnection con, String userId, String newPassword)
+            throws StorageQueryException;
 
-    void updateUsersEmail_Transaction(TransactionConnection conn,
-                                      String userId, String email)
+    void updateUsersEmail_Transaction(TransactionConnection conn, String userId, String email)
             throws StorageQueryException, DuplicateEmailException;
 
     UserInfo getUserInfoUsingId_Transaction(TransactionConnection con, String userId) throws StorageQueryException;

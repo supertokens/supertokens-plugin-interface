@@ -25,20 +25,16 @@ import io.supertokens.pluginInterface.sqlStorage.TransactionConnection;
 
 public interface SessionSQLStorage extends SessionStorage, SQLStorage {
 
-    void removeLegacyAccessTokenSigningKey_Transaction(TransactionConnection con)
-        throws StorageQueryException;
+    void removeLegacyAccessTokenSigningKey_Transaction(TransactionConnection con) throws StorageQueryException;
 
-    KeyValueInfo getLegacyAccessTokenSigningKey_Transaction(TransactionConnection con)
-        throws StorageQueryException;
+    KeyValueInfo getLegacyAccessTokenSigningKey_Transaction(TransactionConnection con) throws StorageQueryException;
 
-    KeyValueInfo[] getAccessTokenSigningKeys_Transaction(TransactionConnection con)
-            throws StorageQueryException;
+    KeyValueInfo[] getAccessTokenSigningKeys_Transaction(TransactionConnection con) throws StorageQueryException;
 
     void addAccessTokenSigningKey_Transaction(TransactionConnection con, KeyValueInfo info)
             throws StorageQueryException;
 
-    KeyValueInfo getRefreshTokenSigningKey_Transaction(TransactionConnection con)
-            throws StorageQueryException;
+    KeyValueInfo getRefreshTokenSigningKey_Transaction(TransactionConnection con) throws StorageQueryException;
 
     void setRefreshTokenSigningKey_Transaction(TransactionConnection con, KeyValueInfo info)
             throws StorageQueryException;
@@ -46,7 +42,6 @@ public interface SessionSQLStorage extends SessionStorage, SQLStorage {
     SessionInfo getSessionInfo_Transaction(TransactionConnection con, String sessionHandle)
             throws StorageQueryException;
 
-    void updateSessionInfo_Transaction(TransactionConnection con, String sessionHandle,
-                                       String refreshTokenHash2, long expiry)
-            throws StorageQueryException;
+    void updateSessionInfo_Transaction(TransactionConnection con, String sessionHandle, String refreshTokenHash2,
+            long expiry) throws StorageQueryException;
 }

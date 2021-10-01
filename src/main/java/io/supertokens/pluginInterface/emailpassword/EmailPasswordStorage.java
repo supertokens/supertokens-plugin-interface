@@ -27,8 +27,7 @@ import javax.annotation.Nonnull;
 
 public interface EmailPasswordStorage extends AuthRecipeStorage {
 
-    void signUp(UserInfo userInfo)
-            throws StorageQueryException, DuplicateUserIdException, DuplicateEmailException;
+    void signUp(UserInfo userInfo) throws StorageQueryException, DuplicateUserIdException, DuplicateEmailException;
 
     UserInfo getUserInfoUsingId(String id) throws StorageQueryException;
 
@@ -37,17 +36,15 @@ public interface EmailPasswordStorage extends AuthRecipeStorage {
     void addPasswordResetToken(PasswordResetTokenInfo passwordResetTokenInfo)
             throws StorageQueryException, UnknownUserIdException, DuplicatePasswordResetTokenException;
 
-    PasswordResetTokenInfo getPasswordResetTokenInfo(String token)
-            throws StorageQueryException;
+    PasswordResetTokenInfo getPasswordResetTokenInfo(String token) throws StorageQueryException;
 
     void deleteExpiredPasswordResetTokens() throws StorageQueryException;
 
-    PasswordResetTokenInfo[] getAllPasswordResetTokenInfoForUser(String userId)
-            throws StorageQueryException;
+    PasswordResetTokenInfo[] getAllPasswordResetTokenInfoForUser(String userId) throws StorageQueryException;
 
     @Deprecated
     UserInfo[] getUsers(@Nonnull String userId, @Nonnull Long timeJoined, @Nonnull Integer limit,
-                        @Nonnull String timeJoinedOrder) throws StorageQueryException;
+            @Nonnull String timeJoinedOrder) throws StorageQueryException;
 
     @Deprecated
     UserInfo[] getUsers(@Nonnull Integer limit, @Nonnull String timeJoinedOrder) throws StorageQueryException;

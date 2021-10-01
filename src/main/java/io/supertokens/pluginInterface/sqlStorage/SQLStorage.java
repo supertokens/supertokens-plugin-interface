@@ -23,19 +23,15 @@ import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.exceptions.StorageTransactionLogicException;
 
 public interface SQLStorage extends Storage {
-    <T> T startTransaction(TransactionLogic<T> logic)
-            throws StorageQueryException, StorageTransactionLogicException;
+    <T> T startTransaction(TransactionLogic<T> logic) throws StorageQueryException, StorageTransactionLogicException;
 
     void commitTransaction(TransactionConnection con) throws StorageQueryException;
 
-    void setKeyValue_Transaction(TransactionConnection con, String key, KeyValueInfo info)
-            throws StorageQueryException;
+    void setKeyValue_Transaction(TransactionConnection con, String key, KeyValueInfo info) throws StorageQueryException;
 
-    KeyValueInfo getKeyValue_Transaction(TransactionConnection con, String key)
-            throws StorageQueryException;
+    KeyValueInfo getKeyValue_Transaction(TransactionConnection con, String key) throws StorageQueryException;
 
     interface TransactionLogic<T> {
-        T mainLogicAndCommit(TransactionConnection con)
-                throws StorageQueryException, StorageTransactionLogicException;
+        T mainLogicAndCommit(TransactionConnection con) throws StorageQueryException, StorageTransactionLogicException;
     }
 }

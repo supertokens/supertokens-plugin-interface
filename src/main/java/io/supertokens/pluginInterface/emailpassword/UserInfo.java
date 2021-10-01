@@ -41,10 +41,8 @@ public class UserInfo extends AuthRecipeUserInfo {
     public boolean equals(Object other) {
         if (other instanceof UserInfo) {
             UserInfo otherUserInfo = (UserInfo) other;
-            return otherUserInfo.email.equals(this.email) &&
-                    otherUserInfo.passwordHash.equals(this.passwordHash) &&
-                    otherUserInfo.id.equals(this.id) &&
-                    otherUserInfo.timeJoined == this.timeJoined;
+            return otherUserInfo.email.equals(this.email) && otherUserInfo.passwordHash.equals(this.passwordHash)
+                    && otherUserInfo.id.equals(this.id) && otherUserInfo.timeJoined == this.timeJoined;
         }
         return false;
     }

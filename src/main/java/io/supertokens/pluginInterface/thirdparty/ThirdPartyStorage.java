@@ -28,14 +28,13 @@ public interface ThirdPartyStorage extends AuthRecipeStorage {
     void signUp(UserInfo userInfo)
             throws StorageQueryException, DuplicateUserIdException, DuplicateThirdPartyUserException;
 
-    UserInfo getThirdPartyUserInfoUsingId(String thirdPartyId, String thirdPartyUserId)
-            throws StorageQueryException;
+    UserInfo getThirdPartyUserInfoUsingId(String thirdPartyId, String thirdPartyUserId) throws StorageQueryException;
 
     UserInfo getThirdPartyUserInfoUsingId(String userId) throws StorageQueryException;
 
     @Deprecated
     UserInfo[] getThirdPartyUsers(@Nonnull String userId, @Nonnull Long timeJoined, @Nonnull Integer limit,
-                                  @Nonnull String timeJoinedOrder) throws StorageQueryException;
+            @Nonnull String timeJoinedOrder) throws StorageQueryException;
 
     @Deprecated
     UserInfo[] getThirdPartyUsers(@Nonnull Integer limit, @Nonnull String timeJoinedOrder) throws StorageQueryException;
