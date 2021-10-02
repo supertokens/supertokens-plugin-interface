@@ -25,16 +25,12 @@ import io.supertokens.pluginInterface.sqlStorage.TransactionConnection;
 public interface EmailVerificationSQLStorage extends EmailVerificationStorage, SQLStorage {
 
     EmailVerificationTokenInfo[] getAllEmailVerificationTokenInfoForUser_Transaction(TransactionConnection con,
-                                                                                     String userId,
-                                                                                     String email)
+            String userId, String email) throws StorageQueryException;
+
+    void deleteAllEmailVerificationTokensForUser_Transaction(TransactionConnection con, String userId, String email)
             throws StorageQueryException;
 
-    void deleteAllEmailVerificationTokensForUser_Transaction(TransactionConnection con,
-                                                             String userId, String email)
-            throws StorageQueryException;
-
-    void updateIsEmailVerified_Transaction(TransactionConnection con,
-                                           String userId, String email, boolean isEmailVerified)
-            throws StorageQueryException;
+    void updateIsEmailVerified_Transaction(TransactionConnection con, String userId, String email,
+            boolean isEmailVerified) throws StorageQueryException;
 
 }

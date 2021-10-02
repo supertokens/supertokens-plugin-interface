@@ -23,10 +23,10 @@ import io.supertokens.pluginInterface.thirdparty.ThirdPartyStorage;
 import io.supertokens.pluginInterface.thirdparty.UserInfo;
 
 public interface ThirdPartySQLStorage extends ThirdPartyStorage, SQLStorage {
-    
+
     UserInfo getUserInfoUsingId_Transaction(TransactionConnection con, String thirdPartyId, String thirdPartyUserId)
             throws StorageQueryException;
 
     void updateUserEmail_Transaction(TransactionConnection con, String thirdPartyId, String thirdPartyUserId,
-                                     String newEmail) throws StorageQueryException;
+            String newEmail) throws StorageQueryException;
 }

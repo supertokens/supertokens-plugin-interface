@@ -18,4 +18,5 @@ package io.supertokens.pluginInterface.jwt;
 
 import io.supertokens.pluginInterface.Storage;
 
-public interface JWTRecipeStorage extends Storage { }
+public interface JWTRecipeStorage extends Storage {
+}

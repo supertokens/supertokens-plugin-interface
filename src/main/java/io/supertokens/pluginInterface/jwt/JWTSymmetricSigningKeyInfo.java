@@ -16,7 +16,7 @@
 
 package io.supertokens.pluginInterface.jwt;
 
-public class JWTSymmetricSigningKeyInfo extends JWTSigningKeyInfo{
+public class JWTSymmetricSigningKeyInfo extends JWTSigningKeyInfo {
     public String key;
 
     public JWTSymmetricSigningKeyInfo(String keyId, long createdAtTime, String algorithm, String keyString) {

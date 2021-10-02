@@ -28,6 +28,6 @@ import java.util.List;
 public interface JWTRecipeSQLStorage extends JWTRecipeStorage, SQLStorage {
     List<JWTSigningKeyInfo> getJWTSigningKeys_Transaction(TransactionConnection con) throws StorageQueryException;
 
-    void setJWTSigningKey_Transaction(TransactionConnection con, JWTSigningKeyInfo info) throws StorageQueryException,
-            DuplicateKeyIdException;
+    void setJWTSigningKey_Transaction(TransactionConnection con, JWTSigningKeyInfo info)
+            throws StorageQueryException, DuplicateKeyIdException;
 }

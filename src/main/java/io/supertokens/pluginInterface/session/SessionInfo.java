@@ -28,7 +28,7 @@ public class SessionInfo {
     public long timeCreated;
 
     public SessionInfo(String sessionHandle, String userId, String refreshTokenHash2, JsonObject userDataInDatabase,
-                       long expiry, JsonObject userDataInJWT, long timeCreated) {
+            long expiry, JsonObject userDataInJWT, long timeCreated) {
         this.sessionHandle = sessionHandle;
         this.userId = userId;
         this.refreshTokenHash2 = refreshTokenHash2;

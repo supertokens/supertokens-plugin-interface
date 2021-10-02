@@ -39,9 +39,8 @@ public abstract class JWTSigningKeyInfo {
         if (obj instanceof JWTSigningKeyInfo) {
             JWTSigningKeyInfo keyInfo = (JWTSigningKeyInfo) obj;
 
-            return this.createdAtTime == keyInfo.createdAtTime && this.keyId.equals(keyInfo.keyId) &&
-                    this.algorithm.equals(keyInfo.algorithm) &&
-                    this.keyString.equals(keyInfo.keyString);
+            return this.createdAtTime == keyInfo.createdAtTime && this.keyId.equals(keyInfo.keyId)
+                    && this.algorithm.equals(keyInfo.algorithm) && this.keyString.equals(keyInfo.keyString);
         }
 
         return false;

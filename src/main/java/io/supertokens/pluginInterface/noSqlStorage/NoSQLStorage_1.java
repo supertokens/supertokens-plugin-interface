@@ -22,8 +22,7 @@ import io.supertokens.pluginInterface.Storage;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 
 public interface NoSQLStorage_1 extends Storage {
-    boolean setKeyValue_Transaction(String key, KeyValueInfoWithLastUpdated info)
-            throws StorageQueryException;
+    boolean setKeyValue_Transaction(String key, KeyValueInfoWithLastUpdated info) throws StorageQueryException;
 
     KeyValueInfoWithLastUpdated getKeyValue_Transaction(String key) throws StorageQueryException;
 }

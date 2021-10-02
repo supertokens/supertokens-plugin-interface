@@ -33,7 +33,6 @@ public interface Storage {
     // load tables and create connection pools
     void initStorage();
 
-
     // used by the core to do transactions the right way.
     STORAGE_TYPE getType();
 
@@ -49,5 +48,5 @@ public interface Storage {
     void setStorageLayerEnabled(boolean enabled);
 
     boolean canBeUsed(String configFilePath);
-    
+
 }
