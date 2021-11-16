@@ -12,34 +12,20 @@
  *    WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  *    License for the specific language governing permissions and limitations
  *    under the License.
- *
  */
 
-package io.supertokens.pluginInterface;
+package io.supertokens.pluginInterface.passwordless;
 
-public enum RECIPE_ID {
+public class PasswordlessDevice {
+    public final String deviceIdHash;
+    public final String email;
+    public final String phoneNumber;
+    public final int failedAttempts;
 
-    EMAIL_PASSWORD("emailpassword"), THIRD_PARTY("thirdparty"), SESSION("session"),
-    EMAIL_VERIFICATION("emailverification"), JWT("jwt"), PASSWORDLESS("passwordless");
-
-    private final String name;
-
-    RECIPE_ID(String s) {
-        name = s;
+    public PasswordlessDevice(String loginAttemptId, String email, String phoneNumber, int failedAttempts) {
+        this.deviceIdHash = loginAttemptId;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.failedAttempts = failedAttempts;
     }
-
-    @Override
-    public String toString() {
-        return this.name;
-    }
-
-    public static RECIPE_ID getEnumFromString(String s) {
-        for (RECIPE_ID b : RECIPE_ID.values()) {
-            if (b.toString().equalsIgnoreCase(s)) {
-                return b;
-            }
-        }
-        return null;
-    }
-
 }
