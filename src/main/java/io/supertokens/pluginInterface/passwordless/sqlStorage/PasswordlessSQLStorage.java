@@ -67,8 +67,8 @@ public interface PasswordlessSQLStorage extends PasswordlessStorage, SQLStorage 
             throws StorageQueryException;
 
     void createUser_Transaction(TransactionConnection con, @Nonnull String userId, @Nullable String email,
-            @Nullable String phoneNumber, long timeJoined)
-            throws StorageQueryException, DuplicateEmailException, DuplicatePhoneNumberException, DuplicateUserIdException;
+            @Nullable String phoneNumber, long timeJoined) throws StorageQueryException, DuplicateEmailException,
+            DuplicatePhoneNumberException, DuplicateUserIdException;
 
     void updateUser_Transaction(TransactionConnection con, @Nonnull String userId, @Nullable String email,
             @Nullable String phoneNumber) throws StorageQueryException, DuplicatePhoneNumberException,
