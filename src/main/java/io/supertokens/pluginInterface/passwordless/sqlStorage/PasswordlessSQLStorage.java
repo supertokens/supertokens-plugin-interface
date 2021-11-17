@@ -30,15 +30,13 @@ import io.supertokens.pluginInterface.passwordless.exception.DuplicateCodeIdExce
 import io.supertokens.pluginInterface.passwordless.exception.DuplicateDeviceIdHashException;
 import io.supertokens.pluginInterface.passwordless.exception.DuplicateLinkCodeHashException;
 import io.supertokens.pluginInterface.passwordless.exception.DuplicatePhoneNumberException;
-import io.supertokens.pluginInterface.passwordless.exception.EmptyContactInfoException;
 import io.supertokens.pluginInterface.passwordless.exception.UnknownDeviceIdHash;
 import io.supertokens.pluginInterface.sqlStorage.SQLStorage;
 import io.supertokens.pluginInterface.sqlStorage.TransactionConnection;
 
 public interface PasswordlessSQLStorage extends PasswordlessStorage, SQLStorage {
     void createDevice_Transaction(TransactionConnection con, String deviceIdHash, @Nullable String email,
-            @Nullable String phoneNumber)
-            throws StorageQueryException, DuplicateDeviceIdHashException, EmptyContactInfoException;
+            @Nullable String phoneNumber) throws StorageQueryException, DuplicateDeviceIdHashException;
 
     PasswordlessDevice getDevice_Transaction(TransactionConnection con, String deviceIdHash)
             throws StorageQueryException;
@@ -70,9 +68,9 @@ public interface PasswordlessSQLStorage extends PasswordlessStorage, SQLStorage 
 
     void createUser_Transaction(TransactionConnection con, @Nonnull String userId, @Nullable String email,
             @Nullable String phoneNumber, long timeJoined)
-            throws StorageQueryException, DuplicateEmailException, DuplicateUserIdException, EmptyContactInfoException;
+            throws StorageQueryException, DuplicateEmailException, DuplicateUserIdException;
 
     void updateUser_Transaction(TransactionConnection con, @Nonnull String userId, @Nullable String email,
             @Nullable String phoneNumber) throws StorageQueryException, DuplicatePhoneNumberException,
-            UnknownUserIdException, DuplicateEmailException, EmptyContactInfoException;
+            UnknownUserIdException, DuplicateEmailException;
 }

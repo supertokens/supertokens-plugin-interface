@@ -20,18 +20,18 @@ import javax.annotation.Nullable;
 
 import io.supertokens.pluginInterface.RECIPE_ID;
 import io.supertokens.pluginInterface.authRecipe.AuthRecipeUserInfo;
-import io.supertokens.pluginInterface.passwordless.exception.EmptyContactInfoException;
 
 public class UserInfo extends AuthRecipeUserInfo {
     public final String email;
     public final String phoneNumber;
 
-    public UserInfo(String id, @Nullable String email, @Nullable String phoneNumber, long timeJoined)
-            throws EmptyContactInfoException {
+    public UserInfo(String id, @Nullable String email, @Nullable String phoneNumber, long timeJoined) {
         super(id, timeJoined);
+
         if (email == null && phoneNumber == null) {
-            throw new EmptyContactInfoException();
+            throw new IllegalArgumentException("Both email and phoneNumber cannot be null");
         }
+
         this.email = email;
         this.phoneNumber = phoneNumber;
     }
