@@ -14,18 +14,10 @@
  *    under the License.
  */
 
-package io.supertokens.pluginInterface.passwordless;
+package io.supertokens.pluginInterface.passwordless.exception;
 
-public class PasswordlessDevice {
-    public final String deviceIdHash;
-    public final String email;
-    public final String phoneNumber;
-    public final int failedCodeInputAttemptCount;
+import io.supertokens.pluginInterface.emailpassword.exceptions.EmailPasswordException;
 
-    public PasswordlessDevice(String deviceIdHash, String email, String phoneNumber, int failedCodeInputAttemptCount) {
-        this.deviceIdHash = deviceIdHash;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.failedCodeInputAttemptCount = failedCodeInputAttemptCount;
-    }
+public class EmptyContactInfoException extends EmailPasswordException {
+    private static final long serialVersionUID = 6848053563771647272L;
 }

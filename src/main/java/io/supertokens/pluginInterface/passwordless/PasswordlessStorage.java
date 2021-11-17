@@ -22,25 +22,13 @@ import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import javax.annotation.Nonnull;
 
 public interface PasswordlessStorage extends AuthRecipeStorage {
-    PasswordlessDevice getDevice(String deviceIdHash) throws StorageQueryException;
-
     PasswordlessDevice[] getDevicesByEmail(@Nonnull String email) throws StorageQueryException;
 
     PasswordlessDevice[] getDevicesByPhoneNumber(@Nonnull String phoneNumber) throws StorageQueryException;
 
-    PasswordlessCode[] getCodesOfDevice(String deviceIdHash) throws StorageQueryException;
-
-    void deleteDevicesByPhoneNumber(String phoneNumber) throws StorageQueryException;
-
-    void deleteDevicesByEmail(String email) throws StorageQueryException;
-
     PasswordlessCode[] getCodesBefore(long time) throws StorageQueryException;
 
     PasswordlessCode getCode(String codeId) throws StorageQueryException;
-
-    PasswordlessCode getCodeByLinkCodeHash(String linkCode) throws StorageQueryException;
-
-    void deleteCode(String codeId) throws StorageQueryException;
 
     UserInfo getUserById(String userId) throws StorageQueryException;
 

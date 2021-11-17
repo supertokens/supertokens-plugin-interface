@@ -17,6 +17,7 @@
 package io.supertokens.pluginInterface.passwordless.sqlStorage;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import io.supertokens.pluginInterface.emailpassword.exceptions.DuplicateEmailException;
 import io.supertokens.pluginInterface.emailpassword.exceptions.DuplicateUserIdException;
@@ -29,16 +30,15 @@ import io.supertokens.pluginInterface.passwordless.exception.DuplicateCodeIdExce
 import io.supertokens.pluginInterface.passwordless.exception.DuplicateDeviceIdHashException;
 import io.supertokens.pluginInterface.passwordless.exception.DuplicateLinkCodeHashException;
 import io.supertokens.pluginInterface.passwordless.exception.DuplicatePhoneNumberException;
+import io.supertokens.pluginInterface.passwordless.exception.EmptyContactInfoException;
 import io.supertokens.pluginInterface.passwordless.exception.UnknownDeviceIdHash;
 import io.supertokens.pluginInterface.sqlStorage.SQLStorage;
 import io.supertokens.pluginInterface.sqlStorage.TransactionConnection;
 
 public interface PasswordlessSQLStorage extends PasswordlessStorage, SQLStorage {
-    void createDeviceWithEmail_Transaction(TransactionConnection con, String deviceIdHash, @Nonnull String email)
-            throws StorageQueryException, DuplicateDeviceIdHashException;
-
-    void createDeviceWithPhoneNumber_Transaction(TransactionConnection con, String deviceIdHash,
-            @Nonnull String phoneNumber) throws StorageQueryException, DuplicateDeviceIdHashException;
+    void createDevice_Transaction(TransactionConnection con, String deviceIdHash, @Nullable String email,
+            @Nullable String phoneNumber)
+            throws StorageQueryException, DuplicateDeviceIdHashException, EmptyContactInfoException;
 
     PasswordlessDevice getDevice_Transaction(TransactionConnection con, String deviceIdHash)
             throws StorageQueryException;
@@ -68,17 +68,11 @@ public interface PasswordlessSQLStorage extends PasswordlessStorage, SQLStorage 
     void deleteCodesOfDeviceBefore_Transaction(TransactionConnection con, String deviceIdHash, long time)
             throws StorageQueryException;
 
-    void createUserWithEmail_Transaction(TransactionConnection con, @Nonnull String userId, @Nonnull String email,
-            long timeJoined) throws StorageQueryException, DuplicateEmailException, DuplicateUserIdException;
+    void createUser_Transaction(TransactionConnection con, @Nonnull String userId, @Nullable String email,
+            @Nullable String phoneNumber, long timeJoined)
+            throws StorageQueryException, DuplicateEmailException, DuplicateUserIdException, EmptyContactInfoException;
 
-    void createUserWithPhoneNumber_Transaction(TransactionConnection con, @Nonnull String userId,
-            @Nonnull String phoneNumber, long timeJoined)
-            throws StorageQueryException, DuplicatePhoneNumberException, DuplicateUserIdException;
-
-    void updateUserPhoneNumber_Transaction(TransactionConnection con, @Nonnull String userId,
-            @Nonnull String phoneNumber)
-            throws StorageQueryException, DuplicatePhoneNumberException, UnknownUserIdException;
-
-    void updateUserEmail_Transaction(TransactionConnection con, @Nonnull String userId, String email)
-            throws StorageQueryException, DuplicateEmailException, UnknownUserIdException;
+    void updateUser_Transaction(TransactionConnection con, @Nonnull String userId, @Nullable String email,
+            @Nullable String phoneNumber) throws StorageQueryException, DuplicatePhoneNumberException,
+            UnknownUserIdException, DuplicateEmailException, EmptyContactInfoException;
 }

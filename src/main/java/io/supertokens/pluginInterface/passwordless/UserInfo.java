@@ -16,15 +16,22 @@
 
 package io.supertokens.pluginInterface.passwordless;
 
+import javax.annotation.Nullable;
+
 import io.supertokens.pluginInterface.RECIPE_ID;
 import io.supertokens.pluginInterface.authRecipe.AuthRecipeUserInfo;
+import io.supertokens.pluginInterface.passwordless.exception.EmptyContactInfoException;
 
 public class UserInfo extends AuthRecipeUserInfo {
     public final String email;
     public final String phoneNumber;
 
-    public UserInfo(String id, String email, String phoneNumber, long timeJoined) {
+    public UserInfo(String id, @Nullable String email, @Nullable String phoneNumber, long timeJoined)
+            throws EmptyContactInfoException {
         super(id, timeJoined);
+        if (email == null && phoneNumber == null) {
+            throw new EmptyContactInfoException();
+        }
         this.email = email;
         this.phoneNumber = phoneNumber;
     }
