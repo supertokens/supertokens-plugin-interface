@@ -30,15 +30,14 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public interface PasswordlessStorage extends AuthRecipeStorage {
-    void createDeviceWithCode(String deviceIdHash, @Nullable String email, @Nullable String phoneNumber, String codeId,
-            String linkCodeHash, long createdAt) throws StorageQueryException, DuplicateDeviceIdHashException,
-            DuplicateCodeIdException, DuplicateLinkCodeHashException;
+    void createDeviceWithCode(@Nullable String email, @Nullable String phoneNumber, PasswordlessCode code)
+            throws StorageQueryException, DuplicateDeviceIdHashException, DuplicateCodeIdException,
+            DuplicateLinkCodeHashException;
 
-    void createCode(String codeId, String deviceIdHash, String linkCodeHash, long createdAt)
+    void createCode(PasswordlessCode code)
             throws StorageQueryException, UnknownDeviceIdHash, DuplicateCodeIdException, DuplicateLinkCodeHashException;
 
-    void createUser(@Nonnull String userId, @Nullable String email, @Nullable String phoneNumber, long timeJoined)
-            throws StorageQueryException, DuplicateEmailException, DuplicatePhoneNumberException,
+    void createUser(UserInfo user) throws StorageQueryException, DuplicateEmailException, DuplicatePhoneNumberException,
             DuplicateUserIdException;
 
     PasswordlessDevice getDevice(String deviceIdHash) throws StorageQueryException;
