@@ -51,9 +51,6 @@ public interface PasswordlessSQLStorage extends PasswordlessStorage, SQLStorage 
 
     void deleteCode_Transaction(TransactionConnection con, String codeId) throws StorageQueryException;
 
-    void deleteCodesOfDeviceBefore_Transaction(TransactionConnection con, String deviceIdHash, long time)
-            throws StorageQueryException;
-
     void updateUser_Transaction(TransactionConnection con, @Nonnull String userId, @Nullable String email,
             @Nullable String phoneNumber) throws StorageQueryException, DuplicatePhoneNumberException,
             UnknownUserIdException, DuplicateEmailException;
