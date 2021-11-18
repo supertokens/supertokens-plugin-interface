@@ -17,11 +17,30 @@
 package io.supertokens.pluginInterface.passwordless;
 
 import io.supertokens.pluginInterface.authRecipe.AuthRecipeStorage;
+import io.supertokens.pluginInterface.emailpassword.exceptions.DuplicateEmailException;
+import io.supertokens.pluginInterface.emailpassword.exceptions.DuplicateUserIdException;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
+import io.supertokens.pluginInterface.passwordless.exception.DuplicateCodeIdException;
+import io.supertokens.pluginInterface.passwordless.exception.DuplicateDeviceIdHashException;
+import io.supertokens.pluginInterface.passwordless.exception.DuplicateLinkCodeHashException;
+import io.supertokens.pluginInterface.passwordless.exception.DuplicatePhoneNumberException;
+import io.supertokens.pluginInterface.passwordless.exception.UnknownDeviceIdHash;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public interface PasswordlessStorage extends AuthRecipeStorage {
+    void createDeviceWithCode(String deviceIdHash, @Nullable String email, @Nullable String phoneNumber, String codeId,
+            String linkCodeHash, long createdAt) throws StorageQueryException, DuplicateDeviceIdHashException,
+            DuplicateCodeIdException, DuplicateLinkCodeHashException;
+
+    void createCode(String codeId, String deviceIdHash, String linkCodeHash, long createdAt)
+            throws StorageQueryException, UnknownDeviceIdHash, DuplicateCodeIdException, DuplicateLinkCodeHashException;
+
+    void createUser(@Nonnull String userId, @Nullable String email, @Nullable String phoneNumber, long timeJoined)
+            throws StorageQueryException, DuplicateEmailException, DuplicatePhoneNumberException,
+            DuplicateUserIdException;
+
     PasswordlessDevice getDevice(String deviceIdHash) throws StorageQueryException;
 
     PasswordlessDevice[] getDevicesByEmail(@Nonnull String email) throws StorageQueryException;

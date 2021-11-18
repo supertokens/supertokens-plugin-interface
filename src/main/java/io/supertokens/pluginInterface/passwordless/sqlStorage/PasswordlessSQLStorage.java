@@ -20,24 +20,16 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import io.supertokens.pluginInterface.emailpassword.exceptions.DuplicateEmailException;
-import io.supertokens.pluginInterface.emailpassword.exceptions.DuplicateUserIdException;
 import io.supertokens.pluginInterface.emailpassword.exceptions.UnknownUserIdException;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.passwordless.PasswordlessCode;
 import io.supertokens.pluginInterface.passwordless.PasswordlessDevice;
 import io.supertokens.pluginInterface.passwordless.PasswordlessStorage;
-import io.supertokens.pluginInterface.passwordless.exception.DuplicateCodeIdException;
-import io.supertokens.pluginInterface.passwordless.exception.DuplicateDeviceIdHashException;
-import io.supertokens.pluginInterface.passwordless.exception.DuplicateLinkCodeHashException;
 import io.supertokens.pluginInterface.passwordless.exception.DuplicatePhoneNumberException;
-import io.supertokens.pluginInterface.passwordless.exception.UnknownDeviceIdHash;
 import io.supertokens.pluginInterface.sqlStorage.SQLStorage;
 import io.supertokens.pluginInterface.sqlStorage.TransactionConnection;
 
 public interface PasswordlessSQLStorage extends PasswordlessStorage, SQLStorage {
-    void createDevice_Transaction(TransactionConnection con, String deviceIdHash, @Nullable String email,
-            @Nullable String phoneNumber) throws StorageQueryException, DuplicateDeviceIdHashException;
-
     PasswordlessDevice getDevice_Transaction(TransactionConnection con, String deviceIdHash)
             throws StorageQueryException;
 
@@ -54,10 +46,6 @@ public interface PasswordlessSQLStorage extends PasswordlessStorage, SQLStorage 
 
     void deleteDevicesByEmail_Transaction(TransactionConnection con, String email) throws StorageQueryException;
 
-    void createCode_Transaction(TransactionConnection con, String codeId, String deviceIdHash, String linkCodeHash,
-            long createdAt)
-            throws StorageQueryException, UnknownDeviceIdHash, DuplicateCodeIdException, DuplicateLinkCodeHashException;
-
     PasswordlessCode getCodeByLinkCodeHash_Transaction(TransactionConnection con, String linkCodeHash)
             throws StorageQueryException;
 
@@ -66,11 +54,7 @@ public interface PasswordlessSQLStorage extends PasswordlessStorage, SQLStorage 
     void deleteCodesOfDeviceBefore_Transaction(TransactionConnection con, String deviceIdHash, long time)
             throws StorageQueryException;
 
-    void createUser_Transaction(TransactionConnection con, @Nonnull String userId, @Nullable String email,
-            @Nullable String phoneNumber, long timeJoined) throws StorageQueryException, DuplicateEmailException,
-            DuplicatePhoneNumberException, DuplicateUserIdException;
-
     void updateUser_Transaction(TransactionConnection con, @Nonnull String userId, @Nullable String email,
             @Nullable String phoneNumber) throws StorageQueryException, DuplicatePhoneNumberException,
-            UnknownUserIdException, DuplicateEmailException, DuplicatePhoneNumberException;
+            UnknownUserIdException, DuplicateEmailException;
 }
