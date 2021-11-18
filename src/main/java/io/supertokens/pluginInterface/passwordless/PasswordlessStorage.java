@@ -40,6 +40,9 @@ public interface PasswordlessStorage extends AuthRecipeStorage {
     void createUser(UserInfo user) throws StorageQueryException, DuplicateEmailException, DuplicatePhoneNumberException,
             DuplicateUserIdException;
 
+    void updateUser(@Nonnull String userId, @Nullable String email, @Nullable String phoneNumber)
+            throws StorageQueryException, DuplicatePhoneNumberException, DuplicateEmailException;
+
     PasswordlessDevice getDevice(String deviceIdHash) throws StorageQueryException;
 
     PasswordlessDevice[] getDevicesByEmail(@Nonnull String email) throws StorageQueryException;
