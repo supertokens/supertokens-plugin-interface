@@ -16,10 +16,17 @@
 
 package io.supertokens.pluginInterface.passwordless.sqlStorage;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import io.supertokens.pluginInterface.emailpassword.exceptions.DuplicateEmailException;
+import io.supertokens.pluginInterface.emailpassword.exceptions.UnknownUserIdException;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.passwordless.PasswordlessCode;
 import io.supertokens.pluginInterface.passwordless.PasswordlessDevice;
 import io.supertokens.pluginInterface.passwordless.PasswordlessStorage;
+import io.supertokens.pluginInterface.passwordless.UserInfo;
+import io.supertokens.pluginInterface.passwordless.exception.DuplicatePhoneNumberException;
 import io.supertokens.pluginInterface.sqlStorage.SQLStorage;
 import io.supertokens.pluginInterface.sqlStorage.TransactionConnection;
 
@@ -44,4 +51,13 @@ public interface PasswordlessSQLStorage extends PasswordlessStorage, SQLStorage 
             throws StorageQueryException;
 
     void deleteCode_Transaction(TransactionConnection con, String codeId) throws StorageQueryException;
+
+    UserInfo getUserById_Transaction(TransactionConnection con, String userId) throws StorageQueryException;
+
+    void updateUserEmail_Transaction(TransactionConnection con, @Nonnull String userId, @Nullable String email)
+            throws StorageQueryException, UnknownUserIdException, DuplicateEmailException;
+
+    void updateUserPhoneNumber_Transaction(TransactionConnection con, @Nonnull String userId,
+            @Nullable String phoneNumber)
+            throws StorageQueryException, UnknownUserIdException, DuplicatePhoneNumberException;
 }
