@@ -26,33 +26,44 @@ public class PasswordlessCode {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (!(obj instanceof PasswordlessCode)) {
             return false;
+        }
         PasswordlessCode other = (PasswordlessCode) obj;
         if (createdAt == null) {
-            if (other.createdAt != null)
+            if (other.createdAt != null) {
                 return false;
-        } else if (!createdAt.equals(other.createdAt))
+            }
+        } else if (!createdAt.equals(other.createdAt)) {
             return false;
+        }
         if (deviceIdHash == null) {
-            if (other.deviceIdHash != null)
+            if (other.deviceIdHash != null) {
                 return false;
-        } else if (!deviceIdHash.equals(other.deviceIdHash))
+            }
+        } else if (!deviceIdHash.equals(other.deviceIdHash)) {
             return false;
+        }
         if (id == null) {
-            if (other.id != null)
+            if (other.id != null) {
                 return false;
-        } else if (!id.equals(other.id))
+            }
+        } else if (!id.equals(other.id)) {
             return false;
+        }
         if (linkCodeHash == null) {
-            if (other.linkCodeHash != null)
+            if (other.linkCodeHash != null) {
                 return false;
-        } else if (!linkCodeHash.equals(other.linkCodeHash))
+            }
+        } else if (!linkCodeHash.equals(other.linkCodeHash)) {
             return false;
+        }
         return true;
     }
 }
