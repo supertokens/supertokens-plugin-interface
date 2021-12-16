@@ -27,7 +27,7 @@ public interface EmailVerificationStorage extends Storage {
 
     EmailVerificationTokenInfo getEmailVerificationTokenInfo(String token) throws StorageQueryException;
 
-    void deleteUserInfo(String userId) throws StorageQueryException;
+    void deleteEmailVerificationUserInfo(String userId) throws StorageQueryException;
 
     void revokeAllTokens(String userId, String email) throws StorageQueryException;
 
