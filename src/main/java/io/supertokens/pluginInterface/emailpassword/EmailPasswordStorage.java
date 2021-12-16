@@ -29,6 +29,8 @@ public interface EmailPasswordStorage extends AuthRecipeStorage {
 
     void signUp(UserInfo userInfo) throws StorageQueryException, DuplicateUserIdException, DuplicateEmailException;
 
+    void deleteUser(String userId) throws StorageQueryException;
+
     UserInfo getUserInfoUsingId(String id) throws StorageQueryException;
 
     UserInfo getUserInfoUsingEmail(String email) throws StorageQueryException;

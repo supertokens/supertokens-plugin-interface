@@ -26,6 +26,8 @@ public interface SessionStorage extends Storage {
     void createNewSession(String sessionHandle, String userId, String refreshTokenHash2, JsonObject userDataInDatabase,
             long expiry, JsonObject userDataInJWT, long createdAtTime) throws StorageQueryException;
 
+    void deleteSessionsOfUser(String userId) throws StorageQueryException;
+
     // return number of rows else throw UnsupportedOperationException
     int getNumberOfSessions() throws StorageQueryException;
 
