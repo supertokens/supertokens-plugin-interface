@@ -19,7 +19,6 @@ package io.supertokens.pluginInterface.passwordless;
 import io.supertokens.pluginInterface.authRecipe.AuthRecipeStorage;
 import io.supertokens.pluginInterface.emailpassword.exceptions.DuplicateEmailException;
 import io.supertokens.pluginInterface.emailpassword.exceptions.DuplicateUserIdException;
-import io.supertokens.pluginInterface.emailpassword.exceptions.UnknownUserIdException;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.passwordless.exception.DuplicateCodeIdException;
 import io.supertokens.pluginInterface.passwordless.exception.DuplicateDeviceIdHashException;
@@ -31,9 +30,9 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public interface PasswordlessStorage extends AuthRecipeStorage {
-    void createDeviceWithCode(@Nullable String email, @Nullable String phoneNumber, PasswordlessCode code)
-            throws StorageQueryException, DuplicateDeviceIdHashException, DuplicateCodeIdException,
-            DuplicateLinkCodeHashException;
+    void createDeviceWithCode(@Nullable String email, @Nullable String phoneNumber, @Nonnull String linkCodeHash,
+            PasswordlessCode code) throws StorageQueryException, DuplicateDeviceIdHashException,
+            DuplicateCodeIdException, DuplicateLinkCodeHashException;
 
     void createCode(PasswordlessCode code)
             throws StorageQueryException, UnknownDeviceIdHash, DuplicateCodeIdException, DuplicateLinkCodeHashException;

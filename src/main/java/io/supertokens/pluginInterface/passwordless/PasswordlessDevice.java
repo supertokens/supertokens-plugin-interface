@@ -20,12 +20,15 @@ public class PasswordlessDevice {
     public final String deviceIdHash;
     public final String email;
     public final String phoneNumber;
+    public final String linkCodeSalt;
     public final int failedAttempts;
 
-    public PasswordlessDevice(String deviceIdHash, String email, String phoneNumber, int failedAttempts) {
+    public PasswordlessDevice(String deviceIdHash, String email, String phoneNumber, String linkCodeSalt,
+            int failedAttempts) {
         this.deviceIdHash = deviceIdHash;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.failedAttempts = failedAttempts;
+        this.linkCodeSalt = linkCodeSalt;
     }
 }
