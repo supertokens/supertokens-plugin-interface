@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.10.0] - 2021-12-16
+
+### Added
+
+- User deletion methods
+
 ## [2.9.0] - 2021-08-08
 ### Added
 - JWT recipe related changes
