@@ -30,7 +30,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public interface PasswordlessStorage extends AuthRecipeStorage {
-    void createDeviceWithCode(@Nullable String email, @Nullable String phoneNumber, @Nonnull String linkCodeHash,
+    void createDeviceWithCode(@Nullable String email, @Nullable String phoneNumber, @Nonnull String linkCodeSalt,
             PasswordlessCode code) throws StorageQueryException, DuplicateDeviceIdHashException,
             DuplicateCodeIdException, DuplicateLinkCodeHashException;
 
