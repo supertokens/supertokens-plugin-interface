@@ -6,10 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [2.10.0] - 2021-12-16
+## [2.10.0] - 2021-11-16
 
-### Added
+# Added
 
+- Passwordless interface
 - User deletion methods
 
 ## [2.9.0] - 2021-08-08

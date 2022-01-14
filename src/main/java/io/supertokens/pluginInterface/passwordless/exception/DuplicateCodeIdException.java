@@ -12,34 +12,12 @@
  *    WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  *    License for the specific language governing permissions and limitations
  *    under the License.
- *
  */
 
-package io.supertokens.pluginInterface;
+package io.supertokens.pluginInterface.passwordless.exception;
 
-public enum RECIPE_ID {
+import io.supertokens.pluginInterface.emailpassword.exceptions.EmailPasswordException;
 
-    EMAIL_PASSWORD("emailpassword"), THIRD_PARTY("thirdparty"), SESSION("session"),
-    EMAIL_VERIFICATION("emailverification"), JWT("jwt"), PASSWORDLESS("passwordless");
-
-    private final String name;
-
-    RECIPE_ID(String s) {
-        name = s;
-    }
-
-    @Override
-    public String toString() {
-        return this.name;
-    }
-
-    public static RECIPE_ID getEnumFromString(String s) {
-        for (RECIPE_ID b : RECIPE_ID.values()) {
-            if (b.toString().equalsIgnoreCase(s)) {
-                return b;
-            }
-        }
-        return null;
-    }
-
+public class DuplicateCodeIdException extends EmailPasswordException {
+    private static final long serialVersionUID = 6848053563771647272L;
 }
