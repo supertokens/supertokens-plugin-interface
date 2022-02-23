@@ -19,6 +19,7 @@ package io.supertokens.pluginInterface.emailverification;
 import io.supertokens.pluginInterface.Storage;
 import io.supertokens.pluginInterface.emailverification.exception.DuplicateEmailVerificationTokenException;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
+import io.supertokens.pluginInterface.exceptions.StorageTransactionLogicException;
 
 public interface EmailVerificationStorage extends Storage {
 

@@ -19,19 +19,29 @@ package io.supertokens.pluginInterface.sqlStorage;
 
 import io.supertokens.pluginInterface.KeyValueInfo;
 import io.supertokens.pluginInterface.Storage;
+import io.supertokens.pluginInterface.emailpassword.exceptions.UnknownUserIdException;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.exceptions.StorageTransactionLogicException;
 
 public interface SQLStorage extends Storage {
-    <T> T startTransaction(TransactionLogic<T> logic) throws StorageQueryException, StorageTransactionLogicException;
 
-    void commitTransaction(TransactionConnection con) throws StorageQueryException;
+    <T> T startSimpleTransactionHibernate(SimpleTransactionLogicHibernate<T> logic) throws Exception;
 
-    void setKeyValue_Transaction(TransactionConnection con, String key, KeyValueInfo info) throws StorageQueryException;
+    <T> T startTransactionHibernate(TransactionLogicHibernate<T> logic)
+            throws StorageQueryException, StorageTransactionLogicException;
 
-    KeyValueInfo getKeyValue_Transaction(TransactionConnection con, String key) throws StorageQueryException;
+    void commitTransaction(SessionObject sessionInstance) throws Exception;
 
-    interface TransactionLogic<T> {
-        T mainLogicAndCommit(TransactionConnection con) throws StorageQueryException, StorageTransactionLogicException;
+    void setKeyValue_Transaction(SessionObject sessionInstance, String key, KeyValueInfo info)
+            throws StorageQueryException;
+
+    KeyValueInfo getKeyValue_Transaction(SessionObject sessionInstance, String key) throws StorageQueryException;
+
+    interface TransactionLogicHibernate<T> {
+        T mainLogicAndCommit(SessionObject sessionInstance) throws Exception;
+    }
+
+    interface SimpleTransactionLogicHibernate<T> {
+        T mainLogic(SessionObject sessionInstance) throws Exception;
     }
 }

@@ -18,14 +18,14 @@
 package io.supertokens.pluginInterface.sqlStorage;
 
 // This class enables the core to pass around a connection without knowing about it
-public class TransactionConnection {
-    private Object connection;
+public class SessionObject {
+    private Object session;
 
-    public TransactionConnection(Object connection) {
-        this.connection = connection;
+    public SessionObject(Object session) {
+        this.session = session;
     }
 
-    public Object getConnection() {
-        return connection;
+    public Object getSession() {
+        return session;
     }
 }

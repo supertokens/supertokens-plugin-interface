@@ -27,34 +27,35 @@ import io.supertokens.pluginInterface.passwordless.PasswordlessDevice;
 import io.supertokens.pluginInterface.passwordless.PasswordlessStorage;
 import io.supertokens.pluginInterface.passwordless.exception.DuplicatePhoneNumberException;
 import io.supertokens.pluginInterface.sqlStorage.SQLStorage;
-import io.supertokens.pluginInterface.sqlStorage.TransactionConnection;
+import io.supertokens.pluginInterface.sqlStorage.SessionObject;
 
 public interface PasswordlessSQLStorage extends PasswordlessStorage, SQLStorage {
-    PasswordlessDevice getDevice_Transaction(TransactionConnection con, String deviceIdHash)
+    PasswordlessDevice getDevice_Transaction(SessionObject sessionInstance, String deviceIdHash)
             throws StorageQueryException;
 
-    void incrementDeviceFailedAttemptCount_Transaction(TransactionConnection con, String deviceIdHash)
+    void incrementDeviceFailedAttemptCount_Transaction(SessionObject sessionInstance, String deviceIdHash)
             throws StorageQueryException;
 
-    PasswordlessCode[] getCodesOfDevice_Transaction(TransactionConnection con, String deviceIdHash)
+    PasswordlessCode[] getCodesOfDevice_Transaction(SessionObject sessionInstance, String deviceIdHash)
             throws StorageQueryException;
 
-    void deleteDevice_Transaction(TransactionConnection con, String deviceIdHash) throws StorageQueryException;
+    void deleteDevice_Transaction(SessionObject sessionInstance, String deviceIdHash) throws StorageQueryException;
 
-    void deleteDevicesByPhoneNumber_Transaction(TransactionConnection con, String phoneNumber)
+    void deleteDevicesByPhoneNumber_Transaction(SessionObject sessionInstance, String phoneNumber)
             throws StorageQueryException;
 
-    void deleteDevicesByEmail_Transaction(TransactionConnection con, String email) throws StorageQueryException;
+    void deleteDevicesByEmail_Transaction(SessionObject sessionInstance, String email) throws StorageQueryException;
 
-    PasswordlessCode getCodeByLinkCodeHash_Transaction(TransactionConnection con, String linkCodeHash)
+    PasswordlessCode getCodeByLinkCodeHash_Transaction(SessionObject sessionInstance, String linkCodeHash)
             throws StorageQueryException;
 
-    void deleteCode_Transaction(TransactionConnection con, String codeId) throws StorageQueryException;
+    void deleteCode_Transaction(SessionObject sessionInstance, String codeId) throws StorageQueryException;
 
-    void updateUserEmail_Transaction(TransactionConnection con, @Nonnull String userId, @Nullable String email)
+    void updateUserEmail_Transaction(SessionObject sessionInstance, @Nonnull String userId, @Nullable String email)
             throws StorageQueryException, UnknownUserIdException, DuplicateEmailException;
 
-    void updateUserPhoneNumber_Transaction(TransactionConnection con, @Nonnull String userId,
+    void updateUserPhoneNumber_Transaction(SessionObject sessionInstance, @Nonnull String userId,
             @Nullable String phoneNumber)
             throws StorageQueryException, UnknownUserIdException, DuplicatePhoneNumberException;
+
 }

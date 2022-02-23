@@ -22,21 +22,22 @@ import io.supertokens.pluginInterface.emailpassword.UserInfo;
 import io.supertokens.pluginInterface.emailpassword.exceptions.DuplicateEmailException;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.sqlStorage.SQLStorage;
-import io.supertokens.pluginInterface.sqlStorage.TransactionConnection;
+import io.supertokens.pluginInterface.sqlStorage.SessionObject;
 
 public interface EmailPasswordSQLStorage extends EmailPasswordStorage, SQLStorage {
 
-    PasswordResetTokenInfo[] getAllPasswordResetTokenInfoForUser_Transaction(TransactionConnection con, String userId)
+    PasswordResetTokenInfo[] getAllPasswordResetTokenInfoForUser_Transaction(SessionObject sessionInstance,
+            String userId) throws StorageQueryException;
+
+    void deleteAllPasswordResetTokensForUser_Transaction(SessionObject sessionInstance, String userId)
             throws StorageQueryException;
 
-    void deleteAllPasswordResetTokensForUser_Transaction(TransactionConnection con, String userId)
+    void updateUsersPassword_Transaction(SessionObject sessionInstance, String userId, String newPassword)
             throws StorageQueryException;
 
-    void updateUsersPassword_Transaction(TransactionConnection con, String userId, String newPassword)
-            throws StorageQueryException;
-
-    void updateUsersEmail_Transaction(TransactionConnection conn, String userId, String email)
+    void updateUsersEmail_Transaction(SessionObject sessionInstance, String userId, String email)
             throws StorageQueryException, DuplicateEmailException;
 
-    UserInfo getUserInfoUsingId_Transaction(TransactionConnection con, String userId) throws StorageQueryException;
+    UserInfo getUserInfoUsingId_Transaction(SessionObject sessionInstance, String userId) throws StorageQueryException;
+
 }

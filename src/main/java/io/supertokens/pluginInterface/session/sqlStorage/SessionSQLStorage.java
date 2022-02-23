@@ -21,27 +21,27 @@ import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.session.SessionInfo;
 import io.supertokens.pluginInterface.session.SessionStorage;
 import io.supertokens.pluginInterface.sqlStorage.SQLStorage;
-import io.supertokens.pluginInterface.sqlStorage.TransactionConnection;
+import io.supertokens.pluginInterface.sqlStorage.SessionObject;
 
 public interface SessionSQLStorage extends SessionStorage, SQLStorage {
 
-    void removeLegacyAccessTokenSigningKey_Transaction(TransactionConnection con) throws StorageQueryException;
+    void removeLegacyAccessTokenSigningKey_Transaction(SessionObject sessionInstance) throws StorageQueryException;
 
-    KeyValueInfo getLegacyAccessTokenSigningKey_Transaction(TransactionConnection con) throws StorageQueryException;
+    KeyValueInfo getLegacyAccessTokenSigningKey_Transaction(SessionObject sessionInstance) throws StorageQueryException;
 
-    KeyValueInfo[] getAccessTokenSigningKeys_Transaction(TransactionConnection con) throws StorageQueryException;
+    KeyValueInfo[] getAccessTokenSigningKeys_Transaction(SessionObject sessionInstance) throws StorageQueryException;
 
-    void addAccessTokenSigningKey_Transaction(TransactionConnection con, KeyValueInfo info)
+    void addAccessTokenSigningKey_Transaction(SessionObject sessionInstance, KeyValueInfo info)
             throws StorageQueryException;
 
-    KeyValueInfo getRefreshTokenSigningKey_Transaction(TransactionConnection con) throws StorageQueryException;
+    KeyValueInfo getRefreshTokenSigningKey_Transaction(SessionObject sessionInstance) throws StorageQueryException;
 
-    void setRefreshTokenSigningKey_Transaction(TransactionConnection con, KeyValueInfo info)
+    void setRefreshTokenSigningKey_Transaction(SessionObject sessionInstance, KeyValueInfo info)
             throws StorageQueryException;
 
-    SessionInfo getSessionInfo_Transaction(TransactionConnection con, String sessionHandle)
+    SessionInfo getSessionInfo_Transaction(SessionObject sessionInstance, String sessionHandle)
             throws StorageQueryException;
 
-    void updateSessionInfo_Transaction(TransactionConnection con, String sessionHandle, String refreshTokenHash2,
+    void updateSessionInfo_Transaction(SessionObject sessionInstance, String sessionHandle, String refreshTokenHash2,
             long expiry) throws StorageQueryException;
 }
