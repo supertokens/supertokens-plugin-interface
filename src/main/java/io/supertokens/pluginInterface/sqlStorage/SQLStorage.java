@@ -23,7 +23,7 @@ import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.exceptions.StorageTransactionLogicException;
 
 public interface SQLStorage extends Storage {
-    <T> T startTransaction(TransactionLogic<T> logic, boolean serializableIsolation)
+    <T> T startTransaction(TransactionLogic<T> logic, TransactionIsolationLevel isolationLevel)
             throws StorageQueryException, StorageTransactionLogicException;
 
     <T> T startTransaction(TransactionLogic<T> logic) throws StorageQueryException, StorageTransactionLogicException;
@@ -36,5 +36,9 @@ public interface SQLStorage extends Storage {
 
     interface TransactionLogic<T> {
         T mainLogicAndCommit(TransactionConnection con) throws StorageQueryException, StorageTransactionLogicException;
+    }
+
+    public enum TransactionIsolationLevel {
+        SERIALIZABLE, REPEATABLE_READ
     }
 }
