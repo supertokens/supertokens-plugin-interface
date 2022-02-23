@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.12.0] - 2022-02-23
+
+# Added
+
+- Allow starting transactions with lower isolation level (the default is SERIALIZABLE) through an optional flag in startTransaction
+
 ## [2.11.0] - 2022-01-14
 
 # Added

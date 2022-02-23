@@ -23,6 +23,9 @@ import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.exceptions.StorageTransactionLogicException;
 
 public interface SQLStorage extends Storage {
+    <T> T startTransaction(TransactionLogic<T> logic, boolean serializableIsolation)
+            throws StorageQueryException, StorageTransactionLogicException;
+
     <T> T startTransaction(TransactionLogic<T> logic) throws StorageQueryException, StorageTransactionLogicException;
 
     void commitTransaction(TransactionConnection con) throws StorageQueryException;
