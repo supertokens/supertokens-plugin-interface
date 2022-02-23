@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Updated interfaces to interact with generic sql plugin
+
 ## [2.11.0] - 2022-01-14
 
 # Added
