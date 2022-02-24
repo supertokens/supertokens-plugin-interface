@@ -39,6 +39,6 @@ public interface SQLStorage extends Storage {
     }
 
     public enum TransactionIsolationLevel {
-        SERIALIZABLE, REPEATABLE_READ
+        SERIALIZABLE, REPEATABLE_READ, READ_COMMITTED, READ_UNCOMMITTED, NONE
     }
 }
