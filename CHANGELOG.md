@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.13.0] - 2022-03-04
+
+### Added
+
+- User metadata methods
+
 ## [2.12.0] - 2022-02-23
 
 # Added
