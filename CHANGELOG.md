@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 # Added
 
 - Allow starting transactions with lower isolation level (the default is SERIALIZABLE) through an optional flag in startTransaction
+- add workflow to verify if pr title follows conventional commits
 
 ## [2.11.0] - 2022-01-14
 
