@@ -25,16 +25,18 @@ public class SessionInfo {
     public JsonObject userDataInDatabase;
     public long expiry;
     public JsonObject userDataInJWT;
+    public JsonObject grants;
     public long timeCreated;
 
     public SessionInfo(String sessionHandle, String userId, String refreshTokenHash2, JsonObject userDataInDatabase,
-            long expiry, JsonObject userDataInJWT, long timeCreated) {
+            long expiry, JsonObject userDataInJWT, JsonObject grants, long timeCreated) {
         this.sessionHandle = sessionHandle;
         this.userId = userId;
         this.refreshTokenHash2 = refreshTokenHash2;
         this.userDataInDatabase = userDataInDatabase;
         this.expiry = expiry;
         this.userDataInJWT = userDataInJWT;
+        this.grants = grants;
         this.timeCreated = timeCreated;
     }
 }

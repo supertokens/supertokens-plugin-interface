@@ -24,7 +24,8 @@ import javax.annotation.Nullable;
 
 public interface SessionStorage extends Storage {
     void createNewSession(String sessionHandle, String userId, String refreshTokenHash2, JsonObject userDataInDatabase,
-            long expiry, JsonObject userDataInJWT, long createdAtTime) throws StorageQueryException;
+            long expiry, JsonObject userDataInJWT, JsonObject grantPayload, long createdAtTime)
+            throws StorageQueryException;
 
     void deleteSessionsOfUser(String userId) throws StorageQueryException;
 
@@ -39,8 +40,8 @@ public interface SessionStorage extends Storage {
 
     SessionInfo getSession(String sessionHandle) throws StorageQueryException;
 
-    int updateSession(String sessionHandle, @Nullable JsonObject sessionData, @Nullable JsonObject jwtPayload)
-            throws StorageQueryException;
+    int updateSession(String sessionHandle, @Nullable JsonObject sessionData, @Nullable JsonObject jwtPayload,
+            @Nullable JsonObject grantPayload) throws StorageQueryException;
 
     void removeAccessTokenSigningKeysBefore(long time) throws StorageQueryException;
 }

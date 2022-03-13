@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Updated methods & classes to support session grants
+
 ## [2.12.0] - 2022-02-23
 
 # Added
