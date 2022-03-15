@@ -12,34 +12,20 @@
  *    WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  *    License for the specific language governing permissions and limitations
  *    under the License.
- *
  */
 
-package io.supertokens.pluginInterface;
+package io.supertokens.pluginInterface.usermetadata.sqlStorage;
 
-public enum RECIPE_ID {
+import com.google.gson.JsonObject;
 
-    EMAIL_PASSWORD("emailpassword"), THIRD_PARTY("thirdparty"), SESSION("session"),
-    EMAIL_VERIFICATION("emailverification"), JWT("jwt"), PASSWORDLESS("passwordless"), USER_METADATA("usermetadata");
+import io.supertokens.pluginInterface.exceptions.StorageQueryException;
+import io.supertokens.pluginInterface.sqlStorage.SQLStorage;
+import io.supertokens.pluginInterface.sqlStorage.TransactionConnection;
+import io.supertokens.pluginInterface.usermetadata.UserMetadataStorage;
 
-    private final String name;
+public interface UserMetadataSQLStorage extends UserMetadataStorage, SQLStorage {
+    JsonObject getUserMetadata_Transaction(TransactionConnection con, String userId) throws StorageQueryException;
 
-    RECIPE_ID(String s) {
-        name = s;
-    }
-
-    @Override
-    public String toString() {
-        return this.name;
-    }
-
-    public static RECIPE_ID getEnumFromString(String s) {
-        for (RECIPE_ID b : RECIPE_ID.values()) {
-            if (b.toString().equalsIgnoreCase(s)) {
-                return b;
-            }
-        }
-        return null;
-    }
-
+    int setUserMetadata_Transaction(TransactionConnection con, String userId, JsonObject metadata)
+            throws StorageQueryException;
 }

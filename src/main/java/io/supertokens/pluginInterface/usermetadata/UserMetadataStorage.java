@@ -12,34 +12,16 @@
  *    WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  *    License for the specific language governing permissions and limitations
  *    under the License.
- *
  */
 
-package io.supertokens.pluginInterface;
+package io.supertokens.pluginInterface.usermetadata;
 
-public enum RECIPE_ID {
+import com.google.gson.JsonObject;
+import io.supertokens.pluginInterface.Storage;
+import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 
-    EMAIL_PASSWORD("emailpassword"), THIRD_PARTY("thirdparty"), SESSION("session"),
-    EMAIL_VERIFICATION("emailverification"), JWT("jwt"), PASSWORDLESS("passwordless"), USER_METADATA("usermetadata");
+public interface UserMetadataStorage extends Storage {
+    JsonObject getUserMetadata(String userId) throws StorageQueryException;
 
-    private final String name;
-
-    RECIPE_ID(String s) {
-        name = s;
-    }
-
-    @Override
-    public String toString() {
-        return this.name;
-    }
-
-    public static RECIPE_ID getEnumFromString(String s) {
-        for (RECIPE_ID b : RECIPE_ID.values()) {
-            if (b.toString().equalsIgnoreCase(s)) {
-                return b;
-            }
-        }
-        return null;
-    }
-
+    int deleteUserMetadata(String userId) throws StorageQueryException;
 }
