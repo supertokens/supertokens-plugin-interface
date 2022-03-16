@@ -42,6 +42,9 @@ public interface SessionSQLStorage extends SessionStorage, SQLStorage {
     SessionInfo getSessionInfo_Transaction(TransactionConnection con, String sessionHandle)
             throws StorageQueryException;
 
+    void updateSessionGrantPayload_Transaction(TransactionConnection con, String sessionHandle, String grantPayload)
+            throws StorageQueryException;
+
     void updateSessionInfo_Transaction(TransactionConnection con, String sessionHandle, String refreshTokenHash2,
             long expiry) throws StorageQueryException;
 }

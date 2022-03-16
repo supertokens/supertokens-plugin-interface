@@ -46,6 +46,9 @@ public interface SessionNoSQLStorage_1 extends SessionStorage, NoSQLStorage_1 {
 
     SessionInfoWithLastUpdated getSessionInfo_Transaction(String sessionHandle) throws StorageQueryException;
 
+    boolean updateSessionGrantPayload_Transaction(String sessionHandle, String grantPayload, String lastUpdatedSign)
+            throws StorageQueryException;
+
     boolean updateSessionInfo_Transaction(String sessionHandle, String refreshTokenHash2, long expiry,
             String lastUpdatedSign) throws StorageQueryException;
 }
