@@ -19,13 +19,25 @@ package io.supertokens.pluginInterface.sqlStorage;
 
 // This class enables the core to pass around a connection without knowing about it
 public class TransactionConnection {
+    // TODO: sql-plugin -> remove connection object
     private Object connection;
+    private Object session;
+
+    public TransactionConnection(Object connection, Object session) {
+        this.connection = connection;
+        this.session = session;
+    }
 
     public TransactionConnection(Object connection) {
         this.connection = connection;
+        this.session = null;
     }
 
     public Object getConnection() {
         return connection;
+    }
+
+    public Object getSession() {
+        return session;
     }
 }
