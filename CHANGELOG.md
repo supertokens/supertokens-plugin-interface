@@ -8,11 +8,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Updated methods & classes to support session grants
 
+## [2.13.0] - 2022-03-04
+
+### Added
+
+- usermetadata recipe functions
+
 ## [2.12.0] - 2022-02-23
 
 # Added
 
 - Allow starting transactions with lower isolation level (the default is SERIALIZABLE) through an optional flag in startTransaction
+- add workflow to verify if pr title follows conventional commits
 
 ## [2.11.0] - 2022-01-14
 
