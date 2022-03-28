@@ -27,8 +27,7 @@ import javax.annotation.Nullable;
 public interface UserRolesSQLStorage extends UserRolesStorage, SQLStorage {
 
     // delete roles associated with the input userId from the input roles, if roles is null then all roles associated
-    // with the userId
-    // are removed
+    // with the userId are removed
     void deleteUserRoles_Transaction(TransactionConnection con, String userId, @Nullable String[] roles)
             throws StorageQueryException;
 
