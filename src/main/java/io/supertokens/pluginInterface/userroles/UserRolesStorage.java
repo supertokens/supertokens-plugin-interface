@@ -30,7 +30,7 @@ public interface UserRolesStorage extends Storage {
     String[] getUserRoles(String userId) throws StorageQueryException;
 
     // get all users associated with the input role
-    String[] getRoleUsers(String role) throws StorageQueryException;
+    String[] getRoleUsers(String role) throws StorageQueryException, UnknownRoleException;
 
     // get permissions associated with the input role
     String[] getRolePermissions(String role) throws StorageQueryException, UnknownRoleException;
