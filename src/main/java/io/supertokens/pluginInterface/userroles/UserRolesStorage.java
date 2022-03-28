@@ -23,24 +23,24 @@ import io.supertokens.pluginInterface.userroles.exception.UnknownRoleException;
 
 public interface UserRolesStorage extends Storage {
 
-    // associate a user with a role that exists
+    // associate a userId with a role that exists
     void setUserRole(String userId, String role) throws StorageQueryException, UnknownRoleException;
 
-    // get all roles associated with a user
+    // get all roles associated with the input userId
     String[] getUserRoles(String userId) throws StorageQueryException;
 
-    // get all users associated with a role
+    // get all users associated with the input role
     String[] getRoleUsers(String role) throws StorageQueryException;
 
-    // get permissions associated with a role
+    // get permissions associated with the input role
     String[] getRolePermissions(String role) throws StorageQueryException, UnknownRoleException;
 
-    // get roles associated with a permission
+    // get roles associated with the input permission
     String[] getPermissionRoles(String permission) throws StorageQueryException;
 
     // delete a role
     void deleteRole(String role) throws StorageQueryException;
 
-    // get all roles
+    // get all created roles
     String[] getRoles() throws StorageQueryException;
 }

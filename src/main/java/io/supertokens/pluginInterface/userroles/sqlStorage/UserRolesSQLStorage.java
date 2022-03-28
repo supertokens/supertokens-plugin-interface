@@ -26,12 +26,13 @@ import javax.annotation.Nullable;
 
 public interface UserRolesSQLStorage extends UserRolesStorage, SQLStorage {
 
-    // delete input roles associated with the input userId, if roles is null then all roles associated with the userId
+    // delete roles associated with the input userId from the input roles, if roles is null then all roles associated
+    // with the userId
     // are removed
     void deleteUserRoles_Transaction(TransactionConnection con, String userId, @Nullable String[] roles)
             throws StorageQueryException;
 
-    // create a role with permissions / add additional permissions to a role if it already exists
+    // create a role with permissions | add additional permissions to a role if it already exists
     void setRole_Transaction(TransactionConnection con, String role, String[] permissions) throws StorageQueryException;
 
     // remove permissions associated with a role, if permissions is NULL then all permissions are removed from the role
