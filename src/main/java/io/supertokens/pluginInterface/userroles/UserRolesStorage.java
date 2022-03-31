@@ -19,28 +19,37 @@ package io.supertokens.pluginInterface.userroles;
 import com.google.gson.JsonObject;
 import io.supertokens.pluginInterface.Storage;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
+import io.supertokens.pluginInterface.userroles.exception.DuplicateUserRoleMappingException;
 import io.supertokens.pluginInterface.userroles.exception.UnknownRoleException;
 
 public interface UserRolesStorage extends Storage {
 
     // associate a userId with a role that exists
-    void setUserRole(String userId, String role) throws StorageQueryException, UnknownRoleException;
+    void addRoleToUser(String userId, String role)
+            throws StorageQueryException, UnknownRoleException, DuplicateUserRoleMappingException;
 
     // get all roles associated with the input userId
-    String[] getUserRoles(String userId) throws StorageQueryException;
+    String[] getRolesForUser(String userId) throws StorageQueryException;
 
     // get all users associated with the input role
-    String[] getRoleUsers(String role) throws StorageQueryException, UnknownRoleException;
+    String[] getUsersForRole(String role) throws StorageQueryException, UnknownRoleException;
 
     // get permissions associated with the input role
-    String[] getRolePermissions(String role) throws StorageQueryException, UnknownRoleException;
+    String[] getPermissionsForRole(String role) throws StorageQueryException, UnknownRoleException;
 
     // get roles associated with the input permission
-    String[] getPermissionRoles(String permission) throws StorageQueryException;
+    String[] getRolesThatHavePermission(String permission) throws StorageQueryException;
 
     // delete a role
-    void deleteRole(String role) throws StorageQueryException;
+    int deleteRole(String role) throws StorageQueryException;
 
     // get all created roles
     String[] getRoles() throws StorageQueryException;
+
+    // check if input roles exists
+    boolean doesRoleExist(String role) throws StorageQueryException;
+
+    // delete all roles for the input userId
+    int deleteAllRolesForUser(String userId) throws StorageQueryException;
+
 }

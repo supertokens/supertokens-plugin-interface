@@ -20,21 +20,42 @@ import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.sqlStorage.SQLStorage;
 import io.supertokens.pluginInterface.sqlStorage.TransactionConnection;
 import io.supertokens.pluginInterface.userroles.UserRolesStorage;
+import io.supertokens.pluginInterface.userroles.exception.DuplicateRoleException;
+import io.supertokens.pluginInterface.userroles.exception.DuplicateRolePermissionMappingException;
 import io.supertokens.pluginInterface.userroles.exception.UnknownRoleException;
 
 import javax.annotation.Nullable;
 
 public interface UserRolesSQLStorage extends UserRolesStorage, SQLStorage {
 
-    // delete roles associated with the input userId from the input roles, if roles is null then all roles associated
-    // with the userId are removed
-    void deleteUserRoles_Transaction(TransactionConnection con, String userId, @Nullable String[] roles)
-            throws StorageQueryException;
+    // delete role associated with the input userId from the input roles
+    boolean deleteRoleForUser_Transaction(TransactionConnection con, String userId, String role)
+            throws StorageQueryException, UnknownRoleException;
+
+    // delete all roles associated with the input userId
+    int deleteAllRolesForUser_Transaction(TransactionConnection con, String userId);
 
     // create a role with permissions | add additional permissions to a role if it already exists
     void setRole_Transaction(TransactionConnection con, String role, String[] permissions) throws StorageQueryException;
 
+    // create a new role
+    void createNewRole_Transaction(TransactionConnection con, String role) throws DuplicateRoleException;
+
+    // associate a permission with a role
+    void addPermissionToRole_Transaction(TransactionConnection con, String role, String permission)
+            throws UnknownRoleException, DuplicateRolePermissionMappingException;
+
     // remove permissions associated with a role, if permissions is NULL then all permissions are removed from the role
     void deleteRolePermissions_Transaction(TransactionConnection con, String role, @Nullable String[] permissions)
             throws StorageQueryException, UnknownRoleException;
+
+    // delete a permission associated with the input role
+    boolean deletePermissionForRole_Transaction(TransactionConnection con, String role, String permission)
+            throws StorageQueryException, UnknownRoleException;
+
+    // delete all permissions associated with the input role
+    int deleteAllPermissionsForRole_Transaction(TransactionConnection con, String role);
+
+    // check if a role exists
+    boolean doesRoleExist_Transaction(String role) throws StorageQueryException;
 }
