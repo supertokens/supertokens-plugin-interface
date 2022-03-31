@@ -51,5 +51,4 @@ public interface UserRolesStorage extends Storage {
 
     // delete all roles for the input userId
     int deleteAllRolesForUser(String userId) throws StorageQueryException;
-
 }
