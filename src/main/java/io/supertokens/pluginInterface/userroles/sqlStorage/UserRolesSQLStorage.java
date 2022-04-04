@@ -30,25 +30,22 @@ public interface UserRolesSQLStorage extends UserRolesStorage, SQLStorage {
 
     // delete role associated with the input userId from the input roles
     boolean deleteRoleForUser_Transaction(TransactionConnection con, String userId, String role)
-            throws StorageQueryException, UnknownRoleException;
+            throws StorageQueryException;
 
     // create a new role
-    void createNewRole_Transaction(TransactionConnection con, String role) throws DuplicateRoleException;
+    void createNewRole_Transaction(TransactionConnection con, String role)
+            throws StorageQueryException, DuplicateRoleException;
 
     // associate a permission with a role
     void addPermissionToRole_Transaction(TransactionConnection con, String role, String permission)
-            throws UnknownRoleException, DuplicateRolePermissionMappingException;
-
-    // remove permissions associated with a role, if permissions is NULL then all permissions are removed from the role
-    void deleteRolePermissions_Transaction(TransactionConnection con, String role, @Nullable String[] permissions)
-            throws StorageQueryException, UnknownRoleException;
+            throws StorageQueryException, UnknownRoleException, DuplicateRolePermissionMappingException;
 
     // delete a permission associated with the input role
     boolean deletePermissionForRole_Transaction(TransactionConnection con, String role, String permission)
             throws StorageQueryException, UnknownRoleException;
 
     // delete all permissions associated with the input role
-    int deleteAllPermissionsForRole_Transaction(TransactionConnection con, String role);
+    int deleteAllPermissionsForRole_Transaction(TransactionConnection con, String role) throws StorageQueryException;
 
     // check if a role exists
     boolean doesRoleExist_Transaction(String role) throws StorageQueryException;
