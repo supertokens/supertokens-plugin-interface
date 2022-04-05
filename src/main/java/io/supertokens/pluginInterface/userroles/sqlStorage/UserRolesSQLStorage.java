@@ -48,5 +48,5 @@ public interface UserRolesSQLStorage extends UserRolesStorage, SQLStorage {
     int deleteAllPermissionsForRole_Transaction(TransactionConnection con, String role) throws StorageQueryException;
 
     // check if a role exists
-    boolean doesRoleExist_Transaction(String role) throws StorageQueryException;
+    boolean doesRoleExist_Transaction(TransactionConnection con, String role) throws StorageQueryException;
 }
