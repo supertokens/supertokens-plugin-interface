@@ -41,7 +41,7 @@ public interface UserRolesStorage extends Storage {
     String[] getRolesThatHavePermission(String permission) throws StorageQueryException;
 
     // delete a role
-    int deleteRole(String role) throws StorageQueryException;
+    boolean deleteRole(String role) throws StorageQueryException;
 
     // get all created roles
     String[] getRoles() throws StorageQueryException;
