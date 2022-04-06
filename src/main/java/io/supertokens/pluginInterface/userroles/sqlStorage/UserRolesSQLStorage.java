@@ -42,7 +42,7 @@ public interface UserRolesSQLStorage extends UserRolesStorage, SQLStorage {
 
     // delete a permission associated with the input role
     boolean deletePermissionForRole_Transaction(TransactionConnection con, String role, String permission)
-            throws StorageQueryException, UnknownRoleException;
+            throws StorageQueryException;
 
     // delete all permissions associated with the input role
     int deleteAllPermissionsForRole_Transaction(TransactionConnection con, String role) throws StorageQueryException;
