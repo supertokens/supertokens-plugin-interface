@@ -30,11 +30,12 @@ public interface UserRolesSQLStorage extends UserRolesStorage, SQLStorage {
             throws StorageQueryException;
 
     // create a new role
-    void createNewRole_Transaction(TransactionConnection con, String role) throws StorageQueryException;
+    void createNewRoleOrDoNothingIfExists_Transaction(TransactionConnection con, String role)
+            throws StorageQueryException;
 
     // associate a permission with a role
     void addPermissionToRole_Transaction(TransactionConnection con, String role, String permission)
-            throws StorageQueryException, UnknownRoleException, DuplicateRolePermissionMappingException;
+            throws StorageQueryException, UnknownRoleException;
 
     // delete a permission associated with the input role
     boolean deletePermissionForRole_Transaction(TransactionConnection con, String role, String permission)
