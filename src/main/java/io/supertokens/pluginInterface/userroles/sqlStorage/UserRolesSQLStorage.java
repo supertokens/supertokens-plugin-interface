@@ -20,11 +20,8 @@ import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.sqlStorage.SQLStorage;
 import io.supertokens.pluginInterface.sqlStorage.TransactionConnection;
 import io.supertokens.pluginInterface.userroles.UserRolesStorage;
-import io.supertokens.pluginInterface.userroles.exception.DuplicateRoleException;
 import io.supertokens.pluginInterface.userroles.exception.DuplicateRolePermissionMappingException;
 import io.supertokens.pluginInterface.userroles.exception.UnknownRoleException;
-
-import javax.annotation.Nullable;
 
 public interface UserRolesSQLStorage extends UserRolesStorage, SQLStorage {
 
@@ -33,8 +30,7 @@ public interface UserRolesSQLStorage extends UserRolesStorage, SQLStorage {
             throws StorageQueryException;
 
     // create a new role
-    void createNewRole_Transaction(TransactionConnection con, String role)
-            throws StorageQueryException, DuplicateRoleException;
+    void createNewRole_Transaction(TransactionConnection con, String role) throws StorageQueryException;
 
     // associate a permission with a role
     void addPermissionToRole_Transaction(TransactionConnection con, String role, String permission)
