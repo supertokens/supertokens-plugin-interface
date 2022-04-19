@@ -28,8 +28,8 @@ public interface UserRolesSQLStorage extends UserRolesStorage, SQLStorage {
     boolean deleteRoleForUser_Transaction(TransactionConnection con, String userId, String role)
             throws StorageQueryException;
 
-    // create a new role if it doesnt exist, returns the number of rows affected
-    int createNewRoleOrDoNothingIfExists_Transaction(TransactionConnection con, String role)
+    // create a new role if it doesnt exist
+    boolean createNewRoleOrDoNothingIfExists_Transaction(TransactionConnection con, String role)
             throws StorageQueryException;
 
     // associate a permission with a role
