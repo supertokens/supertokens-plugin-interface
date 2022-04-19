@@ -24,8 +24,8 @@ import io.supertokens.pluginInterface.userroles.exception.UnknownRoleException;
 
 public interface UserRolesStorage extends Storage {
 
-    // associate a userId with a role that exists
-    void addRoleToUser(String userId, String role)
+    // associate a userId with a role that exists, returns the number of rows updated
+    int addRoleToUser(String userId, String role)
             throws StorageQueryException, UnknownRoleException, DuplicateUserRoleMappingException;
 
     // get all roles associated with the input userId
