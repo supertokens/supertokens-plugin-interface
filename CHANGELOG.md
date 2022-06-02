@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.14.0] - 2022-05-05
+- User Roles interface
+
 ## [2.13.0] - 2022-03-04
 
 ### Added
