@@ -33,7 +33,7 @@ public interface SessionStorage extends Storage {
 
     int deleteSession(String[] sessionHandles) throws StorageQueryException;
 
-    String[] getAllSessionHandlesForUser(String userId) throws StorageQueryException;
+    String[] getAllNonExpiredSessionHandlesForUser(String userId) throws StorageQueryException;
 
     void deleteAllExpiredSessions() throws StorageQueryException;
 
