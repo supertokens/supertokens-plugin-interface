@@ -7,6 +7,8 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- UserId Mapping interface
+
 ## [2.15.0] - 2022-06-07
 
 - Changes name of `getAllSessionHandlesForUser` to `getAllNonExpiredSessionHandlesForUser`.
