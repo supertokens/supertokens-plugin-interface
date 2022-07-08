@@ -18,22 +18,22 @@ package io.supertokens.pluginInterface.useridmapping;
 
 import io.supertokens.pluginInterface.Storage;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
-import io.supertokens.pluginInterface.useridmapping.exception.UnknownMappingException;
 import io.supertokens.pluginInterface.useridmapping.exception.UnknownSuperTokensUserIdException;
+
+import javax.annotation.Nullable;
 
 public interface UserIdMappingStorage extends Storage {
 
-    UserIdMappingExistsInfo createUserIdMapping(String superTokensUserId, String externalUserId)
-            throws StorageQueryException, UnknownSuperTokensUserIdException;
+    void createUserIdMapping(String superTokensUserId, String externalUserId)
+            throws StorageQueryException, UnknownSuperTokensUserIdException, IllegalArgumentException;
 
-    boolean deleteUserIdMapping(String usersId, Boolean isSuperTokensUserId) throws StorageQueryException;
+    boolean deleteUserIdMapping(String userId, boolean isSuperTokensUserId) throws StorageQueryException;
 
-    UserIdMappingInfo[] getUserIdMapping(String userId, String userIdType)
-            throws StorageQueryException, UnknownMappingException;
+    UserIdMapping getUserIdMapping(String userId, boolean isSuperTokensUserId) throws StorageQueryException;
 
-    void updateExternalUserIdInfo(String userId, String userIdType, String externalUserIdInfo)
-            throws StorageQueryException, UnknownMappingException;
+    UserIdMapping[] getUserIdMapping(String userId) throws StorageQueryException;
 
-    boolean isSuperTokensUserId(String userId) throws StorageQueryException;
+    boolean updateOrDeleteExternalUserIdInfo(String userId, boolean isSuperTokensUserId,
+            @Nullable String externalUserIdInfo) throws StorageQueryException;
 
 }

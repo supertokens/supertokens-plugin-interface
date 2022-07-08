@@ -18,7 +18,7 @@ package io.supertokens.pluginInterface.useridmapping;
 
 import javax.annotation.Nullable;
 
-public class UserIdMappingInfo {
+public class UserIdMapping {
 
     public final String superTokensUserId;
 
@@ -26,7 +26,7 @@ public class UserIdMappingInfo {
 
     public final @Nullable String externalUserIdInfo;
 
-    public UserIdMappingInfo(String superTokensUserId, String externalUserId, @Nullable String externalUserIdInfo) {
+    public UserIdMapping(String superTokensUserId, String externalUserId, @Nullable String externalUserIdInfo) {
         this.superTokensUserId = superTokensUserId;
         this.externalUserId = externalUserId;
         this.externalUserIdInfo = externalUserIdInfo;

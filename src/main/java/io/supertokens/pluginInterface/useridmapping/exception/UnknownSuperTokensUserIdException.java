@@ -18,7 +18,7 @@ package io.supertokens.pluginInterface.useridmapping.exception;
 
 import java.io.Serial;
 
-public class UnknownSuperTokensUserIdException extends Exception {
+public class UnknownSuperTokensUserIdException extends UserIdMappingException {
     @Serial
     private static final long serialVersionUID = -2468061107846190216L;
 }

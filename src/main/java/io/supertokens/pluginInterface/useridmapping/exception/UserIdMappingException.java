@@ -14,24 +14,11 @@
  *    under the License.
  */
 
-package io.supertokens.pluginInterface.useridmapping;
+package io.supertokens.pluginInterface.useridmapping.exception;
 
-public class UserIdMappingExistsInfo {
-    public final boolean doesMappingExist;
+import java.io.Serial;
 
-    public final boolean doesSuperTokensUserIdExist;
-
-    public final boolean doesExternalUserIdExist;
-
-    public UserIdMappingExistsInfo() {
-        this.doesMappingExist = false;
-        this.doesSuperTokensUserIdExist = false;
-        this.doesExternalUserIdExist = false;
-    }
-
-    public UserIdMappingExistsInfo(boolean doesSuperTokensUserIdExist, boolean doesExternalUserIdExist) {
-        this.doesMappingExist = true;
-        this.doesSuperTokensUserIdExist = doesSuperTokensUserIdExist;
-        this.doesExternalUserIdExist = doesExternalUserIdExist;
-    }
+public class UserIdMappingException extends Exception {
+    @Serial
+    private static final long serialVersionUID = -7930311777814572808L;
 }
