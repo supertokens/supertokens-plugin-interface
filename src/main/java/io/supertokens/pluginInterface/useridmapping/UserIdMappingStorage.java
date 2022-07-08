@@ -25,7 +25,7 @@ import javax.annotation.Nullable;
 
 public interface UserIdMappingStorage extends Storage {
 
-    void createUserIdMapping(String superTokensUserId, String externalUserId)
+    void createUserIdMapping(String superTokensUserId, String externalUserId, @Nullable String externalUserIdInfo)
             throws StorageQueryException, UnknownSuperTokensUserIdException, UserIdMappingAlreadyExistsException;
 
     boolean deleteUserIdMapping(String userId, boolean isSuperTokensUserId) throws StorageQueryException;
