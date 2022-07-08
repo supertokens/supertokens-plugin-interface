@@ -18,7 +18,22 @@ package io.supertokens.pluginInterface.useridmapping.exception;
 
 import java.io.Serial;
 
-public class UserIdMappingExistsException extends UserIdMappingException {
+public class UserIdMappingAlreadyExistsException extends UserIdMappingException {
     @Serial
     private static final long serialVersionUID = -492689371744874366L;
+
+    public final boolean doesSuperTokensUserIdExist;
+
+    public final boolean doesExternalUserIdExist;
+
+    public UserIdMappingAlreadyExistsException(boolean doesSuperTokensUserIdExist, boolean doesExternalUserIdExist) {
+
+        if (!doesExternalUserIdExist && !doesSuperTokensUserIdExist) {
+            throw new IllegalArgumentException("At least one of superTokensUserId or externalUserId should exist");
+        } else {
+
+            this.doesSuperTokensUserIdExist = doesSuperTokensUserIdExist;
+            this.doesExternalUserIdExist = doesExternalUserIdExist;
+        }
+    }
 }
