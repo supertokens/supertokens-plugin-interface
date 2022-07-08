@@ -19,13 +19,14 @@ package io.supertokens.pluginInterface.useridmapping;
 import io.supertokens.pluginInterface.Storage;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.useridmapping.exception.UnknownSuperTokensUserIdException;
+import io.supertokens.pluginInterface.useridmapping.exception.UserIdMappingExistsException;
 
 import javax.annotation.Nullable;
 
 public interface UserIdMappingStorage extends Storage {
 
     void createUserIdMapping(String superTokensUserId, String externalUserId)
-            throws StorageQueryException, UnknownSuperTokensUserIdException, IllegalArgumentException;
+            throws StorageQueryException, UnknownSuperTokensUserIdException, UserIdMappingExistsException;
 
     boolean deleteUserIdMapping(String userId, boolean isSuperTokensUserId) throws StorageQueryException;
 
