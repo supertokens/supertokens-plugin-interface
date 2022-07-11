@@ -21,7 +21,7 @@ public enum RECIPE_ID {
 
     EMAIL_PASSWORD("emailpassword"), THIRD_PARTY("thirdparty"), SESSION("session"),
     EMAIL_VERIFICATION("emailverification"), JWT("jwt"), PASSWORDLESS("passwordless"), USER_METADATA("usermetadata"),
-    USER_ROLES("userroles");
+    USER_ROLES("userroles"), USER_ID_MAPPING("useridmapping");
 
     private final String name;
 
