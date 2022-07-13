@@ -31,4 +31,15 @@ public class UserIdMapping {
         this.externalUserId = externalUserId;
         this.externalUserIdInfo = externalUserIdInfo;
     }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other instanceof UserIdMapping) {
+            UserIdMapping otherUserIdMapping = (UserIdMapping) other;
+            return otherUserIdMapping.superTokensUserId.equals(this.superTokensUserId)
+                    && otherUserIdMapping.externalUserId.equals(this.externalUserId)
+                    && otherUserIdMapping.externalUserIdInfo.equals(this.externalUserIdInfo);
+        }
+        return false;
+    }
 }
