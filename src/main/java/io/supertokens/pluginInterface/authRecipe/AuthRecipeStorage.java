@@ -31,4 +31,6 @@ public interface AuthRecipeStorage extends Storage {
     AuthRecipeUserInfo[] getUsers(@Nonnull Integer limit, @Nonnull String timeJoinedOrder,
             @Nullable RECIPE_ID[] includeRecipeIds, @Nullable String userId, @Nullable Long timeJoined)
             throws StorageQueryException;
+
+    boolean doesUserIdExist(String userId) throws StorageQueryException;
 }
