@@ -7,6 +7,8 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [2.16.0] - 2022-07-25
+
 - UserId Mapping interface
 
 ## [2.15.0] - 2022-06-07
