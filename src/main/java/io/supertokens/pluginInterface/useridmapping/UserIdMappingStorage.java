@@ -39,6 +39,9 @@ public interface UserIdMappingStorage extends Storage {
     boolean updateOrDeleteExternalUserIdInfo(String userId, boolean isSuperTokensUserId,
             @Nullable String externalUserIdInfo) throws StorageQueryException;
 
-    HashMap<String, String> getUserIdMappingForSuperTokenIds(ArrayList<String> userIds) throws StorageQueryException;
+    // This function will be used in the user pagination API to retrieve the userId mapping for a list of userIds, so we
+    // can set the externalUserId in the response if a mapping exists. The key of the HashMap will be the
+    // superTokensUserId and the value will be the externalUserId
+    HashMap<String, String> getUserIdMappingForSuperTokensIds(ArrayList<String> userIds) throws StorageQueryException;
 
 }
