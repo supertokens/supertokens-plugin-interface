@@ -19,8 +19,9 @@ package io.supertokens.pluginInterface.emailverification;
 import io.supertokens.pluginInterface.Storage;
 import io.supertokens.pluginInterface.emailverification.exception.DuplicateEmailVerificationTokenException;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
+import io.supertokens.pluginInterface.nonAuthRecipe.NonAuthRecipeStorage;
 
-public interface EmailVerificationStorage extends Storage {
+public interface EmailVerificationStorage extends NonAuthRecipeStorage {
 
     void addEmailVerificationToken(EmailVerificationTokenInfo emailVerificationInfo)
             throws StorageQueryException, DuplicateEmailVerificationTokenException;
@@ -39,5 +40,7 @@ public interface EmailVerificationStorage extends Storage {
             throws StorageQueryException;
 
     boolean isEmailVerified(String userId, String email) throws StorageQueryException;
+
+    boolean isUserIdBeingUsedForEmailVerification(String userid) throws StorageQueryException;
 
 }

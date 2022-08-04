@@ -1,5 +1,5 @@
 /*
- *    Copyright (c) 2020, VRAI Labs and/or its affiliates. All rights reserved.
+ *    Copyright (c) 2022, VRAI Labs and/or its affiliates. All rights reserved.
  *
  *    This software is licensed under the Apache License, Version 2.0 (the
  *    "License") as published by the Apache Software Foundation.
@@ -14,15 +14,13 @@
  *    under the License.
  */
 
-package io.supertokens.pluginInterface.usermetadata;
+package io.supertokens.pluginInterface.nonAuthRecipe;
 
-import com.google.gson.JsonObject;
 import io.supertokens.pluginInterface.Storage;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
-import io.supertokens.pluginInterface.nonAuthRecipe.NonAuthRecipeStorage;
 
-public interface UserMetadataStorage extends NonAuthRecipeStorage {
-    JsonObject getUserMetadata(String userId) throws StorageQueryException;
+public interface NonAuthRecipeStorage extends Storage {
+    boolean isUserIdBeingUsedInNonAuthRecipe(NonAuthRecipeStorage storage, String userId) throws StorageQueryException;
 
-    int deleteUserMetadata(String userId) throws StorageQueryException;
+    void addInfoToNonAuthRecipesBasedOnUserId(NonAuthRecipeStorage storage, String userId) throws StorageQueryException;
 }
