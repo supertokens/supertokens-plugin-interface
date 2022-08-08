@@ -49,4 +49,8 @@ public interface Storage {
 
     boolean canBeUsed(String configFilePath);
 
+    boolean isUserIdBeingUsedInNonAuthRecipe(String className, String userId) throws StorageQueryException;
+
+    void addInfoToNonAuthRecipesBasedOnUserId(String className, String userId) throws StorageQueryException;
+
 }

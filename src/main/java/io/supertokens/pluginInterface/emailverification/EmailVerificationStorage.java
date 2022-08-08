@@ -41,6 +41,4 @@ public interface EmailVerificationStorage extends NonAuthRecipeStorage {
 
     boolean isEmailVerified(String userId, String email) throws StorageQueryException;
 
-    boolean isUserIdBeingUsedForEmailVerification(String userid) throws StorageQueryException;
-
 }
