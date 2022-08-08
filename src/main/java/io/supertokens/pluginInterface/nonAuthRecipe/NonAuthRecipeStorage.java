@@ -20,7 +20,7 @@ import io.supertokens.pluginInterface.Storage;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 
 public interface NonAuthRecipeStorage extends Storage {
-    boolean isUserIdBeingUsedInNonAuthRecipe(NonAuthRecipeStorage storage, String userId) throws StorageQueryException;
+    boolean isUserIdBeingUsedInNonAuthRecipe(String className, String userId) throws StorageQueryException;
 
-    void addInfoToNonAuthRecipesBasedOnUserId(NonAuthRecipeStorage storage, String userId) throws StorageQueryException;
+    void addInfoToNonAuthRecipesBasedOnUserId(String className, String userId) throws StorageQueryException;
 }
