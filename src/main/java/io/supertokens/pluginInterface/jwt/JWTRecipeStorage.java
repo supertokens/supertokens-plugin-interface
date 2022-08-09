@@ -16,7 +16,7 @@
 
 package io.supertokens.pluginInterface.jwt;
 
-import io.supertokens.pluginInterface.Storage;
+import io.supertokens.pluginInterface.nonAuthRecipe.NonAuthRecipeStorage;
 
-public interface JWTRecipeStorage extends Storage {
+public interface JWTRecipeStorage extends NonAuthRecipeStorage {
 }

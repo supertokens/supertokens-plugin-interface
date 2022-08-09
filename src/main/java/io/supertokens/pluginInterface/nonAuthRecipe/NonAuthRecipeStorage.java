@@ -18,5 +18,7 @@ package io.supertokens.pluginInterface.nonAuthRecipe;
 
 import io.supertokens.pluginInterface.Storage;
 
+// All Non-Auth Recipes will extend this interface.
+// We will use this interface in testing to check If the createUserIdMapping and deleteUserIdMapping functions have checks for all nonAuthRecipes
 public interface NonAuthRecipeStorage extends Storage {
 }
