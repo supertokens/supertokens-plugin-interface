@@ -49,4 +49,11 @@ public interface Storage {
 
     boolean canBeUsed(String configFilePath);
 
+    // this function will be used in the createUserIdMapping and deleteUserIdMapping functions to check if the userId is
+    // being used in NonAuth recipes.
+    boolean isUserIdBeingUsedInNonAuthRecipe(String className, String userId) throws StorageQueryException;
+
+    // to be used for testing purposes only. This function will add dummy data to non-auth tables.
+    void addInfoToNonAuthRecipesBasedOnUserId(String className, String userId) throws StorageQueryException;
+
 }

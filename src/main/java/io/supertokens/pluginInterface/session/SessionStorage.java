@@ -19,10 +19,11 @@ package io.supertokens.pluginInterface.session;
 import com.google.gson.JsonObject;
 import io.supertokens.pluginInterface.Storage;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
+import io.supertokens.pluginInterface.nonAuthRecipe.NonAuthRecipeStorage;
 
 import javax.annotation.Nullable;
 
-public interface SessionStorage extends Storage {
+public interface SessionStorage extends NonAuthRecipeStorage {
     void createNewSession(String sessionHandle, String userId, String refreshTokenHash2, JsonObject userDataInDatabase,
             long expiry, JsonObject userDataInJWT, long createdAtTime) throws StorageQueryException;
 
