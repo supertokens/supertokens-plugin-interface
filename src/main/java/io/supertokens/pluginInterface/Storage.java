@@ -19,6 +19,8 @@ package io.supertokens.pluginInterface;
 
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 
+import java.util.Set;
+
 public interface Storage {
 
     // if silent is true, do not log anything out on the console
@@ -26,7 +28,7 @@ public interface Storage {
 
     void loadConfig(String configFilePath);
 
-    void initFileLogging(String infoLogPath, String errorLogPath);
+    void initFileLogging(String infoLogPath, String errorLogPath, Set<LOG_LEVEL> logLevel);
 
     void stopLogging();
 
