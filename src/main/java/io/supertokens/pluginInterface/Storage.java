@@ -26,9 +26,9 @@ public interface Storage {
     // if silent is true, do not log anything out on the console
     void constructor(String processId, boolean silent);
 
-    void loadConfig(String configFilePath);
+    void loadConfig(String configFilePath, Set<LOG_LEVEL> logLevels);
 
-    void initFileLogging(String infoLogPath, String errorLogPath, Set<LOG_LEVEL> logLevel);
+    void initFileLogging(String infoLogPath, String errorLogPath);
 
     void stopLogging();
 
