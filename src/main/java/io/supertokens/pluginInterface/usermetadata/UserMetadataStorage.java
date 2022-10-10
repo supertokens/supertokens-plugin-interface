@@ -19,8 +19,9 @@ package io.supertokens.pluginInterface.usermetadata;
 import com.google.gson.JsonObject;
 import io.supertokens.pluginInterface.Storage;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
+import io.supertokens.pluginInterface.nonAuthRecipe.NonAuthRecipeStorage;
 
-public interface UserMetadataStorage extends Storage {
+public interface UserMetadataStorage extends NonAuthRecipeStorage {
     JsonObject getUserMetadata(String userId) throws StorageQueryException;
 
     int deleteUserMetadata(String userId) throws StorageQueryException;
