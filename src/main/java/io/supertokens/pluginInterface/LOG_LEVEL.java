@@ -1,5 +1,5 @@
 /*
- *    Copyright (c) 2021, VRAI Labs and/or its affiliates. All rights reserved.
+ *    Copyright (c) 2020, VRAI Labs and/or its affiliates. All rights reserved.
  *
  *    This software is licensed under the Apache License, Version 2.0 (the
  *    "License") as published by the Apache Software Foundation.
@@ -12,11 +12,11 @@
  *    WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  *    License for the specific language governing permissions and limitations
  *    under the License.
+ *
  */
 
-package io.supertokens.pluginInterface.jwt;
+package io.supertokens.pluginInterface;
 
-import io.supertokens.pluginInterface.nonAuthRecipe.NonAuthRecipeStorage;
-
-public interface JWTRecipeStorage extends NonAuthRecipeStorage {
+public enum LOG_LEVEL {
+    NONE, DEBUG, INFO, WARN, ERROR
 }

@@ -19,12 +19,14 @@ package io.supertokens.pluginInterface;
 
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 
+import java.util.Set;
+
 public interface Storage {
 
     // if silent is true, do not log anything out on the console
     void constructor(String processId, boolean silent);
 
-    void loadConfig(String configFilePath);
+    void loadConfig(String configFilePath, Set<LOG_LEVEL> logLevels);
 
     void initFileLogging(String infoLogPath, String errorLogPath);
 
@@ -48,5 +50,12 @@ public interface Storage {
     void setStorageLayerEnabled(boolean enabled);
 
     boolean canBeUsed(String configFilePath);
+
+    // this function will be used in the createUserIdMapping and deleteUserIdMapping functions to check if the userId is
+    // being used in NonAuth recipes.
+    boolean isUserIdBeingUsedInNonAuthRecipe(String className, String userId) throws StorageQueryException;
+
+    // to be used for testing purposes only. This function will add dummy data to non-auth tables.
+    void addInfoToNonAuthRecipesBasedOnUserId(String className, String userId) throws StorageQueryException;
 
 }

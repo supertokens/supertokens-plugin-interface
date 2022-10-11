@@ -19,10 +19,11 @@ package io.supertokens.pluginInterface.userroles;
 import com.google.gson.JsonObject;
 import io.supertokens.pluginInterface.Storage;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
+import io.supertokens.pluginInterface.nonAuthRecipe.NonAuthRecipeStorage;
 import io.supertokens.pluginInterface.userroles.exception.DuplicateUserRoleMappingException;
 import io.supertokens.pluginInterface.userroles.exception.UnknownRoleException;
 
-public interface UserRolesStorage extends Storage {
+public interface UserRolesStorage extends NonAuthRecipeStorage {
 
     // associate a userId with a role that exists
     void addRoleToUser(String userId, String role)

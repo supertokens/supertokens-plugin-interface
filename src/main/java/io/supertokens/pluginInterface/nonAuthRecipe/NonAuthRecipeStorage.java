@@ -1,5 +1,5 @@
 /*
- *    Copyright (c) 2021, VRAI Labs and/or its affiliates. All rights reserved.
+ *    Copyright (c) 2022, VRAI Labs and/or its affiliates. All rights reserved.
  *
  *    This software is licensed under the Apache License, Version 2.0 (the
  *    "License") as published by the Apache Software Foundation.
@@ -14,9 +14,11 @@
  *    under the License.
  */
 
-package io.supertokens.pluginInterface.jwt;
+package io.supertokens.pluginInterface.nonAuthRecipe;
 
-import io.supertokens.pluginInterface.nonAuthRecipe.NonAuthRecipeStorage;
+import io.supertokens.pluginInterface.Storage;
 
-public interface JWTRecipeStorage extends NonAuthRecipeStorage {
+// All Non-Auth Recipes will extend this interface.
+// We will use this interface in testing to check If the createUserIdMapping and deleteUserIdMapping functions have checks for all nonAuthRecipes
+public interface NonAuthRecipeStorage extends Storage {
 }

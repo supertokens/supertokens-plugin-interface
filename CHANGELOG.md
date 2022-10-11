@@ -7,9 +7,22 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [2.18.0] - 2022-08-18
+
+- Adds `LOG_LEVEL` enum, and changes `initFileLogging` interface function to accept a log level.
+
+## [2.17.0] - 2022-08-10
+
+- Adds `getUserIdMappingForSuperTokensIds` to the UserIdMapping Interface
+- Adds `isUserIdBeingUsedInNonAuthRecipe` and `addInfoToNonAuthRecipesBasedOnUserId` to the Storage Interface
+- Adds `NonAuthRecipeStorage` Interface
+- All non-auth recipes now extend the `NonAuthRecipeStorage` Interface
+
 ## [2.16.0] - 2022-07-25
 
 - UserId Mapping interface
+
+## [2.16.0] - 2022-07-25
 
 ## [2.15.0] - 2022-06-07
 

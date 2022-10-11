@@ -22,6 +22,8 @@ import io.supertokens.pluginInterface.useridmapping.exception.UnknownSuperTokens
 import io.supertokens.pluginInterface.useridmapping.exception.UserIdMappingAlreadyExistsException;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public interface UserIdMappingStorage extends Storage {
 
@@ -36,5 +38,10 @@ public interface UserIdMappingStorage extends Storage {
 
     boolean updateOrDeleteExternalUserIdInfo(String userId, boolean isSuperTokensUserId,
             @Nullable String externalUserIdInfo) throws StorageQueryException;
+
+    // This function will be used to retrieve the userId mapping for a list of userIds. The key of the HashMap will be
+    // superTokensUserId and the value will be the externalUserId. If a mapping does not exist for an input userId,
+    // it will not be in a part of the returned HashMap
+    HashMap<String, String> getUserIdMappingForSuperTokensIds(ArrayList<String> userIds) throws StorageQueryException;
 
 }
