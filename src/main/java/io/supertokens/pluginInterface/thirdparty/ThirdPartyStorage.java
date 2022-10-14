@@ -18,6 +18,7 @@ package io.supertokens.pluginInterface.thirdparty;
 
 import io.supertokens.pluginInterface.authRecipe.AuthRecipeStorage;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
+import io.supertokens.pluginInterface.thirdparty.exception.DuplicateThirdPartyTenantMappingException;
 import io.supertokens.pluginInterface.thirdparty.exception.DuplicateThirdPartyUserException;
 import io.supertokens.pluginInterface.thirdparty.exception.DuplicateUserIdException;
 
@@ -33,6 +34,18 @@ public interface ThirdPartyStorage extends AuthRecipeStorage {
     UserInfo getThirdPartyUserInfoUsingId(String thirdPartyId, String thirdPartyUserId) throws StorageQueryException;
 
     UserInfo getThirdPartyUserInfoUsingId(String userId) throws StorageQueryException;
+
+    boolean deleteThirdPartyTenantMapping(String supertokensTenantId, String thirdPartyId) throws StorageQueryException;
+ 
+    ThirdPartyTenantConfig getThirdPartyTenantConfig(String supertokensTenantId, String thirdPartyId) throws StorageQueryException;
+
+    ThirdPartyTenantConfig createThirdPartyTenantMapping(String supertokensTenantId, String thirdPartyId, String config) throws DuplicateThirdPartyTenantMappingException, StorageQueryException;
+
+    boolean updateThirdPartyTenantMapping(String supertokensTenantId, String thirdPartyId, String config) throws StorageQueryException;
+    
+    ThirdPartyTenantConfig[] getThirdPartyTenantConfigsForSuperTokensTenantId(String supertokensTenantId) throws StorageQueryException;
+    
+    ThirdPartyTenantConfig[] getThirdPartyTenantConfigsForThirdPartyId(String thirdPartyId) throws StorageQueryException;
 
     @Deprecated
     UserInfo[] getThirdPartyUsers(@Nonnull String userId, @Nonnull Long timeJoined, @Nonnull Integer limit,
