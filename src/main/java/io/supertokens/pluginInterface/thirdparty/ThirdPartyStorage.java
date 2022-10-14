@@ -39,7 +39,7 @@ public interface ThirdPartyStorage extends AuthRecipeStorage {
  
     ThirdPartyTenantConfig getThirdPartyTenantConfig(String supertokensTenantId, String thirdPartyId) throws StorageQueryException;
 
-    void createThirdPartyTenantMapping(String supertokensTenantId, String thirdPartyId, String config) throws DuplicateThirdPartyTenantMappingException, StorageQueryException;
+    ThirdPartyTenantConfig createThirdPartyTenantMapping(String supertokensTenantId, String thirdPartyId, String config) throws DuplicateThirdPartyTenantMappingException, StorageQueryException;
 
     boolean updateThirdPartyTenantMapping(String supertokensTenantId, String thirdPartyId, String config) throws StorageQueryException;
     
