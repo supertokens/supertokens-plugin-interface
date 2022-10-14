@@ -34,6 +34,15 @@ public interface ThirdPartyStorage extends AuthRecipeStorage {
 
     UserInfo getThirdPartyUserInfoUsingId(String userId) throws StorageQueryException;
 
+    boolean deleteThirdPartyTenantMapping(String supertokensTenantId, String thirdPartyId) throws StorageQueryException;
+ 
+    ThirdPartyTenantConfig getThirdPartyTenantConfig(String supertokensTenantId, String thirdPartyId) throws StorageQueryException;
+
+    ThirdPartyTenantConfig createOrUpdateThirdPartyTenantMapping(String supertokensTenantId, String thirdPartyId, String config) throws StorageQueryException;
+    
+    // retrives a list of thirdparty tenant's configs. If isSuperTokensTenantId is true, the input Id is assumed to be a supertokensTenantId else it is the thirdPartyId
+    ThirdPartyTenantConfig[] getThirdPartyTenantConfigsForSuperTokensTenantIdOrThirdPartyId(String Id, boolean isSuperTokensTenantId) throws StorageQueryException;
+
     @Deprecated
     UserInfo[] getThirdPartyUsers(@Nonnull String userId, @Nonnull Long timeJoined, @Nonnull Integer limit,
             @Nonnull String timeJoinedOrder) throws StorageQueryException;
