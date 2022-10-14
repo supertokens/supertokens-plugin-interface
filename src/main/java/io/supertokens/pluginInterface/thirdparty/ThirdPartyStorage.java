@@ -43,7 +43,6 @@ public interface ThirdPartyStorage extends AuthRecipeStorage {
 
     void updateThirdPartyTenantMapping(String supertokensTenantId, String thirdPartyId, String config) throws StorageQueryException;
     
-    // retrives a list of thirdparty tenant's configs. If isSuperTokensTenantId is true, the input Id is assumed to be a supertokensTenantId else it is the thirdPartyId
     ThirdPartyTenantConfig[] getThirdPartyTenantConfigsForSuperTokensTenantId(String supertokensTenantId) throws StorageQueryException;
     
     ThirdPartyTenantConfig[] getThirdPartyTenantConfigsForThirdPartyId(String thirdPartyId) throws StorageQueryException;
