@@ -18,6 +18,7 @@ package io.supertokens.pluginInterface.thirdparty;
 
 import io.supertokens.pluginInterface.authRecipe.AuthRecipeStorage;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
+import io.supertokens.pluginInterface.thirdparty.exception.DuplicateThirdPartyTenantMappingException;
 import io.supertokens.pluginInterface.thirdparty.exception.DuplicateThirdPartyUserException;
 import io.supertokens.pluginInterface.thirdparty.exception.DuplicateUserIdException;
 
@@ -38,7 +39,9 @@ public interface ThirdPartyStorage extends AuthRecipeStorage {
  
     ThirdPartyTenantConfig getThirdPartyTenantConfig(String supertokensTenantId, String thirdPartyId) throws StorageQueryException;
 
-    ThirdPartyTenantConfig createOrUpdateThirdPartyTenantMapping(String supertokensTenantId, String thirdPartyId, String config) throws StorageQueryException;
+    void createThirdPartyTenantMapping(String supertokensTenantId, String thirdPartyId, String config) throws DuplicateThirdPartyTenantMappingException, StorageQueryException;
+
+    void updateThirdPartyTenantMapping(String supertokensTenantId, String thirdPartyId, String config) throws StorageQueryException;
     
     // retrives a list of thirdparty tenant's configs. If isSuperTokensTenantId is true, the input Id is assumed to be a supertokensTenantId else it is the thirdPartyId
     ThirdPartyTenantConfig[] getThirdPartyTenantConfigsForSuperTokensTenantIdOrThirdPartyId(String Id, boolean isSuperTokensTenantId) throws StorageQueryException;
