@@ -23,18 +23,18 @@ public class ThirdPartyTenantConfig {
     public final String thirdPartyId;
 
     public final String config;
-    
-    public ThirdPartyTenantConfig(String supertokensTenantId, String thirdPartyId, String config){
+
+    public ThirdPartyTenantConfig(String supertokensTenantId, String thirdPartyId, String config) {
         this.supertokensTenantId = supertokensTenantId;
         this.thirdPartyId = thirdPartyId;
         this.config = config;
     }
 
-    public boolean equals(Object other){
-        if(other instanceof ThirdPartyTenantConfig){
+    public boolean equals(Object other) {
+        if (other instanceof ThirdPartyTenantConfig) {
             ThirdPartyTenantConfig otherThirdPartyTenantConfig = (ThirdPartyTenantConfig) other;
             return otherThirdPartyTenantConfig.supertokensTenantId.equals(this.supertokensTenantId)
-                    && otherThirdPartyTenantConfig.thirdPartyId.equals(otherThirdPartyTenantConfig.thirdPartyId) 
+                    && otherThirdPartyTenantConfig.thirdPartyId.equals(otherThirdPartyTenantConfig.thirdPartyId)
                     && otherThirdPartyTenantConfig.config.equals(otherThirdPartyTenantConfig.config);
         }
 
