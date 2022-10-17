@@ -7,6 +7,10 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [2.18.1] - 2022-10-17
+
+- Adds interfaces for Third Party tenant mapping functions
+
 ## [2.18.0] - 2022-08-18
 
 - Adds `LOG_LEVEL` enum, and changes `initFileLogging` interface function to accept a log level.
