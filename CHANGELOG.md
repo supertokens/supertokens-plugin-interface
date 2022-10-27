@@ -7,6 +7,8 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Updates ThirdParty recipe errors to now extend `ThirdPartyException`
+
 ## [2.18.0] - 2022-08-18
 
 - Adds `LOG_LEVEL` enum, and changes `initFileLogging` interface function to accept a log level.
