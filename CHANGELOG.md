@@ -7,6 +7,9 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [2.19.0] - 2022-11-07
+
+- Updates version so that new plugin versions can only be used by new core versions due to dependency changes.
 - Updates ThirdParty recipe errors to now extend `ThirdPartyException`
 
 ## [2.18.0] - 2022-08-18
