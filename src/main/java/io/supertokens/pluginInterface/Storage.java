@@ -30,6 +30,14 @@ public interface Storage {
 
     void loadConfig(JsonObject jsonConfig, Set<LOG_LEVEL> logLevels) throws InvalidConfigException;
 
+    // this returns a unique ID based on the db's connection URI and table prefix such that
+    // two different user pool IDs imply that the data for those two user pools are completely isolated.
+    String getUserPoolId(JsonObject jsonConfig);
+
+    // if the input otherConfig has different values set for the same properties as this user pool's config,
+    // then this function should throw an error since this is a misconfig from ther user's side.
+    void assertThatConfigFromSameUserPoolIsNotConflicting(JsonObject otherConfig) throws InvalidConfigException;
+
     void initFileLogging(String infoLogPath, String errorLogPath);
 
     void stopLogging();
