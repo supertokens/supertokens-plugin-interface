@@ -17,6 +17,8 @@
 
 package io.supertokens.pluginInterface;
 
+import com.google.gson.JsonObject;
+import io.supertokens.pluginInterface.exceptions.InvalidConfigException;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 
 import java.util.Set;
@@ -26,7 +28,7 @@ public interface Storage {
     // if silent is true, do not log anything out on the console
     void constructor(String processId, boolean silent);
 
-    void loadConfig(String configFilePath, Set<LOG_LEVEL> logLevels);
+    void loadConfig(JsonObject jsonConfig, Set<LOG_LEVEL> logLevels) throws InvalidConfigException;
 
     void initFileLogging(String infoLogPath, String errorLogPath);
 
@@ -49,7 +51,7 @@ public interface Storage {
 
     void setStorageLayerEnabled(boolean enabled);
 
-    boolean canBeUsed(String configFilePath);
+    boolean canBeUsed(JsonObject configJson);
 
     // this function will be used in the createUserIdMapping and deleteUserIdMapping functions to check if the userId is
     // being used in NonAuth recipes.
