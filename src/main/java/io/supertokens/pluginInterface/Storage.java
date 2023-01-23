@@ -34,6 +34,10 @@ public interface Storage {
     // two different user pool IDs imply that the data for those two user pools are completely isolated.
     String getUserPoolId(JsonObject jsonConfig) throws InvalidConfigException;
 
+    // this returns a unique ID based on the db's connection connection pool config. This can be different
+    // even if the getUserPoolId returns the same ID - based on the config provided by the user.
+    String getConnectionPoolId(JsonObject jsonConfig) throws InvalidConfigException;
+
     // if the input otherConfig has different values set for the same properties as this user pool's config,
     // then this function should throw an error since this is a misconfig from ther user's side.
     void assertThatConfigFromSameUserPoolIsNotConflicting(JsonObject otherConfig) throws InvalidConfigException;
