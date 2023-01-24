@@ -18,6 +18,7 @@
 package io.supertokens.pluginInterface;
 
 import com.google.gson.JsonObject;
+import io.supertokens.pluginInterface.exceptions.DbInitException;
 import io.supertokens.pluginInterface.exceptions.InvalidConfigException;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 
@@ -47,7 +48,7 @@ public interface Storage {
     void stopLogging();
 
     // load tables and create connection pools
-    void initStorage();
+    void initStorage() throws DbInitException;
 
     // used by the core to do transactions the right way.
     STORAGE_TYPE getType();
