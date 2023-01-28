@@ -73,4 +73,7 @@ public interface Storage {
     // to be used for testing purposes only. This function will add dummy data to non-auth tables.
     void addInfoToNonAuthRecipesBasedOnUserId(String className, String userId) throws StorageQueryException;
 
+    // this function is used during testing in the core so that the core can
+    // create multiple user pools across any plugin being used.
+    void modifyConfigToAddANewUserPoolForTesting(JsonObject config, int poolNumber);
 }
