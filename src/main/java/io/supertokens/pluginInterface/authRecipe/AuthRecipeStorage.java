@@ -29,7 +29,7 @@ public interface AuthRecipeStorage extends Storage {
     long getUsersCount(@Nullable RECIPE_ID[] includeRecipeIds) throws StorageQueryException;
 
     AuthRecipeUserInfo[] getUsers(@Nonnull Integer limit, @Nonnull String timeJoinedOrder,
-            @Nullable RECIPE_ID[] includeRecipeIds, @Nullable String userId, @Nullable Long timeJoined)
+            @Nullable RECIPE_ID[] includeRecipeIds, @Nullable String userId, @Nullable Long timeJoined, @Nullable String search)
             throws StorageQueryException;
 
     boolean doesUserIdExist(String userId) throws StorageQueryException;
