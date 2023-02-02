@@ -1,4 +1,4 @@
-package io.supertokens.pluginInterface.dashabord;
+package io.supertokens.pluginInterface.dashboard;
 
 public class DashboardUser {
     public final String email;
