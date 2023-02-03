@@ -17,8 +17,5 @@ public interface DashboardStorage extends Storage {
     boolean deleteDashboardUserWithEmail(String email) throws StorageQueryException;
 
     boolean deleteDashboardUserWithUserId(String userId) throws StorageQueryException;
-    
-    void updateDashboardUserWithEmail(String email, String newEmail, String newPassword) throws StorageQueryException, DuplicateEmailException;
 
-    void updateDashboardUserWithUserId(String userId, String newEmail, String newPassword) throws StorageQueryException, DuplicateEmailException;
 }
