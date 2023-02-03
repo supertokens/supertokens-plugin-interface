@@ -1,9 +1,10 @@
 package io.supertokens.pluginInterface.dashboard;
 
 import io.supertokens.pluginInterface.Storage;
-import io.supertokens.pluginInterface.emailpassword.exceptions.DuplicateEmailException;
-import io.supertokens.pluginInterface.emailpassword.exceptions.DuplicateUserIdException;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
+import io.supertokens.pluginInterface.dashboard.exceptions.DuplicateEmailException;
+import io.supertokens.pluginInterface.dashboard.exceptions.DuplicateUserIdException;
+
 
 public interface DashboardStorage extends Storage {
 
@@ -17,7 +18,7 @@ public interface DashboardStorage extends Storage {
 
     boolean deleteDashboardUserWithUserId(String userId) throws StorageQueryException;
     
-    void updateDashboardUserWithEmail(String email, String newEmail, String newPassword) throws StorageQueryException;
+    void updateDashboardUserWithEmail(String email, String newEmail, String newPassword) throws StorageQueryException, DuplicateEmailException;
 
-    void updateDashboardUserWithUserId(String userId, String newEmail, String newPassword) throws StorageQueryException;
+    void updateDashboardUserWithUserId(String userId, String newEmail, String newPassword) throws StorageQueryException, DuplicateEmailException;
 }
