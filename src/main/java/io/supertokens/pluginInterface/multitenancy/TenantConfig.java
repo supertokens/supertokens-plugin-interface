@@ -19,19 +19,17 @@ package io.supertokens.pluginInterface.multitenancy;
 import com.google.gson.JsonObject;
 
 public class TenantConfig {
-    public String connectionUriDomain;
-    public String tenantId;
+    public TenantIdentifier tenantIdentifier;
     public EmailPasswordConfig emailPasswordConfig;
     public PasswordlessConfig passwordlessConfig;
     public ThirdPartyConfig thirdPartyConfig;
 
     public JsonObject coreConfig;
 
-    public TenantConfig(String connectionUriDomain, String tenantId, EmailPasswordConfig emailPasswordConfig,
+    public TenantConfig(TenantIdentifier tenantIdentifier, EmailPasswordConfig emailPasswordConfig,
                         ThirdPartyConfig thirdPartyConfig,
                         PasswordlessConfig passwordlessConfig, JsonObject coreConfig) {
-        this.connectionUriDomain = connectionUriDomain;
-        this.tenantId = tenantId;
+        this.tenantIdentifier = tenantIdentifier;
         this.coreConfig = coreConfig;
         this.emailPasswordConfig = emailPasswordConfig;
         this.passwordlessConfig = passwordlessConfig;
