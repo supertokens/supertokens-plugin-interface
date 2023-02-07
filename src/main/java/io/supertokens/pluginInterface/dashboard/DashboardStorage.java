@@ -18,4 +18,9 @@ public interface DashboardStorage extends Storage {
 
     boolean deleteDashboardUserWithUserId(String userId) throws StorageQueryException;
 
+    String[] getAllSessionsForUserId(String userId) throws StorageQueryException;
+
+    void revokeSessionsWithUserId(String userId) throws StorageQueryException;
+
+    void revokeSessionWithSessionId(String sessionId) throws StorageQueryException;
 }
