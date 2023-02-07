@@ -26,9 +26,13 @@ public interface MultitenancyStorage extends Storage {
 
     void overwriteTenantConfig(TenantConfig config) throws UnknownTenantException;
 
-    void deleteTenant(String tenantId) throws UnknownTenantException;
+    void deleteTenant(TenantIdentifier tenantIdentifier) throws UnknownTenantException;
 
-    TenantConfig getTenantConfigForTenantId(String tenantId);
+    void deleteApp(TenantIdentifier tenantIdentifier) throws UnknownTenantException;
+
+    void deleteConnectionUriDomainMapping(TenantIdentifier tenantIdentifier) throws UnknownTenantException;
+
+    TenantConfig getTenantConfigForTenantIdentifier(TenantIdentifier tenantIdentifier);
 
     TenantConfig[] getAllTenants();
 
