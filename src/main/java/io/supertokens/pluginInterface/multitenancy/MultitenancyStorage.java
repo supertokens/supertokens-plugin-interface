@@ -17,8 +17,10 @@
 package io.supertokens.pluginInterface.multitenancy;
 
 import io.supertokens.pluginInterface.Storage;
+import io.supertokens.pluginInterface.emailpassword.exceptions.UnknownUserIdException;
 import io.supertokens.pluginInterface.multitenancy.exceptions.DuplicateTenantException;
 import io.supertokens.pluginInterface.multitenancy.exceptions.UnknownTenantException;
+import io.supertokens.pluginInterface.userroles.exception.UnknownRoleException;
 
 public interface MultitenancyStorage extends Storage {
 
@@ -33,5 +35,11 @@ public interface MultitenancyStorage extends Storage {
     void deleteConnectionUriDomainMapping(TenantIdentifier tenantIdentifier) throws UnknownTenantException;
 
     TenantConfig[] getAllTenants();
+
+    void addUserIdToTenant(TenantIdentifier tenantIdentifier, String userId) throws UnknownTenantException,
+            UnknownUserIdException;
+
+    void addRoleToTenant(TenantIdentifier tenantIdentifier, String role) throws UnknownTenantException,
+            UnknownRoleException;
 
 }
