@@ -14,8 +14,6 @@ public interface DashboardStorage extends Storage {
 
     DashboardUser[] getAllDashboardUsers() throws StorageQueryException;
 
-    boolean deleteDashboardUserWithEmail(String email) throws StorageQueryException;
-
     boolean deleteDashboardUserWithUserId(String userId) throws StorageQueryException;
     
     void createNewDashboardUserSession(String userId, String sessionId, long timeCreated, long expiry) throws StorageQueryException, UserIdNotFoundException;
