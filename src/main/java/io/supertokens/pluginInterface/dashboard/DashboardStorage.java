@@ -4,7 +4,7 @@ import io.supertokens.pluginInterface.Storage;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.dashboard.exceptions.DuplicateEmailException;
 import io.supertokens.pluginInterface.dashboard.exceptions.DuplicateUserIdException;
-
+import io.supertokens.pluginInterface.dashboard.exceptions.UserIdNotFoundException;
 
 public interface DashboardStorage extends Storage {
 
@@ -18,13 +18,13 @@ public interface DashboardStorage extends Storage {
 
     boolean deleteDashboardUserWithUserId(String userId) throws StorageQueryException;
     
-    void createNewDashboardUserSession(String userId, String sessionId, long timeJoined) throws StorageQueryException;
+    void createNewDashboardUserSession(String userId, String sessionId, long timeCreated, long expiry) throws StorageQueryException, UserIdNotFoundException;
 
     DashboardSessionInfo[] getAllSessionsForUserId(String userId) throws StorageQueryException;
 
     DashboardSessionInfo getSessionInfoWithSessionId(String sessionId) throws StorageQueryException;
 
-    void revokeSessionsWithUserId(String userId) throws StorageQueryException;
-
     void revokeSessionWithSessionId(String sessionId) throws StorageQueryException;
+
+    void revokeExpiredSessions(long expiry) throws StorageQueryException;
 }
