@@ -32,10 +32,6 @@ public interface MultitenancyStorage extends Storage {
 
     void deleteConnectionUriDomainMapping(TenantIdentifier tenantIdentifier) throws UnknownTenantException;
 
-    TenantConfig getTenantConfigForTenantIdentifier(TenantIdentifier tenantIdentifier);
-
     TenantConfig[] getAllTenants();
-
-    TenantConfig[] getAllTenantsWithThirdPartyId(String thirdPartyId);
 
 }
