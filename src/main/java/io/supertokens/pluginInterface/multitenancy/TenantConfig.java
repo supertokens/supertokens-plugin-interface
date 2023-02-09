@@ -20,6 +20,8 @@ import com.google.gson.JsonObject;
 
 public class TenantConfig {
     public TenantIdentifier tenantIdentifier;
+    public boolean appIdMarkedAsDeleted;
+    public boolean connectionUriDomainMarkedAsDeleted;
     public EmailPasswordConfig emailPasswordConfig;
     public PasswordlessConfig passwordlessConfig;
     public ThirdPartyConfig thirdPartyConfig;
@@ -28,11 +30,28 @@ public class TenantConfig {
 
     public TenantConfig(TenantIdentifier tenantIdentifier, EmailPasswordConfig emailPasswordConfig,
                         ThirdPartyConfig thirdPartyConfig,
-                        PasswordlessConfig passwordlessConfig, JsonObject coreConfig) {
+                        PasswordlessConfig passwordlessConfig, JsonObject coreConfig, boolean appIdMarkedAsDeleted,
+                        boolean connectionUriDomainMarkedAsDeleted) {
         this.tenantIdentifier = tenantIdentifier;
         this.coreConfig = coreConfig;
         this.emailPasswordConfig = emailPasswordConfig;
         this.passwordlessConfig = passwordlessConfig;
         this.thirdPartyConfig = thirdPartyConfig;
+        this.appIdMarkedAsDeleted = appIdMarkedAsDeleted;
+        this.connectionUriDomainMarkedAsDeleted = connectionUriDomainMarkedAsDeleted;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other instanceof TenantConfig) {
+            TenantConfig otherTenantConfig = (TenantConfig) other;
+            return otherTenantConfig.tenantIdentifier.equals(this.tenantIdentifier);
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return tenantIdentifier.hashCode();
     }
 }

@@ -26,6 +26,12 @@ public interface MultitenancyStorage extends Storage {
 
     void createTenant(TenantConfig config) throws DuplicateTenantException;
 
+    // this adds tenantId to the target user pool
+    void addTenantIdInUserPool(TenantIdentifier tenantIdentifier) throws DuplicateTenantException;
+
+    // this also deletes all tenant info from all tables.
+    void deleteTenantIdInUserPool(TenantIdentifier tenantIdentifier) throws UnknownTenantException;
+
     void overwriteTenantConfig(TenantConfig config) throws UnknownTenantException;
 
     void deleteTenant(TenantIdentifier tenantIdentifier) throws UnknownTenantException;
@@ -41,5 +47,9 @@ public interface MultitenancyStorage extends Storage {
 
     void addRoleToTenant(TenantIdentifier tenantIdentifier, String role) throws UnknownTenantException,
             UnknownRoleException;
+
+    void markAppIdAsDeleted(String appId) throws UnknownTenantException;
+
+    void markConnectionUriDomainAsDeleted(String connectionUriDomain) throws UnknownTenantException;
 
 }
