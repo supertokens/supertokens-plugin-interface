@@ -19,7 +19,7 @@ package io.supertokens.pluginInterface.multitenancy;
 import io.supertokens.pluginInterface.Storage;
 import io.supertokens.pluginInterface.emailpassword.exceptions.UnknownUserIdException;
 import io.supertokens.pluginInterface.multitenancy.exceptions.DuplicateTenantException;
-import io.supertokens.pluginInterface.multitenancy.exceptions.UnknownTenantException;
+import io.supertokens.pluginInterface.multitenancy.exceptions.TenantOrAppNotFoundException;
 import io.supertokens.pluginInterface.userroles.exception.UnknownRoleException;
 
 public interface MultitenancyStorage extends Storage {
@@ -30,26 +30,26 @@ public interface MultitenancyStorage extends Storage {
     void addTenantIdInUserPool(TenantIdentifier tenantIdentifier) throws DuplicateTenantException;
 
     // this also deletes all tenant info from all tables.
-    void deleteTenantIdInUserPool(TenantIdentifier tenantIdentifier) throws UnknownTenantException;
+    void deleteTenantIdInUserPool(TenantIdentifier tenantIdentifier) throws TenantOrAppNotFoundException;
 
-    void overwriteTenantConfig(TenantConfig config) throws UnknownTenantException;
+    void overwriteTenantConfig(TenantConfig config) throws TenantOrAppNotFoundException;
 
-    void deleteTenant(TenantIdentifier tenantIdentifier) throws UnknownTenantException;
+    void deleteTenant(TenantIdentifier tenantIdentifier) throws TenantOrAppNotFoundException;
 
-    void deleteApp(TenantIdentifier tenantIdentifier) throws UnknownTenantException;
+    void deleteApp(TenantIdentifier tenantIdentifier) throws TenantOrAppNotFoundException;
 
-    void deleteConnectionUriDomainMapping(TenantIdentifier tenantIdentifier) throws UnknownTenantException;
+    void deleteConnectionUriDomainMapping(TenantIdentifier tenantIdentifier) throws TenantOrAppNotFoundException;
 
     TenantConfig[] getAllTenants();
 
-    void addUserIdToTenant(TenantIdentifier tenantIdentifier, String userId) throws UnknownTenantException,
+    void addUserIdToTenant(TenantIdentifier tenantIdentifier, String userId) throws TenantOrAppNotFoundException,
             UnknownUserIdException;
 
-    void addRoleToTenant(TenantIdentifier tenantIdentifier, String role) throws UnknownTenantException,
+    void addRoleToTenant(TenantIdentifier tenantIdentifier, String role) throws TenantOrAppNotFoundException,
             UnknownRoleException;
 
-    void markAppIdAsDeleted(String appId) throws UnknownTenantException;
+    void markAppIdAsDeleted(String appId) throws TenantOrAppNotFoundException;
 
-    void markConnectionUriDomainAsDeleted(String connectionUriDomain) throws UnknownTenantException;
+    void markConnectionUriDomainAsDeleted(String connectionUriDomain) throws TenantOrAppNotFoundException;
 
 }

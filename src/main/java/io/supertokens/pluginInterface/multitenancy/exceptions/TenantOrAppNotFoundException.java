@@ -16,8 +16,19 @@
 
 package io.supertokens.pluginInterface.multitenancy.exceptions;
 
-import io.supertokens.pluginInterface.emailpassword.exceptions.EmailPasswordException;
+import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
 
-public class UnknownTenantException extends EmailPasswordException {
-    private static final long serialVersionUID = 7345237610253685511L;
+public class TenantOrAppNotFoundException extends Exception {
+    private final TenantIdentifier tenantIdentifier;
+
+    public TenantOrAppNotFoundException(TenantIdentifier tenantIdentifier) {
+        super("Tenant with the following connectionURIDomain, appId and tenantId combination not found: (" +
+                tenantIdentifier.getConnectionUriDomain() +
+                ", " + tenantIdentifier.getAppId() + ", " + tenantIdentifier.getTenantId() + ")");
+        this.tenantIdentifier = tenantIdentifier;
+    }
+
+    public TenantIdentifier getTenantIdentifier() {
+        return this.tenantIdentifier;
+    }
 }

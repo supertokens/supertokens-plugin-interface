@@ -16,8 +16,6 @@
 
 package io.supertokens.pluginInterface.multitenancy.exceptions;
 
-import io.supertokens.pluginInterface.emailpassword.exceptions.EmailPasswordException;
-
-public class DuplicateTenantException extends EmailPasswordException {
+public class DuplicateTenantException extends Exception {
 
 }
