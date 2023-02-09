@@ -17,6 +17,9 @@
 package io.supertokens.pluginInterface.multitenancy;
 
 public class TenantIdentifier {
+    public static final String DEFAULT_TENANT_ID = "public";
+    public static final String DEFAULT_APP_ID = "public";
+    public static final String DEFAULT_CONNECTION_URI = "";
     private final String connectionUriDomain;
     private final String tenantId;
     private final String appId;
@@ -29,21 +32,21 @@ public class TenantIdentifier {
 
     public String getTenantId() {
         if (this.tenantId == null || this.tenantId.equals("")) {
-            return "public";
+            return DEFAULT_TENANT_ID;
         }
         return this.tenantId.trim().toLowerCase();
     }
 
     public String getAppId() {
         if (this.appId == null || this.appId.equals("")) {
-            return "public";
+            return DEFAULT_APP_ID;
         }
         return this.appId.trim().toLowerCase();
     }
 
     public String getConnectionUriDomain() {
         if (this.connectionUriDomain == null) {
-            return "";
+            return DEFAULT_CONNECTION_URI;
         }
         return this.connectionUriDomain.trim().toLowerCase();
     }

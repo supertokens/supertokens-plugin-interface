@@ -41,6 +41,18 @@ public class TenantConfig {
         this.connectionUriDomainMarkedAsDeleted = connectionUriDomainMarkedAsDeleted;
     }
 
+    public TenantConfig(TenantIdentifier tenantIdentifier, EmailPasswordConfig emailPasswordConfig,
+                        ThirdPartyConfig thirdPartyConfig,
+                        PasswordlessConfig passwordlessConfig, JsonObject coreConfig) {
+        this.tenantIdentifier = tenantIdentifier;
+        this.coreConfig = coreConfig;
+        this.emailPasswordConfig = emailPasswordConfig;
+        this.passwordlessConfig = passwordlessConfig;
+        this.thirdPartyConfig = thirdPartyConfig;
+        this.appIdMarkedAsDeleted = false;
+        this.connectionUriDomainMarkedAsDeleted = false;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other instanceof TenantConfig) {
