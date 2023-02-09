@@ -6,7 +6,7 @@ public class TOTPDevice {
     public final String secretKey;
     public final int period;
     public final int skew;
-    public final Boolean verified;
+    public final boolean verified;
 
     public TOTPDevice(String deviceName, String userId, String secretKey, int period, int skew, boolean verified) {
         this.deviceName = deviceName;

@@ -4,38 +4,41 @@ import javax.annotation.Nullable;
 
 import io.supertokens.pluginInterface.authRecipe.AuthRecipeStorage;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
-import io.supertokens.pluginInterface.totp.TOTPDevice;
 import io.supertokens.pluginInterface.totp.exception.DeviceAlreadyExistsException;
-import io.supertokens.pluginInterface.totp.exception.InvalidCodeException;
-import io.supertokens.pluginInterface.totp.exception.LimitReachedException;
-import io.supertokens.pluginInterface.totp.exception.NotEnabledException;
+import io.supertokens.pluginInterface.totp.exception.TotpNotEnabledException;
 import io.supertokens.pluginInterface.totp.exception.UnknownDeviceException;
 
 public interface TOTPStorage extends AuthRecipeStorage {
-    // Create a new device:
-    void createDevice(String userId, String deviceName, String secret, int skew, int period)
-            throws StorageQueryException, DeviceAlreadyExistsException;
+        // Create a new device:
+        void createDevice(TOTPDevice device)
+                        throws StorageQueryException, DeviceAlreadyExistsException;
 
-    // Verify the TOTP code:
-    void verifyCode(String userId, String deviceName, String code)
-            throws StorageQueryException, InvalidCodeException, NotEnabledException, LimitReachedException;
+        // Verify the device with the given name:
+        void markDeviceAsVerified(String userId, String deviceName)
+                        throws StorageQueryException, TotpNotEnabledException, UnknownDeviceException;
 
-    // Verify the device with the given name:
-    void verifyDevice(String userId, String deviceName)
-            throws StorageQueryException, InvalidCodeException, NotEnabledException, UnknownDeviceException;
+        // Delete the device with the given name:
+        void deleteDevice(String userId, String deviceName)
+                        throws StorageQueryException, TotpNotEnabledException, UnknownDeviceException;
 
-    // Delete the device with the given name:
-    void deleteDevice(String userId, String deviceName) throws StorageQueryException, NotEnabledException;
+        // update device name:
+        void updateDeviceName(String userId, String oldDeviceName, String newDeviceName)
+                        throws StorageQueryException, TotpNotEnabledException, DeviceAlreadyExistsException,
+                        UnknownDeviceException;
 
-    // update device name:
-    void updateDeviceName(String userId, String oldDeviceName, String newDeviceName)
-            throws StorageQueryException, NotEnabledException, DeviceAlreadyExistsException, UnknownDeviceException;
+        // Get the devices
+        TOTPDevice[] getDevices(String userId)
+                        throws StorageQueryException, TotpNotEnabledException;
 
-    // Get the devices
-    TOTPDevice[] getDevices(String userId, @Nullable String deviceName)
-            throws StorageQueryException, NotEnabledException;
+        // Insert a used TOTP code:
+        void insertUsedCode(TOTPUsedCode code)
+                        throws StorageQueryException;
 
-    // Get all the device names for the given user:
-    String[] getDeviceNames(String userId) throws StorageQueryException;
+        // Get totp used code based on userId:
+        TOTPUsedCode[] getUsedCodes(String userId)
+                        throws StorageQueryException;
 
+        // Remove expired codes from totp used codes:
+        void removeExpiredCodes()
+                        throws StorageQueryException;
 }
