@@ -20,26 +20,11 @@ import com.google.gson.JsonObject;
 
 public class TenantConfig {
     public TenantIdentifier tenantIdentifier;
-    public boolean appIdMarkedAsDeleted;
-    public boolean connectionUriDomainMarkedAsDeleted;
     public EmailPasswordConfig emailPasswordConfig;
     public PasswordlessConfig passwordlessConfig;
     public ThirdPartyConfig thirdPartyConfig;
 
     public JsonObject coreConfig;
-
-    public TenantConfig(TenantIdentifier tenantIdentifier, EmailPasswordConfig emailPasswordConfig,
-                        ThirdPartyConfig thirdPartyConfig,
-                        PasswordlessConfig passwordlessConfig, JsonObject coreConfig, boolean appIdMarkedAsDeleted,
-                        boolean connectionUriDomainMarkedAsDeleted) {
-        this.tenantIdentifier = tenantIdentifier;
-        this.coreConfig = coreConfig;
-        this.emailPasswordConfig = emailPasswordConfig;
-        this.passwordlessConfig = passwordlessConfig;
-        this.thirdPartyConfig = thirdPartyConfig;
-        this.appIdMarkedAsDeleted = appIdMarkedAsDeleted;
-        this.connectionUriDomainMarkedAsDeleted = connectionUriDomainMarkedAsDeleted;
-    }
 
     public TenantConfig(TenantIdentifier tenantIdentifier, EmailPasswordConfig emailPasswordConfig,
                         ThirdPartyConfig thirdPartyConfig,
@@ -49,8 +34,6 @@ public class TenantConfig {
         this.emailPasswordConfig = emailPasswordConfig;
         this.passwordlessConfig = passwordlessConfig;
         this.thirdPartyConfig = thirdPartyConfig;
-        this.appIdMarkedAsDeleted = false;
-        this.connectionUriDomainMarkedAsDeleted = false;
     }
 
     @Override
