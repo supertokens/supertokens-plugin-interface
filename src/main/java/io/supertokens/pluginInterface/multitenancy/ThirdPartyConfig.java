@@ -20,11 +20,18 @@ import com.google.gson.JsonObject;
 
 public class ThirdPartyConfig {
     public boolean enabled;
-    public Provider[] providers;
+    private Provider[] providers;
 
     public ThirdPartyConfig(boolean enabled, Provider[] providers) {
         this.enabled = enabled;
         this.providers = providers;
+    }
+
+    public Provider[] getProviders() {
+        if (this.providers == null) {
+            return new Provider[0];
+        }
+        return providers;
     }
 
     public class Provider {

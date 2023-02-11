@@ -64,6 +64,7 @@ public class TenantIdentifier {
 
     @Override
     public int hashCode() {
-        return (this.getTenantId() + "|" + this.getConnectionUriDomain() + "|" + this.getAppId()).hashCode();
+        return (this.getTenantId() + "|" + this.getConnectionUriDomain() + "|" +
+                this.getAppId()).hashCode();
     }
 }

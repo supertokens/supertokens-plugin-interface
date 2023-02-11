@@ -24,7 +24,7 @@ public class TenantConfig {
     public PasswordlessConfig passwordlessConfig;
     public ThirdPartyConfig thirdPartyConfig;
 
-    public JsonObject coreConfig;
+    private JsonObject coreConfig;
 
     public TenantConfig(TenantIdentifier tenantIdentifier, EmailPasswordConfig emailPasswordConfig,
                         ThirdPartyConfig thirdPartyConfig,
@@ -34,6 +34,13 @@ public class TenantConfig {
         this.emailPasswordConfig = emailPasswordConfig;
         this.passwordlessConfig = passwordlessConfig;
         this.thirdPartyConfig = thirdPartyConfig;
+    }
+
+    public JsonObject getCoreConfig() {
+        if (this.coreConfig == null) {
+            return new JsonObject();
+        }
+        return coreConfig;
     }
 
     @Override
