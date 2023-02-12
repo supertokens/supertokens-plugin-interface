@@ -43,6 +43,17 @@ public class TenantConfig {
         return coreConfig;
     }
 
+    public boolean deepEquals(TenantConfig other) {
+        if (other == null) {
+            return false;
+        }
+        return this.tenantIdentifier.equals(other.tenantIdentifier) &&
+                this.emailPasswordConfig.equals(other.emailPasswordConfig) &&
+                this.passwordlessConfig.equals(other.passwordlessConfig) &&
+                this.thirdPartyConfig.equals(other.thirdPartyConfig) &&
+                this.getCoreConfig().equals(other.getCoreConfig());
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other instanceof TenantConfig) {

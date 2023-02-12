@@ -18,6 +18,9 @@ package io.supertokens.pluginInterface.multitenancy;
 
 import com.google.gson.JsonObject;
 
+import java.util.Arrays;
+import java.util.Objects;
+
 public class ThirdPartyConfig {
     public boolean enabled;
     private Provider[] providers;
@@ -49,6 +52,28 @@ public class ThirdPartyConfig {
         public String oidcDiscoveryEndpoint;
         public boolean requireEmail;
         public UserInfoMap userInfoMap;
+
+        @Override
+        public boolean equals(Object other) {
+            if (other instanceof Provider) {
+                Provider otherProvider = (Provider) other;
+                return otherProvider.thirdPartyId.equals(this.thirdPartyId) &&
+                        otherProvider.name.equals(this.name) &&
+                        Arrays.equals(otherProvider.clients, this.clients) &&
+                        otherProvider.authorizationEndpoint.equals(this.authorizationEndpoint) &&
+                        otherProvider.authorizationEndpointQueryParams.equals(this.authorizationEndpointQueryParams) &&
+                        otherProvider.tokenEndpoint.equals(this.tokenEndpoint) &&
+                        otherProvider.tokenEndpointBodyParams.equals(this.tokenEndpointBodyParams) &&
+                        otherProvider.userInfoEndpoint.equals(this.userInfoEndpoint) &&
+                        otherProvider.userInfoEndpointQueryParams.equals(this.userInfoEndpointQueryParams) &&
+                        otherProvider.userInfoEndpointHeaders.equals(this.userInfoEndpointHeaders) &&
+                        otherProvider.jwksURI.equals(this.jwksURI) &&
+                        otherProvider.oidcDiscoveryEndpoint.equals(this.oidcDiscoveryEndpoint) &&
+                        otherProvider.requireEmail == this.requireEmail &&
+                        otherProvider.userInfoMap.equals(this.userInfoMap);
+            }
+            return false;
+        }
     }
 
     public class ProviderClients {
@@ -58,6 +83,20 @@ public class ThirdPartyConfig {
         public String[] scope;
         public boolean forcePKCE;
         public JsonObject additionalConfig;
+
+        @Override
+        public boolean equals(Object other) {
+            if (other instanceof ProviderClients) {
+                ProviderClients otherProviderClients = (ProviderClients) other;
+                return otherProviderClients.clientType.equals(this.clientType) &&
+                        otherProviderClients.clientId.equals(this.clientId) &&
+                        otherProviderClients.clientSecret.equals(this.clientSecret) &&
+                        Arrays.equals(otherProviderClients.scope, this.scope) &&
+                        otherProviderClients.forcePKCE == this.forcePKCE &&
+                        otherProviderClients.additionalConfig.equals(this.additionalConfig);
+            }
+            return false;
+        }
     }
 
     public class UserInfoMap {
@@ -67,6 +106,16 @@ public class ThirdPartyConfig {
         public UserInfoMap(UserInfoMapKeyValue fromIdTokenPayload, UserInfoMapKeyValue fromUserInfoAPI) {
             this.fromIdTokenPayload = fromIdTokenPayload;
             this.fromUserInfoAPI = fromUserInfoAPI;
+        }
+
+        @Override
+        public boolean equals(Object other) {
+            if (other instanceof UserInfoMap) {
+                UserInfoMap otherUserInfoMap = (UserInfoMap) other;
+                return Objects.equals(otherUserInfoMap.fromUserInfoAPI, this.fromUserInfoAPI) &&
+                        Objects.equals(otherUserInfoMap.fromIdTokenPayload, this.fromIdTokenPayload);
+            }
+            return false;
         }
     }
 
@@ -80,5 +129,27 @@ public class ThirdPartyConfig {
             this.email = email;
             this.emailVerified = emailVerified;
         }
+
+        @Override
+        public boolean equals(Object other) {
+            if (other instanceof UserInfoMapKeyValue) {
+                UserInfoMapKeyValue otherUserInfoMapKeyValue = (UserInfoMapKeyValue) other;
+                return otherUserInfoMapKeyValue.userId.equals(this.userId) &&
+                        otherUserInfoMapKeyValue.email.equals(this.email) &&
+                        otherUserInfoMapKeyValue.emailVerified.equals(this.emailVerified);
+            }
+            return false;
+        }
     }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other instanceof ThirdPartyConfig) {
+            ThirdPartyConfig otherThirdPartyConfig = (ThirdPartyConfig) other;
+            return otherThirdPartyConfig.enabled == this.enabled &&
+                    Arrays.equals(otherThirdPartyConfig.getProviders(), this.getProviders());
+        }
+        return false;
+    }
+
 }

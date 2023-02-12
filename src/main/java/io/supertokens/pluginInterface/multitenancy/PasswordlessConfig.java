@@ -22,4 +22,13 @@ public class PasswordlessConfig {
     public PasswordlessConfig(boolean enabled) {
         this.enabled = enabled;
     }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other instanceof PasswordlessConfig) {
+            PasswordlessConfig otherPasswordlessConfig = (PasswordlessConfig) other;
+            return otherPasswordlessConfig.enabled == this.enabled;
+        }
+        return false;
+    }
 }

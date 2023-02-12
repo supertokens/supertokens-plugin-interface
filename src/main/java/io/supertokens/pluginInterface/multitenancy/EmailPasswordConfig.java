@@ -22,4 +22,14 @@ public class EmailPasswordConfig {
     public EmailPasswordConfig(boolean enabled) {
         this.enabled = enabled;
     }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other instanceof EmailPasswordConfig) {
+            EmailPasswordConfig otherEmailPasswordConfig = (EmailPasswordConfig) other;
+            return otherEmailPasswordConfig.enabled == this.enabled;
+        }
+        return false;
+    }
+
 }
