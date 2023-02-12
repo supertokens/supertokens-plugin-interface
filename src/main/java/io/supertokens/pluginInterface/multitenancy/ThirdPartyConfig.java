@@ -18,63 +18,88 @@ package io.supertokens.pluginInterface.multitenancy;
 
 import com.google.gson.JsonObject;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.Objects;
 
 public class ThirdPartyConfig {
-    public boolean enabled;
-    private Provider[] providers;
+    public final boolean enabled;
 
-    public ThirdPartyConfig(boolean enabled, Provider[] providers) {
+    @Nonnull
+    public final Provider[] providers;
+
+    public ThirdPartyConfig(boolean enabled, @Nullable Provider[] providers) {
         this.enabled = enabled;
         this.providers = providers == null ? new Provider[0] : providers;
     }
 
-    public Provider[] getProviders() {
-        if (this.providers == null) {
-            return new Provider[0];
-        }
-        return providers;
-    }
+    public static class Provider {
 
-    public class Provider {
-        private final String thirdPartyId;
-        private final String name;
-        private final ProviderClients[] clients;
-        private final String authorizationEndpoint;
-        private final JsonObject authorizationEndpointQueryParams;
-        private final String tokenEndpoint;
-        private final JsonObject tokenEndpointBodyParams;
-        private final String userInfoEndpoint;
-        private JsonObject userInfoEndpointQueryParams;
-        private final JsonObject userInfoEndpointHeaders;
-        private final String jwksURI;
-        private final String oidcDiscoveryEndpoint;
+        @Nonnull
+        public final String thirdPartyId;
+
+        @Nonnull
+        public final String name;
+
+        @Nullable
+        public final ProviderClients[] clients;
+
+        @Nullable
+        public final String authorizationEndpoint;
+
+        @Nullable
+        public final JsonObject authorizationEndpointQueryParams;
+
+        @Nullable
+        public final String tokenEndpoint;
+
+        @Nullable
+        public final JsonObject tokenEndpointBodyParams;
+
+        @Nullable
+        public final String userInfoEndpoint;
+
+        @Nullable
+        public JsonObject userInfoEndpointQueryParams;
+
+        @Nullable
+        public final JsonObject userInfoEndpointHeaders;
+
+        @Nullable
+        public final String jwksURI;
+
+        @Nullable
+        public final String oidcDiscoveryEndpoint;
+
+        @Nullable
         public final boolean requireEmail;
-        private final UserInfoMap userInfoMap;
 
-        public Provider(String thirdPartyId, String name, ProviderClients[] clients, String authorizationEndpoint,
-                        JsonObject authorizationEndpointQueryParams, String tokenEndpoint,
-                        JsonObject tokenEndpointBodyParams,
-                        String userInfoEndpoint, JsonObject userInfoEndpointQueryParams,
-                        JsonObject userInfoEndpointHeaders,
-                        String jwksURI, String oidcDiscoveryEndpoint, boolean requireEmail, UserInfoMap userInfoMap) {
+        @Nullable
+        public final UserInfoMap userInfoMap;
+
+        public Provider(@Nonnull String thirdPartyId, @Nonnull String name, @Nullable ProviderClients[] clients,
+                        @Nullable String authorizationEndpoint,
+                        @Nullable JsonObject authorizationEndpointQueryParams, @Nullable String tokenEndpoint,
+                        @Nullable JsonObject tokenEndpointBodyParams,
+                        @Nullable String userInfoEndpoint, @Nullable JsonObject userInfoEndpointQueryParams,
+                        @Nullable JsonObject userInfoEndpointHeaders,
+                        @Nullable String jwksURI, @Nullable String oidcDiscoveryEndpoint, boolean requireEmail,
+                        @Nullable UserInfoMap userInfoMap) {
             this.thirdPartyId = thirdPartyId;
             this.name = name;
-            this.clients = clients == null ? new ProviderClients[0] : clients;
-            this.authorizationEndpoint = authorizationEndpoint == null ? "" : authorizationEndpoint;
-            this.authorizationEndpointQueryParams =
-                    authorizationEndpointQueryParams == null ? new JsonObject() : authorizationEndpointQueryParams;
-            this.tokenEndpoint = tokenEndpoint == null ? "" : tokenEndpoint;
-            this.tokenEndpointBodyParams = tokenEndpointBodyParams == null ? new JsonObject() : tokenEndpointBodyParams;
-            this.userInfoEndpoint = userInfoEndpoint == null ? "" : userInfoEndpoint;
-            this.userInfoEndpointQueryParams =
-                    userInfoEndpointQueryParams == null ? new JsonObject() : userInfoEndpointQueryParams;
-            this.userInfoEndpointHeaders = userInfoEndpointHeaders == null ? new JsonObject() : userInfoEndpointHeaders;
-            this.jwksURI = jwksURI == null ? "" : jwksURI;
-            this.oidcDiscoveryEndpoint = oidcDiscoveryEndpoint == null ? "" : oidcDiscoveryEndpoint;
+            this.clients = clients;
+            this.authorizationEndpoint = authorizationEndpoint;
+            this.authorizationEndpointQueryParams = authorizationEndpointQueryParams;
+            this.tokenEndpoint = tokenEndpoint;
+            this.tokenEndpointBodyParams = tokenEndpointBodyParams;
+            this.userInfoEndpoint = userInfoEndpoint;
+            this.userInfoEndpointQueryParams = userInfoEndpointQueryParams;
+            this.userInfoEndpointHeaders = userInfoEndpointHeaders;
+            this.jwksURI = jwksURI;
+            this.oidcDiscoveryEndpoint = oidcDiscoveryEndpoint;
             this.requireEmail = requireEmail;
-            this.userInfoMap = userInfoMap == null ? new UserInfoMap(null, null) : userInfoMap;
+            this.userInfoMap = userInfoMap;
         }
 
         @Override
@@ -84,60 +109,77 @@ public class ThirdPartyConfig {
                 return otherProvider.thirdPartyId.equals(this.thirdPartyId) &&
                         otherProvider.name.equals(this.name) &&
                         Arrays.equals(otherProvider.clients, this.clients) &&
-                        otherProvider.authorizationEndpoint.equals(this.authorizationEndpoint) &&
-                        otherProvider.authorizationEndpointQueryParams.equals(this.authorizationEndpointQueryParams) &&
-                        otherProvider.tokenEndpoint.equals(this.tokenEndpoint) &&
-                        otherProvider.tokenEndpointBodyParams.equals(this.tokenEndpointBodyParams) &&
-                        otherProvider.userInfoEndpoint.equals(this.userInfoEndpoint) &&
-                        otherProvider.userInfoEndpointQueryParams.equals(this.userInfoEndpointQueryParams) &&
-                        otherProvider.userInfoEndpointHeaders.equals(this.userInfoEndpointHeaders) &&
-                        otherProvider.jwksURI.equals(this.jwksURI) &&
-                        otherProvider.oidcDiscoveryEndpoint.equals(this.oidcDiscoveryEndpoint) &&
+                        Objects.equals(otherProvider.authorizationEndpoint, this.authorizationEndpoint) &&
+                        Objects.equals(otherProvider.authorizationEndpointQueryParams,
+                                this.authorizationEndpointQueryParams) &&
+                        Objects.equals(otherProvider.tokenEndpoint, this.tokenEndpoint) &&
+                        Objects.equals(otherProvider.tokenEndpointBodyParams, this.tokenEndpointBodyParams) &&
+                        Objects.equals(otherProvider.userInfoEndpoint, this.userInfoEndpoint) &&
+                        Objects.equals(otherProvider.userInfoEndpointQueryParams, this.userInfoEndpointQueryParams) &&
+                        Objects.equals(otherProvider.userInfoEndpointHeaders, this.userInfoEndpointHeaders) &&
+                        Objects.equals(otherProvider.jwksURI, this.jwksURI) &&
+                        Objects.equals(otherProvider.oidcDiscoveryEndpoint, this.oidcDiscoveryEndpoint) &&
                         otherProvider.requireEmail == this.requireEmail &&
-                        otherProvider.userInfoMap.equals(this.userInfoMap);
+                        Objects.equals(otherProvider.userInfoMap, this.userInfoMap);
             }
             return false;
         }
     }
 
-    public class ProviderClients {
-        private final String clientType;
-        private final String clientId;
-        private final String clientSecret;
-        private final String[] scope;
-        private final boolean forcePKCE;
-        private final JsonObject additionalConfig;
+    public static class ProviderClients {
 
-        public ProviderClients(String clientType, String clientId, String clientSecret, String[] scope,
-                               boolean forcePKCE, JsonObject additionalConfig) {
-            this.clientType = clientType == null ? "" : clientType;
-            this.clientId = clientId == null ? "" : clientId;
-            this.clientSecret = clientSecret == null ? "" : clientSecret;
-            this.scope = scope == null ? new String[0] : scope;
+        @Nullable
+        public final String clientType;
+
+        @Nonnull
+        public final String clientId;
+
+        @Nullable
+        public final String clientSecret;
+
+        @Nullable
+        public final String[] scope;
+
+        public final boolean forcePKCE;
+
+        @Nullable
+        public final JsonObject additionalConfig;
+
+        public ProviderClients(@Nullable String clientType, @Nonnull String clientId, @Nullable String clientSecret,
+                               @Nullable String[] scope,
+                               boolean forcePKCE, @Nullable JsonObject additionalConfig) {
+            this.clientType = clientType;
+            this.clientId = clientId;
+            this.clientSecret = clientSecret;
+            this.scope = scope;
             this.forcePKCE = forcePKCE;
-            this.additionalConfig = additionalConfig == null ? new JsonObject() : additionalConfig;
+            this.additionalConfig = additionalConfig;
         }
 
         @Override
         public boolean equals(Object other) {
             if (other instanceof ProviderClients) {
                 ProviderClients otherProviderClients = (ProviderClients) other;
-                return otherProviderClients.clientType.equals(this.clientType) &&
+                return Objects.equals(otherProviderClients.clientType, this.clientType) &&
                         otherProviderClients.clientId.equals(this.clientId) &&
-                        otherProviderClients.clientSecret.equals(this.clientSecret) &&
+                        Objects.equals(otherProviderClients.clientSecret, this.clientSecret) &&
                         Arrays.equals(otherProviderClients.scope, this.scope) &&
                         otherProviderClients.forcePKCE == this.forcePKCE &&
-                        otherProviderClients.additionalConfig.equals(this.additionalConfig);
+                        Objects.equals(otherProviderClients.additionalConfig, this.additionalConfig);
             }
             return false;
         }
     }
 
-    public class UserInfoMap {
+    public static class UserInfoMap {
+        @Nullable
         public UserInfoMapKeyValue fromIdTokenPayload;
+
+        @Nullable
         public UserInfoMapKeyValue fromUserInfoAPI;
 
-        public UserInfoMap(UserInfoMapKeyValue fromIdTokenPayload, UserInfoMapKeyValue fromUserInfoAPI) {
+        public UserInfoMap(@Nullable UserInfoMapKeyValue fromIdTokenPayload,
+                           @Nullable UserInfoMapKeyValue fromUserInfoAPI) {
             this.fromIdTokenPayload = fromIdTokenPayload;
             this.fromUserInfoAPI = fromUserInfoAPI;
         }
@@ -153,12 +195,17 @@ public class ThirdPartyConfig {
         }
     }
 
-    public class UserInfoMapKeyValue {
+    public static class UserInfoMapKeyValue {
+        @Nonnull
         public String userId;
+
+        @Nonnull
         public String email;
+
+        @Nonnull
         public String emailVerified;
 
-        public UserInfoMapKeyValue(String userId, String email, String emailVerified) {
+        public UserInfoMapKeyValue(@Nonnull String userId, @Nonnull String email, @Nonnull String emailVerified) {
             this.userId = userId;
             this.email = email;
             this.emailVerified = emailVerified;
@@ -181,7 +228,7 @@ public class ThirdPartyConfig {
         if (other instanceof ThirdPartyConfig) {
             ThirdPartyConfig otherThirdPartyConfig = (ThirdPartyConfig) other;
             return otherThirdPartyConfig.enabled == this.enabled &&
-                    Arrays.equals(otherThirdPartyConfig.getProviders(), this.getProviders());
+                    Arrays.equals(otherThirdPartyConfig.providers, this.providers);
         }
         return false;
     }

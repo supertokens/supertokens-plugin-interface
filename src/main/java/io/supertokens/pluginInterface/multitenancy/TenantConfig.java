@@ -18,29 +18,34 @@ package io.supertokens.pluginInterface.multitenancy;
 
 import com.google.gson.JsonObject;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 public class TenantConfig {
-    public TenantIdentifier tenantIdentifier;
-    public EmailPasswordConfig emailPasswordConfig;
-    public PasswordlessConfig passwordlessConfig;
-    public ThirdPartyConfig thirdPartyConfig;
 
-    private JsonObject coreConfig;
+    @Nonnull
+    public transient final TenantIdentifier tenantIdentifier;
 
-    public TenantConfig(TenantIdentifier tenantIdentifier, EmailPasswordConfig emailPasswordConfig,
-                        ThirdPartyConfig thirdPartyConfig,
-                        PasswordlessConfig passwordlessConfig, JsonObject coreConfig) {
+    @Nonnull
+    public final EmailPasswordConfig emailPasswordConfig;
+
+    @Nonnull
+    public final PasswordlessConfig passwordlessConfig;
+
+    @Nonnull
+    public final ThirdPartyConfig thirdPartyConfig;
+
+    @Nonnull
+    public final JsonObject coreConfig;
+
+    public TenantConfig(@Nonnull TenantIdentifier tenantIdentifier, @Nonnull EmailPasswordConfig emailPasswordConfig,
+                        @Nonnull ThirdPartyConfig thirdPartyConfig,
+                        @Nonnull PasswordlessConfig passwordlessConfig, @Nullable JsonObject coreConfig) {
         this.tenantIdentifier = tenantIdentifier;
-        this.coreConfig = coreConfig;
+        this.coreConfig = coreConfig == null ? new JsonObject() : coreConfig;
         this.emailPasswordConfig = emailPasswordConfig;
         this.passwordlessConfig = passwordlessConfig;
         this.thirdPartyConfig = thirdPartyConfig;
-    }
-
-    public JsonObject getCoreConfig() {
-        if (this.coreConfig == null) {
-            return new JsonObject();
-        }
-        return coreConfig;
     }
 
     public boolean deepEquals(TenantConfig other) {
@@ -51,7 +56,7 @@ public class TenantConfig {
                 this.emailPasswordConfig.equals(other.emailPasswordConfig) &&
                 this.passwordlessConfig.equals(other.passwordlessConfig) &&
                 this.thirdPartyConfig.equals(other.thirdPartyConfig) &&
-                this.getCoreConfig().equals(other.getCoreConfig());
+                this.coreConfig.equals(other.coreConfig);
     }
 
     @Override

@@ -16,20 +16,30 @@
 
 package io.supertokens.pluginInterface.multitenancy;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 public class TenantIdentifier {
     public static final String DEFAULT_TENANT_ID = "public";
     public static final String DEFAULT_APP_ID = "public";
     public static final String DEFAULT_CONNECTION_URI = "";
+
+    @Nullable
     private final String connectionUriDomain;
+
+    @Nullable
     private final String tenantId;
+
+    @Nullable
     private final String appId;
 
-    public TenantIdentifier(String connectionUriDomain, String appId, String tenantId) {
+    public TenantIdentifier(@Nullable String connectionUriDomain, @Nullable String appId, @Nullable String tenantId) {
         this.connectionUriDomain = connectionUriDomain;
         this.tenantId = tenantId;
         this.appId = appId;
     }
 
+    @Nonnull
     public String getTenantId() {
         if (this.tenantId == null || this.tenantId.equals("")) {
             return DEFAULT_TENANT_ID;
@@ -37,6 +47,7 @@ public class TenantIdentifier {
         return this.tenantId.trim().toLowerCase();
     }
 
+    @Nonnull
     public String getAppId() {
         if (this.appId == null || this.appId.equals("")) {
             return DEFAULT_APP_ID;
@@ -44,6 +55,7 @@ public class TenantIdentifier {
         return this.appId.trim().toLowerCase();
     }
 
+    @Nonnull
     public String getConnectionUriDomain() {
         if (this.connectionUriDomain == null) {
             return DEFAULT_CONNECTION_URI;
