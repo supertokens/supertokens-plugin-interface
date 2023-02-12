@@ -72,7 +72,6 @@ public class ThirdPartyConfig {
         @Nullable
         public final String oidcDiscoveryEndpoint;
 
-        @Nullable
         public final boolean requireEmail;
 
         @Nullable
