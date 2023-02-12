@@ -27,7 +27,7 @@ public class ThirdPartyConfig {
 
     public ThirdPartyConfig(boolean enabled, Provider[] providers) {
         this.enabled = enabled;
-        this.providers = providers;
+        this.providers = providers == null ? new Provider[0] : providers;
     }
 
     public Provider[] getProviders() {
@@ -38,20 +38,44 @@ public class ThirdPartyConfig {
     }
 
     public class Provider {
-        public String thirdPartyId;
-        public String name;
-        public ProviderClients[] clients;
-        public String authorizationEndpoint;
-        public JsonObject authorizationEndpointQueryParams;
-        public String tokenEndpoint;
-        public JsonObject tokenEndpointBodyParams;
-        public String userInfoEndpoint;
-        public JsonObject userInfoEndpointQueryParams;
-        public JsonObject userInfoEndpointHeaders;
-        public String jwksURI;
-        public String oidcDiscoveryEndpoint;
-        public boolean requireEmail;
-        public UserInfoMap userInfoMap;
+        private final String thirdPartyId;
+        private final String name;
+        private final ProviderClients[] clients;
+        private final String authorizationEndpoint;
+        private final JsonObject authorizationEndpointQueryParams;
+        private final String tokenEndpoint;
+        private final JsonObject tokenEndpointBodyParams;
+        private final String userInfoEndpoint;
+        private JsonObject userInfoEndpointQueryParams;
+        private final JsonObject userInfoEndpointHeaders;
+        private final String jwksURI;
+        private final String oidcDiscoveryEndpoint;
+        public final boolean requireEmail;
+        private final UserInfoMap userInfoMap;
+
+        public Provider(String thirdPartyId, String name, ProviderClients[] clients, String authorizationEndpoint,
+                        JsonObject authorizationEndpointQueryParams, String tokenEndpoint,
+                        JsonObject tokenEndpointBodyParams,
+                        String userInfoEndpoint, JsonObject userInfoEndpointQueryParams,
+                        JsonObject userInfoEndpointHeaders,
+                        String jwksURI, String oidcDiscoveryEndpoint, boolean requireEmail, UserInfoMap userInfoMap) {
+            this.thirdPartyId = thirdPartyId;
+            this.name = name;
+            this.clients = clients == null ? new ProviderClients[0] : clients;
+            this.authorizationEndpoint = authorizationEndpoint == null ? "" : authorizationEndpoint;
+            this.authorizationEndpointQueryParams =
+                    authorizationEndpointQueryParams == null ? new JsonObject() : authorizationEndpointQueryParams;
+            this.tokenEndpoint = tokenEndpoint == null ? "" : tokenEndpoint;
+            this.tokenEndpointBodyParams = tokenEndpointBodyParams == null ? new JsonObject() : tokenEndpointBodyParams;
+            this.userInfoEndpoint = userInfoEndpoint == null ? "" : userInfoEndpoint;
+            this.userInfoEndpointQueryParams =
+                    userInfoEndpointQueryParams == null ? new JsonObject() : userInfoEndpointQueryParams;
+            this.userInfoEndpointHeaders = userInfoEndpointHeaders == null ? new JsonObject() : userInfoEndpointHeaders;
+            this.jwksURI = jwksURI == null ? "" : jwksURI;
+            this.oidcDiscoveryEndpoint = oidcDiscoveryEndpoint == null ? "" : oidcDiscoveryEndpoint;
+            this.requireEmail = requireEmail;
+            this.userInfoMap = userInfoMap == null ? new UserInfoMap(null, null) : userInfoMap;
+        }
 
         @Override
         public boolean equals(Object other) {
@@ -77,12 +101,22 @@ public class ThirdPartyConfig {
     }
 
     public class ProviderClients {
-        public String clientType;
-        public String clientId;
-        public String clientSecret;
-        public String[] scope;
-        public boolean forcePKCE;
-        public JsonObject additionalConfig;
+        private final String clientType;
+        private final String clientId;
+        private final String clientSecret;
+        private final String[] scope;
+        private final boolean forcePKCE;
+        private final JsonObject additionalConfig;
+
+        public ProviderClients(String clientType, String clientId, String clientSecret, String[] scope,
+                               boolean forcePKCE, JsonObject additionalConfig) {
+            this.clientType = clientType == null ? "" : clientType;
+            this.clientId = clientId == null ? "" : clientId;
+            this.clientSecret = clientSecret == null ? "" : clientSecret;
+            this.scope = scope == null ? new String[0] : scope;
+            this.forcePKCE = forcePKCE;
+            this.additionalConfig = additionalConfig == null ? new JsonObject() : additionalConfig;
+        }
 
         @Override
         public boolean equals(Object other) {
