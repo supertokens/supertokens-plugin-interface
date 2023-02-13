@@ -18,6 +18,7 @@ package io.supertokens.pluginInterface.useridmapping;
 
 import io.supertokens.pluginInterface.Storage;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
+import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
 import io.supertokens.pluginInterface.useridmapping.exception.UnknownSuperTokensUserIdException;
 import io.supertokens.pluginInterface.useridmapping.exception.UserIdMappingAlreadyExistsException;
 
@@ -27,21 +28,26 @@ import java.util.HashMap;
 
 public interface UserIdMappingStorage extends Storage {
 
-    void createUserIdMapping(String superTokensUserId, String externalUserId, @Nullable String externalUserIdInfo)
+    void createUserIdMapping(TenantIdentifier tenantIdentifier, String superTokensUserId, String externalUserId,
+                             @Nullable String externalUserIdInfo)
             throws StorageQueryException, UnknownSuperTokensUserIdException, UserIdMappingAlreadyExistsException;
 
-    boolean deleteUserIdMapping(String userId, boolean isSuperTokensUserId) throws StorageQueryException;
+    boolean deleteUserIdMapping(TenantIdentifier tenantIdentifier, String userId, boolean isSuperTokensUserId)
+            throws StorageQueryException;
 
-    UserIdMapping getUserIdMapping(String userId, boolean isSuperTokensUserId) throws StorageQueryException;
+    UserIdMapping getUserIdMapping(TenantIdentifier tenantIdentifier, String userId, boolean isSuperTokensUserId)
+            throws StorageQueryException;
 
-    UserIdMapping[] getUserIdMapping(String userId) throws StorageQueryException;
+    UserIdMapping[] getUserIdMapping(TenantIdentifier tenantIdentifier, String userId) throws StorageQueryException;
 
-    boolean updateOrDeleteExternalUserIdInfo(String userId, boolean isSuperTokensUserId,
-            @Nullable String externalUserIdInfo) throws StorageQueryException;
+    boolean updateOrDeleteExternalUserIdInfo(TenantIdentifier tenantIdentifier, String userId,
+                                             boolean isSuperTokensUserId,
+                                             @Nullable String externalUserIdInfo) throws StorageQueryException;
 
     // This function will be used to retrieve the userId mapping for a list of userIds. The key of the HashMap will be
     // superTokensUserId and the value will be the externalUserId. If a mapping does not exist for an input userId,
     // it will not be in a part of the returned HashMap
-    HashMap<String, String> getUserIdMappingForSuperTokensIds(ArrayList<String> userIds) throws StorageQueryException;
+    HashMap<String, String> getUserIdMappingForSuperTokensIds(TenantIdentifier tenantIdentifier,
+                                                              ArrayList<String> userIds) throws StorageQueryException;
 
 }

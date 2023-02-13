@@ -20,17 +20,21 @@ package io.supertokens.pluginInterface.authRecipe;
 import io.supertokens.pluginInterface.RECIPE_ID;
 import io.supertokens.pluginInterface.Storage;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
+import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public interface AuthRecipeStorage extends Storage {
 
-    long getUsersCount(@Nullable RECIPE_ID[] includeRecipeIds) throws StorageQueryException;
-
-    AuthRecipeUserInfo[] getUsers(@Nonnull Integer limit, @Nonnull String timeJoinedOrder,
-            @Nullable RECIPE_ID[] includeRecipeIds, @Nullable String userId, @Nullable Long timeJoined)
+    long getUsersCount(TenantIdentifier tenantIdentifier, @Nullable RECIPE_ID[] includeRecipeIds)
             throws StorageQueryException;
 
-    boolean doesUserIdExist(String userId) throws StorageQueryException;
+    AuthRecipeUserInfo[] getUsers(TenantIdentifier tenantIdentifier, @Nonnull Integer limit,
+                                  @Nonnull String timeJoinedOrder,
+                                  @Nullable RECIPE_ID[] includeRecipeIds, @Nullable String userId,
+                                  @Nullable Long timeJoined)
+            throws StorageQueryException;
+
+    boolean doesUserIdExist(TenantIdentifier tenantIdentifier, String userId) throws StorageQueryException;
 }
