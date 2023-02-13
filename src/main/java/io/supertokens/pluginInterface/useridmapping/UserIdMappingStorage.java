@@ -28,6 +28,9 @@ import java.util.HashMap;
 
 public interface UserIdMappingStorage extends Storage {
 
+    // whilst these take the full tenantIdentifier as an input, they ignore the tenantId
+    // cause user ID mapping is per app and not per tenant.
+
     void createUserIdMapping(TenantIdentifier tenantIdentifier, String superTokensUserId, String externalUserId,
                              @Nullable String externalUserIdInfo)
             throws StorageQueryException, UnknownSuperTokensUserIdException, UserIdMappingAlreadyExistsException;
