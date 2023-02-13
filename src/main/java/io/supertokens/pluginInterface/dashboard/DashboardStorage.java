@@ -26,5 +26,5 @@ public interface DashboardStorage extends Storage {
 
     boolean revokeSessionWithSessionId(String sessionId) throws StorageQueryException;
 
-    void revokeExpiredSessions(long expiry) throws StorageQueryException;
+    void revokeExpiredSessions() throws StorageQueryException;
 }
