@@ -15,15 +15,15 @@ public interface TOTPStorage extends AuthRecipeStorage {
 
         // Verify the device with the given name:
         void markDeviceAsVerified(String userId, String deviceName)
-                        throws StorageQueryException, TotpNotEnabledException, UnknownDeviceException;
+                        throws StorageQueryException, UnknownDeviceException;
 
         // Delete the device with the given name:
         void deleteDevice(String userId, String deviceName)
-                        throws StorageQueryException, TotpNotEnabledException, UnknownDeviceException;
+                        throws StorageQueryException, UnknownDeviceException;
 
         // update device name:
         void updateDeviceName(String userId, String oldDeviceName, String newDeviceName)
-                        throws StorageQueryException, TotpNotEnabledException, DeviceAlreadyExistsException,
+                        throws StorageQueryException, DeviceAlreadyExistsException,
                         UnknownDeviceException;
 
         // Get the devices
@@ -36,7 +36,7 @@ public interface TOTPStorage extends AuthRecipeStorage {
 
         // Get totp used code based on userId:
         TOTPUsedCode[] getUsedCodes(String userId)
-                        throws StorageQueryException, TotpNotEnabledException;
+                        throws StorageQueryException;
 
         // Remove expired codes from totp used codes:
         void removeExpiredCodes()
