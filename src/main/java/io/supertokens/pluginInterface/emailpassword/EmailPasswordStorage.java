@@ -41,6 +41,8 @@ public interface EmailPasswordStorage extends AuthRecipeStorage {
     PasswordResetTokenInfo getPasswordResetTokenInfo(TenantIdentifier tenantIdentifier, String token)
             throws StorageQueryException;
 
+    // we purposely do not add TenantIdentifier to this query cause
+    // this is called from a cronjob that runs per user pool ID
     void deleteExpiredPasswordResetTokens() throws StorageQueryException;
 
     PasswordResetTokenInfo[] getAllPasswordResetTokenInfoForUser(TenantIdentifier tenantIdentifier, String userId)
