@@ -18,6 +18,7 @@ package io.supertokens.pluginInterface.session.sqlStorage;
 
 import io.supertokens.pluginInterface.KeyValueInfo;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
+import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
 import io.supertokens.pluginInterface.session.SessionInfo;
 import io.supertokens.pluginInterface.session.SessionStorage;
 import io.supertokens.pluginInterface.sqlStorage.SQLStorage;
@@ -25,23 +26,31 @@ import io.supertokens.pluginInterface.sqlStorage.TransactionConnection;
 
 public interface SessionSQLStorage extends SessionStorage, SQLStorage {
 
-    void removeLegacyAccessTokenSigningKey_Transaction(TransactionConnection con) throws StorageQueryException;
-
-    KeyValueInfo getLegacyAccessTokenSigningKey_Transaction(TransactionConnection con) throws StorageQueryException;
-
-    KeyValueInfo[] getAccessTokenSigningKeys_Transaction(TransactionConnection con) throws StorageQueryException;
-
-    void addAccessTokenSigningKey_Transaction(TransactionConnection con, KeyValueInfo info)
+    void removeLegacyAccessTokenSigningKey_Transaction(TenantIdentifier tenantIdentifier, TransactionConnection con)
             throws StorageQueryException;
 
-    KeyValueInfo getRefreshTokenSigningKey_Transaction(TransactionConnection con) throws StorageQueryException;
+    KeyValueInfo getLegacyAccessTokenSigningKey_Transaction(TenantIdentifier tenantIdentifier,
+                                                            TransactionConnection con) throws StorageQueryException;
 
-    void setRefreshTokenSigningKey_Transaction(TransactionConnection con, KeyValueInfo info)
+    KeyValueInfo[] getAccessTokenSigningKeys_Transaction(TenantIdentifier tenantIdentifier, TransactionConnection con)
             throws StorageQueryException;
 
-    SessionInfo getSessionInfo_Transaction(TransactionConnection con, String sessionHandle)
+    void addAccessTokenSigningKey_Transaction(TenantIdentifier tenantIdentifier, TransactionConnection con,
+                                              KeyValueInfo info)
             throws StorageQueryException;
 
-    void updateSessionInfo_Transaction(TransactionConnection con, String sessionHandle, String refreshTokenHash2,
-            long expiry) throws StorageQueryException;
+    KeyValueInfo getRefreshTokenSigningKey_Transaction(TenantIdentifier tenantIdentifier, TransactionConnection con)
+            throws StorageQueryException;
+
+    void setRefreshTokenSigningKey_Transaction(TenantIdentifier tenantIdentifier, TransactionConnection con,
+                                               KeyValueInfo info)
+            throws StorageQueryException;
+
+    SessionInfo getSessionInfo_Transaction(TenantIdentifier tenantIdentifier, TransactionConnection con,
+                                           String sessionHandle)
+            throws StorageQueryException;
+
+    void updateSessionInfo_Transaction(TenantIdentifier tenantIdentifier, TransactionConnection con,
+                                       String sessionHandle, String refreshTokenHash2,
+                                       long expiry) throws StorageQueryException;
 }
