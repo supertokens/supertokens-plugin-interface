@@ -17,6 +17,8 @@
 package io.supertokens.pluginInterface.userroles.sqlStorage;
 
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
+import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
+import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
 import io.supertokens.pluginInterface.sqlStorage.SQLStorage;
 import io.supertokens.pluginInterface.sqlStorage.TransactionConnection;
 import io.supertokens.pluginInterface.userroles.UserRolesStorage;
@@ -25,24 +27,31 @@ import io.supertokens.pluginInterface.userroles.exception.UnknownRoleException;
 public interface UserRolesSQLStorage extends UserRolesStorage, SQLStorage {
 
     // delete role associated with the input userId from the input roles
-    boolean deleteRoleForUser_Transaction(TransactionConnection con, String userId, String role)
+    boolean deleteRoleForUser_Transaction(TenantIdentifier tenantIdentifier, TransactionConnection con, String userId,
+                                          String role)
             throws StorageQueryException;
 
-    // create a new role if it doesnt exist
-    boolean createNewRoleOrDoNothingIfExists_Transaction(TransactionConnection con, String role)
+    // create a new role if it doesnt exist. The reason this has tenantIdentifier is that it also adds the
+    // tenantId <-> role mapping
+    boolean createNewRoleOrDoNothingIfExists_Transaction(TenantIdentifier tenantIdentifier, TransactionConnection con,
+                                                         String role)
             throws StorageQueryException;
 
     // associate a permission with a role
-    void addPermissionToRoleOrDoNothingIfExists_Transaction(TransactionConnection con, String role, String permission)
+    void addPermissionToRoleOrDoNothingIfExists_Transaction(AppIdentifier appIdentifier, TransactionConnection con,
+                                                            String role, String permission)
             throws StorageQueryException, UnknownRoleException;
 
     // delete a permission associated with the input role
-    boolean deletePermissionForRole_Transaction(TransactionConnection con, String role, String permission)
+    boolean deletePermissionForRole_Transaction(AppIdentifier appIdentifier, TransactionConnection con, String role,
+                                                String permission)
             throws StorageQueryException;
 
     // delete all permissions associated with the input role
-    int deleteAllPermissionsForRole_Transaction(TransactionConnection con, String role) throws StorageQueryException;
+    int deleteAllPermissionsForRole_Transaction(AppIdentifier appIdentifier, TransactionConnection con, String role)
+            throws StorageQueryException;
 
     // check if a role exists
-    boolean doesRoleExist_Transaction(TransactionConnection con, String role) throws StorageQueryException;
+    boolean doesRoleExist_Transaction(AppIdentifier appIdentifier, TransactionConnection con, String role)
+            throws StorageQueryException;
 }
