@@ -20,14 +20,16 @@ import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.jwt.JWTRecipeStorage;
 import io.supertokens.pluginInterface.jwt.JWTSigningKeyInfo;
 import io.supertokens.pluginInterface.jwt.exceptions.DuplicateKeyIdException;
+import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
 import io.supertokens.pluginInterface.sqlStorage.SQLStorage;
 import io.supertokens.pluginInterface.sqlStorage.TransactionConnection;
 
 import java.util.List;
 
 public interface JWTRecipeSQLStorage extends JWTRecipeStorage, SQLStorage {
-    List<JWTSigningKeyInfo> getJWTSigningKeys_Transaction(TransactionConnection con) throws StorageQueryException;
+    List<JWTSigningKeyInfo> getJWTSigningKeys_Transaction(AppIdentifier appIdentifier, TransactionConnection con)
+            throws StorageQueryException;
 
-    void setJWTSigningKey_Transaction(TransactionConnection con, JWTSigningKeyInfo info)
+    void setJWTSigningKey_Transaction(AppIdentifier appIdentifier, TransactionConnection con, JWTSigningKeyInfo info)
             throws StorageQueryException, DuplicateKeyIdException;
 }

@@ -19,8 +19,7 @@ package io.supertokens.pluginInterface.multitenancy;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class TenantIdentifier {
-    public static final String DEFAULT_TENANT_ID = "public";
+public class AppIdentifier {
     public static final String DEFAULT_APP_ID = "public";
     public static final String DEFAULT_CONNECTION_URI = "";
 
@@ -28,23 +27,11 @@ public class TenantIdentifier {
     private final String connectionUriDomain;
 
     @Nullable
-    private final String tenantId;
-
-    @Nullable
     private final String appId;
 
-    public TenantIdentifier(@Nullable String connectionUriDomain, @Nullable String appId, @Nullable String tenantId) {
+    public AppIdentifier(@Nullable String connectionUriDomain, @Nullable String appId) {
         this.connectionUriDomain = connectionUriDomain;
-        this.tenantId = tenantId;
         this.appId = appId;
-    }
-
-    @Nonnull
-    public String getTenantId() {
-        if (this.tenantId == null || this.tenantId.equals("")) {
-            return DEFAULT_TENANT_ID;
-        }
-        return this.tenantId.trim().toLowerCase();
     }
 
     @Nonnull
@@ -65,22 +52,21 @@ public class TenantIdentifier {
 
     @Override
     public boolean equals(Object other) {
-        if (other instanceof TenantIdentifier) {
-            TenantIdentifier otherTenantIdentifier = (TenantIdentifier) other;
-            return otherTenantIdentifier.getTenantId().equals(this.getTenantId()) &&
-                    otherTenantIdentifier.getConnectionUriDomain().equals(this.getConnectionUriDomain()) &&
-                    otherTenantIdentifier.getAppId().equals(this.getAppId());
+        if (other instanceof AppIdentifier) {
+            AppIdentifier otherAppIdentifier = (AppIdentifier) other;
+            return otherAppIdentifier.getConnectionUriDomain().equals(this.getConnectionUriDomain()) &&
+                    otherAppIdentifier.getAppId().equals(this.getAppId());
         }
         return false;
     }
 
     @Override
     public int hashCode() {
-        return (this.getTenantId() + "|" + this.getConnectionUriDomain() + "|" +
+        return (this.getConnectionUriDomain() + "|" +
                 this.getAppId()).hashCode();
     }
 
-    public AppIdentifier toAppIdentifier() {
-        return new AppIdentifier(this.getConnectionUriDomain(), this.getAppId());
+    public TenantIdentifier getAsPublicTenantIdentifier() {
+        return new TenantIdentifier(this.getConnectionUriDomain(), this.getAppId(), null);
     }
 }

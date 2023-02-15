@@ -20,6 +20,7 @@ package io.supertokens.pluginInterface.authRecipe;
 import io.supertokens.pluginInterface.RECIPE_ID;
 import io.supertokens.pluginInterface.Storage;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
+import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
 import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
 
 import javax.annotation.Nonnull;
@@ -36,5 +37,5 @@ public interface AuthRecipeStorage extends Storage {
                                   @Nullable Long timeJoined)
             throws StorageQueryException;
 
-    boolean doesUserIdExist(TenantIdentifier tenantIdentifier, String userId) throws StorageQueryException;
+    boolean doesUserIdExist(AppIdentifier appIdentifier, String userId) throws StorageQueryException;
 }

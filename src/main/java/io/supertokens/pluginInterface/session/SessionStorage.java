@@ -18,6 +18,7 @@ package io.supertokens.pluginInterface.session;
 
 import com.google.gson.JsonObject;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
+import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
 import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
 import io.supertokens.pluginInterface.nonAuthRecipe.NonAuthRecipeStorage;
 
@@ -48,5 +49,5 @@ public interface SessionStorage extends NonAuthRecipeStorage {
                       @Nullable JsonObject jwtPayload)
             throws StorageQueryException;
 
-    void removeAccessTokenSigningKeysBefore(TenantIdentifier tenantIdentifier, long time) throws StorageQueryException;
+    void removeAccessTokenSigningKeysBefore(AppIdentifier appIdentifier, long time) throws StorageQueryException;
 }

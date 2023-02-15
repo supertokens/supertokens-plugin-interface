@@ -21,6 +21,7 @@ import com.google.gson.JsonObject;
 import io.supertokens.pluginInterface.exceptions.DbInitException;
 import io.supertokens.pluginInterface.exceptions.InvalidConfigException;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
+import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
 import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
 
 import java.util.Set;
@@ -69,7 +70,7 @@ public interface Storage {
 
     // this function will be used in the createUserIdMapping and deleteUserIdMapping functions to check if the userId is
     // being used in NonAuth recipes.
-    boolean isUserIdBeingUsedInNonAuthRecipe(TenantIdentifier tenantIdentifier, String className, String userId)
+    boolean isUserIdBeingUsedInNonAuthRecipe(AppIdentifier appIdentifier, String className, String userId)
             throws StorageQueryException;
 
     // to be used for testing purposes only. This function will add dummy data to non-auth tables.
