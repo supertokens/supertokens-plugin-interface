@@ -29,7 +29,7 @@ public interface SessionStorage extends NonAuthRecipeStorage {
                           String refreshTokenHash2, JsonObject userDataInDatabase,
                           long expiry, JsonObject userDataInJWT, long createdAtTime) throws StorageQueryException;
 
-    void deleteSessionsOfUser(TenantIdentifier tenantIdentifier, String userId) throws StorageQueryException;
+    void deleteSessionsOfUser(AppIdentifier appIdentifier, String userId) throws StorageQueryException;
 
     // return number of rows else throw UnsupportedOperationException
     int getNumberOfSessions(TenantIdentifier tenantIdentifier) throws StorageQueryException;

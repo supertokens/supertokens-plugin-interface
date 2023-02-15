@@ -38,4 +38,6 @@ public interface AuthRecipeStorage extends Storage {
             throws StorageQueryException;
 
     boolean doesUserIdExist(AppIdentifier appIdentifier, String userId) throws StorageQueryException;
+
+    boolean doesUserIdExist(TenantIdentifier tenantIdentifierIdentifier, String userId) throws StorageQueryException;
 }
