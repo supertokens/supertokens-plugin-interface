@@ -21,22 +21,36 @@ import io.supertokens.pluginInterface.emailpassword.PasswordResetTokenInfo;
 import io.supertokens.pluginInterface.emailpassword.UserInfo;
 import io.supertokens.pluginInterface.emailpassword.exceptions.DuplicateEmailException;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
+import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
+import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
 import io.supertokens.pluginInterface.sqlStorage.SQLStorage;
 import io.supertokens.pluginInterface.sqlStorage.TransactionConnection;
 
 public interface EmailPasswordSQLStorage extends EmailPasswordStorage, SQLStorage {
 
-    PasswordResetTokenInfo[] getAllPasswordResetTokenInfoForUser_Transaction(TransactionConnection con, String userId)
+    // all password reset related stuff is app wide cause the same user ID can be shared across tenants,
+    // and updating / resetting a user's password should apply to all those tenants.
+
+    PasswordResetTokenInfo[] getAllPasswordResetTokenInfoForUser_Transaction(AppIdentifier appIdentifier,
+                                                                             TransactionConnection con, String userId)
             throws StorageQueryException;
 
-    void deleteAllPasswordResetTokensForUser_Transaction(TransactionConnection con, String userId)
+    void deleteAllPasswordResetTokensForUser_Transaction(AppIdentifier appIdentifier, TransactionConnection con,
+                                                         String userId)
             throws StorageQueryException;
 
-    void updateUsersPassword_Transaction(TransactionConnection con, String userId, String newPassword)
+    void updateUsersPassword_Transaction(AppIdentifier appIdentifier, TransactionConnection con, String userId,
+                                         String newPassword)
             throws StorageQueryException;
 
-    void updateUsersEmail_Transaction(TransactionConnection conn, String userId, String email)
+    void updateUsersEmail_Transaction(AppIdentifier appIdentifier, TransactionConnection conn, String userId,
+                                      String email)
             throws StorageQueryException, DuplicateEmailException;
 
-    UserInfo getUserInfoUsingId_Transaction(TransactionConnection con, String userId) throws StorageQueryException;
+    // this is tenant specific, but doesn't really need to be since the same user ID should yield the
+    // same userInfo object across tenants. The only reason this takes a TenantIdentifier is cause
+    // then in the query we get an exact result as opposed to an array of users (and then we have to pick the 0th
+    // element)
+    UserInfo getUserInfoUsingId_Transaction(TenantIdentifier appIdentifier, TransactionConnection con, String userId)
+            throws StorageQueryException;
 }
