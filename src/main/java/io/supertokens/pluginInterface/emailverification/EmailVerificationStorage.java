@@ -16,29 +16,31 @@
 
 package io.supertokens.pluginInterface.emailverification;
 
-import io.supertokens.pluginInterface.Storage;
 import io.supertokens.pluginInterface.emailverification.exception.DuplicateEmailVerificationTokenException;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
+import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
 import io.supertokens.pluginInterface.nonAuthRecipe.NonAuthRecipeStorage;
 
 public interface EmailVerificationStorage extends NonAuthRecipeStorage {
 
-    void addEmailVerificationToken(EmailVerificationTokenInfo emailVerificationInfo)
+    void addEmailVerificationToken(AppIdentifier appIdentifier, EmailVerificationTokenInfo emailVerificationInfo)
             throws StorageQueryException, DuplicateEmailVerificationTokenException;
 
-    EmailVerificationTokenInfo getEmailVerificationTokenInfo(String token) throws StorageQueryException;
+    EmailVerificationTokenInfo getEmailVerificationTokenInfo(AppIdentifier appIdentifier, String token)
+            throws StorageQueryException;
 
-    void deleteEmailVerificationUserInfo(String userId) throws StorageQueryException;
+    void deleteEmailVerificationUserInfo(AppIdentifier appIdentifier, String userId) throws StorageQueryException;
 
-    void revokeAllTokens(String userId, String email) throws StorageQueryException;
+    void revokeAllTokens(AppIdentifier appIdentifier, String userId, String email) throws StorageQueryException;
 
-    void unverifyEmail(String userId, String email) throws StorageQueryException;
+    void unverifyEmail(AppIdentifier appIdentifier, String userId, String email) throws StorageQueryException;
 
     void deleteExpiredEmailVerificationTokens() throws StorageQueryException;
 
-    EmailVerificationTokenInfo[] getAllEmailVerificationTokenInfoForUser(String userId, String email)
+    EmailVerificationTokenInfo[] getAllEmailVerificationTokenInfoForUser(AppIdentifier appIdentifier, String userId,
+                                                                         String email)
             throws StorageQueryException;
 
-    boolean isEmailVerified(String userId, String email) throws StorageQueryException;
+    boolean isEmailVerified(AppIdentifier appIdentifier, String userId, String email) throws StorageQueryException;
 
 }
