@@ -22,7 +22,6 @@ import io.supertokens.pluginInterface.emailpassword.UserInfo;
 import io.supertokens.pluginInterface.emailpassword.exceptions.DuplicateEmailException;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
-import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
 import io.supertokens.pluginInterface.sqlStorage.SQLStorage;
 import io.supertokens.pluginInterface.sqlStorage.TransactionConnection;
 
@@ -47,10 +46,6 @@ public interface EmailPasswordSQLStorage extends EmailPasswordStorage, SQLStorag
                                       String email)
             throws StorageQueryException, DuplicateEmailException;
 
-    // this is tenant specific, but doesn't really need to be since the same user ID should yield the
-    // same userInfo object across tenants. The only reason this takes a TenantIdentifier is cause
-    // then in the query we get an exact result as opposed to an array of users (and then we have to pick the 0th
-    // element)
-    UserInfo getUserInfoUsingId_Transaction(TenantIdentifier appIdentifier, TransactionConnection con, String userId)
+    UserInfo getUserInfoUsingId_Transaction(AppIdentifier appIdentifier, TransactionConnection con, String userId)
             throws StorageQueryException;
 }

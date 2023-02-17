@@ -33,11 +33,8 @@ public interface EmailPasswordStorage extends AuthRecipeStorage {
 
     // this deletion of a user is app wide since the same user ID can be shared across tenants
     void deleteEmailPasswordUser(AppIdentifier appIdentifier, String userId) throws StorageQueryException;
-
-    // Here we pass TenantIdentifier and not AppIdentifier cause the query will yield an exact row,
-    // as opposed to AppIdentifier in which it would give us an array of users and we would then have
-    // to pick the 0th element from it.
-    UserInfo getUserInfoUsingId(TenantIdentifier appIdentifier, String id) throws StorageQueryException;
+    
+    UserInfo getUserInfoUsingId(AppIdentifier appIdentifier, String id) throws StorageQueryException;
 
     // Here we pass in TenantIdentifier cause the same email can be shared across tenants, but yield different
     // user IDs
