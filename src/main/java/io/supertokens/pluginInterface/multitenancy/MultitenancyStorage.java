@@ -48,8 +48,8 @@ public interface MultitenancyStorage extends Storage {
     void addRoleToTenant(TenantIdentifier tenantIdentifier, String role) throws TenantOrAppNotFoundException,
             UnknownRoleException;
 
-    void markAppIdAsDeleted(String appId) throws TenantOrAppNotFoundException;
+    void deleteAppId(String appId) throws TenantOrAppNotFoundException;
 
-    void markConnectionUriDomainAsDeleted(String connectionUriDomain) throws TenantOrAppNotFoundException;
+    void deleteConnectionUriDomain(String connectionUriDomain) throws TenantOrAppNotFoundException;
 
 }
