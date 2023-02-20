@@ -8,9 +8,9 @@ public class TOTPDevice {
     public final int skew;
     public final boolean verified;
 
-    public TOTPDevice(String deviceName, String userId, String secretKey, int period, int skew, boolean verified) {
-        this.deviceName = deviceName;
+    public TOTPDevice(String userId, String deviceName, String secretKey, int period, int skew, boolean verified) {
         this.userId = userId;
+        this.deviceName = deviceName;
         this.secretKey = secretKey;
         this.period = period;
         this.skew = skew;
