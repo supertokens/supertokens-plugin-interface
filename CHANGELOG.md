@@ -7,6 +7,8 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Dashboard Recipe Interface
+
 ## [2.19.0] - 2022-11-07
 
 - Updates version so that new plugin versions can only be used by new core versions due to dependency changes.
