@@ -14,7 +14,7 @@ public interface TOTPStorage extends AuthRecipeStorage {
                         throws StorageQueryException, DeviceAlreadyExistsException;
 
         // Verify the device with the given name:
-        void markDeviceAsVerified(String userId, String deviceName)
+        boolean markDeviceAsVerified(String userId, String deviceName)
                         throws StorageQueryException, UnknownDeviceException;
 
         // Delete the device with the given name:
