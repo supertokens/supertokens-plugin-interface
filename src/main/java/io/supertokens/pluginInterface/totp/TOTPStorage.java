@@ -34,8 +34,8 @@ public interface TOTPStorage extends AuthRecipeStorage {
         boolean insertUsedCode(TOTPUsedCode code)
                         throws StorageQueryException, TotpNotEnabledException;
 
-        // Get totp used code based on userId:
-        TOTPUsedCode[] getUsedCodes(String userId)
+        // Get totp used code based on userId that haven't expired yet:
+        TOTPUsedCode[] getNonExpiredUsedCodes(String userId)
                         throws StorageQueryException;
 
         // Remove expired codes from totp used codes:

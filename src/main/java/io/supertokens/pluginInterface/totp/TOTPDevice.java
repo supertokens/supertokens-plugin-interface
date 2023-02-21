@@ -16,4 +16,21 @@ public class TOTPDevice {
         this.skew = skew;
         this.verified = verified;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        if (!(obj instanceof TOTPDevice)) {
+            return false;
+        }
+        TOTPDevice other = (TOTPDevice) obj;
+        return this.userId.equals(other.userId) && this.deviceName.equals(other.deviceName)
+                && this.secretKey.equals(other.secretKey) && this.period == other.period && this.skew == other.skew
+                && this.verified == other.verified;
+    }
 }
