@@ -9,36 +9,36 @@ import io.supertokens.pluginInterface.totp.exception.TotpNotEnabledException;
 import io.supertokens.pluginInterface.totp.exception.UnknownDeviceException;
 
 public interface TOTPStorage extends AuthRecipeStorage {
-        // Create a new device:
+        /** Create a new device and a new user if the user does not exist: */
         void createDevice(TOTPDevice device)
                         throws StorageQueryException, DeviceAlreadyExistsException;
 
-        // Verify the device with the given name:
+        /** Verify a user's device with the given name: */
         boolean markDeviceAsVerified(String userId, String deviceName)
                         throws StorageQueryException, UnknownDeviceException;
 
-        // Delete the device with the given name:
+        /** Delete device and also delete user if deleting the last device */
         void deleteDevice(String userId, String deviceName)
                         throws StorageQueryException, UnknownDeviceException;
 
-        // update device name:
+        /** Update device name of a device: */
         void updateDeviceName(String userId, String oldDeviceName, String newDeviceName)
                         throws StorageQueryException, DeviceAlreadyExistsException,
                         UnknownDeviceException;
 
-        // Get the devices
+        /** Get the devices for a user */
         TOTPDevice[] getDevices(String userId)
                         throws StorageQueryException;
 
-        // Insert a used TOTP code:
-        boolean insertUsedCode(TOTPUsedCode code)
+        /** Insert a used TOTP code for an existing user: */
+        void insertUsedCode(TOTPUsedCode code)
                         throws StorageQueryException, TotpNotEnabledException;
 
-        // Get totp used code based on userId that haven't expired yet:
+        /** Get totp used codes for user that haven't expired yet: */
         TOTPUsedCode[] getNonExpiredUsedCodes(String userId)
                         throws StorageQueryException;
 
-        // Remove expired codes from totp used codes:
+        /** Remove expired codes from totp used codes for all users: */
         void removeExpiredCodes()
                         throws StorageQueryException;
 }
