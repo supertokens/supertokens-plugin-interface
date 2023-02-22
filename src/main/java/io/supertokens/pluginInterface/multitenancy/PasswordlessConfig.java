@@ -16,11 +16,21 @@
 
 package io.supertokens.pluginInterface.multitenancy;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonPrimitive;
+
 public class PasswordlessConfig {
     public boolean enabled;
 
     public PasswordlessConfig(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public static PasswordlessConfig fromJSONString(String json) {
+        JsonParser jp = new JsonParser();
+        JsonObject obj = jp.parse(json).getAsJsonObject();
+        return new PasswordlessConfig(obj.get("enabled").getAsBoolean());
     }
 
     @Override
@@ -30,5 +40,11 @@ public class PasswordlessConfig {
             return otherPasswordlessConfig.enabled == this.enabled;
         }
         return false;
+    }
+
+    public JsonObject toJSON() {
+        JsonObject result = new JsonObject();
+        result.add("enabled", new JsonPrimitive(enabled));
+        return result;
     }
 }

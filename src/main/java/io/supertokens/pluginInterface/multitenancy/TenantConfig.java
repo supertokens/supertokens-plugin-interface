@@ -72,4 +72,12 @@ public class TenantConfig {
     public int hashCode() {
         return tenantIdentifier.hashCode();
     }
+
+    public JsonObject toJSON() {
+        JsonObject result = new JsonObject();
+        result.add("emailPassword", emailPasswordConfig.toJSON());
+        result.add("passwordless", passwordlessConfig.toJSON());
+        result.add("thirdParty", thirdPartyConfig.toJSON());
+        return result;
+    }
 }

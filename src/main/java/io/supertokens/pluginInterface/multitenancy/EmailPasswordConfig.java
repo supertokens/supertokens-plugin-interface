@@ -16,11 +16,21 @@
 
 package io.supertokens.pluginInterface.multitenancy;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonPrimitive;
+
 public class EmailPasswordConfig {
     public boolean enabled;
 
     public EmailPasswordConfig(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public static EmailPasswordConfig fromJSONString(String json) {
+        JsonParser jp = new JsonParser();
+        JsonObject obj = jp.parse(json).getAsJsonObject();
+        return new EmailPasswordConfig(obj.get("enabled").getAsBoolean());
     }
 
     @Override
@@ -30,6 +40,12 @@ public class EmailPasswordConfig {
             return otherEmailPasswordConfig.enabled == this.enabled;
         }
         return false;
+    }
+
+    public JsonObject toJSON() {
+        JsonObject result = new JsonObject();
+        result.add("enabled", new JsonPrimitive(enabled));
+        return result;
     }
 
 }

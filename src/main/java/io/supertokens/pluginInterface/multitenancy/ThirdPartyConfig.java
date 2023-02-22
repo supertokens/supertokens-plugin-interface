@@ -16,7 +16,10 @@
 
 package io.supertokens.pluginInterface.multitenancy;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonPrimitive;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -32,6 +35,12 @@ public class ThirdPartyConfig {
     public ThirdPartyConfig(boolean enabled, @Nullable Provider[] providers) {
         this.enabled = enabled;
         this.providers = providers == null ? new Provider[0] : providers;
+    }
+
+    public static ThirdPartyConfig fromJSONString(String json) {
+        JsonParser jp = new JsonParser();
+        JsonObject obj = jp.parse(json).getAsJsonObject();
+        return new ThirdPartyConfig(obj.get("enabled").getAsBoolean(), new Provider[]{}); // TODO
     }
 
     public static class Provider {
@@ -232,4 +241,11 @@ public class ThirdPartyConfig {
         return false;
     }
 
+    public JsonObject toJSON() {
+        JsonObject result = new JsonObject();
+        result.add("enabled", new JsonPrimitive(enabled));
+        JsonArray providers = new JsonArray(); // TODO
+        result.add("providers", providers);
+        return result;
+    }
 }
