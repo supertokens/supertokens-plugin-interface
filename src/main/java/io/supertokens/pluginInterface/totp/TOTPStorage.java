@@ -41,4 +41,8 @@ public interface TOTPStorage extends AuthRecipeStorage {
         /** Remove expired codes from totp used codes for all users: */
         void removeExpiredCodes()
                         throws StorageQueryException;
+
+        /** Delete all data associated with the user: */
+        void deleteAllDataForUser(String userId)
+                        throws StorageQueryException;
 }
