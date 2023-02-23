@@ -41,7 +41,7 @@ public interface MultitenancyStorage extends Storage {
 
     void deleteConnectionUriDomainMapping(TenantIdentifier tenantIdentifier) throws TenantOrAppNotFoundException;
 
-    TenantConfig[] getAllTenants();
+    TenantConfig[] getAllTenants() throws StorageQueryException;
 
     void addUserIdToTenant(TenantIdentifier tenantIdentifier, String userId) throws TenantOrAppNotFoundException,
             UnknownUserIdException;
