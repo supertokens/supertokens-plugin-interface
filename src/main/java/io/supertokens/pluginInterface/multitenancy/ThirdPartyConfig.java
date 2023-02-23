@@ -43,7 +43,7 @@ public class ThirdPartyConfig {
         public final String name;
 
         @Nullable
-        public final ProviderClients[] clients;
+        public final ProviderClient[] clients;
 
         @Nullable
         public final String authorizationEndpoint;
@@ -77,7 +77,7 @@ public class ThirdPartyConfig {
         @Nullable
         public final UserInfoMap userInfoMap;
 
-        public Provider(@Nonnull String thirdPartyId, @Nonnull String name, @Nullable ProviderClients[] clients,
+        public Provider(@Nonnull String thirdPartyId, @Nonnull String name, @Nullable ProviderClient[] clients,
                         @Nullable String authorizationEndpoint,
                         @Nullable JsonObject authorizationEndpointQueryParams, @Nullable String tokenEndpoint,
                         @Nullable JsonObject tokenEndpointBodyParams,
@@ -125,7 +125,7 @@ public class ThirdPartyConfig {
         }
     }
 
-    public static class ProviderClients {
+    public static class ProviderClient {
 
         @Nullable
         public final String clientType;
@@ -144,9 +144,9 @@ public class ThirdPartyConfig {
         @Nullable
         public final JsonObject additionalConfig;
 
-        public ProviderClients(@Nullable String clientType, @Nonnull String clientId, @Nullable String clientSecret,
-                               @Nullable String[] scope,
-                               boolean forcePKCE, @Nullable JsonObject additionalConfig) {
+        public ProviderClient(@Nullable String clientType, @Nonnull String clientId, @Nullable String clientSecret,
+                              @Nullable String[] scope,
+                              boolean forcePKCE, @Nullable JsonObject additionalConfig) {
             this.clientType = clientType;
             this.clientId = clientId;
             this.clientSecret = clientSecret;
@@ -157,14 +157,14 @@ public class ThirdPartyConfig {
 
         @Override
         public boolean equals(Object other) {
-            if (other instanceof ProviderClients) {
-                ProviderClients otherProviderClients = (ProviderClients) other;
-                return Objects.equals(otherProviderClients.clientType, this.clientType) &&
-                        otherProviderClients.clientId.equals(this.clientId) &&
-                        Objects.equals(otherProviderClients.clientSecret, this.clientSecret) &&
-                        Arrays.equals(otherProviderClients.scope, this.scope) &&
-                        otherProviderClients.forcePKCE == this.forcePKCE &&
-                        Objects.equals(otherProviderClients.additionalConfig, this.additionalConfig);
+            if (other instanceof ProviderClient) {
+                ProviderClient otherProviderClient = (ProviderClient) other;
+                return Objects.equals(otherProviderClient.clientType, this.clientType) &&
+                        otherProviderClient.clientId.equals(this.clientId) &&
+                        Objects.equals(otherProviderClient.clientSecret, this.clientSecret) &&
+                        Arrays.equals(otherProviderClient.scope, this.scope) &&
+                        otherProviderClient.forcePKCE == this.forcePKCE &&
+                        Objects.equals(otherProviderClient.additionalConfig, this.additionalConfig);
             }
             return false;
         }
