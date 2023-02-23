@@ -14,7 +14,7 @@ public interface TOTPStorage extends AuthRecipeStorage {
                         throws StorageQueryException, DeviceAlreadyExistsException;
 
         /** Verify a user's device with the given name: */
-        boolean markDeviceAsVerified(String userId, String deviceName)
+        void markDeviceAsVerified(String userId, String deviceName)
                         throws StorageQueryException, UnknownDeviceException;
 
         /** Delete device and also delete user if deleting the last device */
@@ -34,7 +34,10 @@ public interface TOTPStorage extends AuthRecipeStorage {
         void insertUsedCode(TOTPUsedCode code)
                         throws StorageQueryException, TotpNotEnabledException;
 
-        /** Get totp used codes for user that haven't expired yet: */
+        /**
+         * Get totp used codes for user that haven't expired yet (sorted by descending
+         * order of created time):
+         */
         TOTPUsedCode[] getNonExpiredUsedCodes(String userId)
                         throws StorageQueryException;
 

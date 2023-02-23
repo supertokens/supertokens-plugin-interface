@@ -5,14 +5,14 @@ import javax.annotation.Nullable;
 public class TOTPUsedCode {
     public final String userId;
     public final String code;
-    public final boolean isValidCode;
+    public final boolean isValid;
     public final long expiryTime;
     public final long createdTime;
 
     public TOTPUsedCode(String userId, String code, Boolean isValidCode, long expiryTime, long createdTime) {
         this.userId = userId;
         this.code = code;
-        this.isValidCode = isValidCode;
+        this.isValid = isValidCode;
         this.expiryTime = expiryTime;
         this.createdTime = createdTime;
     }
@@ -30,7 +30,7 @@ public class TOTPUsedCode {
         }
         TOTPUsedCode other = (TOTPUsedCode) obj;
         return this.userId.equals(other.userId) && this.code.equals(other.code)
-                && this.isValidCode == other.isValidCode && this.expiryTime == other.expiryTime
+                && this.isValid == other.isValid && this.expiryTime == other.expiryTime
                 && this.createdTime == other.createdTime;
     }
 }
