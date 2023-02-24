@@ -18,21 +18,22 @@ package io.supertokens.pluginInterface.multitenancy;
 
 import io.supertokens.pluginInterface.Storage;
 import io.supertokens.pluginInterface.emailpassword.exceptions.UnknownUserIdException;
+import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.multitenancy.exceptions.DuplicateTenantException;
 import io.supertokens.pluginInterface.multitenancy.exceptions.TenantOrAppNotFoundException;
 import io.supertokens.pluginInterface.userroles.exception.UnknownRoleException;
 
 public interface MultitenancyStorage extends Storage {
 
-    void createTenant(TenantConfig config) throws DuplicateTenantException;
+    void createTenant(TenantConfig config) throws DuplicateTenantException, StorageQueryException;
 
     // this adds tenantId to the target user pool
-    void addTenantIdInUserPool(TenantIdentifier tenantIdentifier) throws DuplicateTenantException;
+    void addTenantIdInUserPool(TenantIdentifier tenantIdentifier) throws DuplicateTenantException, StorageQueryException;
 
     // this also deletes all tenant info from all tables.
     void deleteTenantIdInUserPool(TenantIdentifier tenantIdentifier) throws TenantOrAppNotFoundException;
 
-    void overwriteTenantConfig(TenantConfig config) throws TenantOrAppNotFoundException;
+    void overwriteTenantConfig(TenantConfig config) throws TenantOrAppNotFoundException, StorageQueryException;
 
     void deleteTenant(TenantIdentifier tenantIdentifier) throws TenantOrAppNotFoundException;
 
@@ -40,7 +41,7 @@ public interface MultitenancyStorage extends Storage {
 
     void deleteConnectionUriDomainMapping(TenantIdentifier tenantIdentifier) throws TenantOrAppNotFoundException;
 
-    TenantConfig[] getAllTenants();
+    TenantConfig[] getAllTenants() throws StorageQueryException;
 
     void addUserIdToTenant(TenantIdentifier tenantIdentifier, String userId) throws TenantOrAppNotFoundException,
             UnknownUserIdException;
