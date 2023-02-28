@@ -147,11 +147,7 @@ public class ThirdPartyConfig {
         public ProviderClient(@Nullable String clientType, @Nonnull String clientId, @Nullable String clientSecret,
                               @Nullable String[] scope,
                               boolean forcePKCE, @Nullable JsonObject additionalConfig) {
-            if (clientType == null) {
-                this.clientType = "";
-            } else {
-                this.clientType = clientType;
-            }
+            this.clientType = clientType;
             this.clientId = clientId;
             this.clientSecret = clientSecret;
             this.scope = scope;
