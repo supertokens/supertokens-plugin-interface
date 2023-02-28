@@ -74,7 +74,7 @@ public class ThirdPartyConfig {
 
         public final boolean requireEmail;
 
-        @Nullable
+        @Nonnull
         public final UserInfoMap userInfoMap;
 
         public Provider(@Nonnull String thirdPartyId, @Nonnull String name, @Nullable ProviderClient[] clients,
@@ -98,7 +98,7 @@ public class ThirdPartyConfig {
             this.jwksURI = jwksURI;
             this.oidcDiscoveryEndpoint = oidcDiscoveryEndpoint;
             this.requireEmail = requireEmail;
-            this.userInfoMap = userInfoMap;
+            this.userInfoMap = userInfoMap == null ? new UserInfoMap(null, null) : userInfoMap;
         }
 
         @Override
@@ -171,16 +171,16 @@ public class ThirdPartyConfig {
     }
 
     public static class UserInfoMap {
-        @Nullable
+        @Nonnull
         public UserInfoMapKeyValue fromIdTokenPayload;
 
-        @Nullable
+        @Nonnull
         public UserInfoMapKeyValue fromUserInfoAPI;
 
         public UserInfoMap(@Nullable UserInfoMapKeyValue fromIdTokenPayload,
                            @Nullable UserInfoMapKeyValue fromUserInfoAPI) {
-            this.fromIdTokenPayload = fromIdTokenPayload;
-            this.fromUserInfoAPI = fromUserInfoAPI;
+            this.fromIdTokenPayload = fromIdTokenPayload == null ? new UserInfoMapKeyValue(null, null, null) : fromIdTokenPayload;
+            this.fromUserInfoAPI = fromUserInfoAPI == null ? new UserInfoMapKeyValue(null, null, null) : fromUserInfoAPI;
         }
 
         @Override
