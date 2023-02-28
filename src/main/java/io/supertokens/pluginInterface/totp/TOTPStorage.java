@@ -1,14 +1,12 @@
 package io.supertokens.pluginInterface.totp;
 
-import javax.annotation.Nullable;
-
-import io.supertokens.pluginInterface.authRecipe.AuthRecipeStorage;
+import io.supertokens.pluginInterface.nonAuthRecipe.NonAuthRecipeStorage;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.totp.exception.DeviceAlreadyExistsException;
 import io.supertokens.pluginInterface.totp.exception.TotpNotEnabledException;
 import io.supertokens.pluginInterface.totp.exception.UnknownDeviceException;
 
-public interface TOTPStorage extends AuthRecipeStorage {
+public interface TOTPStorage extends NonAuthRecipeStorage {
         /** Create a new device and a new user if the user does not exist: */
         void createDevice(TOTPDevice device)
                         throws StorageQueryException, DeviceAlreadyExistsException;
@@ -41,7 +39,4 @@ public interface TOTPStorage extends AuthRecipeStorage {
         int removeExpiredCodes()
                         throws StorageQueryException;
 
-        /** Delete all totp data associated with the user: */
-        void deleteAllTotpDataForUser(String userId)
-                        throws StorageQueryException;
 }
