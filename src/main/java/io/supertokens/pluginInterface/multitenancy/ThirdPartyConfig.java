@@ -74,6 +74,7 @@ public class ThirdPartyConfig {
 
         public final boolean requireEmail;
 
+        @Nonnull
         public final UserInfoMap userInfoMap;
 
         public Provider(@Nonnull String thirdPartyId, @Nonnull String name, @Nullable ProviderClient[] clients,
@@ -170,8 +171,10 @@ public class ThirdPartyConfig {
     }
 
     public static class UserInfoMap {
+        @Nonnull
         public UserInfoMapKeyValue fromIdTokenPayload;
 
+        @Nonnull
         public UserInfoMapKeyValue fromUserInfoAPI;
 
         public UserInfoMap(@Nullable UserInfoMapKeyValue fromIdTokenPayload,
