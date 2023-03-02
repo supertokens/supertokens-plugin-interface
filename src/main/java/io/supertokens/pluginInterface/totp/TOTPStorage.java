@@ -32,7 +32,7 @@ public interface TOTPStorage extends NonAuthRecipeStorage {
          * Get totp used codes for user (expired/non-expired) yet (sorted by descending
          * order of created time):
          */
-        TOTPUsedCode[] getAllUsedCodes(String userId)
+        TOTPUsedCode[] getAllUsedCodesDescOrder(String userId)
                         throws StorageQueryException;
 
         /** Remove expired codes from totp used codes for all users: */
