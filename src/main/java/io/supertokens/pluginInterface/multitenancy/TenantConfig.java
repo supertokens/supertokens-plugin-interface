@@ -30,10 +30,10 @@ public class TenantConfig {
     public final EmailPasswordConfig emailPasswordConfig;
 
     @Nonnull
-    public final PasswordlessConfig passwordlessConfig;
+    public final ThirdPartyConfig thirdPartyConfig;
 
     @Nonnull
-    public final ThirdPartyConfig thirdPartyConfig;
+    public final PasswordlessConfig passwordlessConfig;
 
     @Nonnull
     public final JsonObject coreConfig;

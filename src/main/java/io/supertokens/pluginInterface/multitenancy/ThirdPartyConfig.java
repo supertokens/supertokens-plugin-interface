@@ -17,6 +17,7 @@
 package io.supertokens.pluginInterface.multitenancy;
 
 import com.google.gson.JsonObject;
+import io.supertokens.pluginInterface.exceptions.InvalidConfigException;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -42,7 +43,7 @@ public class ThirdPartyConfig {
         @Nonnull
         public final String name;
 
-        @Nullable
+        @Nonnull
         public final ProviderClient[] clients;
 
         @Nullable
@@ -72,7 +73,8 @@ public class ThirdPartyConfig {
         @Nullable
         public final String oidcDiscoveryEndpoint;
 
-        public final boolean requireEmail;
+        @Nullable
+        public final Boolean requireEmail;
 
         @Nonnull
         public final UserInfoMap userInfoMap;
@@ -83,11 +85,11 @@ public class ThirdPartyConfig {
                         @Nullable JsonObject tokenEndpointBodyParams,
                         @Nullable String userInfoEndpoint, @Nullable JsonObject userInfoEndpointQueryParams,
                         @Nullable JsonObject userInfoEndpointHeaders,
-                        @Nullable String jwksURI, @Nullable String oidcDiscoveryEndpoint, boolean requireEmail,
+                        @Nullable String jwksURI, @Nullable String oidcDiscoveryEndpoint, @Nullable Boolean requireEmail,
                         @Nullable UserInfoMap userInfoMap) {
             this.thirdPartyId = thirdPartyId;
             this.name = name;
-            this.clients = clients;
+            this.clients = clients == null ? new ProviderClient[0] : clients;
             this.authorizationEndpoint = authorizationEndpoint;
             this.authorizationEndpointQueryParams = authorizationEndpointQueryParams;
             this.tokenEndpoint = tokenEndpoint;
@@ -139,14 +141,15 @@ public class ThirdPartyConfig {
         @Nullable
         public final String[] scope;
 
-        public final boolean forcePKCE;
+        @Nullable
+        public final Boolean forcePKCE;
 
         @Nullable
         public final JsonObject additionalConfig;
 
         public ProviderClient(@Nullable String clientType, @Nonnull String clientId, @Nullable String clientSecret,
                               @Nullable String[] scope,
-                              boolean forcePKCE, @Nullable JsonObject additionalConfig) {
+                              @Nullable Boolean forcePKCE, @Nullable JsonObject additionalConfig) {
             this.clientType = clientType;
             this.clientId = clientId;
             this.clientSecret = clientSecret;
