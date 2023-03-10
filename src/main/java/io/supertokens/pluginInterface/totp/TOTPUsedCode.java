@@ -1,7 +1,5 @@
 package io.supertokens.pluginInterface.totp;
 
-import javax.annotation.Nullable;
-
 public class TOTPUsedCode {
     public final String userId;
     public final String code;
