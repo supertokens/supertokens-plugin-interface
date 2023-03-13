@@ -7,6 +7,11 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [2.21.0] - XXX
+
+- Added `useStaticKey ` into session info classes
+- Added `hashCode` override for JWTSigningKeyInfo
+
 ## [2.20.0] - 2023-02-21
 
 - Dashboard Recipe Interface
