@@ -47,6 +47,6 @@ public interface EmailPasswordSQLStorage extends EmailPasswordStorage, SQLStorag
                                       String email)
             throws StorageQueryException, DuplicateEmailException;
 
-    UserInfo getUserInfoUsingId_Transaction(TenantIdentifier tenantIdentifier, TransactionConnection con, String userId)
+    UserInfo getUserInfoUsingId_Transaction(AppIdentifier appIdentifier, TransactionConnection con, String userId)
             throws StorageQueryException;
 }
