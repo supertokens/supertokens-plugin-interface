@@ -22,6 +22,7 @@ import io.supertokens.pluginInterface.emailpassword.UserInfo;
 import io.supertokens.pluginInterface.emailpassword.exceptions.DuplicateEmailException;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
+import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
 import io.supertokens.pluginInterface.sqlStorage.SQLStorage;
 import io.supertokens.pluginInterface.sqlStorage.TransactionConnection;
 
@@ -46,6 +47,6 @@ public interface EmailPasswordSQLStorage extends EmailPasswordStorage, SQLStorag
                                       String email)
             throws StorageQueryException, DuplicateEmailException;
 
-    UserInfo getUserInfoUsingId_Transaction(AppIdentifier appIdentifier, TransactionConnection con, String userId)
+    UserInfo getUserInfoUsingId_Transaction(TenantIdentifier tenantIdentifier, TransactionConnection con, String userId)
             throws StorageQueryException;
 }
