@@ -25,7 +25,7 @@ import javax.annotation.Nullable;
 
 public interface SessionStorage extends NonAuthRecipeStorage {
     void createNewSession(String sessionHandle, String userId, String refreshTokenHash2, JsonObject userDataInDatabase,
-            long expiry, JsonObject userDataInJWT, long createdAtTime) throws StorageQueryException;
+            long expiry, JsonObject userDataInJWT, long createdAtTime, boolean useStaticKey) throws StorageQueryException;
 
     void deleteSessionsOfUser(String userId) throws StorageQueryException;
 

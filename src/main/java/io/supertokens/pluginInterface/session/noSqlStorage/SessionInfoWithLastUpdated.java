@@ -23,9 +23,9 @@ public class SessionInfoWithLastUpdated extends SessionInfo {
     public String lastUpdatedSign;
 
     public SessionInfoWithLastUpdated(String sessionHandle, String userId, String refreshTokenHash2,
-            JsonObject userDataInDatabase, long expiry, JsonObject userDataInJWT, long timeCreated,
+            JsonObject userDataInDatabase, long expiry, JsonObject userDataInJWT, long timeCreated, boolean useStaticKey,
             String lastUpdatedSign) {
-        super(sessionHandle, userId, refreshTokenHash2, userDataInDatabase, expiry, userDataInJWT, timeCreated);
+        super(sessionHandle, userId, refreshTokenHash2, userDataInDatabase, expiry, userDataInJWT, timeCreated, useStaticKey);
         this.lastUpdatedSign = lastUpdatedSign;
     }
 }
