@@ -26,7 +26,7 @@ public class SessionInfo {
     public long expiry;
     public JsonObject userDataInJWT;
     public long timeCreated;
-    public boolean useStaticKey;
+    public transient boolean useStaticKey;
 
     public SessionInfo(String sessionHandle, String userId, String refreshTokenHash2, JsonObject userDataInDatabase,
             long expiry, JsonObject userDataInJWT, long timeCreated, boolean useStaticKey) {
