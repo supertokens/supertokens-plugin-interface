@@ -16,19 +16,32 @@
 
 package io.supertokens.pluginInterface.multitenancy.exceptions;
 
+import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
 import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
 
 public class TenantOrAppNotFoundException extends Exception {
     private final TenantIdentifier tenantIdentifier;
+    private final AppIdentifier appIdentifier;
 
     public TenantOrAppNotFoundException(TenantIdentifier tenantIdentifier) {
         super("Tenant with the following connectionURIDomain, appId and tenantId combination not found: (" +
                 tenantIdentifier.getConnectionUriDomain() +
                 ", " + tenantIdentifier.getAppId() + ", " + tenantIdentifier.getTenantId() + ")");
         this.tenantIdentifier = tenantIdentifier;
+        this.appIdentifier = null;
+    }
+
+    public TenantOrAppNotFoundException(AppIdentifier appIdentifier) {
+        super("App with the following connectionURIDomain and appId combination not found: (" +
+                appIdentifier.getConnectionUriDomain() +
+                ", " + appIdentifier.getAppId() + ")");
+        this.tenantIdentifier = null;
+        this.appIdentifier = appIdentifier;
     }
 
     public TenantIdentifier getTenantIdentifier() {
         return this.tenantIdentifier;
     }
+
+    public AppIdentifier getAppIdentifier() { return this.appIdentifier; }
 }

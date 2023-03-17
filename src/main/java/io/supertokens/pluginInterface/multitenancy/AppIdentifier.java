@@ -16,6 +16,17 @@
 
 package io.supertokens.pluginInterface.multitenancy;
 
+import io.supertokens.pluginInterface.STORAGE_TYPE;
+import io.supertokens.pluginInterface.Storage;
+import io.supertokens.pluginInterface.authRecipe.AuthRecipeStorage;
+import io.supertokens.pluginInterface.emailpassword.sqlStorage.EmailPasswordSQLStorage;
+import io.supertokens.pluginInterface.emailverification.sqlStorage.EmailVerificationSQLStorage;
+import io.supertokens.pluginInterface.multitenancy.exceptions.TenantOrAppNotFoundException;
+import io.supertokens.pluginInterface.session.SessionStorage;
+import io.supertokens.pluginInterface.useridmapping.UserIdMappingStorage;
+import io.supertokens.pluginInterface.usermetadata.sqlStorage.UserMetadataSQLStorage;
+import io.supertokens.pluginInterface.userroles.sqlStorage.UserRolesSQLStorage;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -29,9 +40,19 @@ public class AppIdentifier {
     @Nullable
     private final String appId;
 
+    @Nullable
+    private final Storage storage;
+
     public AppIdentifier(@Nullable String connectionUriDomain, @Nullable String appId) {
         this.connectionUriDomain = connectionUriDomain;
         this.appId = appId;
+        this.storage = null;
+    }
+
+    public AppIdentifier(@Nullable String connectionUriDomain, @Nullable String appId, @Nullable Storage storage) {
+        this.connectionUriDomain = connectionUriDomain;
+        this.appId = appId;
+        this.storage = storage;
     }
 
     @Nonnull
@@ -48,6 +69,10 @@ public class AppIdentifier {
             return DEFAULT_CONNECTION_URI;
         }
         return this.connectionUriDomain.trim().toLowerCase();
+    }
+
+    public Storage getStorage() {
+        return this.storage;
     }
 
     @Override
@@ -68,5 +93,63 @@ public class AppIdentifier {
 
     public TenantIdentifier getAsPublicTenantIdentifier() {
         return new TenantIdentifier(this.getConnectionUriDomain(), this.getAppId(), null);
+    }
+
+    public AppIdentifier withStorage(Storage storage) {
+        return new AppIdentifier(this.getConnectionUriDomain(), this.getAppId(), storage);
+    }
+
+    public AuthRecipeStorage getAuthRecipeStorage() {
+        if (this.storage == null) {
+            throw new UnsupportedOperationException("");
+        }
+        return (AuthRecipeStorage) this.storage;
+    }
+
+    public UserIdMappingStorage getUserIdMappingStorage() {
+        if (this.storage == null) {
+            throw new UnsupportedOperationException("");
+        }
+        return (UserIdMappingStorage) this.storage;
+    }
+
+    public EmailPasswordSQLStorage getEmailPasswordStorage() {
+        if (storage == null || storage.getType() != STORAGE_TYPE.SQL) {
+            throw new UnsupportedOperationException("");
+        }
+
+        return (EmailPasswordSQLStorage) this.storage;
+    }
+
+    public UserMetadataSQLStorage getUserMetadataStorage() {
+        if (this.storage == null || this.storage.getType() != STORAGE_TYPE.SQL) {
+            // we only support SQL for now
+            throw new UnsupportedOperationException("");
+        }
+
+        return (UserMetadataSQLStorage) this.storage;
+    }
+
+    public SessionStorage getSessionStorage() {
+        if (this.storage == null) {
+            throw new UnsupportedOperationException("");
+        }
+        return (SessionStorage) this.storage;
+    }
+
+    public EmailVerificationSQLStorage getEmailVerificationStorage() {
+        if (this.storage == null || this.storage.getType() != STORAGE_TYPE.SQL) {
+            // we only support SQL for now
+            throw new UnsupportedOperationException("");
+        }
+        return (EmailVerificationSQLStorage) this.storage;
+    }
+
+    public UserRolesSQLStorage getUserRolesStorage() {
+        if (this.storage == null || this.storage.getType() != STORAGE_TYPE.SQL) {
+            // we only support SQL for now
+            throw new UnsupportedOperationException("");
+        }
+        return (UserRolesSQLStorage) this.storage;
     }
 }
