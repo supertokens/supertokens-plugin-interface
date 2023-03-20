@@ -40,7 +40,7 @@ public class TenantIdentifier {
     private final String appId;
 
     @Nullable
-    private final Storage storage;
+    private Storage storage;
 
     public TenantIdentifier(@Nullable String connectionUriDomain, @Nullable String appId, @Nullable String tenantId) {
         this.connectionUriDomain = connectionUriDomain;
@@ -110,22 +110,7 @@ public class TenantIdentifier {
         return new AppIdentifier(this.getConnectionUriDomain(), this.getAppId(), storage);
     }
 
-    public TenantIdentifier withStorage(Storage storage) {
-        return new TenantIdentifier(this.connectionUriDomain, this.appId, this.tenantId, storage);
-    }
-
-    public AuthRecipeStorage getAuthRecipeStorage() {
-        if (this.storage == null) {
-            throw new UnsupportedOperationException("");
-        }
-        return (AuthRecipeStorage) this.storage;
-    }
-
-    public EmailPasswordSQLStorage getEmailPasswordStorage() {
-        if (storage == null || storage.getType() != STORAGE_TYPE.SQL) {
-            throw new UnsupportedOperationException("");
-        }
-
-        return (EmailPasswordSQLStorage) this.storage;
+    public void setStorage(Storage storage) {
+        this.storage = storage;
     }
 }

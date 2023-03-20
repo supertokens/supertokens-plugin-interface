@@ -41,7 +41,7 @@ public class AppIdentifier {
     private final String appId;
 
     @Nullable
-    private final Storage storage;
+    private Storage storage;
 
     public AppIdentifier(@Nullable String connectionUriDomain, @Nullable String appId) {
         this.connectionUriDomain = connectionUriDomain;
@@ -71,6 +71,11 @@ public class AppIdentifier {
         return this.connectionUriDomain.trim().toLowerCase();
     }
 
+    public void setStorage(Storage storage) {
+        this.storage = storage;
+    }
+
+    @Nullable
     public Storage getStorage() {
         return this.storage;
     }
@@ -92,64 +97,6 @@ public class AppIdentifier {
     }
 
     public TenantIdentifier getAsPublicTenantIdentifier() {
-        return new TenantIdentifier(this.getConnectionUriDomain(), this.getAppId(), null);
-    }
-
-    public AppIdentifier withStorage(Storage storage) {
-        return new AppIdentifier(this.getConnectionUriDomain(), this.getAppId(), storage);
-    }
-
-    public AuthRecipeStorage getAuthRecipeStorage() {
-        if (this.storage == null) {
-            throw new UnsupportedOperationException("");
-        }
-        return (AuthRecipeStorage) this.storage;
-    }
-
-    public UserIdMappingStorage getUserIdMappingStorage() {
-        if (this.storage == null) {
-            throw new UnsupportedOperationException("");
-        }
-        return (UserIdMappingStorage) this.storage;
-    }
-
-    public EmailPasswordSQLStorage getEmailPasswordStorage() {
-        if (storage == null || storage.getType() != STORAGE_TYPE.SQL) {
-            throw new UnsupportedOperationException("");
-        }
-
-        return (EmailPasswordSQLStorage) this.storage;
-    }
-
-    public UserMetadataSQLStorage getUserMetadataStorage() {
-        if (this.storage == null || this.storage.getType() != STORAGE_TYPE.SQL) {
-            // we only support SQL for now
-            throw new UnsupportedOperationException("");
-        }
-
-        return (UserMetadataSQLStorage) this.storage;
-    }
-
-    public SessionStorage getSessionStorage() {
-        if (this.storage == null) {
-            throw new UnsupportedOperationException("");
-        }
-        return (SessionStorage) this.storage;
-    }
-
-    public EmailVerificationSQLStorage getEmailVerificationStorage() {
-        if (this.storage == null || this.storage.getType() != STORAGE_TYPE.SQL) {
-            // we only support SQL for now
-            throw new UnsupportedOperationException("");
-        }
-        return (EmailVerificationSQLStorage) this.storage;
-    }
-
-    public UserRolesSQLStorage getUserRolesStorage() {
-        if (this.storage == null || this.storage.getType() != STORAGE_TYPE.SQL) {
-            // we only support SQL for now
-            throw new UnsupportedOperationException("");
-        }
-        return (UserRolesSQLStorage) this.storage;
+        return new TenantIdentifier(this.getConnectionUriDomain(), this.getAppId(), null, this.getStorage());
     }
 }
