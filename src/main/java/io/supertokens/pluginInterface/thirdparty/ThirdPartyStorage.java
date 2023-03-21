@@ -30,8 +30,6 @@ public interface ThirdPartyStorage extends AuthRecipeStorage {
     void signUp(TenantIdentifier tenantIdentifier, UserInfo userInfo)
             throws StorageQueryException, DuplicateUserIdException, DuplicateThirdPartyUserException;
 
-    void deleteThirdPartyUser(AppIdentifier appIdentifier, String userId) throws StorageQueryException;
-
     UserInfo getThirdPartyUserInfoUsingId(TenantIdentifier tenantIdentifier, String thirdPartyId,
                                           String thirdPartyUserId) throws StorageQueryException;
 
