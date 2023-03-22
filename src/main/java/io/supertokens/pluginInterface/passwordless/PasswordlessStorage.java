@@ -40,6 +40,8 @@ public interface PasswordlessStorage extends AuthRecipeStorage {
             throws StorageQueryException, DuplicateEmailException, DuplicatePhoneNumberException,
             DuplicateUserIdException;
 
+    void deletePasswordlessUser(AppIdentifier appIdentifier, String userId) throws StorageQueryException;
+
     PasswordlessDevice getDevice(TenantIdentifier tenantIdentifier, String deviceIdHash) throws StorageQueryException;
 
     PasswordlessDevice[] getDevicesByEmail(TenantIdentifier tenantIdentifier, @Nonnull String email)
