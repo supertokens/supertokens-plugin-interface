@@ -21,10 +21,13 @@ import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
 
 public class TenantOrAppNotFoundException extends Exception {
     public TenantOrAppNotFoundException(TenantIdentifier tenantIdentifier) {
-        super("appId: " + tenantIdentifier.getAppId() + ", tenantId: " + tenantIdentifier.getTenantId());
+        super("Tenant with the following connectionURIDomain, appId and tenantId combination not found: (" +
+                tenantIdentifier.getConnectionUriDomain() +
+                ", " + tenantIdentifier.getAppId() + ", " + tenantIdentifier.getTenantId() + ")");
     }
 
     public TenantOrAppNotFoundException(AppIdentifier appIdentifier) {
-        super("appId: " + appIdentifier.getAppId());
+        super("App with the following connectionURIDomain and appId combination not found: (" +
+                appIdentifier.getConnectionUriDomain() + ", " + appIdentifier.getAppId() + ")");
     }
 }
