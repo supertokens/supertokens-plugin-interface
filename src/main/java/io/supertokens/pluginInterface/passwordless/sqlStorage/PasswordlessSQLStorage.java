@@ -58,6 +58,13 @@ public interface PasswordlessSQLStorage extends PasswordlessStorage, SQLStorage 
     void deleteDevicesByEmail_Transaction(TenantIdentifier tenantIdentifier, TransactionConnection con, String email)
             throws StorageQueryException;
 
+    void deleteDevicesByPhoneNumber_Transaction(AppIdentifier appIdentifier, TransactionConnection con,
+                                                String phoneNumber)
+            throws StorageQueryException;
+
+    void deleteDevicesByEmail_Transaction(AppIdentifier appIdentifier, TransactionConnection con, String email)
+            throws StorageQueryException;
+
     void deleteDevicesByPhoneNumber_Transaction(TenantIdentifier tenantIdentifier, TransactionConnection con,
                                                 String phoneNumber, String userId)
             throws StorageQueryException;
