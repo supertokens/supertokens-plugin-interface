@@ -19,12 +19,13 @@ package io.supertokens.pluginInterface.emailverification;
 import io.supertokens.pluginInterface.emailverification.exception.DuplicateEmailVerificationTokenException;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
+import io.supertokens.pluginInterface.multitenancy.exceptions.TenantOrAppNotFoundException;
 import io.supertokens.pluginInterface.nonAuthRecipe.NonAuthRecipeStorage;
 
 public interface EmailVerificationStorage extends NonAuthRecipeStorage {
 
     void addEmailVerificationToken(AppIdentifier appIdentifier, EmailVerificationTokenInfo emailVerificationInfo)
-            throws StorageQueryException, DuplicateEmailVerificationTokenException;
+            throws StorageQueryException, DuplicateEmailVerificationTokenException, TenantOrAppNotFoundException;
 
     EmailVerificationTokenInfo getEmailVerificationTokenInfo(AppIdentifier appIdentifier, String token)
             throws StorageQueryException;

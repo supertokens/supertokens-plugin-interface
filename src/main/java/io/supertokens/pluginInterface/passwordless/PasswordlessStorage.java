@@ -22,6 +22,7 @@ import io.supertokens.pluginInterface.emailpassword.exceptions.DuplicateUserIdEx
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
 import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
+import io.supertokens.pluginInterface.multitenancy.exceptions.TenantOrAppNotFoundException;
 import io.supertokens.pluginInterface.passwordless.exception.*;
 
 import javax.annotation.Nonnull;
@@ -31,14 +32,14 @@ public interface PasswordlessStorage extends AuthRecipeStorage {
     void createDeviceWithCode(TenantIdentifier tenantIdentifier, @Nullable String email, @Nullable String phoneNumber,
                               @Nonnull String linkCodeSalt,
                               PasswordlessCode code) throws StorageQueryException, DuplicateDeviceIdHashException,
-            DuplicateCodeIdException, DuplicateLinkCodeHashException;
+            DuplicateCodeIdException, DuplicateLinkCodeHashException, TenantOrAppNotFoundException;
 
     void createCode(TenantIdentifier tenantIdentifier, PasswordlessCode code)
             throws StorageQueryException, UnknownDeviceIdHash, DuplicateCodeIdException, DuplicateLinkCodeHashException;
 
     void createUser(TenantIdentifier tenantIdentifier, UserInfo user)
             throws StorageQueryException, DuplicateEmailException, DuplicatePhoneNumberException,
-            DuplicateUserIdException;
+            DuplicateUserIdException, TenantOrAppNotFoundException;
 
     void deletePasswordlessUser(AppIdentifier appIdentifier, String userId) throws StorageQueryException;
 
