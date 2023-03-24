@@ -16,6 +16,17 @@
 
 package io.supertokens.pluginInterface.multitenancy;
 
+import io.supertokens.pluginInterface.STORAGE_TYPE;
+import io.supertokens.pluginInterface.Storage;
+import io.supertokens.pluginInterface.authRecipe.AuthRecipeStorage;
+import io.supertokens.pluginInterface.emailpassword.sqlStorage.EmailPasswordSQLStorage;
+import io.supertokens.pluginInterface.emailverification.sqlStorage.EmailVerificationSQLStorage;
+import io.supertokens.pluginInterface.multitenancy.exceptions.TenantOrAppNotFoundException;
+import io.supertokens.pluginInterface.session.SessionStorage;
+import io.supertokens.pluginInterface.useridmapping.UserIdMappingStorage;
+import io.supertokens.pluginInterface.usermetadata.sqlStorage.UserMetadataSQLStorage;
+import io.supertokens.pluginInterface.userroles.sqlStorage.UserRolesSQLStorage;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -29,9 +40,19 @@ public class AppIdentifier {
     @Nullable
     private final String appId;
 
+    @Nullable
+    private Storage storage;
+
     public AppIdentifier(@Nullable String connectionUriDomain, @Nullable String appId) {
         this.connectionUriDomain = connectionUriDomain;
         this.appId = appId;
+        this.storage = null;
+    }
+
+    public AppIdentifier(@Nullable String connectionUriDomain, @Nullable String appId, @Nullable Storage storage) {
+        this.connectionUriDomain = connectionUriDomain;
+        this.appId = appId;
+        this.storage = storage;
     }
 
     @Nonnull
@@ -48,6 +69,15 @@ public class AppIdentifier {
             return DEFAULT_CONNECTION_URI;
         }
         return this.connectionUriDomain.trim().toLowerCase();
+    }
+
+    public void setStorage(Storage storage) {
+        this.storage = storage;
+    }
+
+    @Nullable
+    public Storage getStorage() {
+        return this.storage;
     }
 
     @Override
@@ -67,6 +97,6 @@ public class AppIdentifier {
     }
 
     public TenantIdentifier getAsPublicTenantIdentifier() {
-        return new TenantIdentifier(this.getConnectionUriDomain(), this.getAppId(), null);
+        return new TenantIdentifier(this.getConnectionUriDomain(), this.getAppId(), null, this.getStorage());
     }
 }

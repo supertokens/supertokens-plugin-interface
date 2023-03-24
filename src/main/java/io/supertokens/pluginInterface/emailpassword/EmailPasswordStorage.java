@@ -24,12 +24,14 @@ import io.supertokens.pluginInterface.emailpassword.exceptions.UnknownUserIdExce
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
 import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
+import io.supertokens.pluginInterface.multitenancy.exceptions.TenantOrAppNotFoundException;
 
 public interface EmailPasswordStorage extends AuthRecipeStorage {
 
     // we pass tenantIdentifier here cause this also adds to the userId <-> tenantId mapping
     void signUp(TenantIdentifier tenantIdentifier, UserInfo userInfo)
-            throws StorageQueryException, DuplicateUserIdException, DuplicateEmailException;
+            throws StorageQueryException, DuplicateUserIdException, DuplicateEmailException,
+            TenantOrAppNotFoundException;
 
     // this deletion of a user is app wide since the same user ID can be shared across tenants
     void deleteEmailPasswordUser(AppIdentifier appIdentifier, String userId) throws StorageQueryException;
