@@ -24,7 +24,7 @@ import javax.annotation.Nullable;
 public class AppIdentifierWithStorage extends AppIdentifier {
 
     @Nonnull
-    public final Storage storage;
+    private final Storage storage;
 
     public AppIdentifierWithStorage(@Nullable String connectionUriDomain, @Nullable String appId, @Nonnull
     Storage storage) {
