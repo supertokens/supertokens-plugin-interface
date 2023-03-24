@@ -40,19 +40,9 @@ public class AppIdentifier {
     @Nullable
     private final String appId;
 
-    @Nullable
-    private Storage storage;
-
     public AppIdentifier(@Nullable String connectionUriDomain, @Nullable String appId) {
         this.connectionUriDomain = connectionUriDomain;
         this.appId = appId;
-        this.storage = null;
-    }
-
-    public AppIdentifier(@Nullable String connectionUriDomain, @Nullable String appId, @Nullable Storage storage) {
-        this.connectionUriDomain = connectionUriDomain;
-        this.appId = appId;
-        this.storage = storage;
     }
 
     @Nonnull
@@ -69,15 +59,6 @@ public class AppIdentifier {
             return DEFAULT_CONNECTION_URI;
         }
         return this.connectionUriDomain.trim().toLowerCase();
-    }
-
-    public void setStorage(Storage storage) {
-        this.storage = storage;
-    }
-
-    @Nullable
-    public Storage getStorage() {
-        return this.storage;
     }
 
     @Override
@@ -97,6 +78,10 @@ public class AppIdentifier {
     }
 
     public TenantIdentifier getAsPublicTenantIdentifier() {
-        return new TenantIdentifier(this.getConnectionUriDomain(), this.getAppId(), null, this.getStorage());
+        return new TenantIdentifier(this.getConnectionUriDomain(), this.getAppId(), null);
+    }
+
+    public AppIdentifierWithStorage withStorage(Storage storage) {
+        return new AppIdentifierWithStorage(this.getConnectionUriDomain(), this.getAppId(), storage);
     }
 }
