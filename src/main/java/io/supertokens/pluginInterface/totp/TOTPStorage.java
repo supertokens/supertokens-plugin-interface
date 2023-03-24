@@ -26,5 +26,4 @@ public interface TOTPStorage extends NonAuthRecipeStorage {
         /** Remove expired codes from totp used codes for all users: */
         int removeExpiredCodes(long expiredBefore)
                         throws StorageQueryException;
-
 }
