@@ -17,4 +17,28 @@ public class DashboardSearchTags {
         this.providers = providers;
     }
 
+    public enum SUPPORTED_SEARCH_TAGS {
+        EMAIL("email"), PHONE("phone"), PROVIDER("provider");
+
+        private String tag;
+
+        SUPPORTED_SEARCH_TAGS(String tag) {
+            this.tag = tag;
+        }
+
+        public static SUPPORTED_SEARCH_TAGS fromString(String text) {
+            for (SUPPORTED_SEARCH_TAGS t : SUPPORTED_SEARCH_TAGS.values()) {
+                if (t.tag.equalsIgnoreCase(text)) {
+                    return t;
+                }
+            }
+            return null;
+        }
+
+        @Override
+        public String toString() {
+            return tag;
+        }
+    }
+
 }
