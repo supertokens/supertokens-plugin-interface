@@ -31,6 +31,9 @@ public interface AuthRecipeStorage extends Storage {
     long getUsersCount(TenantIdentifier tenantIdentifier, @Nullable RECIPE_ID[] includeRecipeIds)
             throws StorageQueryException;
 
+    long getUsersCount(AppIdentifier appIdentifier, @Nullable RECIPE_ID[] includeRecipeIds)
+            throws StorageQueryException;
+
     AuthRecipeUserInfo[] getUsers(TenantIdentifier tenantIdentifier, @Nonnull Integer limit,
                                   @Nonnull String timeJoinedOrder,
                                   @Nullable RECIPE_ID[] includeRecipeIds, @Nullable String userId,

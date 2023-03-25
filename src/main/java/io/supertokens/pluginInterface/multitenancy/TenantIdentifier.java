@@ -16,11 +16,7 @@
 
 package io.supertokens.pluginInterface.multitenancy;
 
-import io.supertokens.pluginInterface.STORAGE_TYPE;
 import io.supertokens.pluginInterface.Storage;
-import io.supertokens.pluginInterface.authRecipe.AuthRecipeStorage;
-import io.supertokens.pluginInterface.emailpassword.EmailPasswordStorage;
-import io.supertokens.pluginInterface.emailpassword.sqlStorage.EmailPasswordSQLStorage;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -39,21 +35,10 @@ public class TenantIdentifier {
     @Nullable
     private final String appId;
 
-    @Nullable
-    private Storage storage;
-
     public TenantIdentifier(@Nullable String connectionUriDomain, @Nullable String appId, @Nullable String tenantId) {
         this.connectionUriDomain = connectionUriDomain;
         this.tenantId = tenantId;
         this.appId = appId;
-        this.storage = null;
-    }
-
-    public TenantIdentifier(@Nullable String connectionUriDomain, @Nullable String appId, @Nullable String tenantId, @Nullable Storage storage) {
-        this.connectionUriDomain = connectionUriDomain;
-        this.tenantId = tenantId;
-        this.appId = appId;
-        this.storage = storage;
     }
 
     @Nonnull
@@ -80,11 +65,6 @@ public class TenantIdentifier {
         return this.connectionUriDomain.trim().toLowerCase();
     }
 
-    @Nullable
-    public Storage getStorage() {
-        return this.storage;
-    }
-
     @Override
     public boolean equals(Object other) {
         if (other instanceof TenantIdentifier) {
@@ -103,14 +83,11 @@ public class TenantIdentifier {
     }
 
     public AppIdentifier toAppIdentifier() {
-        return new AppIdentifier(this.getConnectionUriDomain(), this.getAppId(), this.getStorage());
+        return new AppIdentifier(this.getConnectionUriDomain(), this.getAppId());
     }
 
-    public AppIdentifier toAppIdentifier(Storage storage) {
-        return new AppIdentifier(this.getConnectionUriDomain(), this.getAppId(), storage);
-    }
-
-    public void setStorage(Storage storage) {
-        this.storage = storage;
+    public TenantIdentifierWithStorage withStorage(Storage storage) {
+        return new TenantIdentifierWithStorage(this.getConnectionUriDomain(), this.getAppId(), this.getTenantId(),
+                storage);
     }
 }
