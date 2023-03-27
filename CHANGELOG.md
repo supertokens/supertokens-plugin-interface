@@ -7,6 +7,9 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Introduce TOTP Recipe plugin interface
+- Introduce Active users storage plugin interface
+
 ## [2.20.0] - 2023-02-21
 
 - Dashboard Recipe Interface
