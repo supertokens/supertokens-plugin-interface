@@ -26,14 +26,29 @@ public class AppIdentifierWithStorage extends AppIdentifier {
     @Nonnull
     private final Storage storage;
 
+    private final Storage[] storages;
+
     public AppIdentifierWithStorage(@Nullable String connectionUriDomain, @Nullable String appId, @Nonnull
     Storage storage) {
         super(connectionUriDomain, appId);
         this.storage = storage;
+        this.storages = new Storage[]{storage};
+    }
+
+    public AppIdentifierWithStorage(@Nullable String connectionUriDomain, @Nullable String appId, @Nonnull
+    Storage storage, @Nonnull Storage[] storages) {
+        super(connectionUriDomain, appId);
+        this.storage = storage;
+        this.storages = storages;
     }
 
     @Nonnull
     public Storage getStorage() {
         return storage;
+    }
+
+    @Nonnull
+    public Storage[] getStorages() {
+        return storages;
     }
 }
