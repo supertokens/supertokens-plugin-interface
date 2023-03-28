@@ -17,29 +17,21 @@ public class DashboardSearchTags {
         this.providers = providers;
     }
 
-    public boolean shouldRecipeBeSearched(ArrayList<SUPPORTED_SEARCH_TAGS> tags){
+    public boolean shouldRecipeBeSearched(ArrayList<SUPPORTED_SEARCH_TAGS> tags) {
 
-        boolean resultCondition = false;
-
-        if(tags.contains(SUPPORTED_SEARCH_TAGS.EMAIL)){
-            resultCondition = resultCondition || (this.emails != null);
-        } else {
-            resultCondition = resultCondition && (this.emails == null);
+        if (!tags.contains(SUPPORTED_SEARCH_TAGS.EMAIL) && this.emails != null) {
+            return false;
         }
 
-        if(tags.contains(SUPPORTED_SEARCH_TAGS.PROVIDER)){
-            resultCondition = resultCondition || (this.providers != null);
-        } else {
-            resultCondition = resultCondition && (this.providers == null);
+        if (!tags.contains(SUPPORTED_SEARCH_TAGS.PROVIDER) && this.providers != null) {
+            return false;
         }
 
-        if(tags.contains(SUPPORTED_SEARCH_TAGS.PHONE)){
-            resultCondition = resultCondition || (this.phoneNumbers != null);
-        } else {
-            resultCondition = resultCondition && (this.phoneNumbers == null);
+        if (!tags.contains(SUPPORTED_SEARCH_TAGS.PHONE) && this.phoneNumbers != null) {
+            return false;
         }
 
-        return resultCondition;
+        return true;
     }
 
     public enum SUPPORTED_SEARCH_TAGS {
