@@ -19,6 +19,7 @@ package io.supertokens.pluginInterface.userroles.sqlStorage;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
 import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
+import io.supertokens.pluginInterface.multitenancy.exceptions.TenantOrAppNotFoundException;
 import io.supertokens.pluginInterface.sqlStorage.SQLStorage;
 import io.supertokens.pluginInterface.sqlStorage.TransactionConnection;
 import io.supertokens.pluginInterface.userroles.UserRolesStorage;
@@ -31,11 +32,9 @@ public interface UserRolesSQLStorage extends UserRolesStorage, SQLStorage {
                                           String role)
             throws StorageQueryException;
 
-    // create a new role if it doesnt exist. The reason this has tenantIdentifier is that it also adds the
-    // tenantId <-> role mapping
-    boolean createNewRoleOrDoNothingIfExists_Transaction(TenantIdentifier tenantIdentifier, TransactionConnection con,
+    boolean createNewRoleOrDoNothingIfExists_Transaction(AppIdentifier appIdentifier, TransactionConnection con,
                                                          String role)
-            throws StorageQueryException;
+            throws StorageQueryException, TenantOrAppNotFoundException;
 
     // associate a permission with a role
     void addPermissionToRoleOrDoNothingIfExists_Transaction(AppIdentifier appIdentifier, TransactionConnection con,
