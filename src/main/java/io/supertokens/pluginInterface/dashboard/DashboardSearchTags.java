@@ -17,6 +17,31 @@ public class DashboardSearchTags {
         this.providers = providers;
     }
 
+    public boolean shouldRecipeBeSearched(ArrayList<SUPPORTED_SEARCH_TAGS> tags){
+
+        boolean resultCondition = false;
+
+        if(tags.contains(SUPPORTED_SEARCH_TAGS.EMAIL)){
+            resultCondition = resultCondition || (this.emails != null);
+        } else {
+            resultCondition = resultCondition && (this.emails == null);
+        }
+
+        if(tags.contains(SUPPORTED_SEARCH_TAGS.PROVIDER)){
+            resultCondition = resultCondition || (this.providers != null);
+        } else {
+            resultCondition = resultCondition && (this.providers == null);
+        }
+
+        if(tags.contains(SUPPORTED_SEARCH_TAGS.PHONE)){
+            resultCondition = resultCondition || (this.phoneNumbers != null);
+        } else {
+            resultCondition = resultCondition && (this.phoneNumbers == null);
+        }
+
+        return resultCondition;
+    }
+
     public enum SUPPORTED_SEARCH_TAGS {
         EMAIL("email"), PHONE("phone"), PROVIDER("provider");
 
