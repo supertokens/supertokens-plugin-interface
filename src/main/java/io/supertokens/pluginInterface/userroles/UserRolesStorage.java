@@ -19,6 +19,7 @@ package io.supertokens.pluginInterface.userroles;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
 import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
+import io.supertokens.pluginInterface.multitenancy.exceptions.TenantOrAppNotFoundException;
 import io.supertokens.pluginInterface.nonAuthRecipe.NonAuthRecipeStorage;
 import io.supertokens.pluginInterface.userroles.exception.DuplicateUserRoleMappingException;
 import io.supertokens.pluginInterface.userroles.exception.UnknownRoleException;
@@ -27,7 +28,8 @@ public interface UserRolesStorage extends NonAuthRecipeStorage {
 
     // associate a userId with a role that exists
     void addRoleToUser(TenantIdentifier tenantIdentifier, String userId, String role)
-            throws StorageQueryException, UnknownRoleException, DuplicateUserRoleMappingException;
+            throws StorageQueryException, UnknownRoleException, DuplicateUserRoleMappingException,
+            TenantOrAppNotFoundException;
 
     // get all roles associated with the input userId
     String[] getRolesForUser(TenantIdentifier tenantIdentifier, String userId) throws StorageQueryException;
