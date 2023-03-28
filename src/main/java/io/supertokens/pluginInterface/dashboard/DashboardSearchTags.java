@@ -17,17 +17,55 @@ public class DashboardSearchTags {
         this.providers = providers;
     }
 
-    public boolean shouldRecipeBeSearched(ArrayList<SUPPORTED_SEARCH_TAGS> tags) {
-
-        if (!tags.contains(SUPPORTED_SEARCH_TAGS.EMAIL) && this.emails != null) {
+    public boolean shouldEmailPasswordTableBeSearched(){
+        
+        if (this.emails == null){
             return false;
         }
 
-        if (!tags.contains(SUPPORTED_SEARCH_TAGS.PROVIDER) && this.providers != null) {
+        ArrayList<SUPPORTED_SEARCH_TAGS> tags = new ArrayList<>();
+        tags.add(SUPPORTED_SEARCH_TAGS.EMAIL);
+
+        return checkThatSearchFieldsAreNull(tags);
+    }
+
+    public boolean shouldThirdPartyTableBeSearched(){
+        if (this.emails == null && this.providers == null){
             return false;
         }
 
-        if (!tags.contains(SUPPORTED_SEARCH_TAGS.PHONE) && this.phoneNumbers != null) {
+        ArrayList<SUPPORTED_SEARCH_TAGS> tags = new ArrayList<>();
+        tags.add(SUPPORTED_SEARCH_TAGS.EMAIL);
+        tags.add(SUPPORTED_SEARCH_TAGS.PROVIDER);
+
+        return checkThatSearchFieldsAreNull(tags);
+    }
+
+    public boolean shouldPasswordlessTableBeSearched(){
+        if (this.emails == null && this.phoneNumbers == null){
+            return false;
+        }
+
+        ArrayList<SUPPORTED_SEARCH_TAGS> tags = new ArrayList<>();
+        tags.add(SUPPORTED_SEARCH_TAGS.EMAIL);
+        tags.add(SUPPORTED_SEARCH_TAGS.PHONE);
+
+        return checkThatSearchFieldsAreNull(tags);
+    }
+
+
+    // checks that all fields of the current instance are null, ignores checks for fields set in the input
+    private boolean checkThatSearchFieldsAreNull(ArrayList<SUPPORTED_SEARCH_TAGS> tagsToIgnore) {
+
+        if (!tagsToIgnore.contains(SUPPORTED_SEARCH_TAGS.EMAIL) && this.emails != null) {
+            return false;
+        }
+
+        if (!tagsToIgnore.contains(SUPPORTED_SEARCH_TAGS.PROVIDER) && this.providers != null) {
+            return false;
+        }
+
+        if (!tagsToIgnore.contains(SUPPORTED_SEARCH_TAGS.PHONE) && this.phoneNumbers != null) {
             return false;
         }
 
