@@ -16,7 +16,9 @@
 
 package io.supertokens.pluginInterface.multitenancy;
 
+import io.supertokens.pluginInterface.STORAGE_TYPE;
 import io.supertokens.pluginInterface.Storage;
+import io.supertokens.pluginInterface.userroles.sqlStorage.UserRolesSQLStorage;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -50,5 +52,13 @@ public class AppIdentifierWithStorage extends AppIdentifier {
     @Nonnull
     public Storage[] getStorages() {
         return storages;
+    }
+
+    public UserRolesSQLStorage getUserRolesStorage() {
+        if (this.storage.getType() != STORAGE_TYPE.SQL) {
+            // we only support SQL for now
+            throw new UnsupportedOperationException("");
+        }
+        return (UserRolesSQLStorage) this.storage;
     }
 }

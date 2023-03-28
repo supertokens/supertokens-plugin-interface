@@ -33,7 +33,7 @@ public interface UserRolesSQLStorage extends UserRolesStorage, SQLStorage {
 
     // create a new role if it doesnt exist. The reason this has tenantIdentifier is that it also adds the
     // tenantId <-> role mapping
-    boolean createNewRoleOrDoNothingIfExists_Transaction(TenantIdentifier tenantIdentifier, TransactionConnection con,
+    boolean createNewRoleOrDoNothingIfExists_Transaction(AppIdentifier appIdentifier, TransactionConnection con,
                                                          String role)
             throws StorageQueryException;
 
