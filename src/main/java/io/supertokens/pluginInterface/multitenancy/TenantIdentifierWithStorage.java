@@ -18,6 +18,7 @@ package io.supertokens.pluginInterface.multitenancy;
 
 import io.supertokens.pluginInterface.STORAGE_TYPE;
 import io.supertokens.pluginInterface.Storage;
+import io.supertokens.pluginInterface.useridmapping.UserIdMappingStorage;
 import io.supertokens.pluginInterface.userroles.sqlStorage.UserRolesSQLStorage;
 
 import javax.annotation.Nonnull;
@@ -41,6 +42,10 @@ public class TenantIdentifierWithStorage extends TenantIdentifier {
 
     public AppIdentifierWithStorage toAppIdentifierWithStorage() {
         return new AppIdentifierWithStorage(this.getConnectionUriDomain(), this.getAppId(), this.getStorage());
+    }
+
+    public UserIdMappingStorage getUserIdMappingStorage() {
+        return (UserIdMappingStorage) this.storage;
     }
 
     public UserRolesSQLStorage getUserRolesStorage() {
