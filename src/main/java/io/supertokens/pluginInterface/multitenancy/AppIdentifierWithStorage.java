@@ -66,6 +66,11 @@ public class AppIdentifierWithStorage extends AppIdentifier {
     }
 
     public UserIdMappingStorage getUserIdMappingStorage() {
+        if (this.storage.getType() != STORAGE_TYPE.SQL) {
+            // we only support SQL for now
+            throw new UnsupportedOperationException("");
+        }
+
         return (UserIdMappingStorage) this.storage;
     }
 
