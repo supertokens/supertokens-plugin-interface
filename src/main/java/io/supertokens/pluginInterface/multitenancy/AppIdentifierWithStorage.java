@@ -18,6 +18,7 @@ package io.supertokens.pluginInterface.multitenancy;
 
 import io.supertokens.pluginInterface.STORAGE_TYPE;
 import io.supertokens.pluginInterface.Storage;
+import io.supertokens.pluginInterface.useridmapping.UserIdMappingStorage;
 import io.supertokens.pluginInterface.emailpassword.sqlStorage.EmailPasswordSQLStorage;
 import io.supertokens.pluginInterface.usermetadata.sqlStorage.UserMetadataSQLStorage;
 import io.supertokens.pluginInterface.userroles.sqlStorage.UserRolesSQLStorage;
@@ -71,6 +72,15 @@ public class AppIdentifierWithStorage extends AppIdentifier {
         }
 
         return (UserMetadataSQLStorage) this.storage;
+    }
+
+    public UserIdMappingStorage getUserIdMappingStorage() {
+        if (this.storage.getType() != STORAGE_TYPE.SQL) {
+            // we only support SQL for now
+            throw new UnsupportedOperationException("");
+        }
+
+        return (UserIdMappingStorage) this.storage;
     }
 
     public UserRolesSQLStorage getUserRolesStorage() {

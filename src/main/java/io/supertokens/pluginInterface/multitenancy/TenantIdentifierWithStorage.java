@@ -18,8 +18,8 @@ package io.supertokens.pluginInterface.multitenancy;
 
 import io.supertokens.pluginInterface.STORAGE_TYPE;
 import io.supertokens.pluginInterface.Storage;
+import io.supertokens.pluginInterface.useridmapping.UserIdMappingStorage;
 import io.supertokens.pluginInterface.emailpassword.sqlStorage.EmailPasswordSQLStorage;
-import io.supertokens.pluginInterface.multitenancy.exceptions.TenantOrAppNotFoundException;
 import io.supertokens.pluginInterface.userroles.sqlStorage.UserRolesSQLStorage;
 
 import javax.annotation.Nonnull;
@@ -45,11 +45,21 @@ public class TenantIdentifierWithStorage extends TenantIdentifier {
         return new AppIdentifierWithStorage(this.getConnectionUriDomain(), this.getAppId(), this.getStorage());
     }
 
+    public UserIdMappingStorage getUserIdMappingStorage() {
+        if (this.storage.getType() != STORAGE_TYPE.SQL) {
+            // we only support SQL for now
+            throw new UnsupportedOperationException("");
+        }
+
+        return (UserIdMappingStorage) this.storage;
+    }
+
     public EmailPasswordSQLStorage getEmailPasswordStorage() {
         if (this.storage.getType() != STORAGE_TYPE.SQL) {
             // we only support SQL for now
             throw new UnsupportedOperationException("");
         }
+
         return (EmailPasswordSQLStorage) this.storage;
     }
 
