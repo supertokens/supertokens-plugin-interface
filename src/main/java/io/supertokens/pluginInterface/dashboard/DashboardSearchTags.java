@@ -17,59 +17,56 @@ public class DashboardSearchTags {
         this.providers = providers;
     }
 
-    public boolean shouldEmailPasswordTableBeSearched(){
+    public boolean shouldEmailPasswordTableBeSearched() {
+
+        ArrayList<SUPPORTED_SEARCH_TAGS> nonNullSearchTags = getNonNullSearchFields();
+        return nonNullSearchTags.contains(SUPPORTED_SEARCH_TAGS.EMAIL) && nonNullSearchTags.size() == 1;
+
+    }
+
+    public boolean shouldThirdPartyTableBeSearched() {
         
-        if (this.emails == null){
-            return false;
+        ArrayList<SUPPORTED_SEARCH_TAGS> nonNullSearchTags = getNonNullSearchFields();
+        if(nonNullSearchTags.contains(SUPPORTED_SEARCH_TAGS.EMAIL) && nonNullSearchTags.contains(SUPPORTED_SEARCH_TAGS.PROVIDER)){
+            return nonNullSearchTags.size() == 2;
         }
 
-        ArrayList<SUPPORTED_SEARCH_TAGS> tags = new ArrayList<>();
-        tags.add(SUPPORTED_SEARCH_TAGS.EMAIL);
+        if(nonNullSearchTags.contains(SUPPORTED_SEARCH_TAGS.EMAIL) || nonNullSearchTags.contains(SUPPORTED_SEARCH_TAGS.PROVIDER)){
+            return nonNullSearchTags.size() == 1;
+        }
 
-        return checkThatSearchFieldsAreNull(tags);
+        return false;
     }
 
-    public boolean shouldThirdPartyTableBeSearched(){
-        if (this.emails == null && this.providers == null){
-            return false;
+    public boolean shouldPasswordlessTableBeSearched() {
+        ArrayList<SUPPORTED_SEARCH_TAGS> nonNullSearchTags = getNonNullSearchFields();
+        if(nonNullSearchTags.contains(SUPPORTED_SEARCH_TAGS.EMAIL) && nonNullSearchTags.contains(SUPPORTED_SEARCH_TAGS.PHONE)){
+            return nonNullSearchTags.size() == 2;
         }
 
-        ArrayList<SUPPORTED_SEARCH_TAGS> tags = new ArrayList<>();
-        tags.add(SUPPORTED_SEARCH_TAGS.EMAIL);
-        tags.add(SUPPORTED_SEARCH_TAGS.PROVIDER);
+        if(nonNullSearchTags.contains(SUPPORTED_SEARCH_TAGS.EMAIL) || nonNullSearchTags.contains(SUPPORTED_SEARCH_TAGS.PHONE)){
+            return nonNullSearchTags.size() == 1;
+        }
 
-        return checkThatSearchFieldsAreNull(tags);
+        return false;
     }
 
-    public boolean shouldPasswordlessTableBeSearched(){
-        if (this.emails == null && this.phoneNumbers == null){
-            return false;
+    private ArrayList<SUPPORTED_SEARCH_TAGS> getNonNullSearchFields() {
+        ArrayList<SUPPORTED_SEARCH_TAGS> nonNullSearchTags = new ArrayList<>();
+
+        if (this.emails != null) {
+            nonNullSearchTags.add(SUPPORTED_SEARCH_TAGS.EMAIL);
         }
 
-        ArrayList<SUPPORTED_SEARCH_TAGS> tags = new ArrayList<>();
-        tags.add(SUPPORTED_SEARCH_TAGS.EMAIL);
-        tags.add(SUPPORTED_SEARCH_TAGS.PHONE);
-
-        return checkThatSearchFieldsAreNull(tags);
-    }
-
-
-    // checks that all fields of the current instance are null, ignores checks for fields set in the input
-    private boolean checkThatSearchFieldsAreNull(ArrayList<SUPPORTED_SEARCH_TAGS> tagsToIgnore) {
-
-        if (!tagsToIgnore.contains(SUPPORTED_SEARCH_TAGS.EMAIL) && this.emails != null) {
-            return false;
+        if (this.phoneNumbers != null) {
+            nonNullSearchTags.add(SUPPORTED_SEARCH_TAGS.PHONE);
         }
 
-        if (!tagsToIgnore.contains(SUPPORTED_SEARCH_TAGS.PROVIDER) && this.providers != null) {
-            return false;
+        if (this.providers != null) {
+            nonNullSearchTags.add(SUPPORTED_SEARCH_TAGS.PROVIDER);
         }
 
-        if (!tagsToIgnore.contains(SUPPORTED_SEARCH_TAGS.PHONE) && this.phoneNumbers != null) {
-            return false;
-        }
-
-        return true;
+        return nonNullSearchTags;
     }
 
     public enum SUPPORTED_SEARCH_TAGS {
