@@ -7,6 +7,10 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [2.22.0] - 2023-03-30
+
+- Adds Support for Dashboard Search 
+
 ## [2.21.0] - 2023-03-27
 
 - Introduce TOTP Recipe plugin interface
