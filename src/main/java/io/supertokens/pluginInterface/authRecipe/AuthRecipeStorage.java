@@ -19,6 +19,7 @@ package io.supertokens.pluginInterface.authRecipe;
 
 import io.supertokens.pluginInterface.RECIPE_ID;
 import io.supertokens.pluginInterface.Storage;
+import io.supertokens.pluginInterface.dashboard.DashboardSearchTags;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 
 import javax.annotation.Nonnull;
@@ -29,7 +30,7 @@ public interface AuthRecipeStorage extends Storage {
     long getUsersCount(@Nullable RECIPE_ID[] includeRecipeIds) throws StorageQueryException;
 
     AuthRecipeUserInfo[] getUsers(@Nonnull Integer limit, @Nonnull String timeJoinedOrder,
-            @Nullable RECIPE_ID[] includeRecipeIds, @Nullable String userId, @Nullable Long timeJoined)
+            @Nullable RECIPE_ID[] includeRecipeIds, @Nullable String userId, @Nullable Long timeJoined, @Nullable DashboardSearchTags dashboardSearchTags)
             throws StorageQueryException;
 
     boolean doesUserIdExist(String userId) throws StorageQueryException;
