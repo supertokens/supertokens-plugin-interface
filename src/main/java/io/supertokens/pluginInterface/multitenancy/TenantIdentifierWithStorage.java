@@ -19,6 +19,7 @@ package io.supertokens.pluginInterface.multitenancy;
 import io.supertokens.pluginInterface.STORAGE_TYPE;
 import io.supertokens.pluginInterface.Storage;
 import io.supertokens.pluginInterface.passwordless.sqlStorage.PasswordlessSQLStorage;
+import io.supertokens.pluginInterface.thirdparty.sqlStorage.ThirdPartySQLStorage;
 import io.supertokens.pluginInterface.useridmapping.UserIdMappingStorage;
 import io.supertokens.pluginInterface.emailpassword.sqlStorage.EmailPasswordSQLStorage;
 import io.supertokens.pluginInterface.userroles.sqlStorage.UserRolesSQLStorage;
@@ -70,6 +71,14 @@ public class TenantIdentifierWithStorage extends TenantIdentifier {
             throw new UnsupportedOperationException("");
         }
         return (PasswordlessSQLStorage) this.storage;
+    }
+
+    public ThirdPartySQLStorage getThirdPartyStorage() {
+        if (this.storage.getType() != STORAGE_TYPE.SQL) {
+            // we only support SQL for now
+            throw new UnsupportedOperationException("");
+        }
+        return (ThirdPartySQLStorage) this.storage;
     }
 
     public UserRolesSQLStorage getUserRolesStorage() {
