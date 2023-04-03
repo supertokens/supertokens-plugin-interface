@@ -20,6 +20,7 @@ import io.supertokens.pluginInterface.KeyValueInfo;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
 import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
+import io.supertokens.pluginInterface.multitenancy.exceptions.TenantOrAppNotFoundException;
 import io.supertokens.pluginInterface.session.SessionInfo;
 import io.supertokens.pluginInterface.session.SessionStorage;
 import io.supertokens.pluginInterface.sqlStorage.SQLStorage;
@@ -38,7 +39,7 @@ public interface SessionSQLStorage extends SessionStorage, SQLStorage {
 
     void addAccessTokenSigningKey_Transaction(AppIdentifier appIdentifier, TransactionConnection con,
                                               KeyValueInfo info)
-            throws StorageQueryException;
+            throws StorageQueryException, TenantOrAppNotFoundException;
 
     KeyValueInfo getRefreshTokenSigningKey_Transaction(AppIdentifier appIdentifier, TransactionConnection con)
             throws StorageQueryException;
