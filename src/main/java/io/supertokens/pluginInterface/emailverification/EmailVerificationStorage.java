@@ -19,26 +19,27 @@ package io.supertokens.pluginInterface.emailverification;
 import io.supertokens.pluginInterface.emailverification.exception.DuplicateEmailVerificationTokenException;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
+import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
 import io.supertokens.pluginInterface.multitenancy.exceptions.TenantOrAppNotFoundException;
 import io.supertokens.pluginInterface.nonAuthRecipe.NonAuthRecipeStorage;
 
 public interface EmailVerificationStorage extends NonAuthRecipeStorage {
 
-    void addEmailVerificationToken(AppIdentifier appIdentifier, EmailVerificationTokenInfo emailVerificationInfo)
+    void addEmailVerificationToken(TenantIdentifier tenantIdentifier, EmailVerificationTokenInfo emailVerificationInfo)
             throws StorageQueryException, DuplicateEmailVerificationTokenException, TenantOrAppNotFoundException;
 
-    EmailVerificationTokenInfo getEmailVerificationTokenInfo(AppIdentifier appIdentifier, String token)
+    EmailVerificationTokenInfo getEmailVerificationTokenInfo(TenantIdentifier tenantIdentifier, String token)
             throws StorageQueryException;
 
     void deleteEmailVerificationUserInfo(AppIdentifier appIdentifier, String userId) throws StorageQueryException;
 
-    void revokeAllTokens(AppIdentifier appIdentifier, String userId, String email) throws StorageQueryException;
+    void revokeAllTokens(TenantIdentifier tenantIdentifier, String userId, String email) throws StorageQueryException;
 
     void unverifyEmail(AppIdentifier appIdentifier, String userId, String email) throws StorageQueryException;
 
     void deleteExpiredEmailVerificationTokens() throws StorageQueryException;
 
-    EmailVerificationTokenInfo[] getAllEmailVerificationTokenInfoForUser(AppIdentifier appIdentifier, String userId,
+    EmailVerificationTokenInfo[] getAllEmailVerificationTokenInfoForUser(TenantIdentifier tenantIdentifier, String userId,
                                                                          String email)
             throws StorageQueryException;
 
