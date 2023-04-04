@@ -18,11 +18,13 @@ package io.supertokens.pluginInterface.multitenancy;
 
 import io.supertokens.pluginInterface.STORAGE_TYPE;
 import io.supertokens.pluginInterface.Storage;
+import io.supertokens.pluginInterface.emailpassword.sqlStorage.EmailPasswordSQLStorage;
 import io.supertokens.pluginInterface.emailverification.sqlStorage.EmailVerificationSQLStorage;
+import io.supertokens.pluginInterface.multitenancy.exceptions.TenantOrAppNotFoundException;
 import io.supertokens.pluginInterface.passwordless.sqlStorage.PasswordlessSQLStorage;
 import io.supertokens.pluginInterface.thirdparty.sqlStorage.ThirdPartySQLStorage;
+import io.supertokens.pluginInterface.totp.sqlStorage.TOTPSQLStorage;
 import io.supertokens.pluginInterface.useridmapping.UserIdMappingStorage;
-import io.supertokens.pluginInterface.emailpassword.sqlStorage.EmailPasswordSQLStorage;
 import io.supertokens.pluginInterface.userroles.sqlStorage.UserRolesSQLStorage;
 
 import javax.annotation.Nonnull;
@@ -33,8 +35,9 @@ public class TenantIdentifierWithStorage extends TenantIdentifier {
     @Nonnull
     private final Storage storage;
 
-    public TenantIdentifierWithStorage(@Nullable String connectionUriDomain, @Nullable String appId, @Nullable String tenantId, @Nonnull
-    Storage storage) {
+    public TenantIdentifierWithStorage(@Nullable String connectionUriDomain, @Nullable String appId,
+                                       @Nullable String tenantId, @Nonnull
+                                               Storage storage) {
         super(connectionUriDomain, appId, tenantId);
         this.storage = storage;
     }
@@ -96,5 +99,14 @@ public class TenantIdentifierWithStorage extends TenantIdentifier {
             throw new UnsupportedOperationException("");
         }
         return (UserRolesSQLStorage) this.storage;
+    }
+
+    public TOTPSQLStorage getTOTPStorage()
+            throws TenantOrAppNotFoundException {
+        if (this.storage.getType() != STORAGE_TYPE.SQL) {
+            // we only support SQL for now
+            throw new UnsupportedOperationException("");
+        }
+        return (TOTPSQLStorage) this.storage;
     }
 }

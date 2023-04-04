@@ -16,13 +16,15 @@
 
 package io.supertokens.pluginInterface.multitenancy;
 
+import io.supertokens.pluginInterface.ActiveUsersStorage;
 import io.supertokens.pluginInterface.STORAGE_TYPE;
 import io.supertokens.pluginInterface.Storage;
+import io.supertokens.pluginInterface.emailpassword.sqlStorage.EmailPasswordSQLStorage;
 import io.supertokens.pluginInterface.emailverification.sqlStorage.EmailVerificationSQLStorage;
 import io.supertokens.pluginInterface.passwordless.sqlStorage.PasswordlessSQLStorage;
 import io.supertokens.pluginInterface.thirdparty.sqlStorage.ThirdPartySQLStorage;
+import io.supertokens.pluginInterface.totp.sqlStorage.TOTPSQLStorage;
 import io.supertokens.pluginInterface.useridmapping.UserIdMappingStorage;
-import io.supertokens.pluginInterface.emailpassword.sqlStorage.EmailPasswordSQLStorage;
 import io.supertokens.pluginInterface.usermetadata.sqlStorage.UserMetadataSQLStorage;
 import io.supertokens.pluginInterface.userroles.sqlStorage.UserRolesSQLStorage;
 
@@ -37,14 +39,14 @@ public class AppIdentifierWithStorage extends AppIdentifier {
     private final Storage[] storages;
 
     public AppIdentifierWithStorage(@Nullable String connectionUriDomain, @Nullable String appId, @Nonnull
-    Storage storage) {
+            Storage storage) {
         super(connectionUriDomain, appId);
         this.storage = storage;
         this.storages = new Storage[]{storage};
     }
 
     public AppIdentifierWithStorage(@Nullable String connectionUriDomain, @Nullable String appId, @Nonnull
-    Storage storage, @Nonnull Storage[] storages) {
+            Storage storage, @Nonnull Storage[] storages) {
         super(connectionUriDomain, appId);
         this.storage = storage;
         this.storages = storages;
@@ -116,5 +118,21 @@ public class AppIdentifierWithStorage extends AppIdentifier {
             throw new UnsupportedOperationException("");
         }
         return (UserRolesSQLStorage) this.storage;
+    }
+
+    public TOTPSQLStorage getTOTPStorage() {
+        if (this.storage.getType() != STORAGE_TYPE.SQL) {
+            // we only support SQL for now
+            throw new UnsupportedOperationException("");
+        }
+        return (TOTPSQLStorage) this.storage;
+    }
+
+    public ActiveUsersStorage getActiveUsersStorage() {
+        if (this.storage.getType() != STORAGE_TYPE.SQL) {
+            // we only support SQL for now
+            throw new UnsupportedOperationException("");
+        }
+        return (ActiveUsersStorage) this.storage;
     }
 }
