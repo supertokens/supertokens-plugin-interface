@@ -46,7 +46,7 @@ public interface SessionSQLStorage extends SessionStorage, SQLStorage {
 
     void setRefreshTokenSigningKey_Transaction(AppIdentifier appIdentifier, TransactionConnection con,
                                                KeyValueInfo info)
-            throws StorageQueryException;
+            throws StorageQueryException, TenantOrAppNotFoundException;
 
     SessionInfo getSessionInfo_Transaction(TenantIdentifier tenantIdentifier, TransactionConnection con,
                                            String sessionHandle)
