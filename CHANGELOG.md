@@ -7,7 +7,7 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
-## [2.23.0] - XXX
+## [2.23.0] - 2023-04-05
 
 - Added `useStaticKey ` into session info classes
 - Added `hashCode` override for JWTSigningKeyInfo
