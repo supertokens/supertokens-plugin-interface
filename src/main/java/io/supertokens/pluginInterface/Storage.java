@@ -23,6 +23,7 @@ import io.supertokens.pluginInterface.exceptions.InvalidConfigException;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
 import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
+import io.supertokens.pluginInterface.multitenancy.exceptions.TenantOrAppNotFoundException;
 
 import java.util.Set;
 
@@ -63,7 +64,8 @@ public interface Storage {
 
     KeyValueInfo getKeyValue(TenantIdentifier tenantIdentifier, String key) throws StorageQueryException;
 
-    void setKeyValue(TenantIdentifier tenantIdentifier, String key, KeyValueInfo info) throws StorageQueryException;
+    void setKeyValue(TenantIdentifier tenantIdentifier, String key, KeyValueInfo info) throws StorageQueryException,
+            TenantOrAppNotFoundException;
 
     void setStorageLayerEnabled(boolean enabled);
 
