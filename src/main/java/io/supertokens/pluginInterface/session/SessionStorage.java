@@ -20,6 +20,7 @@ import com.google.gson.JsonObject;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
 import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
+import io.supertokens.pluginInterface.multitenancy.exceptions.TenantOrAppNotFoundException;
 import io.supertokens.pluginInterface.nonAuthRecipe.NonAuthRecipeStorage;
 
 import javax.annotation.Nullable;
@@ -27,7 +28,8 @@ import javax.annotation.Nullable;
 public interface SessionStorage extends NonAuthRecipeStorage {
     void createNewSession(TenantIdentifier tenantIdentifier, String sessionHandle, String userId,
                           String refreshTokenHash2, JsonObject userDataInDatabase,
-                          long expiry, JsonObject userDataInJWT, long createdAtTime) throws StorageQueryException;
+                          long expiry, JsonObject userDataInJWT, long createdAtTime) throws StorageQueryException,
+            TenantOrAppNotFoundException;
 
     void deleteSessionsOfUser(AppIdentifier appIdentifier, String userId) throws StorageQueryException;
 

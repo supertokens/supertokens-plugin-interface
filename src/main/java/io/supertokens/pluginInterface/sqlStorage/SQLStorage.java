@@ -22,6 +22,7 @@ import io.supertokens.pluginInterface.Storage;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.exceptions.StorageTransactionLogicException;
 import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
+import io.supertokens.pluginInterface.multitenancy.exceptions.TenantOrAppNotFoundException;
 
 public interface SQLStorage extends Storage {
     <T> T startTransaction(TransactionLogic<T> logic, TransactionIsolationLevel isolationLevel)
@@ -32,7 +33,7 @@ public interface SQLStorage extends Storage {
     void commitTransaction(TransactionConnection con) throws StorageQueryException;
 
     void setKeyValue_Transaction(TenantIdentifier tenantIdentifier, TransactionConnection con, String key,
-                                 KeyValueInfo info) throws StorageQueryException;
+                                 KeyValueInfo info) throws StorageQueryException, TenantOrAppNotFoundException;
 
     KeyValueInfo getKeyValue_Transaction(TenantIdentifier tenantIdentifier, TransactionConnection con, String key)
             throws StorageQueryException;
