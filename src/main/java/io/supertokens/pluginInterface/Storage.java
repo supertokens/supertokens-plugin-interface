@@ -37,8 +37,9 @@ public interface Storage {
     // two different user pool IDs imply that the data for those two user pools are completely isolated.
     String getUserPoolId();
 
-    // this returns a unique ID based on the db's connection connection pool config. This can be different
+    // this returns a unique ID based on the db's connection pool config. This can be different
     // even if the getUserPoolId returns the same ID - based on the config provided by the user.
+    // So two different db connection pools may point to the same end user pool.
     String getConnectionPoolId();
 
     // if the input otherConfig has different values set for the same properties as this user pool's config,
