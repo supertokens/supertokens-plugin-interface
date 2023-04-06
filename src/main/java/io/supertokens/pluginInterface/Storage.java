@@ -52,7 +52,7 @@ public interface Storage {
     void stopLogging();
 
     // load tables and create connection pools
-    void initStorage() throws DbInitException;
+    void initStorage(boolean shouldWait) throws DbInitException;
 
     // used by the core to do transactions the right way.
     STORAGE_TYPE getType();
