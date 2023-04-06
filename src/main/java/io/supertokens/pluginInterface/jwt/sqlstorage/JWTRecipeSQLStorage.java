@@ -21,6 +21,7 @@ import io.supertokens.pluginInterface.jwt.JWTRecipeStorage;
 import io.supertokens.pluginInterface.jwt.JWTSigningKeyInfo;
 import io.supertokens.pluginInterface.jwt.exceptions.DuplicateKeyIdException;
 import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
+import io.supertokens.pluginInterface.multitenancy.exceptions.TenantOrAppNotFoundException;
 import io.supertokens.pluginInterface.sqlStorage.SQLStorage;
 import io.supertokens.pluginInterface.sqlStorage.TransactionConnection;
 
@@ -31,5 +32,5 @@ public interface JWTRecipeSQLStorage extends JWTRecipeStorage, SQLStorage {
             throws StorageQueryException;
 
     void setJWTSigningKey_Transaction(AppIdentifier appIdentifier, TransactionConnection con, JWTSigningKeyInfo info)
-            throws StorageQueryException, DuplicateKeyIdException;
+            throws StorageQueryException, DuplicateKeyIdException, TenantOrAppNotFoundException;
 }
