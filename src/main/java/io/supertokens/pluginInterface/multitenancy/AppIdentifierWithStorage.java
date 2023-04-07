@@ -19,6 +19,7 @@ package io.supertokens.pluginInterface.multitenancy;
 import io.supertokens.pluginInterface.ActiveUsersStorage;
 import io.supertokens.pluginInterface.STORAGE_TYPE;
 import io.supertokens.pluginInterface.Storage;
+import io.supertokens.pluginInterface.authRecipe.AuthRecipeStorage;
 import io.supertokens.pluginInterface.emailpassword.sqlStorage.EmailPasswordSQLStorage;
 import io.supertokens.pluginInterface.emailverification.sqlStorage.EmailVerificationSQLStorage;
 import io.supertokens.pluginInterface.passwordless.sqlStorage.PasswordlessSQLStorage;
@@ -60,6 +61,15 @@ public class AppIdentifierWithStorage extends AppIdentifier {
     @Nonnull
     public Storage[] getStorages() {
         return storages;
+    }
+
+    public AuthRecipeStorage getAuthRecipeStorage() {
+        if (this.storage.getType() != STORAGE_TYPE.SQL) {
+            // we only support SQL for now
+            throw new UnsupportedOperationException("");
+        }
+
+        return (AuthRecipeStorage) this.storage;
     }
 
     public EmailPasswordSQLStorage getEmailPasswordStorage() {
