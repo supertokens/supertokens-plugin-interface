@@ -6,11 +6,13 @@ import io.supertokens.pluginInterface.dashboard.exceptions.DuplicateUserIdExcept
 import io.supertokens.pluginInterface.dashboard.exceptions.UserIdNotFoundException;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
+import io.supertokens.pluginInterface.multitenancy.exceptions.TenantOrAppNotFoundException;
 
 public interface DashboardStorage extends Storage {
 
     void createNewDashboardUser(AppIdentifier appIdentifier, DashboardUser userInfo)
-            throws StorageQueryException, DuplicateUserIdException, DuplicateEmailException;
+            throws StorageQueryException, DuplicateUserIdException, DuplicateEmailException,
+            TenantOrAppNotFoundException;
 
     DashboardUser getDashboardUserByEmail(AppIdentifier appIdentifier, String email) throws StorageQueryException;
 
