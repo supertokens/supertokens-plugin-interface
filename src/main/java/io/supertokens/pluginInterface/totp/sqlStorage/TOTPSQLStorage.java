@@ -3,6 +3,7 @@ package io.supertokens.pluginInterface.totp.sqlStorage;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
 import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
+import io.supertokens.pluginInterface.multitenancy.exceptions.TenantOrAppNotFoundException;
 import io.supertokens.pluginInterface.sqlStorage.SQLStorage;
 import io.supertokens.pluginInterface.sqlStorage.TransactionConnection;
 import io.supertokens.pluginInterface.totp.TOTPDevice;
@@ -34,6 +35,7 @@ public interface TOTPSQLStorage extends TOTPStorage, SQLStorage {
      * Insert a used TOTP code for an existing user:
      */
     void insertUsedCode_Transaction(TransactionConnection con, TenantIdentifier tenantIdentifier, TOTPUsedCode code)
-            throws StorageQueryException, TotpNotEnabledException, UsedCodeAlreadyExistsException;
+            throws StorageQueryException, TotpNotEnabledException, UsedCodeAlreadyExistsException,
+            TenantOrAppNotFoundException;
 
 }
