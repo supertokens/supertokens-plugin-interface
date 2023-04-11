@@ -3,6 +3,7 @@ package io.supertokens.pluginInterface.totp;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
 import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
+import io.supertokens.pluginInterface.multitenancy.exceptions.TenantOrAppNotFoundException;
 import io.supertokens.pluginInterface.nonAuthRecipe.NonAuthRecipeStorage;
 import io.supertokens.pluginInterface.totp.exception.DeviceAlreadyExistsException;
 import io.supertokens.pluginInterface.totp.exception.UnknownDeviceException;
@@ -12,7 +13,7 @@ public interface TOTPStorage extends NonAuthRecipeStorage {
      * Create a new device and a new user if the user does not exist:
      */
     void createDevice(AppIdentifier appIdentifier, TOTPDevice device)
-            throws StorageQueryException, DeviceAlreadyExistsException;
+            throws StorageQueryException, DeviceAlreadyExistsException, TenantOrAppNotFoundException;
 
     /**
      * Verify a user's device with the given name:

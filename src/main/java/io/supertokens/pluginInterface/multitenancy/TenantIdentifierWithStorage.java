@@ -116,8 +116,7 @@ public class TenantIdentifierWithStorage extends TenantIdentifier {
         return (UserRolesSQLStorage) this.storage;
     }
 
-    public TOTPSQLStorage getTOTPStorage()
-            throws TenantOrAppNotFoundException {
+    public TOTPSQLStorage getTOTPStorage() {
         if (this.storage.getType() != STORAGE_TYPE.SQL) {
             // we only support SQL for now
             throw new UnsupportedOperationException("");
