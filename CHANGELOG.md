@@ -7,6 +7,11 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [2.23.0] - 2023-04-05
+
+- Added `useStaticKey ` into session info classes
+- Added `hashCode` override for JWTSigningKeyInfo
+
 ## [2.22.0] - 2023-03-30
 
 - Adds Support for Dashboard Search 
