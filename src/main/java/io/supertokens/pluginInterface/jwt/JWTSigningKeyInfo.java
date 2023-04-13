@@ -45,4 +45,13 @@ public abstract class JWTSigningKeyInfo {
 
         return false;
     }
+
+    @Override
+    public int hashCode() {
+        int result = keyId.hashCode();
+        result = 31 * result + (int) (createdAtTime ^ (createdAtTime >>> 32));
+        result = 31 * result + algorithm.hashCode();
+        result = 31 * result + keyString.hashCode();
+        return result;
+    }
 }

@@ -28,6 +28,6 @@ public class JWTAsymmetricSigningKeyInfo extends JWTSigningKeyInfo {
     }
 
     public JWTAsymmetricSigningKeyInfo(String keyId, long createdAtTime, String algorithm, String keyString) {
-        this(keyId, createdAtTime, algorithm, keyString.split("\\|")[0], keyString.split("\\|")[1]);
+        this(keyId, createdAtTime, algorithm, keyString.split("[|;]")[0], keyString.split("[|;]")[1]);
     }
 }
