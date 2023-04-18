@@ -82,4 +82,8 @@ public interface Storage {
     // this function is used during testing in the core so that the core can
     // create multiple user pools across any plugin being used.
     void modifyConfigToAddANewUserPoolForTesting(JsonObject config, int poolNumber);
+
+    // this function returns a list of protected configs which users of supertokens saas can't read or modify
+    // when they are operating on tenantsm unless the supertokens_saas_secret key is used in the API request.
+    String[] getProtectedConfigsFromSuperTokensSaaSUsers();
 }
