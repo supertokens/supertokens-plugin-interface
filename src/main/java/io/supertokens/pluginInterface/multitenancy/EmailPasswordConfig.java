@@ -17,7 +17,7 @@
 package io.supertokens.pluginInterface.multitenancy;
 
 public class EmailPasswordConfig {
-    public boolean enabled;
+    public final boolean enabled;
 
     public EmailPasswordConfig(boolean enabled) {
         this.enabled = enabled;

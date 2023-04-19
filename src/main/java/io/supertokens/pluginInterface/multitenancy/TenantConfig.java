@@ -16,6 +16,7 @@
 
 package io.supertokens.pluginInterface.multitenancy;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import javax.annotation.Nonnull;
@@ -71,5 +72,13 @@ public class TenantConfig {
     @Override
     public int hashCode() {
         return tenantIdentifier.hashCode();
+    }
+
+    public JsonObject toJson() {
+        Gson gson = new Gson();
+        JsonObject tenantConfigObject = gson.toJsonTree(this).getAsJsonObject();
+        tenantConfigObject.addProperty("tenantId", this.tenantIdentifier.getTenantId());
+        tenantConfigObject.remove("tenantIdentifier");
+        return tenantConfigObject;
     }
 }

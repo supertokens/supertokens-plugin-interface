@@ -48,8 +48,10 @@ public interface MultitenancyStorage extends Storage {
 
     TenantConfig[] getAllTenants() throws StorageQueryException;
 
-    void addUserIdToTenant(TenantIdentifier tenantIdentifier, String userId) throws TenantOrAppNotFoundException,
+    boolean addUserIdToTenant(TenantIdentifier tenantIdentifier, String userId) throws TenantOrAppNotFoundException,
             UnknownUserIdException;
+
+    boolean removeUserIdFromTenant(TenantIdentifier tenantIdentifier, String userId);
 
     void addRoleToTenant(TenantIdentifier tenantIdentifier, String role) throws TenantOrAppNotFoundException,
             UnknownRoleException;
