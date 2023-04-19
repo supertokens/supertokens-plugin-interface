@@ -31,20 +31,21 @@ public interface MultitenancyStorage extends Storage {
             DuplicateClientTypeException, StorageQueryException;
 
     // this adds tenantId to the target user pool
-    void addTenantIdInUserPool(TenantIdentifier tenantIdentifier)
+    void addTenantIdInTargetStorage(TenantIdentifier tenantIdentifier)
             throws DuplicateTenantException, StorageQueryException;
 
     // this also deletes all tenant info from all tables.
-    void deleteTenantIdInUserPool(TenantIdentifier tenantIdentifier) throws TenantOrAppNotFoundException;
+    void deleteTenantIdInTargetStorage(TenantIdentifier tenantIdentifier)
+            throws TenantOrAppNotFoundException, StorageQueryException;
 
     void overwriteTenantConfig(TenantConfig config) throws TenantOrAppNotFoundException, 
             DuplicateThirdPartyIdException, DuplicateClientTypeException, StorageQueryException;
 
-    void deleteTenant(TenantIdentifier tenantIdentifier) throws TenantOrAppNotFoundException;
+    void deleteTenantInfoInBaseStorage(TenantIdentifier tenantIdentifier) throws StorageQueryException;
 
-    void deleteApp(TenantIdentifier tenantIdentifier) throws TenantOrAppNotFoundException;
+    void deleteAppInfoInBaseStorage(AppIdentifier appIdentifier) throws StorageQueryException;
 
-    void deleteConnectionUriDomainMapping(TenantIdentifier tenantIdentifier) throws TenantOrAppNotFoundException;
+    void deleteConnectionUriDomainInfoInBaseStorage(String connectionUriDomain) throws StorageQueryException;
 
     TenantConfig[] getAllTenants() throws StorageQueryException;
 
@@ -55,9 +56,5 @@ public interface MultitenancyStorage extends Storage {
 
     void addRoleToTenant(TenantIdentifier tenantIdentifier, String role) throws TenantOrAppNotFoundException,
             UnknownRoleException;
-
-    void deleteAppId(String appId) throws TenantOrAppNotFoundException;
-
-    void deleteConnectionUriDomain(String connectionUriDomain) throws TenantOrAppNotFoundException;
 
 }
