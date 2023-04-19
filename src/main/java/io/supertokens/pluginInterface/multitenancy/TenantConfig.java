@@ -74,11 +74,16 @@ public class TenantConfig {
         return tenantIdentifier.hashCode();
     }
 
-    public JsonObject toJson() {
+    public JsonObject toJson(boolean shouldProtectDbConfig) {
         Gson gson = new Gson();
         JsonObject tenantConfigObject = gson.toJsonTree(this).getAsJsonObject();
         tenantConfigObject.addProperty("tenantId", this.tenantIdentifier.getTenantId());
         tenantConfigObject.remove("tenantIdentifier");
+
+        if (shouldProtectDbConfig) {
+            // TODO
+        }
+
         return tenantConfigObject;
     }
 }
