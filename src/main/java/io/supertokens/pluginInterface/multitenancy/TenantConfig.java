@@ -18,6 +18,7 @@ package io.supertokens.pluginInterface.multitenancy;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.google.gson.annotations.SerializedName;
 import io.supertokens.pluginInterface.Storage;
 
 import javax.annotation.Nonnull;
@@ -29,12 +30,15 @@ public class TenantConfig {
     public transient final TenantIdentifier tenantIdentifier;
 
     @Nonnull
+    @SerializedName("emailPassword")
     public final EmailPasswordConfig emailPasswordConfig;
 
     @Nonnull
+    @SerializedName("thirdParty")
     public final ThirdPartyConfig thirdPartyConfig;
 
     @Nonnull
+    @SerializedName("passwordless")
     public final PasswordlessConfig passwordlessConfig;
 
     @Nonnull
@@ -79,15 +83,6 @@ public class TenantConfig {
         Gson gson = new Gson();
         JsonObject tenantConfigObject = gson.toJsonTree(this).getAsJsonObject();
         tenantConfigObject.addProperty("tenantId", this.tenantIdentifier.getTenantId());
-        tenantConfigObject.remove("tenantIdentifier");
-
-        // Change the property names as per CDI
-        tenantConfigObject.add("emailPassword", tenantConfigObject.get("emailPasswordConfig"));
-        tenantConfigObject.add("thirdParty", tenantConfigObject.get("thirdPartyConfig"));
-        tenantConfigObject.add("passwordless", tenantConfigObject.get("passwordlessConfig"));
-        tenantConfigObject.remove("emailPasswordConfig");
-        tenantConfigObject.remove("thirdPartyConfig");
-        tenantConfigObject.remove("passwordlessConfig");
 
         if (shouldProtectDbConfig) {
             String[] protectedConfigs = storage.getProtectedConfigsFromSuperTokensSaaSUsers();
