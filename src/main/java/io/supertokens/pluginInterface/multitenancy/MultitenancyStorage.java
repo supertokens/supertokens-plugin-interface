@@ -56,9 +56,6 @@ public interface MultitenancyStorage extends Storage {
             UnknownUserIdException, StorageQueryException, DuplicateEmailException, DuplicateThirdPartyUserException,
             DuplicatePhoneNumberException;
 
-    boolean removeUserIdFromTenant(TenantIdentifier tenantIdentifier, String userId);
-
-    void addRoleToTenant(TenantIdentifier tenantIdentifier, String role) throws TenantOrAppNotFoundException,
-            UnknownRoleException;
-
+    boolean removeUserIdFromTenant(TenantIdentifier tenantIdentifier, String userId)
+            throws StorageQueryException, UnknownUserIdException;
 }
