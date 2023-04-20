@@ -80,6 +80,13 @@ public class TenantConfig {
         tenantConfigObject.addProperty("tenantId", this.tenantIdentifier.getTenantId());
         tenantConfigObject.remove("tenantIdentifier");
 
+        tenantConfigObject.add("emailPassword", tenantConfigObject.get("emailPasswordConfig"));
+        tenantConfigObject.add("thirdParty", tenantConfigObject.get("thirdPartyConfig"));
+        tenantConfigObject.add("passwordless", tenantConfigObject.get("passwordlessConfig"));
+        tenantConfigObject.remove("emailPasswordConfig");
+        tenantConfigObject.remove("thirdPartyConfig");
+        tenantConfigObject.remove("passwordlessConfig");
+
         if (shouldProtectDbConfig) {
             // TODO
         }
