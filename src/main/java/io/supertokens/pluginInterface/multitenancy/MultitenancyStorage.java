@@ -44,11 +44,11 @@ public interface MultitenancyStorage extends Storage {
     void overwriteTenantConfig(TenantConfig config) throws TenantOrAppNotFoundException, 
             DuplicateThirdPartyIdException, DuplicateClientTypeException, StorageQueryException;
 
-    void deleteTenantInfoInBaseStorage(TenantIdentifier tenantIdentifier) throws StorageQueryException;
+    boolean deleteTenantInfoInBaseStorage(TenantIdentifier tenantIdentifier) throws StorageQueryException;
 
-    void deleteAppInfoInBaseStorage(AppIdentifier appIdentifier) throws StorageQueryException;
+    boolean deleteAppInfoInBaseStorage(AppIdentifier appIdentifier) throws StorageQueryException;
 
-    void deleteConnectionUriDomainInfoInBaseStorage(String connectionUriDomain) throws StorageQueryException;
+    boolean deleteConnectionUriDomainInfoInBaseStorage(String connectionUriDomain) throws StorageQueryException;
 
     TenantConfig[] getAllTenants() throws StorageQueryException;
 
