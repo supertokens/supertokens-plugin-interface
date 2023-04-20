@@ -17,12 +17,15 @@
 package io.supertokens.pluginInterface.multitenancy;
 
 import io.supertokens.pluginInterface.Storage;
+import io.supertokens.pluginInterface.emailpassword.exceptions.DuplicateEmailException;
 import io.supertokens.pluginInterface.emailpassword.exceptions.UnknownUserIdException;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.multitenancy.exceptions.DuplicateClientTypeException;
 import io.supertokens.pluginInterface.multitenancy.exceptions.DuplicateTenantException;
 import io.supertokens.pluginInterface.multitenancy.exceptions.DuplicateThirdPartyIdException;
 import io.supertokens.pluginInterface.multitenancy.exceptions.TenantOrAppNotFoundException;
+import io.supertokens.pluginInterface.passwordless.exception.DuplicatePhoneNumberException;
+import io.supertokens.pluginInterface.thirdparty.exception.DuplicateThirdPartyUserException;
 import io.supertokens.pluginInterface.userroles.exception.UnknownRoleException;
 
 public interface MultitenancyStorage extends Storage {
@@ -31,31 +34,28 @@ public interface MultitenancyStorage extends Storage {
             DuplicateClientTypeException, StorageQueryException;
 
     // this adds tenantId to the target user pool
-    void addTenantIdInUserPool(TenantIdentifier tenantIdentifier)
+    void addTenantIdInTargetStorage(TenantIdentifier tenantIdentifier)
             throws DuplicateTenantException, StorageQueryException;
 
     // this also deletes all tenant info from all tables.
-    void deleteTenantIdInUserPool(TenantIdentifier tenantIdentifier) throws TenantOrAppNotFoundException;
+    void deleteTenantIdInTargetStorage(TenantIdentifier tenantIdentifier)
+            throws TenantOrAppNotFoundException, StorageQueryException;
 
     void overwriteTenantConfig(TenantConfig config) throws TenantOrAppNotFoundException, 
             DuplicateThirdPartyIdException, DuplicateClientTypeException, StorageQueryException;
 
-    void deleteTenant(TenantIdentifier tenantIdentifier) throws TenantOrAppNotFoundException;
+    boolean deleteTenantInfoInBaseStorage(TenantIdentifier tenantIdentifier) throws StorageQueryException;
 
-    void deleteApp(TenantIdentifier tenantIdentifier) throws TenantOrAppNotFoundException;
+    boolean deleteAppInfoInBaseStorage(AppIdentifier appIdentifier) throws StorageQueryException;
 
-    void deleteConnectionUriDomainMapping(TenantIdentifier tenantIdentifier) throws TenantOrAppNotFoundException;
+    boolean deleteConnectionUriDomainInfoInBaseStorage(String connectionUriDomain) throws StorageQueryException;
 
     TenantConfig[] getAllTenants() throws StorageQueryException;
 
-    void addUserIdToTenant(TenantIdentifier tenantIdentifier, String userId) throws TenantOrAppNotFoundException,
-            UnknownUserIdException;
+    boolean addUserIdToTenant(TenantIdentifier tenantIdentifier, String userId) throws TenantOrAppNotFoundException,
+            UnknownUserIdException, StorageQueryException, DuplicateEmailException, DuplicateThirdPartyUserException,
+            DuplicatePhoneNumberException;
 
-    void addRoleToTenant(TenantIdentifier tenantIdentifier, String role) throws TenantOrAppNotFoundException,
-            UnknownRoleException;
-
-    void deleteAppId(String appId) throws TenantOrAppNotFoundException;
-
-    void deleteConnectionUriDomain(String connectionUriDomain) throws TenantOrAppNotFoundException;
-
+    boolean removeUserIdFromTenant(TenantIdentifier tenantIdentifier, String userId)
+            throws StorageQueryException, UnknownUserIdException;
 }

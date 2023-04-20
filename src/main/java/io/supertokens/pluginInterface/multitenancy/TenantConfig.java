@@ -16,7 +16,10 @@
 
 package io.supertokens.pluginInterface.multitenancy;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.google.gson.annotations.SerializedName;
+import io.supertokens.pluginInterface.Storage;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -27,12 +30,15 @@ public class TenantConfig {
     public transient final TenantIdentifier tenantIdentifier;
 
     @Nonnull
+    @SerializedName("emailPassword")
     public final EmailPasswordConfig emailPasswordConfig;
 
     @Nonnull
+    @SerializedName("thirdParty")
     public final ThirdPartyConfig thirdPartyConfig;
 
     @Nonnull
+    @SerializedName("passwordless")
     public final PasswordlessConfig passwordlessConfig;
 
     @Nonnull
@@ -71,5 +77,22 @@ public class TenantConfig {
     @Override
     public int hashCode() {
         return tenantIdentifier.hashCode();
+    }
+
+    public JsonObject toJson(boolean shouldProtectDbConfig, Storage storage) {
+        Gson gson = new Gson();
+        JsonObject tenantConfigObject = gson.toJsonTree(this).getAsJsonObject();
+        tenantConfigObject.addProperty("tenantId", this.tenantIdentifier.getTenantId());
+
+        if (shouldProtectDbConfig) {
+            String[] protectedConfigs = storage.getProtectedConfigsFromSuperTokensSaaSUsers();
+            for (String config : protectedConfigs) {
+                if (tenantConfigObject.get("coreConfig").getAsJsonObject().has(config)) {
+                    tenantConfigObject.get("coreConfig").getAsJsonObject().remove(config);
+                }
+            }
+        }
+
+        return tenantConfigObject;
     }
 }

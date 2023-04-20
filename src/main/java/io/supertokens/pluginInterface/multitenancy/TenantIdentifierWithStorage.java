@@ -123,4 +123,12 @@ public class TenantIdentifierWithStorage extends TenantIdentifier {
         }
         return (TOTPSQLStorage) this.storage;
     }
+
+    public MultitenancyStorage getMultitenancyStorageWithTargetStorage() {
+        if (this.storage.getType() != STORAGE_TYPE.SQL) {
+            // we only support SQL for now
+            throw new UnsupportedOperationException("");
+        }
+        return (MultitenancyStorage) this.storage;
+    }
 }
