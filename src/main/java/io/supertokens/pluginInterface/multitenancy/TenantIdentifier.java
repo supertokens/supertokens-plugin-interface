@@ -26,6 +26,8 @@ public class TenantIdentifier {
     public static final String DEFAULT_APP_ID = "public";
     public static final String DEFAULT_CONNECTION_URI = "";
 
+    public static TenantIdentifier BASE_TENANT = new TenantIdentifier(null, null, null);
+
     @Nullable
     private final String connectionUriDomain;
 
