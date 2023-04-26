@@ -26,10 +26,17 @@ public class UserInfo extends AuthRecipeUserInfo {
     // using transient, we tell Gson not to include this when creating a JSON
     public transient final String passwordHash;
 
+    public String[] tenantIds;
+
     public UserInfo(String id, String email, String passwordHash, long timeJoined) {
         super(id, timeJoined);
         this.email = email;
         this.passwordHash = passwordHash;
+        this.tenantIds = null;
+    }
+
+    public void setTenantIds(String[] tenantIds) {
+        this.tenantIds = tenantIds;
     }
 
     @Override

@@ -24,6 +24,7 @@ import io.supertokens.pluginInterface.authRecipe.AuthRecipeUserInfo;
 public class UserInfo extends AuthRecipeUserInfo {
     public final String email;
     public final String phoneNumber;
+    public String[] tenantIds;
 
     public UserInfo(String id, @Nullable String email, @Nullable String phoneNumber, long timeJoined) {
         super(id, timeJoined);
@@ -34,6 +35,11 @@ public class UserInfo extends AuthRecipeUserInfo {
 
         this.email = email;
         this.phoneNumber = phoneNumber;
+        this.tenantIds = null;
+    }
+
+    public void setTenantIds(String[] tenantIds) {
+        this.tenantIds = tenantIds;
     }
 
     @Override
