@@ -16,41 +16,24 @@
 
 package io.supertokens.pluginInterface.thirdparty;
 
-import io.supertokens.pluginInterface.RECIPE_ID;
-import io.supertokens.pluginInterface.authRecipe.AuthRecipeUserInfo;
+public class CreateUserInfo {
 
-public class UserInfo extends AuthRecipeUserInfo {
-
-    public final ThirdParty thirdParty;
-
+    public final String id;
+    public final UserInfo.ThirdParty thirdParty;
     public final String email;
+    public final long timeJoined;
 
-    public UserInfo(String id, String email, ThirdParty thirdParty, long timeJoined, String[] tenantIds) {
-        super(id, timeJoined, tenantIds);
+    public CreateUserInfo(String id, String email, UserInfo.ThirdParty thirdParty, long timeJoined) {
+        this.id = id;
+        this.timeJoined = timeJoined;
         this.thirdParty = thirdParty;
         this.email = email;
     }
 
-    public static class ThirdParty {
-        public final String id;
-
-        public final String userId;
-
-        public ThirdParty(String id, String userId) {
-            this.id = id;
-            this.userId = userId;
-        }
-    }
-
-    @Override
-    public RECIPE_ID getRecipeId() {
-        return RECIPE_ID.THIRD_PARTY;
-    }
-
     @Override
     public boolean equals(Object other) {
-        if (other instanceof UserInfo) {
-            UserInfo otherUserInfo = (UserInfo) other;
+        if (other instanceof CreateUserInfo) {
+            CreateUserInfo otherUserInfo = (CreateUserInfo) other;
             return otherUserInfo.email.equals(this.email) && otherUserInfo.id.equals(this.id)
                     && otherUserInfo.timeJoined == this.timeJoined
                     && otherUserInfo.thirdParty.userId.equals(this.thirdParty.userId)

@@ -16,17 +16,17 @@
 
 package io.supertokens.pluginInterface.passwordless;
 
+
 import javax.annotation.Nullable;
 
-import io.supertokens.pluginInterface.RECIPE_ID;
-import io.supertokens.pluginInterface.authRecipe.AuthRecipeUserInfo;
-
-public class UserInfo extends AuthRecipeUserInfo {
+public class CreateUserInfo {
+    public final String id;
     public final String email;
     public final String phoneNumber;
+    public final long timeJoined;
 
-    public UserInfo(String id, @Nullable String email, @Nullable String phoneNumber, long timeJoined, String[] tenantIds) {
-        super(id, timeJoined, tenantIds);
+    public CreateUserInfo(String id, @Nullable String email, @Nullable String phoneNumber, long timeJoined) {
+        this.id = id;
 
         if (email == null && phoneNumber == null) {
             throw new IllegalArgumentException("Both email and phoneNumber cannot be null");
@@ -34,17 +34,13 @@ public class UserInfo extends AuthRecipeUserInfo {
 
         this.email = email;
         this.phoneNumber = phoneNumber;
-    }
-
-    @Override
-    public RECIPE_ID getRecipeId() {
-        return RECIPE_ID.PASSWORDLESS;
+        this.timeJoined = timeJoined;
     }
 
     @Override
     public boolean equals(Object other) {
-        if (other instanceof UserInfo) {
-            UserInfo otherUserInfo = (UserInfo) other;
+        if (other instanceof CreateUserInfo) {
+            CreateUserInfo otherUserInfo = (CreateUserInfo) other;
             return ((otherUserInfo.email == null && this.email == null) || otherUserInfo.email.equals(this.email))
                     && ((otherUserInfo.phoneNumber == null && this.phoneNumber == null)
                             || otherUserInfo.phoneNumber.equals(this.phoneNumber))

@@ -28,7 +28,7 @@ import javax.annotation.Nonnull;
 
 public interface ThirdPartyStorage extends AuthRecipeStorage {
 
-    void signUp(TenantIdentifier tenantIdentifier, UserInfo userInfo)
+    void signUp(TenantIdentifier tenantIdentifier, CreateUserInfo userInfo)
             throws StorageQueryException, DuplicateUserIdException, DuplicateThirdPartyUserException,
             TenantOrAppNotFoundException;
 
