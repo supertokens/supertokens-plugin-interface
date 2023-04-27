@@ -7,6 +7,8 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Introduce MFA Recipe plugin interface
+
 ## [2.23.0] - 2023-04-05
 
 - Added `useStaticKey ` into session info classes
