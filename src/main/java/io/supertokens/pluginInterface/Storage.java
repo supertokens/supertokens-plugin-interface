@@ -32,7 +32,7 @@ public interface Storage {
     // if silent is true, do not log anything out on the console
     void constructor(String processId, boolean silent);
 
-    void loadConfig(JsonObject jsonConfig, Set<LOG_LEVEL> logLevels) throws InvalidConfigException;
+    void loadConfig(JsonObject jsonConfig, Set<LOG_LEVEL> logLevels, TenantIdentifier tenantIdentifier) throws InvalidConfigException;
 
     // this returns a unique ID based on the db's connection URI and table prefix such that
     // two different user pool IDs imply that the data for those two user pools are completely isolated.
