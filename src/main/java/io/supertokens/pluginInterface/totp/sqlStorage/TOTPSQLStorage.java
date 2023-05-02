@@ -23,6 +23,9 @@ public interface TOTPSQLStorage extends TOTPStorage, SQLStorage {
     public void removeUser_Transaction(TransactionConnection con, AppIdentifier appIdentifier, String userId)
             throws StorageQueryException;
 
+    public boolean removeUser(TenantIdentifier tenantIdentifier, String userId)
+            throws StorageQueryException;
+
     /**
      * Get totp used codes for user (expired/non-expired) yet (sorted by descending
      * order of created time):
