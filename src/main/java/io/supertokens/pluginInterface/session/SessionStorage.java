@@ -34,6 +34,8 @@ public interface SessionStorage extends NonAuthRecipeStorage {
 
     void deleteSessionsOfUser(AppIdentifier appIdentifier, String userId) throws StorageQueryException;
 
+    boolean deleteSessionsOfUser(TenantIdentifier tenantIdentifier, String userId) throws StorageQueryException;
+
     // return number of rows else throw UnsupportedOperationException
     int getNumberOfSessions(TenantIdentifier tenantIdentifier) throws StorageQueryException;
 
