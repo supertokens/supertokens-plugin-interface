@@ -15,4 +15,10 @@ public interface ActiveUsersStorage extends Storage {
 
     /* Count the number of users who have enabled TOTP and are active */
     int countUsersEnabledTotpAndActiveSince(AppIdentifier appIdentifier, long time) throws StorageQueryException;
+
+    /* Count the number of users who have enabled MFA */
+    int countUsersEnabledMfa(AppIdentifier appIdentifier) throws StorageQueryException;
+
+    /* Count the number of users who have enabled MFA and are active */
+    int countUsersEnabledMfaAndActiveSince(AppIdentifier appIdentifier, long time) throws StorageQueryException;
 }

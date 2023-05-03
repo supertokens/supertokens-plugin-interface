@@ -1,6 +1,7 @@
 package io.supertokens.pluginInterface.mfa;
 
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
+import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
 import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
 import io.supertokens.pluginInterface.nonAuthRecipe.NonAuthRecipeStorage;
 
@@ -13,4 +14,7 @@ public interface MfaStorage extends NonAuthRecipeStorage {
 
     // Disable (delete) a factor for a user and return true if it actually deleted something.
     boolean disableFactor(TenantIdentifier tenantIdentifier, String userId, String factorId) throws StorageQueryException;
+
+    // Delete a user and all of their factors.
+    boolean deleteUser(AppIdentifier tenantIdentifier, String userId) throws StorageQueryException;
 }
