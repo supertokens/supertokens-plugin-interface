@@ -86,4 +86,6 @@ public interface Storage {
     // this function returns a list of protected configs which users of supertokens saas can't read or modify
     // when they are operating on tenantsm unless the supertokens_saas_secret key is used in the API request.
     String[] getProtectedConfigsFromSuperTokensSaaSUsers();
+
+    Set<String> getValidFieldsInConfig();
 }
