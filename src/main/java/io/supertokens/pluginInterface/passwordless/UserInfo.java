@@ -25,8 +25,8 @@ public class UserInfo extends AuthRecipeUserInfo {
     public final String email;
     public final String phoneNumber;
 
-    public UserInfo(String id, @Nullable String email, @Nullable String phoneNumber, long timeJoined) {
-        super(id, timeJoined);
+    public UserInfo(String id, @Nullable String email, @Nullable String phoneNumber, long timeJoined, String[] tenantIds) {
+        super(id, timeJoined, tenantIds);
 
         if (email == null && phoneNumber == null) {
             throw new IllegalArgumentException("Both email and phoneNumber cannot be null");

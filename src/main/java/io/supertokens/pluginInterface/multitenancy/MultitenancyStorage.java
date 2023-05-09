@@ -57,5 +57,5 @@ public interface MultitenancyStorage extends Storage {
             DuplicatePhoneNumberException;
 
     boolean removeUserIdFromTenant(TenantIdentifier tenantIdentifier, String userId)
-            throws StorageQueryException, UnknownUserIdException;
+            throws StorageQueryException;
 }

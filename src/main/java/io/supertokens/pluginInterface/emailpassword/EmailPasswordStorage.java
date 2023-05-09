@@ -29,7 +29,7 @@ import io.supertokens.pluginInterface.multitenancy.exceptions.TenantOrAppNotFoun
 public interface EmailPasswordStorage extends AuthRecipeStorage {
 
     // we pass tenantIdentifier here cause this also adds to the userId <-> tenantId mapping
-    void signUp(TenantIdentifier tenantIdentifier, UserInfo userInfo)
+    UserInfo signUp(TenantIdentifier tenantIdentifier, String id, String email, String passwordHash, long timeJoined)
             throws StorageQueryException, DuplicateUserIdException, DuplicateEmailException,
             TenantOrAppNotFoundException;
 

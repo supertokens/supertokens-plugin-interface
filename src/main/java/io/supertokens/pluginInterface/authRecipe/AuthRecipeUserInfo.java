@@ -24,9 +24,12 @@ public abstract class AuthRecipeUserInfo {
 
     public long timeJoined;
 
-    public AuthRecipeUserInfo(String id, long timeJoined) {
+    public final String[] tenantIds;
+
+    public AuthRecipeUserInfo(String id, long timeJoined, String[] tenantIds) {
         this.id = id;
         this.timeJoined = timeJoined;
+        this.tenantIds = tenantIds;
     }
 
     public abstract RECIPE_ID getRecipeId();
