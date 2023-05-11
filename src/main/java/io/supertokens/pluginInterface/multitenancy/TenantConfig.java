@@ -54,6 +54,16 @@ public class TenantConfig {
         this.thirdPartyConfig = thirdPartyConfig;
     }
 
+    public TenantConfig(TenantConfig other) {
+        // copy constructor, that does a deep copy
+        Gson gson = new Gson();
+        this.tenantIdentifier = new TenantIdentifier(other.tenantIdentifier.getConnectionUriDomain(), other.tenantIdentifier.getAppId(), other.tenantIdentifier.getTenantId());
+        this.coreConfig = gson.fromJson(other.coreConfig.toString(), JsonObject.class);
+        this.emailPasswordConfig = new EmailPasswordConfig(other.emailPasswordConfig.enabled);
+        this.passwordlessConfig = new PasswordlessConfig(other.passwordlessConfig.enabled);
+        this.thirdPartyConfig = gson.fromJson(gson.toJsonTree(other.thirdPartyConfig).getAsJsonObject(), ThirdPartyConfig.class);
+    }
+
     public boolean deepEquals(TenantConfig other) {
         if (other == null) {
             return false;
