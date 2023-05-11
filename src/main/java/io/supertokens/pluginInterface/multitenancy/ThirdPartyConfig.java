@@ -198,16 +198,16 @@ public class ThirdPartyConfig {
     }
 
     public static class UserInfoMapKeyValue {
-        @Nonnull
+        @Nullable
         public String userId;
 
-        @Nonnull
+        @Nullable
         public String email;
 
-        @Nonnull
+        @Nullable
         public String emailVerified;
 
-        public UserInfoMapKeyValue(@Nonnull String userId, @Nonnull String email, @Nonnull String emailVerified) {
+        public UserInfoMapKeyValue(@Nullable String userId, @Nullable String email, @Nullable String emailVerified) {
             this.userId = userId;
             this.email = email;
             this.emailVerified = emailVerified;
@@ -217,9 +217,9 @@ public class ThirdPartyConfig {
         public boolean equals(Object other) {
             if (other instanceof UserInfoMapKeyValue) {
                 UserInfoMapKeyValue otherUserInfoMapKeyValue = (UserInfoMapKeyValue) other;
-                return otherUserInfoMapKeyValue.userId.equals(this.userId) &&
-                        otherUserInfoMapKeyValue.email.equals(this.email) &&
-                        otherUserInfoMapKeyValue.emailVerified.equals(this.emailVerified);
+                return Objects.equals(otherUserInfoMapKeyValue.userId, this.userId) &&
+                        Objects.equals(otherUserInfoMapKeyValue.email, this.email) &&
+                        Objects.equals(otherUserInfoMapKeyValue.emailVerified, this.emailVerified);
             }
             return false;
         }
