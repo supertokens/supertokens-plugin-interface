@@ -88,4 +88,6 @@ public interface Storage {
     String[] getProtectedConfigsFromSuperTokensSaaSUsers();
 
     Set<String> getValidFieldsInConfig();
+
+    void setLogLevels(Set<LOG_LEVEL> logLevels);
 }
