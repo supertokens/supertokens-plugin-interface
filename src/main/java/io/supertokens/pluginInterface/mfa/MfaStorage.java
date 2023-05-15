@@ -16,8 +16,8 @@ public interface MfaStorage extends NonAuthRecipeStorage {
     boolean disableFactor(TenantIdentifier tenantIdentifier, String userId, String factorId) throws StorageQueryException;
 
     // Delete a user across all tenants (with all the relevant factors)
-    boolean deleteUser(AppIdentifier appIdentifier, String userId) throws StorageQueryException;
+    boolean deleteMfaInfoForUser(AppIdentifier appIdentifier, String userId) throws StorageQueryException;
 
     // Delete a user from a tenant (with all the relevant factors)
-    boolean deleteUserFromTenant(TenantIdentifier tenantIdentifier, String userId) throws StorageQueryException;
+    boolean deleteMfaInfoForUser(TenantIdentifier tenantIdentifier, String userId) throws StorageQueryException;
 }
