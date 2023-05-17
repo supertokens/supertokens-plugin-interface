@@ -18,6 +18,7 @@ package io.supertokens.pluginInterface.useridmapping;
 
 import io.supertokens.pluginInterface.Storage;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
+import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
 import io.supertokens.pluginInterface.useridmapping.exception.UnknownSuperTokensUserIdException;
 import io.supertokens.pluginInterface.useridmapping.exception.UserIdMappingAlreadyExistsException;
 
@@ -27,17 +28,24 @@ import java.util.HashMap;
 
 public interface UserIdMappingStorage extends Storage {
 
-    void createUserIdMapping(String superTokensUserId, String externalUserId, @Nullable String externalUserIdInfo)
+    // whilst these take the full tenantIdentifier as an input, they ignore the tenantId
+    // cause user ID mapping is per app and not per tenant.
+
+    void createUserIdMapping(AppIdentifier appIdentifier, String superTokensUserId, String externalUserId,
+                             @Nullable String externalUserIdInfo)
             throws StorageQueryException, UnknownSuperTokensUserIdException, UserIdMappingAlreadyExistsException;
 
-    boolean deleteUserIdMapping(String userId, boolean isSuperTokensUserId) throws StorageQueryException;
+    boolean deleteUserIdMapping(AppIdentifier appIdentifier, String userId, boolean isSuperTokensUserId)
+            throws StorageQueryException;
 
-    UserIdMapping getUserIdMapping(String userId, boolean isSuperTokensUserId) throws StorageQueryException;
+    UserIdMapping getUserIdMapping(AppIdentifier appIdentifier, String userId, boolean isSuperTokensUserId)
+            throws StorageQueryException;
 
-    UserIdMapping[] getUserIdMapping(String userId) throws StorageQueryException;
+    UserIdMapping[] getUserIdMapping(AppIdentifier appIdentifier, String userId) throws StorageQueryException;
 
-    boolean updateOrDeleteExternalUserIdInfo(String userId, boolean isSuperTokensUserId,
-            @Nullable String externalUserIdInfo) throws StorageQueryException;
+    boolean updateOrDeleteExternalUserIdInfo(AppIdentifier appIdentifier, String userId,
+                                             boolean isSuperTokensUserId,
+                                             @Nullable String externalUserIdInfo) throws StorageQueryException;
 
     // This function will be used to retrieve the userId mapping for a list of userIds. The key of the HashMap will be
     // superTokensUserId and the value will be the externalUserId. If a mapping does not exist for an input userId,

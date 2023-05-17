@@ -8,7 +8,8 @@ public class TOTPDevice {
     public final int skew;
     public final boolean verified;
 
-    public TOTPDevice(String userId, String deviceName, String secretKey, int period, int skew, boolean verified) {
+    public TOTPDevice(String userId, String deviceName, String secretKey, int period,
+                      int skew, boolean verified) {
         this.userId = userId;
         this.deviceName = deviceName;
         this.secretKey = secretKey;
@@ -29,7 +30,8 @@ public class TOTPDevice {
             return false;
         }
         TOTPDevice other = (TOTPDevice) obj;
-        return this.userId.equals(other.userId) && this.deviceName.equals(other.deviceName)
+        return this.userId.equals(other.userId) &&
+                this.deviceName.equals(other.deviceName)
                 && this.secretKey.equals(other.secretKey) && this.period == other.period && this.skew == other.skew
                 && this.verified == other.verified;
     }

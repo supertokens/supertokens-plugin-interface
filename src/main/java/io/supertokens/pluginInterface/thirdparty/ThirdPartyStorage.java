@@ -18,6 +18,9 @@ package io.supertokens.pluginInterface.thirdparty;
 
 import io.supertokens.pluginInterface.authRecipe.AuthRecipeStorage;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
+import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
+import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
+import io.supertokens.pluginInterface.multitenancy.exceptions.TenantOrAppNotFoundException;
 import io.supertokens.pluginInterface.thirdparty.exception.DuplicateThirdPartyUserException;
 import io.supertokens.pluginInterface.thirdparty.exception.DuplicateUserIdException;
 
@@ -25,24 +28,17 @@ import javax.annotation.Nonnull;
 
 public interface ThirdPartyStorage extends AuthRecipeStorage {
 
-    void signUp(UserInfo userInfo)
-            throws StorageQueryException, DuplicateUserIdException, DuplicateThirdPartyUserException;
+    UserInfo signUp(TenantIdentifier tenantIdentifier, String id, String email, UserInfo.ThirdParty thirdParty, long timeJoined)
+            throws StorageQueryException, DuplicateUserIdException, DuplicateThirdPartyUserException,
+            TenantOrAppNotFoundException;
 
-    void deleteThirdPartyUser(String userId) throws StorageQueryException;
+    void deleteThirdPartyUser(AppIdentifier appIdentifier, String userId) throws StorageQueryException;
 
-    UserInfo getThirdPartyUserInfoUsingId(String thirdPartyId, String thirdPartyUserId) throws StorageQueryException;
+    UserInfo getThirdPartyUserInfoUsingId(TenantIdentifier tenantIdentifier, String thirdPartyId,
+                                          String thirdPartyUserId) throws StorageQueryException;
 
-    UserInfo getThirdPartyUserInfoUsingId(String userId) throws StorageQueryException;
+    UserInfo getThirdPartyUserInfoUsingId(AppIdentifier appIdentifier, String userId) throws StorageQueryException;
 
-    @Deprecated
-    UserInfo[] getThirdPartyUsers(@Nonnull String userId, @Nonnull Long timeJoined, @Nonnull Integer limit,
-            @Nonnull String timeJoinedOrder) throws StorageQueryException;
-
-    @Deprecated
-    UserInfo[] getThirdPartyUsers(@Nonnull Integer limit, @Nonnull String timeJoinedOrder) throws StorageQueryException;
-
-    @Deprecated
-    long getThirdPartyUsersCount() throws StorageQueryException;
-
-    UserInfo[] getThirdPartyUsersByEmail(@Nonnull String email) throws StorageQueryException;
+    UserInfo[] getThirdPartyUsersByEmail(TenantIdentifier tenantIdentifier, @Nonnull String email)
+            throws StorageQueryException;
 }

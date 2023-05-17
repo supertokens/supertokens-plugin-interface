@@ -17,7 +17,13 @@
 
 package io.supertokens.pluginInterface;
 
+import com.google.gson.JsonObject;
+import io.supertokens.pluginInterface.exceptions.DbInitException;
+import io.supertokens.pluginInterface.exceptions.InvalidConfigException;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
+import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
+import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
+import io.supertokens.pluginInterface.multitenancy.exceptions.TenantOrAppNotFoundException;
 
 import java.util.Set;
 
@@ -26,14 +32,27 @@ public interface Storage {
     // if silent is true, do not log anything out on the console
     void constructor(String processId, boolean silent);
 
-    void loadConfig(String configFilePath, Set<LOG_LEVEL> logLevels);
+    void loadConfig(JsonObject jsonConfig, Set<LOG_LEVEL> logLevels, TenantIdentifier tenantIdentifier) throws InvalidConfigException;
+
+    // this returns a unique ID based on the db's connection URI and table prefix such that
+    // two different user pool IDs imply that the data for those two user pools are completely isolated.
+    String getUserPoolId();
+
+    // this returns a unique ID based on the db's connection pool config. This can be different
+    // even if the getUserPoolId returns the same ID - based on the config provided by the user.
+    // So two different db connection pools may point to the same end user pool.
+    String getConnectionPoolId();
+
+    // if the input otherConfig has different values set for the same properties as this user pool's config,
+    // then this function should throw an error since this is a misconfig from ther user's side.
+    void assertThatConfigFromSameUserPoolIsNotConflicting(JsonObject otherConfig) throws InvalidConfigException;
 
     void initFileLogging(String infoLogPath, String errorLogPath);
 
     void stopLogging();
 
     // load tables and create connection pools
-    void initStorage();
+    void initStorage(boolean shouldWait) throws DbInitException;
 
     // used by the core to do transactions the right way.
     STORAGE_TYPE getType();
@@ -43,19 +62,30 @@ public interface Storage {
 
     void close();
 
-    KeyValueInfo getKeyValue(String key) throws StorageQueryException;
+    KeyValueInfo getKeyValue(TenantIdentifier tenantIdentifier, String key) throws StorageQueryException;
 
-    void setKeyValue(String key, KeyValueInfo info) throws StorageQueryException;
+    void setKeyValue(TenantIdentifier tenantIdentifier, String key, KeyValueInfo info) throws StorageQueryException,
+            TenantOrAppNotFoundException;
 
     void setStorageLayerEnabled(boolean enabled);
 
-    boolean canBeUsed(String configFilePath);
+    boolean canBeUsed(JsonObject configJson);
 
     // this function will be used in the createUserIdMapping and deleteUserIdMapping functions to check if the userId is
     // being used in NonAuth recipes.
-    boolean isUserIdBeingUsedInNonAuthRecipe(String className, String userId) throws StorageQueryException;
+    boolean isUserIdBeingUsedInNonAuthRecipe(AppIdentifier appIdentifier, String className, String userId)
+            throws StorageQueryException;
 
     // to be used for testing purposes only. This function will add dummy data to non-auth tables.
-    void addInfoToNonAuthRecipesBasedOnUserId(String className, String userId) throws StorageQueryException;
+    void addInfoToNonAuthRecipesBasedOnUserId(TenantIdentifier tenantIdentifier, String className, String userId) throws StorageQueryException;
 
+    // this function is used during testing in the core so that the core can
+    // create multiple user pools across any plugin being used.
+    void modifyConfigToAddANewUserPoolForTesting(JsonObject config, int poolNumber);
+
+    // this function returns a list of protected configs which users of supertokens saas can't read or modify
+    // when they are operating on tenantsm unless the supertokens_saas_secret key is used in the API request.
+    String[] getProtectedConfigsFromSuperTokensSaaSUsers();
+
+    Set<String> getValidFieldsInConfig();
 }

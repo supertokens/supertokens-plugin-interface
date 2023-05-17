@@ -25,8 +25,8 @@ public class UserInfo extends AuthRecipeUserInfo {
 
     public final String email;
 
-    public UserInfo(String id, String email, ThirdParty thirdParty, long timeJoined) {
-        super(id, timeJoined);
+    public UserInfo(String id, String email, ThirdParty thirdParty, long timeJoined, String[] tenantIds) {
+        super(id, timeJoined, tenantIds);
         this.thirdParty = thirdParty;
         this.email = email;
     }

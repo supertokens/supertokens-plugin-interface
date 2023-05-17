@@ -22,36 +22,39 @@ import io.supertokens.pluginInterface.emailpassword.exceptions.DuplicatePassword
 import io.supertokens.pluginInterface.emailpassword.exceptions.DuplicateUserIdException;
 import io.supertokens.pluginInterface.emailpassword.exceptions.UnknownUserIdException;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
-
-import javax.annotation.Nonnull;
+import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
+import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
+import io.supertokens.pluginInterface.multitenancy.exceptions.TenantOrAppNotFoundException;
 
 public interface EmailPasswordStorage extends AuthRecipeStorage {
 
-    void signUp(UserInfo userInfo) throws StorageQueryException, DuplicateUserIdException, DuplicateEmailException;
+    // we pass tenantIdentifier here cause this also adds to the userId <-> tenantId mapping
+    UserInfo signUp(TenantIdentifier tenantIdentifier, String id, String email, String passwordHash, long timeJoined)
+            throws StorageQueryException, DuplicateUserIdException, DuplicateEmailException,
+            TenantOrAppNotFoundException;
 
-    void deleteEmailPasswordUser(String userId) throws StorageQueryException;
+    // this deletion of a user is app wide since the same user ID can be shared across tenants
+    void deleteEmailPasswordUser(AppIdentifier appIdentifier, String userId) throws StorageQueryException;
+    
+    UserInfo getUserInfoUsingId(AppIdentifier appIdentifier, String id) throws StorageQueryException;
 
-    UserInfo getUserInfoUsingId(String id) throws StorageQueryException;
+    // Here we pass in TenantIdentifier cause the same email can be shared across tenants, but yield different
+    // user IDs
+    UserInfo getUserInfoUsingEmail(TenantIdentifier tenantIdentifier, String email) throws StorageQueryException;
 
-    UserInfo getUserInfoUsingEmail(String email) throws StorageQueryException;
-
-    void addPasswordResetToken(PasswordResetTokenInfo passwordResetTokenInfo)
+    // password reset stuff is app wide cause changing the password for a user affects all the tenants
+    // across which it's shared.
+    void addPasswordResetToken(AppIdentifier appIdentifier, PasswordResetTokenInfo passwordResetTokenInfo)
             throws StorageQueryException, UnknownUserIdException, DuplicatePasswordResetTokenException;
 
-    PasswordResetTokenInfo getPasswordResetTokenInfo(String token) throws StorageQueryException;
+    PasswordResetTokenInfo getPasswordResetTokenInfo(AppIdentifier appIdentifier, String token)
+            throws StorageQueryException;
 
+    // we purposely do not add TenantIdentifier to this query cause
+    // this is called from a cronjob that runs per user pool ID
     void deleteExpiredPasswordResetTokens() throws StorageQueryException;
 
-    PasswordResetTokenInfo[] getAllPasswordResetTokenInfoForUser(String userId) throws StorageQueryException;
-
-    @Deprecated
-    UserInfo[] getUsers(@Nonnull String userId, @Nonnull Long timeJoined, @Nonnull Integer limit,
-            @Nonnull String timeJoinedOrder) throws StorageQueryException;
-
-    @Deprecated
-    UserInfo[] getUsers(@Nonnull Integer limit, @Nonnull String timeJoinedOrder) throws StorageQueryException;
-
-    @Deprecated
-    long getUsersCount() throws StorageQueryException;
+    PasswordResetTokenInfo[] getAllPasswordResetTokenInfoForUser(AppIdentifier appIdentifier, String userId)
+            throws StorageQueryException;
 
 }

@@ -1,5 +1,5 @@
 /*
- *    Copyright (c) 2021, VRAI Labs and/or its affiliates. All rights reserved.
+ *    Copyright (c) 2023, VRAI Labs and/or its affiliates. All rights reserved.
  *
  *    This software is licensed under the Apache License, Version 2.0 (the
  *    "License") as published by the Apache Software Foundation.
@@ -14,24 +14,22 @@
  *    under the License.
  */
 
-package io.supertokens.pluginInterface.authRecipe;
+package io.supertokens.pluginInterface.multitenancy;
 
-import io.supertokens.pluginInterface.RECIPE_ID;
+public class EmailPasswordConfig {
+    public final boolean enabled;
 
-public abstract class AuthRecipeUserInfo {
-
-    public String id;
-
-    public long timeJoined;
-
-    public final String[] tenantIds;
-
-    public AuthRecipeUserInfo(String id, long timeJoined, String[] tenantIds) {
-        this.id = id;
-        this.timeJoined = timeJoined;
-        this.tenantIds = tenantIds;
+    public EmailPasswordConfig(boolean enabled) {
+        this.enabled = enabled;
     }
 
-    public abstract RECIPE_ID getRecipeId();
+    @Override
+    public boolean equals(Object other) {
+        if (other instanceof EmailPasswordConfig) {
+            EmailPasswordConfig otherEmailPasswordConfig = (EmailPasswordConfig) other;
+            return otherEmailPasswordConfig.enabled == this.enabled;
+        }
+        return false;
+    }
 
 }

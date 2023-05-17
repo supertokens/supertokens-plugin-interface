@@ -19,18 +19,26 @@ package io.supertokens.pluginInterface.emailverification.sqlStorage;
 import io.supertokens.pluginInterface.emailverification.EmailVerificationStorage;
 import io.supertokens.pluginInterface.emailverification.EmailVerificationTokenInfo;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
+import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
+import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
+import io.supertokens.pluginInterface.multitenancy.exceptions.TenantOrAppNotFoundException;
 import io.supertokens.pluginInterface.sqlStorage.SQLStorage;
 import io.supertokens.pluginInterface.sqlStorage.TransactionConnection;
 
 public interface EmailVerificationSQLStorage extends EmailVerificationStorage, SQLStorage {
 
-    EmailVerificationTokenInfo[] getAllEmailVerificationTokenInfoForUser_Transaction(TransactionConnection con,
-            String userId, String email) throws StorageQueryException;
-
-    void deleteAllEmailVerificationTokensForUser_Transaction(TransactionConnection con, String userId, String email)
+    EmailVerificationTokenInfo[] getAllEmailVerificationTokenInfoForUser_Transaction(TenantIdentifier tenantIdentifier,
+                                                                                     TransactionConnection con,
+                                                                                     String userId, String email)
             throws StorageQueryException;
 
-    void updateIsEmailVerified_Transaction(TransactionConnection con, String userId, String email,
-            boolean isEmailVerified) throws StorageQueryException;
+    void deleteAllEmailVerificationTokensForUser_Transaction(TenantIdentifier tenantIdentifier, TransactionConnection con,
+                                                             String userId, String email)
+            throws StorageQueryException;
+
+    void updateIsEmailVerified_Transaction(AppIdentifier appIdentifier, TransactionConnection con, String userId,
+                                           String email,
+                                           boolean isEmailVerified)
+            throws StorageQueryException, TenantOrAppNotFoundException;
 
 }
