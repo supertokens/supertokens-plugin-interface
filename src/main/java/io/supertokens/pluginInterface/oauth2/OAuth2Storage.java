@@ -43,4 +43,6 @@ public interface OAuth2Storage {
     void updateOAuth2TokenInfoByRefreshTokenHash(String refreshTokenHash, String accessTokenHash,
                                                  String newRefreshTokenHash, long accessTokenExpiresAtMs,
                                                  Long refreshTokenHashExpiresAtMs) throws StorageQueryException, UnknownOAuth2RefreshTokenHashHashException, DuplicateOAuth2RefreshTokenHash, DuplicateOAuth2AccessTokenHash;
+    void removeOAuth2TokensExpiredBefore(long now) throws StorageQueryException;
+    void removeOAuth2AuthorizationCodesExpiredBefore(long now) throws StorageQueryException;
 }
