@@ -19,31 +19,20 @@ package io.supertokens.pluginInterface.oauth2;
 import java.util.List;
 
 public class OAuth2Client {
-    public final String id;
-    public final String deviceIdHash;
-    public final String linkCodeHash;
-    public final Long createdAt;
     public final String clientId;
     public final String name;
     public final String clientSecretHash;
     public final List<String> redirectUris;
     public final long createdAtMs;
     public final long updatedAtMs;
-    public final boolean enabled;
 
-    public OAuth2Client(String id, String deviceIdHash, String linkCodeHash, Long createdAt, String clientId,
-                        String name, String clientSecretHash, List<String> redirectUris, long createdAtMs,
-                        long updatedAtMs, boolean enabled) {
-        this.id = id;
-        this.deviceIdHash = deviceIdHash;
-        this.linkCodeHash = linkCodeHash;
-        this.createdAt = createdAt;
+    public OAuth2Client(String clientId,String name, String clientSecretHash, List<String> redirectUris,
+                        long createdAtMs, long updatedAtMs) {
         this.clientId = clientId;
         this.name = name;
         this.clientSecretHash = clientSecretHash;
         this.redirectUris = redirectUris;
         this.createdAtMs = createdAtMs;
         this.updatedAtMs = updatedAtMs;
-        this.enabled = enabled;
     }
 }
