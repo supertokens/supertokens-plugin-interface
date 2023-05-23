@@ -66,7 +66,7 @@ public interface OAuth2Storage extends NonAuthRecipeStorage {
     void removeOAuth2TokensExpiredBefore(long now) throws StorageQueryException;
     void removeOAuth2TokensBySessionHandle(TenantIdentifier tenantIdentifier, String sessionHandle) throws StorageQueryException;
     void removeOAuth2TokenByAccessTokenHash(TenantIdentifier tenantIdentifier, String accessTokenHash) throws StorageQueryException;
-    void removeOAuth2TokenByClientId(TenantIdentifier tenantIdentifier, String accessTokenHash) throws StorageQueryException;
+    void removeOAuth2TokensByClientId(TenantIdentifier tenantIdentifier, String accessTokenHash) throws StorageQueryException;
     void removeOAuth2AuthorizationCodesExpiredBefore(long now) throws StorageQueryException;
     void removeOAuth2AuthorizationCodesByClientId(long now) throws StorageQueryException;
     void removeOAuth2AuthorizationCodesBySessionHandle(long now) throws StorageQueryException;
