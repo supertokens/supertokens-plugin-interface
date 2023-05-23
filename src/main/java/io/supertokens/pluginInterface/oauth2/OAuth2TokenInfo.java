@@ -16,27 +16,29 @@
 
 package io.supertokens.pluginInterface.oauth2;
 
+import java.util.List;
+
 public class OAuth2TokenInfo {
     public final String clientId;
-    public final String userId;
     public final String sessionHandle;
-    public final String scope;
+    public final List<String> scope;
     public final String accessTokenHash;
     public final String refreshTokenHash;
     public final long createdAtMs;
+    public final long lastUpdatedAtMs;
     public final long accessTokenExpiresAtMs;
     public final Long refreshTokenHashExpiresAtMs;
 
-    public OAuth2TokenInfo(String clientId, String userId, String sessionHandle, String scope, String accessTokenHash,
-                           String refreshTokenHash, long createdAtMs, long accessTokenExpiresAtMs,
+    public OAuth2TokenInfo(String clientId, String sessionHandle, List<String> scope, String accessTokenHash,
+                           String refreshTokenHash, long createdAtMs, long lastUpdatedAtMs, long accessTokenExpiresAtMs,
                            Long refreshTokenHashExpiresAtMs) {
         this.clientId = clientId;
-        this.userId = userId;
         this.sessionHandle = sessionHandle;
         this.scope = scope;
         this.accessTokenHash = accessTokenHash;
         this.refreshTokenHash = refreshTokenHash;
         this.createdAtMs = createdAtMs;
+        this.lastUpdatedAtMs = lastUpdatedAtMs;
         this.accessTokenExpiresAtMs = accessTokenExpiresAtMs;
         this.refreshTokenHashExpiresAtMs = refreshTokenHashExpiresAtMs;
     }

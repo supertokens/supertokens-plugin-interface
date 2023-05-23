@@ -29,30 +29,27 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public interface OAuth2Storage extends NonAuthRecipeStorage {
-    void updateOAuth2Client(AppIdentifier appIdentifier, @Nonnull String clientId, @Nonnull String name,
-                            @Nonnull String clientSecretHash, @Nonnull List<String> redirectUris, long updatedAtMs)
-            throws StorageQueryException, UnknownOAuth2ClientIdException, DuplicateOAuth2ClientSecretHash;
-    OAuth2Client getOAuth2ClientById(AppIdentifier appIdentifier, @Nonnull String clientId)
+    OAuth2Client getOAuth2ClientById(AppIdentifier appIdentifier, String clientId)
             throws StorageQueryException, UnknownOAuth2ClientIdException;
-    void removeOAuth2Client(AppIdentifier appIdentifier, @Nonnull String clientId)
+    void removeOAuth2Client(AppIdentifier appIdentifier, String clientId)
             throws StorageQueryException, UnknownOAuth2ClientIdException;
 
-    List<OAuth2ClientScope> getOAuth2ClientScopes(AppIdentifier appIdentifier, @Nonnull String clientId)
+    List<OAuth2ClientScope> getOAuth2ClientScopes(AppIdentifier appIdentifier, String clientId)
             throws StorageQueryException, UnknownOAuth2ClientIdException, UnknownOAuth2ScopeException;
-    void removeOAuth2ClientScope(AppIdentifier appIdentifier, @Nonnull String clientId, @Nonnull String scope)
+    void removeOAuth2ClientScope(AppIdentifier appIdentifier, String clientId, String scope)
             throws StorageQueryException, UnknownOAuth2ClientIdException, UnknownOAuth2ScopeException;
 
-    void createOAuth2Scope(AppIdentifier appIdentifier, @Nonnull String scope)
+    void createOAuth2Scope(AppIdentifier appIdentifier, String scope)
             throws StorageQueryException, DuplicateOAuth2ScopeException;
-    void updateOAuth2Scope(AppIdentifier appIdentifier, @Nonnull String scope, String newName)
+    void updateOAuth2Scope(AppIdentifier appIdentifier, String scope, String newName)
             throws StorageQueryException, DuplicateOAuth2ScopeException;
-    void removeOAuth2Scope(AppIdentifier appIdentifier, @Nonnull String scope)
+    void removeOAuth2Scope(AppIdentifier appIdentifier, String scope)
             throws StorageQueryException, DuplicateOAuth2ScopeException;
     List<String> getOAuth2Scopes(AppIdentifier appIdentifier)
             throws StorageQueryException;
 
     void createOAuth2AuthorizationCode(TenantIdentifier tenantIdentifier, String codeHash, String sessionHandle, String clientId, long createdAtMs,
-                                       long expiresAtMs, String scope, String redirectUri, String accessType,
+                                       long expiresAtMs, List<String> scope, String redirectUri, String accessType,
                                        String codeChallenge, String codeChallengeMethod)
             throws StorageQueryException, DuplicateOAuth2AuthorizationCodeHash;
 
@@ -60,7 +57,7 @@ public interface OAuth2Storage extends NonAuthRecipeStorage {
             throws StorageQueryException, UnknownOAuth2AccessTokenHashHashException;
     void updateOAuth2TokenInfoByRefreshTokenHash(TenantIdentifier tenantIdentifier, String refreshTokenHash,
                                                  String newAccessTokenHash, String newRefreshTokenHash,
-                                                 long accessTokenExpiresAtMs, Long refreshTokenHashExpiresAtMs)
+                                                 long accessTokenExpiresAtMs, Long refreshTokenHashExpiresAtMs, long updatedAtMs)
             throws StorageQueryException, UnknownOAuth2RefreshTokenHashHashException, DuplicateOAuth2RefreshTokenHash, DuplicateOAuth2AccessTokenHash;
 
     void removeOAuth2TokensExpiredBefore(long now) throws StorageQueryException;
