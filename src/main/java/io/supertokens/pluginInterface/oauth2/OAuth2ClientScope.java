@@ -16,23 +16,12 @@
 
 package io.supertokens.pluginInterface.oauth2;
 
-import java.util.List;
+public class OAuth2ClientScope {
+    public final String scope;
+    public final boolean requiresConsent;
 
-public class OAuth2Client {
-    public final String clientId;
-    public final String name;
-    public final String clientSecretHash;
-    public final List<String> redirectUris;
-    public final long createdAtMs;
-    public final long updatedAtMs;
-
-    public OAuth2Client(String clientId,String name, String clientSecretHash, List<String> redirectUris,
-                        long createdAtMs, long updatedAtMs) {
-        this.clientId = clientId;
-        this.name = name;
-        this.clientSecretHash = clientSecretHash;
-        this.redirectUris = redirectUris;
-        this.createdAtMs = createdAtMs;
-        this.updatedAtMs = updatedAtMs;
+    public OAuth2ClientScope(String scope, boolean requiresConsent) {
+        this.scope = scope;
+        this.requiresConsent = requiresConsent;
     }
 }

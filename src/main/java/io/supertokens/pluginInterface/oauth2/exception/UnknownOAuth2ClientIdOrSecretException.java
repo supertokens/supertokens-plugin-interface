@@ -14,25 +14,8 @@
  *    under the License.
  */
 
-package io.supertokens.pluginInterface.oauth2;
+package io.supertokens.pluginInterface.oauth2.exception;
 
-import java.util.List;
-
-public class OAuth2Client {
-    public final String clientId;
-    public final String name;
-    public final String clientSecretHash;
-    public final List<String> redirectUris;
-    public final long createdAtMs;
-    public final long updatedAtMs;
-
-    public OAuth2Client(String clientId,String name, String clientSecretHash, List<String> redirectUris,
-                        long createdAtMs, long updatedAtMs) {
-        this.clientId = clientId;
-        this.name = name;
-        this.clientSecretHash = clientSecretHash;
-        this.redirectUris = redirectUris;
-        this.createdAtMs = createdAtMs;
-        this.updatedAtMs = updatedAtMs;
-    }
+public class UnknownOAuth2ClientIdOrSecretException extends Exception {
+    private static final long serialVersionUID = 6848053563771647272L;
 }

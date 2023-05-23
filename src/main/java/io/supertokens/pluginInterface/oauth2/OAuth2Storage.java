@@ -31,20 +31,20 @@ import java.util.List;
 public interface OAuth2Storage extends NonAuthRecipeStorage {
     void updateOAuth2Client(AppIdentifier appIdentifier, @Nonnull String clientId, @Nonnull String name,
                             @Nonnull String clientSecretHash, @Nonnull List<String> redirectUris, long updatedAtMs)
-            throws StorageQueryException, UnknownOAuth2ClientIdException;
+            throws StorageQueryException, UnknownOAuth2ClientIdException, DuplicateOAuth2ClientSecretHash;
     OAuth2Client getOAuth2ClientById(AppIdentifier appIdentifier, @Nonnull String clientId)
             throws StorageQueryException, UnknownOAuth2ClientIdException;
     void removeOAuth2Client(AppIdentifier appIdentifier, @Nonnull String clientId)
             throws StorageQueryException, UnknownOAuth2ClientIdException;
 
-    List<String> getOAuth2ClientScopes(AppIdentifier appIdentifier, @Nonnull String clientId)
+    List<OAuth2ClientScope> getOAuth2ClientScopes(AppIdentifier appIdentifier, @Nonnull String clientId)
             throws StorageQueryException, UnknownOAuth2ClientIdException, UnknownOAuth2ScopeException;
     void removeOAuth2ClientScope(AppIdentifier appIdentifier, @Nonnull String clientId, @Nonnull String scope)
             throws StorageQueryException, UnknownOAuth2ClientIdException, UnknownOAuth2ScopeException;
 
     void createOAuth2Scope(AppIdentifier appIdentifier, @Nonnull String scope)
             throws StorageQueryException, DuplicateOAuth2ScopeException;
-    void renameOAuth2Scope(AppIdentifier appIdentifier, @Nonnull String scope, String newName)
+    void updateOAuth2Scope(AppIdentifier appIdentifier, @Nonnull String scope, String newName)
             throws StorageQueryException, DuplicateOAuth2ScopeException;
     void removeOAuth2Scope(AppIdentifier appIdentifier, @Nonnull String scope)
             throws StorageQueryException, DuplicateOAuth2ScopeException;
@@ -62,8 +62,12 @@ public interface OAuth2Storage extends NonAuthRecipeStorage {
                                                  String newAccessTokenHash, String newRefreshTokenHash,
                                                  long accessTokenExpiresAtMs, Long refreshTokenHashExpiresAtMs)
             throws StorageQueryException, UnknownOAuth2RefreshTokenHashHashException, DuplicateOAuth2RefreshTokenHash, DuplicateOAuth2AccessTokenHash;
+
     void removeOAuth2TokensExpiredBefore(long now) throws StorageQueryException;
     void removeOAuth2TokensBySessionHandle(TenantIdentifier tenantIdentifier, String sessionHandle) throws StorageQueryException;
     void removeOAuth2TokenByAccessTokenHash(TenantIdentifier tenantIdentifier, String accessTokenHash) throws StorageQueryException;
+    void removeOAuth2TokenByClientId(TenantIdentifier tenantIdentifier, String accessTokenHash) throws StorageQueryException;
     void removeOAuth2AuthorizationCodesExpiredBefore(long now) throws StorageQueryException;
+    void removeOAuth2AuthorizationCodesByClientId(long now) throws StorageQueryException;
+    void removeOAuth2AuthorizationCodesBySessionHandle(long now) throws StorageQueryException;
 }
