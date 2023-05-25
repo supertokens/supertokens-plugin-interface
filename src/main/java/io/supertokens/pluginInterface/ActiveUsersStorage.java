@@ -16,4 +16,6 @@ public interface ActiveUsersStorage extends NonAuthRecipeStorage {
 
     /* Count the number of users who have enabled TOTP and are active */
     int countUsersEnabledTotpAndActiveSince(AppIdentifier appIdentifier, long time) throws StorageQueryException;
+
+    void deleteUserActive(AppIdentifier appIdentifier, String userId) throws StorageQueryException;
 }
