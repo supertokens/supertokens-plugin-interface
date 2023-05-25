@@ -2,8 +2,9 @@ package io.supertokens.pluginInterface;
 
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
+import io.supertokens.pluginInterface.nonAuthRecipe.NonAuthRecipeStorage;
 
-public interface ActiveUsersStorage extends Storage {
+public interface ActiveUsersStorage extends NonAuthRecipeStorage {
     /* Update the last active time of a user to now */
     void updateLastActive(AppIdentifier appIdentifier, String userId) throws StorageQueryException;
 
