@@ -2,8 +2,9 @@ package io.supertokens.pluginInterface;
 
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
+import io.supertokens.pluginInterface.nonAuthRecipe.NonAuthRecipeStorage;
 
-public interface ActiveUsersStorage extends Storage {
+public interface ActiveUsersStorage extends NonAuthRecipeStorage {
     /* Update the last active time of a user to now */
     void updateLastActive(AppIdentifier appIdentifier, String userId) throws StorageQueryException;
 
@@ -21,4 +22,7 @@ public interface ActiveUsersStorage extends Storage {
 
     /* Count the number of users who have enabled MFA and are active */
     int countUsersEnabledMfaAndActiveSince(AppIdentifier appIdentifier, long time) throws StorageQueryException;
+
+    /* Delete a user from active users table */
+    void deleteUserActive(AppIdentifier appIdentifier, String userId) throws StorageQueryException;
 }
