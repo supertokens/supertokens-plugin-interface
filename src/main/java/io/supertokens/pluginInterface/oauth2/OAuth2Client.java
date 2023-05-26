@@ -57,11 +57,9 @@ public class OAuth2Client {
         if (list1 == null && list2 == null) {
             return true;
         }
-
         if (list1 == null || list2 == null || list1.size() != list2.size()) {
             return false;
         }
-
         return list1.equals(list2);
     }
 }
