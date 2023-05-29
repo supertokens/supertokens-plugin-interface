@@ -21,6 +21,7 @@ import io.supertokens.pluginInterface.emailpassword.exceptions.DuplicateUserIdEx
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
 import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
+import io.supertokens.pluginInterface.multitenancy.exceptions.TenantOrAppNotFoundException;
 import io.supertokens.pluginInterface.nonAuthRecipe.NonAuthRecipeStorage;
 import io.supertokens.pluginInterface.oauth2.exception.*;
 
@@ -40,7 +41,7 @@ public interface OAuth2Storage extends NonAuthRecipeStorage {
             throws StorageQueryException, UnknownOAuth2ClientIdException, UnknownOAuth2ScopeException;
 
     void createOAuth2Scope(AppIdentifier appIdentifier, String scope)
-            throws StorageQueryException, DuplicateOAuth2ScopeException;
+            throws StorageQueryException, DuplicateOAuth2ScopeException, TenantOrAppNotFoundException;
     void updateOAuth2Scope(AppIdentifier appIdentifier, String scope, String newName)
             throws StorageQueryException, DuplicateOAuth2ScopeException;
     void removeOAuth2Scope(AppIdentifier appIdentifier, String scope)
