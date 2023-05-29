@@ -19,6 +19,7 @@ package io.supertokens.pluginInterface.oauth2.sqlStorage;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
 import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
+import io.supertokens.pluginInterface.multitenancy.exceptions.TenantOrAppNotFoundException;
 import io.supertokens.pluginInterface.oauth2.OAuth2AuthorizationCode;
 import io.supertokens.pluginInterface.oauth2.OAuth2Client;
 import io.supertokens.pluginInterface.oauth2.OAuth2Storage;
@@ -30,9 +31,8 @@ import javax.annotation.Nonnull;
 import java.util.List;
 
 public interface OAuth2SQLStorage extends OAuth2Storage, SQLStorage {
-    void createOAuth2Client_Transaction(AppIdentifier appIdentifier, TransactionConnection con, String clientId, String name,
-                                        String clientSecretHash, List<String> redirectUris, long createdAt)
-            throws StorageQueryException, DuplicateOAuth2ClientSecretHash, DuplicateOAuth2ClientIdException;
+    void createOAuth2Client_Transaction(AppIdentifier appIdentifier, TransactionConnection con, OAuth2Client oAuth2Client)
+            throws StorageQueryException, DuplicateOAuth2ClientSecretHash, DuplicateOAuth2ClientIdException, TenantOrAppNotFoundException;
     void updateOAuth2Client_Transaction(AppIdentifier appIdentifier, TransactionConnection con, String clientId, String name,
                             String clientSecretHash, List<String> redirectUris, long updatedAtMs)
             throws StorageQueryException, UnknownOAuth2ClientIdException, DuplicateOAuth2ClientSecretHash;

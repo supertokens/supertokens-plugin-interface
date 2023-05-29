@@ -26,7 +26,7 @@ public class OAuth2Client {
     public final long createdAtMs;
     public final long updatedAtMs;
 
-    public OAuth2Client(String clientId,String name, String clientSecretHash, List<String> redirectUris,
+    public OAuth2Client(String clientId, String name, String clientSecretHash, List<String> redirectUris,
                         long createdAtMs, long updatedAtMs) {
         this.clientId = clientId;
         this.name = name;
@@ -34,5 +34,32 @@ public class OAuth2Client {
         this.redirectUris = redirectUris;
         this.createdAtMs = createdAtMs;
         this.updatedAtMs = updatedAtMs;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (!(obj instanceof OAuth2Client)) {
+            return false;
+        }
+        OAuth2Client other = (OAuth2Client) obj;
+        return other.clientId.equals(this.clientId) &&
+                other.name.equals(this.name) &&
+                other.clientSecretHash.equals(this.clientSecretHash) &&
+                equalLists(other.redirectUris, this.redirectUris)  &&
+                (other.createdAtMs == this.createdAtMs) &&
+                (other.updatedAtMs == this.updatedAtMs);
+    }
+
+    private boolean equalLists(List<String> list1, List<String> list2) {
+        if (list1 == null && list2 == null) {
+            return true;
+        }
+        if (list1 == null || list2 == null || list1.size() != list2.size()) {
+            return false;
+        }
+        return list1.containsAll(list2);
     }
 }
