@@ -32,7 +32,8 @@ import java.util.List;
 
 public interface OAuth2SQLStorage extends OAuth2Storage, SQLStorage {
     void createOAuth2Client_Transaction(AppIdentifier appIdentifier, TransactionConnection con, OAuth2Client oAuth2Client)
-            throws StorageQueryException, DuplicateOAuth2ClientSecretHash, DuplicateOAuth2ClientIdException, TenantOrAppNotFoundException;
+            throws StorageQueryException, DuplicateOAuth2ClientSecretHash, DuplicateOAuth2ClientIdException,
+            DuplicateOAuth2ClientNameException, TenantOrAppNotFoundException;
     void updateOAuth2Client_Transaction(AppIdentifier appIdentifier, TransactionConnection con, String clientId, String name,
                             String clientSecretHash, List<String> redirectUris, long updatedAtMs)
             throws StorageQueryException, UnknownOAuth2ClientIdException, DuplicateOAuth2ClientSecretHash;
