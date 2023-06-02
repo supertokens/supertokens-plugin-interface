@@ -7,7 +7,9 @@ public class TOTPUsedCode {
     public final long expiryTime;
     public final long createdTime;
 
-    public TOTPUsedCode(String userId, String code, Boolean isValidCode, long expiryTime, long createdTime) {
+    public TOTPUsedCode(String userId, String code, Boolean isValidCode,
+                        long expiryTime,
+                        long createdTime) {
         this.userId = userId;
         this.code = code;
         this.isValid = isValidCode;

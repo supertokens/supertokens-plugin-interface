@@ -16,29 +16,35 @@
 
 package io.supertokens.pluginInterface.emailverification;
 
-import io.supertokens.pluginInterface.Storage;
 import io.supertokens.pluginInterface.emailverification.exception.DuplicateEmailVerificationTokenException;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
+import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
+import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
+import io.supertokens.pluginInterface.multitenancy.exceptions.TenantOrAppNotFoundException;
 import io.supertokens.pluginInterface.nonAuthRecipe.NonAuthRecipeStorage;
 
 public interface EmailVerificationStorage extends NonAuthRecipeStorage {
 
-    void addEmailVerificationToken(EmailVerificationTokenInfo emailVerificationInfo)
-            throws StorageQueryException, DuplicateEmailVerificationTokenException;
+    void addEmailVerificationToken(TenantIdentifier tenantIdentifier, EmailVerificationTokenInfo emailVerificationInfo)
+            throws StorageQueryException, DuplicateEmailVerificationTokenException, TenantOrAppNotFoundException;
 
-    EmailVerificationTokenInfo getEmailVerificationTokenInfo(String token) throws StorageQueryException;
+    EmailVerificationTokenInfo getEmailVerificationTokenInfo(TenantIdentifier tenantIdentifier, String token)
+            throws StorageQueryException;
 
-    void deleteEmailVerificationUserInfo(String userId) throws StorageQueryException;
+    void deleteEmailVerificationUserInfo(AppIdentifier appIdentifier, String userId) throws StorageQueryException;
 
-    void revokeAllTokens(String userId, String email) throws StorageQueryException;
+    boolean deleteEmailVerificationUserInfo(TenantIdentifier tenantIdentifier, String userId) throws StorageQueryException;
 
-    void unverifyEmail(String userId, String email) throws StorageQueryException;
+    void revokeAllTokens(TenantIdentifier tenantIdentifier, String userId, String email) throws StorageQueryException;
+
+    void unverifyEmail(AppIdentifier appIdentifier, String userId, String email) throws StorageQueryException;
 
     void deleteExpiredEmailVerificationTokens() throws StorageQueryException;
 
-    EmailVerificationTokenInfo[] getAllEmailVerificationTokenInfoForUser(String userId, String email)
+    EmailVerificationTokenInfo[] getAllEmailVerificationTokenInfoForUser(TenantIdentifier tenantIdentifier, String userId,
+                                                                         String email)
             throws StorageQueryException;
 
-    boolean isEmailVerified(String userId, String email) throws StorageQueryException;
+    boolean isEmailVerified(AppIdentifier appIdentifier, String userId, String email) throws StorageQueryException;
 
 }

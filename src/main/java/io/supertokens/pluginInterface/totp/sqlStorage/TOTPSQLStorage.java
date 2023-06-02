@@ -1,6 +1,9 @@
 package io.supertokens.pluginInterface.totp.sqlStorage;
 
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
+import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
+import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
+import io.supertokens.pluginInterface.multitenancy.exceptions.TenantOrAppNotFoundException;
 import io.supertokens.pluginInterface.sqlStorage.SQLStorage;
 import io.supertokens.pluginInterface.sqlStorage.TransactionConnection;
 import io.supertokens.pluginInterface.totp.TOTPDevice;
@@ -10,13 +13,17 @@ import io.supertokens.pluginInterface.totp.exception.TotpNotEnabledException;
 import io.supertokens.pluginInterface.totp.exception.UsedCodeAlreadyExistsException;
 
 public interface TOTPSQLStorage extends TOTPStorage, SQLStorage {
-    public int deleteDevice_Transaction(TransactionConnection con, String userId, String deviceName)
+    public int deleteDevice_Transaction(TransactionConnection con, AppIdentifier appIdentifier, String userId,
+                                        String deviceName)
             throws StorageQueryException;
 
-    public TOTPDevice[] getDevices_Transaction(TransactionConnection con, String userId)
+    public TOTPDevice[] getDevices_Transaction(TransactionConnection con, AppIdentifier appIdentifier, String userId)
             throws StorageQueryException;
 
-    public void removeUser_Transaction(TransactionConnection con, String userId)
+    public void removeUser_Transaction(TransactionConnection con, AppIdentifier appIdentifier, String userId)
+            throws StorageQueryException;
+
+    public boolean removeUser(TenantIdentifier tenantIdentifier, String userId)
             throws StorageQueryException;
 
     /**
@@ -24,11 +31,14 @@ public interface TOTPSQLStorage extends TOTPStorage, SQLStorage {
      * order of created time):
      */
     public TOTPUsedCode[] getAllUsedCodesDescOrder_Transaction(TransactionConnection con,
-            String userId)
+                                                               TenantIdentifier tenantIdentifier, String userId)
             throws StorageQueryException;
 
-    /** Insert a used TOTP code for an existing user: */
-    void insertUsedCode_Transaction(TransactionConnection con, TOTPUsedCode code)
-            throws StorageQueryException, TotpNotEnabledException, UsedCodeAlreadyExistsException;
+    /**
+     * Insert a used TOTP code for an existing user:
+     */
+    void insertUsedCode_Transaction(TransactionConnection con, TenantIdentifier tenantIdentifier, TOTPUsedCode code)
+            throws StorageQueryException, TotpNotEnabledException, UsedCodeAlreadyExistsException,
+            TenantOrAppNotFoundException;
 
 }

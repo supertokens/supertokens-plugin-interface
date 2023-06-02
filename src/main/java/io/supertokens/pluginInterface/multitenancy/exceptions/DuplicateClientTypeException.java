@@ -1,5 +1,5 @@
 /*
- *    Copyright (c) 2021, VRAI Labs and/or its affiliates. All rights reserved.
+ *    Copyright (c) 2023, VRAI Labs and/or its affiliates. All rights reserved.
  *
  *    This software is licensed under the Apache License, Version 2.0 (the
  *    "License") as published by the Apache Software Foundation.
@@ -14,24 +14,7 @@
  *    under the License.
  */
 
-package io.supertokens.pluginInterface.authRecipe;
+package io.supertokens.pluginInterface.multitenancy.exceptions;
 
-import io.supertokens.pluginInterface.RECIPE_ID;
-
-public abstract class AuthRecipeUserInfo {
-
-    public String id;
-
-    public long timeJoined;
-
-    public final String[] tenantIds;
-
-    public AuthRecipeUserInfo(String id, long timeJoined, String[] tenantIds) {
-        this.id = id;
-        this.timeJoined = timeJoined;
-        this.tenantIds = tenantIds;
-    }
-
-    public abstract RECIPE_ID getRecipeId();
-
+public class DuplicateClientTypeException extends Exception {
 }

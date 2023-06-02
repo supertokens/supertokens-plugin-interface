@@ -17,15 +17,18 @@
 package io.supertokens.pluginInterface.usermetadata.sqlStorage;
 
 import com.google.gson.JsonObject;
-
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
+import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
+import io.supertokens.pluginInterface.multitenancy.exceptions.TenantOrAppNotFoundException;
 import io.supertokens.pluginInterface.sqlStorage.SQLStorage;
 import io.supertokens.pluginInterface.sqlStorage.TransactionConnection;
 import io.supertokens.pluginInterface.usermetadata.UserMetadataStorage;
 
 public interface UserMetadataSQLStorage extends UserMetadataStorage, SQLStorage {
-    JsonObject getUserMetadata_Transaction(TransactionConnection con, String userId) throws StorageQueryException;
-
-    int setUserMetadata_Transaction(TransactionConnection con, String userId, JsonObject metadata)
+    JsonObject getUserMetadata_Transaction(AppIdentifier appIdentifier, TransactionConnection con, String userId)
             throws StorageQueryException;
+
+    int setUserMetadata_Transaction(AppIdentifier appIdentifier, TransactionConnection con, String userId,
+                                    JsonObject metadata)
+            throws StorageQueryException, TenantOrAppNotFoundException;
 }

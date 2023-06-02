@@ -1,5 +1,5 @@
 /*
- *    Copyright (c) 2020, VRAI Labs and/or its affiliates. All rights reserved.
+ *    Copyright (c) 2023, VRAI Labs and/or its affiliates. All rights reserved.
  *
  *    This software is licensed under the Apache License, Version 2.0 (the
  *    "License") as published by the Apache Software Foundation.
@@ -12,20 +12,20 @@
  *    WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  *    License for the specific language governing permissions and limitations
  *    under the License.
- *
  */
 
 package io.supertokens.pluginInterface.exceptions;
 
-public class QuitProgramFromPluginException extends RuntimeException {
-
-    private static final long serialVersionUID = 1L;
-
-    public QuitProgramFromPluginException(String msg) {
-        super(msg);
+public class InvalidConfigException extends Exception {
+    public InvalidConfigException(String message) {
+        super(message);
     }
 
-    public QuitProgramFromPluginException(Exception e) {
+    public InvalidConfigException() {
+        super();
+    }
+
+    public InvalidConfigException(Exception e) {
         super(e);
     }
 }
