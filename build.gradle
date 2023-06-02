@@ -2,7 +2,7 @@ plugins {
     id 'java-library'
 }
 
-version = "3.0.0"
+version = "2.24.0"
 
 repositories {
     mavenCentral()
