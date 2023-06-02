@@ -7,6 +7,10 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [3.0.0]
+
+- Adds support for multi-tenancy
+
 ## [2.23.0] - 2023-04-05
 
 - Added `useStaticKey ` into session info classes
