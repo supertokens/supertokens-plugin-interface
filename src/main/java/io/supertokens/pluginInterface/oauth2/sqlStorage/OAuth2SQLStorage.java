@@ -42,7 +42,7 @@ public interface OAuth2SQLStorage extends OAuth2Storage, SQLStorage {
 
     void upsertOAuth2ClientScope_Transaction(AppIdentifier appIdentifier, TransactionConnection con, String clientId,
                                                String scope, boolean requiresConsent)
-            throws StorageQueryException, UnknownOAuth2ClientIdException, UnknownOAuth2ScopeException;
+            throws StorageQueryException, UnknownOAuth2ClientIdException, UnknownOAuth2ScopeException, DuplicateOAuth2ClientScopeException;
 
     OAuth2AuthorizationCode getOAuth2AuthorizationCodeByCodeHash_Transaction(TenantIdentifier tenantIdentifier, TransactionConnection con, String codeHash)
             throws StorageQueryException, UnknownOAuth2AuthorizationCodeHashException;
