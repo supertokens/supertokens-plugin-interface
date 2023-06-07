@@ -27,7 +27,6 @@ import io.supertokens.pluginInterface.oauth2.exception.*;
 import io.supertokens.pluginInterface.sqlStorage.SQLStorage;
 import io.supertokens.pluginInterface.sqlStorage.TransactionConnection;
 
-import javax.annotation.Nonnull;
 import java.util.List;
 
 public interface OAuth2SQLStorage extends OAuth2Storage, SQLStorage {
@@ -40,8 +39,8 @@ public interface OAuth2SQLStorage extends OAuth2Storage, SQLStorage {
     OAuth2Client getOAuth2ClientByIdAndClientSecretHash_Transaction(AppIdentifier appIdentifier, TransactionConnection con, String clientId, String clientSecretHash)
             throws StorageQueryException, UnknownOAuth2ClientIdOrSecretException;
 
-    void upsertOAuth2ClientScope_Transaction(AppIdentifier appIdentifier, TransactionConnection con, String clientId,
-                                               String scope, boolean requiresConsent)
+    void insertOAuth2ClientScope_Transaction(AppIdentifier appIdentifier, TransactionConnection con, String clientId,
+                                             String scope, boolean requiresConsent)
             throws StorageQueryException, UnknownOAuth2ClientIdException, UnknownOAuth2ScopeException, DuplicateOAuth2ClientScopeException;
 
     OAuth2AuthorizationCode getOAuth2AuthorizationCodeByCodeHash_Transaction(TenantIdentifier tenantIdentifier, TransactionConnection con, String codeHash)
