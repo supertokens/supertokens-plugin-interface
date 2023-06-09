@@ -90,4 +90,8 @@ public interface Storage {
     Set<String> getValidFieldsInConfig();
 
     void setLogLevels(Set<LOG_LEVEL> logLevels);
+
+    String[] getAllTablesInTheDatabase() throws StorageQueryException;
+
+    String[] getAllTablesInTheDatabaseThatHasDataForAppId(String appId) throws StorageQueryException;
 }
