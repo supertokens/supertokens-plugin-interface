@@ -30,7 +30,7 @@ import java.util.Set;
 public interface Storage {
 
     // if silent is true, do not log anything out on the console
-    void constructor(String processId, boolean silent);
+    void constructor(String processId, boolean silent, boolean isTesting);
 
     void loadConfig(JsonObject jsonConfig, Set<LOG_LEVEL> logLevels, TenantIdentifier tenantIdentifier) throws InvalidConfigException;
 
