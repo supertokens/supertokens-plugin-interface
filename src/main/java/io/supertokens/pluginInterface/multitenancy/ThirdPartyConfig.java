@@ -103,6 +103,25 @@ public class ThirdPartyConfig {
             this.userInfoMap = userInfoMap == null ? new UserInfoMap(null, null) : userInfoMap;
         }
 
+        public Provider normalize() {
+            return new Provider(
+                    this.thirdPartyId,
+                    this.name,
+                    this.clients,
+                    this.authorizationEndpoint,
+                    this.authorizationEndpointQueryParams,
+                    this.tokenEndpoint,
+                    this.tokenEndpointBodyParams,
+                    this.userInfoEndpoint,
+                    this.userInfoEndpointQueryParams,
+                    this.userInfoEndpointHeaders,
+                    this.jwksURI,
+                    this.oidcDiscoveryEndpoint,
+                    this.requireEmail,
+                    this.userInfoMap
+            );
+        }
+
         @Override
         public boolean equals(Object other) {
             if (other instanceof Provider) {
