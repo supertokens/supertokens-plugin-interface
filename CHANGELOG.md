@@ -7,7 +7,9 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
-- Introduce MFA Recipe plugin interface
+## [3.0.0] - 2023-06-02
+
+- Adds support for multi-tenancy
 
 ## [2.23.0] - 2023-04-05
 
