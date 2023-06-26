@@ -16,6 +16,6 @@
 
 package io.supertokens.pluginInterface.oauth2.exception;
 
-public class UnknownOAuth2AccessTokenHashHashException extends Exception {
+public class UnknownOAuth2ClientSecretHashException extends Exception {
     private static final long serialVersionUID = 6848053563771647272L;
 }
