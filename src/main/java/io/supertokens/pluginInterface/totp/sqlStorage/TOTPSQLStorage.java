@@ -9,8 +9,8 @@ import io.supertokens.pluginInterface.sqlStorage.TransactionConnection;
 import io.supertokens.pluginInterface.totp.TOTPDevice;
 import io.supertokens.pluginInterface.totp.TOTPStorage;
 import io.supertokens.pluginInterface.totp.TOTPUsedCode;
-import io.supertokens.pluginInterface.totp.exception.TotpNotEnabledException;
 import io.supertokens.pluginInterface.totp.exception.UsedCodeAlreadyExistsException;
+import io.supertokens.pluginInterface.totp.exception.UnknownDeviceException;
 
 public interface TOTPSQLStorage extends TOTPStorage, SQLStorage {
     public int deleteDevice_Transaction(TransactionConnection con, AppIdentifier appIdentifier, String userId,
@@ -38,7 +38,7 @@ public interface TOTPSQLStorage extends TOTPStorage, SQLStorage {
      * Insert a used TOTP code for an existing user:
      */
     void insertUsedCode_Transaction(TransactionConnection con, TenantIdentifier tenantIdentifier, TOTPUsedCode code)
-            throws StorageQueryException, TotpNotEnabledException, UsedCodeAlreadyExistsException,
+            throws StorageQueryException, UnknownDeviceException, UsedCodeAlreadyExistsException,
             TenantOrAppNotFoundException;
 
 }
