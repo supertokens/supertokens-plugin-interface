@@ -28,10 +28,13 @@ public class OAuth2TokenInfo {
     public final long lastUpdatedAtMs;
     public final long accessTokenExpiresAtMs;
     public final Long refreshTokenHashExpiresAtMs;
+    public final boolean clientSecretRequiredForRefresh;
+    public final GrantType grantType;
 
     public OAuth2TokenInfo(String clientId, String sessionHandle, List<String> scope, String accessTokenHash,
                            String refreshTokenHash, long createdAtMs, long lastUpdatedAtMs, long accessTokenExpiresAtMs,
-                           Long refreshTokenHashExpiresAtMs) {
+                           Long refreshTokenHashExpiresAtMs, boolean clientSecretRequiredForRefresh,
+                           GrantType grantType) {
         this.clientId = clientId;
         this.sessionHandle = sessionHandle;
         this.scope = scope;
@@ -41,5 +44,11 @@ public class OAuth2TokenInfo {
         this.lastUpdatedAtMs = lastUpdatedAtMs;
         this.accessTokenExpiresAtMs = accessTokenExpiresAtMs;
         this.refreshTokenHashExpiresAtMs = refreshTokenHashExpiresAtMs;
+        this.clientSecretRequiredForRefresh = clientSecretRequiredForRefresh;
+        this.grantType = grantType;
+    }
+
+    public enum GrantType {
+        CLIENT_CREDENTIALS, REFRESH_TOKEN, AUTH_CODE, AUTH_CODE_PKCE
     }
 }

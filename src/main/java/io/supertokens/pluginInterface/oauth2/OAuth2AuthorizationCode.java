@@ -16,7 +16,6 @@
 
 package io.supertokens.pluginInterface.oauth2;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public class OAuth2AuthorizationCode {
@@ -27,13 +26,14 @@ public class OAuth2AuthorizationCode {
     public final long expiresAtMs;
     public final List<String> scope;
     public final String redirectUri;
-    public final String accessType;
+    public final AccessType accessType;
     public final String codeChallenge;
     public final String codeChallengeMethod;
+    public final String queryString;
 
     public OAuth2AuthorizationCode(String codeHash, String sessionHandle, String clientId, long createdAtMs,
-                                   long expiresAtMs, List<String> scope, String redirectUri, String accessType,
-                                   String codeChallenge, String codeChallengeMethod) {
+                                   long expiresAtMs, List<String> scope, String redirectUri, AccessType accessType,
+                                   String codeChallenge, String codeChallengeMethod, String queryString) {
         this.codeHash = codeHash;
         this.sessionHandle = sessionHandle;
         this.clientId = clientId;
@@ -44,5 +44,10 @@ public class OAuth2AuthorizationCode {
         this.accessType = accessType;
         this.codeChallenge = codeChallenge;
         this.codeChallengeMethod = codeChallengeMethod;
+        this.queryString = queryString;
+    }
+
+    public enum AccessType {
+        offline , online
     }
 }
