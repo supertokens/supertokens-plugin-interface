@@ -16,8 +16,6 @@
 
 package io.supertokens.pluginInterface.oauth2.exception;
 
-import java.security.spec.ECFieldF2m;
-
 public class UnknownRedirectURIException extends Exception {
     public final static long serialVersionUID = 6848053563771647272L;
 }

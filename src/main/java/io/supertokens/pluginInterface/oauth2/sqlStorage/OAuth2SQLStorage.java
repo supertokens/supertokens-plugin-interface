@@ -34,8 +34,6 @@ public interface OAuth2SQLStorage extends OAuth2Storage, SQLStorage {
             DuplicateOAuth2ClientNameException, TenantOrAppNotFoundException;
     void updateOAuth2Client_Transaction(AppIdentifier appIdentifier, TransactionConnection con, OAuth2Client oAuth2Client)
             throws StorageQueryException, UnknownOAuth2ClientIdException, DuplicateOAuth2ClientSecretHash;
-    OAuth2Client getOAuth2ClientByIdAndClientSecretHash_Transaction(AppIdentifier appIdentifier, TransactionConnection con, String clientId, String clientSecretHash)
-            throws StorageQueryException, UnknownOAuth2ClientSecretHashException;
 
     void insertOAuth2ClientScope_Transaction(AppIdentifier appIdentifier, TransactionConnection con, String clientId,
                                              String scope, boolean requiresConsent)
@@ -55,13 +53,10 @@ public interface OAuth2SQLStorage extends OAuth2Storage, SQLStorage {
             throws StorageQueryException, UnknownOAuth2ClientIdException, UnknownOAuth2ScopeException, OAuth2ScopeNotAllowedException,
             UnknownRedirectURIException, UnknownOAuth2CodeVerifierException,UnknownOAuth2AuthorizationCodeHashException,
             UnknownOAuth2RefreshTokenHashException, UnknownOAuth2ClientSecretHashException;
-    OAuth2TokenInfo getOAuth2TokenInfoByAccessTokenHash_Transaction(TenantIdentifier tenantIdentifier, TransactionConnection con, String accessTokenHash)
-            throws StorageQueryException, UnknownOAuth2AccessTokenHashException;
     void updateOAuth2TokenInfoByRefreshTokenHash_Transaction(TenantIdentifier tenantIdentifier, OAuth2TokenInfo tokenInfo)
             throws StorageQueryException, UnknownOAuth2RefreshTokenHashException, DuplicateOAuth2RefreshTokenHash, DuplicateOAuth2AccessTokenHash;
     OAuth2TokenInfo getOAuth2TokenInfoByRefreshTokenHash_Transaction(TenantIdentifier tenantIdentifier, TransactionConnection con,
                                                                      String clientId, String refreshTokenHash)
             throws StorageQueryException, UnknownOAuth2RefreshTokenHashException;
-    void removeOAuth2TokenInfoByAccessTokenHash_Transaction(TenantIdentifier tenantIdentifier, TransactionConnection con, String accessTokenHash)
-            throws StorageQueryException, UnknownOAuth2AccessTokenHashException;
+
 }
