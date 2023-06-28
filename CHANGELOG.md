@@ -7,7 +7,7 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
-- Replace `TOTP_NOT_ENABLED_ERROR` with other TOTP exceptions.
+- Replace `TotpNotEnabledError` with `UnknownUserIdTotpError`.
 
 ## [3.0.0] - 2023-06-02
 
