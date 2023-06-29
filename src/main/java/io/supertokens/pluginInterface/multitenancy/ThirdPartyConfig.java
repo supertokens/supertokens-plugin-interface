@@ -104,6 +104,11 @@ public class ThirdPartyConfig {
         }
 
         public Provider normalize() {
+            UserInfoMap normalizedUserInfoMap = this.userInfoMap;
+            if (normalizedUserInfoMap != null) {
+                normalizedUserInfoMap = new UserInfoMap(normalizedUserInfoMap.fromIdTokenPayload, normalizedUserInfoMap.fromUserInfoAPI);
+            }
+
             return new Provider(
                     this.thirdPartyId,
                     this.name,
@@ -118,7 +123,7 @@ public class ThirdPartyConfig {
                     this.jwksURI,
                     this.oidcDiscoveryEndpoint,
                     this.requireEmail,
-                    this.userInfoMap
+                    normalizedUserInfoMap
             );
         }
 
