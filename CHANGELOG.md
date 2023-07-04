@@ -7,6 +7,10 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [3.0.1] - 2023-06-04
+
+- Updates `TenantConfig` toJson function to protect core config as well.
+
 ## [3.0.0] - 2023-06-02
 
 - Adds support for multi-tenancy
