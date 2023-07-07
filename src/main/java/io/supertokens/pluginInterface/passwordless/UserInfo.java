@@ -16,21 +16,21 @@
 
 package io.supertokens.pluginInterface.passwordless;
 
-import javax.annotation.Nullable;
-
 import io.supertokens.pluginInterface.RECIPE_ID;
 import io.supertokens.pluginInterface.authRecipe.AuthRecipeUserInfo;
+import io.supertokens.pluginInterface.authRecipe.LoginMethods;
+
+import javax.annotation.Nullable;
 
 public class UserInfo extends AuthRecipeUserInfo {
     public final String email;
     public final String phoneNumber;
 
-    public UserInfo(String id, @Nullable String email, @Nullable String phoneNumber, long timeJoined, String[] tenantIds) {
-        super(id, timeJoined, tenantIds);
-
-        if (email == null && phoneNumber == null) {
-            throw new IllegalArgumentException("Both email and phoneNumber cannot be null");
-        }
+    public UserInfo(String id, @Nullable String email, @Nullable String phoneNumber, long timeJoined,
+                    String[] tenantIds) {
+        super(id, false, new LoginMethods[]{
+                new LoginMethods(id, timeJoined, true, new LoginMethods.PasswordlessInfo(email, phoneNumber),
+                        tenantIds)});
 
         this.email = email;
         this.phoneNumber = phoneNumber;
@@ -47,8 +47,9 @@ public class UserInfo extends AuthRecipeUserInfo {
             UserInfo otherUserInfo = (UserInfo) other;
             return ((otherUserInfo.email == null && this.email == null) || otherUserInfo.email.equals(this.email))
                     && ((otherUserInfo.phoneNumber == null && this.phoneNumber == null)
-                            || otherUserInfo.phoneNumber.equals(this.phoneNumber))
-                    && otherUserInfo.id.equals(this.id) && otherUserInfo.timeJoined == this.timeJoined;
+                    || otherUserInfo.phoneNumber.equals(this.phoneNumber))
+                    && otherUserInfo.id.equals(this.id) &&
+                    otherUserInfo.loginMethods[0].timeJoined == this.loginMethods[0].timeJoined;
         }
         return false;
     }

@@ -18,6 +18,7 @@ package io.supertokens.pluginInterface.thirdparty;
 
 import io.supertokens.pluginInterface.RECIPE_ID;
 import io.supertokens.pluginInterface.authRecipe.AuthRecipeUserInfo;
+import io.supertokens.pluginInterface.authRecipe.LoginMethods;
 
 public class UserInfo extends AuthRecipeUserInfo {
 
@@ -26,7 +27,10 @@ public class UserInfo extends AuthRecipeUserInfo {
     public final String email;
 
     public UserInfo(String id, String email, ThirdParty thirdParty, long timeJoined, String[] tenantIds) {
-        super(id, timeJoined, tenantIds);
+        super(id, false, new LoginMethods[]{
+                new LoginMethods(id, timeJoined, true, email,
+                        new LoginMethods.ThirdParty(thirdParty.id, thirdParty.userId),
+                        tenantIds)});
         this.thirdParty = thirdParty;
         this.email = email;
     }
@@ -52,7 +56,7 @@ public class UserInfo extends AuthRecipeUserInfo {
         if (other instanceof UserInfo) {
             UserInfo otherUserInfo = (UserInfo) other;
             return otherUserInfo.email.equals(this.email) && otherUserInfo.id.equals(this.id)
-                    && otherUserInfo.timeJoined == this.timeJoined
+                    && otherUserInfo.loginMethods[0].timeJoined == this.loginMethods[0].timeJoined
                     && otherUserInfo.thirdParty.userId.equals(this.thirdParty.userId)
                     && otherUserInfo.thirdParty.id.equals(this.thirdParty.id);
         }

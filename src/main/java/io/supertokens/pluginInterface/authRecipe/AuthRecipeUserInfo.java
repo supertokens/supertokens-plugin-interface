@@ -20,18 +20,29 @@ import io.supertokens.pluginInterface.RECIPE_ID;
 
 public abstract class AuthRecipeUserInfo {
 
+    // this is not final, cause we modify this in certain places in place (like in UsersAPI.java)
     public String id;
 
-    public long timeJoined;
+    public final boolean isPrimaryUser;
 
-    public final String[] tenantIds;
+    public final LoginMethods[] loginMethods;
 
-    public AuthRecipeUserInfo(String id, long timeJoined, String[] tenantIds) {
+    public final long timeJoined;
+
+    public AuthRecipeUserInfo(String id, boolean isPrimaryUser, LoginMethods[] loginMethods) {
         this.id = id;
-        this.timeJoined = timeJoined;
-        this.tenantIds = tenantIds;
+        this.isPrimaryUser = isPrimaryUser;
+        this.loginMethods = loginMethods;
+        long minTimeJoined = loginMethods[0].timeJoined;
+        for (int i = 1; i < loginMethods.length; i++) {
+            if (loginMethods[i].timeJoined < minTimeJoined) {
+                minTimeJoined = loginMethods[i].timeJoined;
+            }
+        }
+        this.timeJoined = minTimeJoined;
     }
 
-    public abstract RECIPE_ID getRecipeId();
-
+    public RECIPE_ID getRecipeId() {
+        throw new UnsupportedOperationException("Please search for bugs");
+    }
 }
