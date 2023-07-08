@@ -18,7 +18,7 @@ package io.supertokens.pluginInterface.authRecipe;
 
 import io.supertokens.pluginInterface.RECIPE_ID;
 
-public class LoginMethods {
+public class LoginMethod {
 
     public final boolean verified;
 
@@ -38,8 +38,8 @@ public class LoginMethods {
 
     public transient final String passwordHash;
 
-    public LoginMethods(String recipeUserId, long timeJoined, boolean verified, String email,
-                        String passwordHash, String[] tenantIds) {
+    public LoginMethod(String recipeUserId, long timeJoined, boolean verified, String email,
+                       String passwordHash, String[] tenantIds) {
         this.verified = verified;
         this.timeJoined = timeJoined;
         this.recipeUserId = recipeUserId;
@@ -51,8 +51,8 @@ public class LoginMethods {
         this.passwordHash = passwordHash;
     }
 
-    public LoginMethods(String recipeUserId, long timeJoined, boolean verified, PasswordlessInfo passwordlessInfo,
-                        String[] tenantIds) {
+    public LoginMethod(String recipeUserId, long timeJoined, boolean verified, PasswordlessInfo passwordlessInfo,
+                       String[] tenantIds) {
         this.verified = verified;
         this.timeJoined = timeJoined;
         this.recipeUserId = recipeUserId;
@@ -64,8 +64,8 @@ public class LoginMethods {
         this.passwordHash = null;
     }
 
-    public LoginMethods(String recipeUserId, long timeJoined, boolean verified, String email, ThirdParty thirdPartyInfo,
-                        String[] tenantIds) {
+    public LoginMethod(String recipeUserId, long timeJoined, boolean verified, String email, ThirdParty thirdPartyInfo,
+                       String[] tenantIds) {
         this.verified = verified;
         this.timeJoined = timeJoined;
         this.recipeUserId = recipeUserId;
@@ -91,8 +91,8 @@ public class LoginMethods {
     }
 
     public static class ThirdParty {
-        String id;
-        String userId;
+        public String id;
+        public String userId;
 
         public ThirdParty(String id, String userId) {
             this.id = id;
@@ -111,10 +111,10 @@ public class LoginMethods {
 
     @Override
     public boolean equals(Object other) {
-        if (!(other instanceof LoginMethods)) {
+        if (!(other instanceof LoginMethod)) {
             return false;
         }
-        LoginMethods otherLoginMethod = (LoginMethods) other;
+        LoginMethod otherLoginMethod = (LoginMethod) other;
         return this.verified == otherLoginMethod.verified && this.timeJoined == otherLoginMethod.timeJoined
                 && this.recipeUserId.equals(otherLoginMethod.recipeUserId) && this.recipeId == otherLoginMethod.recipeId
                 && java.util.Objects.equals(this.email, otherLoginMethod.email)

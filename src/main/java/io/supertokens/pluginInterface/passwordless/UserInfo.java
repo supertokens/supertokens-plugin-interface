@@ -18,22 +18,16 @@ package io.supertokens.pluginInterface.passwordless;
 
 import io.supertokens.pluginInterface.RECIPE_ID;
 import io.supertokens.pluginInterface.authRecipe.AuthRecipeUserInfo;
-import io.supertokens.pluginInterface.authRecipe.LoginMethods;
-
-import javax.annotation.Nullable;
+import io.supertokens.pluginInterface.authRecipe.LoginMethod;
 
 public class UserInfo extends AuthRecipeUserInfo {
     public final String email;
     public final String phoneNumber;
 
-    public UserInfo(String id, @Nullable String email, @Nullable String phoneNumber, long timeJoined,
-                    String[] tenantIds) {
-        super(id, false, new LoginMethods[]{
-                new LoginMethods(id, timeJoined, true, new LoginMethods.PasswordlessInfo(email, phoneNumber),
-                        tenantIds)});
-
-        this.email = email;
-        this.phoneNumber = phoneNumber;
+    public UserInfo(String id, boolean verified, LoginMethod loginMethod) {
+        super(id, verified, loginMethod);
+        this.email = loginMethod.email;
+        this.phoneNumber = loginMethod.phoneNumber;
     }
 
     @Override
@@ -41,16 +35,4 @@ public class UserInfo extends AuthRecipeUserInfo {
         return RECIPE_ID.PASSWORDLESS;
     }
 
-    @Override
-    public boolean equals(Object other) {
-        if (other instanceof UserInfo) {
-            UserInfo otherUserInfo = (UserInfo) other;
-            return ((otherUserInfo.email == null && this.email == null) || otherUserInfo.email.equals(this.email))
-                    && ((otherUserInfo.phoneNumber == null && this.phoneNumber == null)
-                    || otherUserInfo.phoneNumber.equals(this.phoneNumber))
-                    && otherUserInfo.id.equals(this.id) &&
-                    otherUserInfo.loginMethods[0].timeJoined == this.loginMethods[0].timeJoined;
-        }
-        return false;
-    }
 }

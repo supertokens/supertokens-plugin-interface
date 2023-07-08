@@ -18,32 +18,18 @@ package io.supertokens.pluginInterface.thirdparty;
 
 import io.supertokens.pluginInterface.RECIPE_ID;
 import io.supertokens.pluginInterface.authRecipe.AuthRecipeUserInfo;
-import io.supertokens.pluginInterface.authRecipe.LoginMethods;
+import io.supertokens.pluginInterface.authRecipe.LoginMethod;
 
 public class UserInfo extends AuthRecipeUserInfo {
 
-    public final ThirdParty thirdParty;
+    public final LoginMethod.ThirdParty thirdParty;
 
     public final String email;
 
-    public UserInfo(String id, String email, ThirdParty thirdParty, long timeJoined, String[] tenantIds) {
-        super(id, false, new LoginMethods[]{
-                new LoginMethods(id, timeJoined, true, email,
-                        new LoginMethods.ThirdParty(thirdParty.id, thirdParty.userId),
-                        tenantIds)});
-        this.thirdParty = thirdParty;
-        this.email = email;
-    }
-
-    public static class ThirdParty {
-        public final String id;
-
-        public final String userId;
-
-        public ThirdParty(String id, String userId) {
-            this.id = id;
-            this.userId = userId;
-        }
+    public UserInfo(String id, boolean verified, LoginMethod loginMethod) {
+        super(id, verified, loginMethod);
+        this.thirdParty = loginMethod.thirdParty;
+        this.email = loginMethod.email;
     }
 
     @Override
@@ -51,15 +37,4 @@ public class UserInfo extends AuthRecipeUserInfo {
         return RECIPE_ID.THIRD_PARTY;
     }
 
-    @Override
-    public boolean equals(Object other) {
-        if (other instanceof UserInfo) {
-            UserInfo otherUserInfo = (UserInfo) other;
-            return otherUserInfo.email.equals(this.email) && otherUserInfo.id.equals(this.id)
-                    && otherUserInfo.loginMethods[0].timeJoined == this.loginMethods[0].timeJoined
-                    && otherUserInfo.thirdParty.userId.equals(this.thirdParty.userId)
-                    && otherUserInfo.thirdParty.id.equals(this.thirdParty.id);
-        }
-        return false;
-    }
 }

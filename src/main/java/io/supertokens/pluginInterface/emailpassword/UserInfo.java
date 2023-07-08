@@ -18,7 +18,7 @@ package io.supertokens.pluginInterface.emailpassword;
 
 import io.supertokens.pluginInterface.RECIPE_ID;
 import io.supertokens.pluginInterface.authRecipe.AuthRecipeUserInfo;
-import io.supertokens.pluginInterface.authRecipe.LoginMethods;
+import io.supertokens.pluginInterface.authRecipe.LoginMethod;
 
 public class UserInfo extends AuthRecipeUserInfo {
 
@@ -27,10 +27,10 @@ public class UserInfo extends AuthRecipeUserInfo {
     // using transient, we tell Gson not to include this when creating a JSON
     public transient final String passwordHash;
 
-    public UserInfo(String id, String email, String passwordHash, long timeJoined, String[] tenantIds) {
-        super(id, false, new LoginMethods[]{new LoginMethods(id, timeJoined, false, email, passwordHash, tenantIds)});
-        this.email = email;
-        this.passwordHash = passwordHash;
+    public UserInfo(String id, boolean verified, LoginMethod loginMethod) {
+        super(id, verified, loginMethod);
+        this.email = loginMethod.email;
+        this.passwordHash = loginMethod.passwordHash;
     }
 
     @Override
@@ -38,14 +38,4 @@ public class UserInfo extends AuthRecipeUserInfo {
         return RECIPE_ID.EMAIL_PASSWORD;
     }
 
-    @Override
-    public boolean equals(Object other) {
-        if (other instanceof UserInfo) {
-            UserInfo otherUserInfo = (UserInfo) other;
-            return otherUserInfo.email.equals(this.email) && otherUserInfo.passwordHash.equals(this.passwordHash)
-                    && otherUserInfo.id.equals(this.id) &&
-                    otherUserInfo.loginMethods[0].timeJoined == this.loginMethods[0].timeJoined;
-        }
-        return false;
-    }
 }

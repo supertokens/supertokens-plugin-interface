@@ -20,28 +20,37 @@ import io.supertokens.pluginInterface.RECIPE_ID;
 
 import java.util.Arrays;
 
-public abstract class AuthRecipeUserInfo {
+public class AuthRecipeUserInfo {
 
     // this is not final, cause we modify this in certain places in place (like in UsersAPI.java)
     public String id;
 
     public final boolean isPrimaryUser;
 
-    public final LoginMethods[] loginMethods;
+    public LoginMethod[] loginMethods;
 
-    public final long timeJoined;
+    public long timeJoined;
 
-    public AuthRecipeUserInfo(String id, boolean isPrimaryUser, LoginMethods[] loginMethods) {
+    public AuthRecipeUserInfo(String id, boolean isPrimaryUser, LoginMethod loginMethods) {
         this.id = id;
         this.isPrimaryUser = isPrimaryUser;
-        this.loginMethods = loginMethods;
-        long minTimeJoined = loginMethods[0].timeJoined;
-        for (int i = 1; i < loginMethods.length; i++) {
-            if (loginMethods[i].timeJoined < minTimeJoined) {
-                minTimeJoined = loginMethods[i].timeJoined;
+        this.loginMethods = new LoginMethod[]{loginMethods};
+        this.timeJoined = loginMethods.timeJoined;
+    }
+
+    public void addLoginMethod(LoginMethod loginMethod) {
+        for (LoginMethod method : this.loginMethods) {
+            if (method.equals(loginMethod)) {
+                return;
             }
         }
-        this.timeJoined = minTimeJoined;
+        LoginMethod[] newLoginMethods = new LoginMethod[this.loginMethods.length + 1];
+        System.arraycopy(this.loginMethods, 0, newLoginMethods, 0, this.loginMethods.length);
+        newLoginMethods[this.loginMethods.length] = loginMethod;
+        this.loginMethods = newLoginMethods;
+        if (timeJoined > loginMethod.timeJoined) {
+            this.timeJoined = loginMethod.timeJoined;
+        }
     }
 
     public RECIPE_ID getRecipeId() {
