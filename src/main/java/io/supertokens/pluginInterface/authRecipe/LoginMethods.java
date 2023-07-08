@@ -98,5 +98,29 @@ public class LoginMethods {
             this.id = id;
             this.userId = userId;
         }
+
+        @Override
+        public boolean equals(Object other) {
+            if (!(other instanceof ThirdParty)) {
+                return false;
+            }
+            ThirdParty otherThirdParty = (ThirdParty) other;
+            return this.id.equals(otherThirdParty.id) && this.userId.equals(otherThirdParty.userId);
+        }
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (!(other instanceof LoginMethods)) {
+            return false;
+        }
+        LoginMethods otherLoginMethod = (LoginMethods) other;
+        return this.verified == otherLoginMethod.verified && this.timeJoined == otherLoginMethod.timeJoined
+                && this.recipeUserId.equals(otherLoginMethod.recipeUserId) && this.recipeId == otherLoginMethod.recipeId
+                && java.util.Objects.equals(this.email, otherLoginMethod.email)
+                && java.util.Objects.equals(this.phoneNumber, otherLoginMethod.phoneNumber)
+                && java.util.Objects.equals(this.passwordHash, otherLoginMethod.passwordHash)
+                && java.util.Objects.equals(this.thirdParty, otherLoginMethod.thirdParty)
+                && java.util.Arrays.equals(this.tenantIds, otherLoginMethod.tenantIds);
     }
 }

@@ -18,6 +18,8 @@ package io.supertokens.pluginInterface.authRecipe;
 
 import io.supertokens.pluginInterface.RECIPE_ID;
 
+import java.util.Arrays;
+
 public abstract class AuthRecipeUserInfo {
 
     // this is not final, cause we modify this in certain places in place (like in UsersAPI.java)
@@ -44,5 +46,15 @@ public abstract class AuthRecipeUserInfo {
 
     public RECIPE_ID getRecipeId() {
         throw new UnsupportedOperationException("Please search for bugs");
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (!(other instanceof AuthRecipeUserInfo)) {
+            return false;
+        }
+        AuthRecipeUserInfo otherUser = (AuthRecipeUserInfo) other;
+        return this.id.equals(otherUser.id) && this.isPrimaryUser == otherUser.isPrimaryUser
+                && this.timeJoined == otherUser.timeJoined && Arrays.equals(this.loginMethods, otherUser.loginMethods);
     }
 }
