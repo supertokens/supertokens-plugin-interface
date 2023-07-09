@@ -19,6 +19,8 @@ package io.supertokens.pluginInterface.authRecipe;
 import io.supertokens.pluginInterface.RECIPE_ID;
 
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 public class AuthRecipeUserInfo {
 
@@ -29,6 +31,8 @@ public class AuthRecipeUserInfo {
 
     public LoginMethod[] loginMethods;
 
+    public String[] tenantIds;
+
     public long timeJoined;
 
     public AuthRecipeUserInfo(String id, boolean isPrimaryUser, LoginMethod loginMethods) {
@@ -36,6 +40,7 @@ public class AuthRecipeUserInfo {
         this.isPrimaryUser = isPrimaryUser;
         this.loginMethods = new LoginMethod[]{loginMethods};
         this.timeJoined = loginMethods.timeJoined;
+        this.tenantIds = loginMethods.tenantIds;
     }
 
     public void addLoginMethod(LoginMethod loginMethod) {
@@ -51,6 +56,11 @@ public class AuthRecipeUserInfo {
         if (timeJoined > loginMethod.timeJoined) {
             this.timeJoined = loginMethod.timeJoined;
         }
+
+        Set<String> tenantIds = new HashSet<>();
+        tenantIds.addAll(Arrays.asList(loginMethod.tenantIds));
+        tenantIds.addAll(Arrays.asList(this.tenantIds));
+        this.tenantIds = tenantIds.toArray(new String[0]);
     }
 
     public RECIPE_ID getRecipeId() {
@@ -64,6 +74,7 @@ public class AuthRecipeUserInfo {
         }
         AuthRecipeUserInfo otherUser = (AuthRecipeUserInfo) other;
         return this.id.equals(otherUser.id) && this.isPrimaryUser == otherUser.isPrimaryUser
-                && this.timeJoined == otherUser.timeJoined && Arrays.equals(this.loginMethods, otherUser.loginMethods);
+                && this.timeJoined == otherUser.timeJoined && Arrays.equals(this.loginMethods, otherUser.loginMethods)
+                && Arrays.equals(this.tenantIds, otherUser.tenantIds);
     }
 }
