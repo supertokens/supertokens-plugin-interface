@@ -27,8 +27,9 @@ import java.util.Set;
 
 public class AuthRecipeUserInfo {
 
-    // this is not final, cause we modify this in certain places in place (like in UsersAPI.java)
-    public String id;
+    public final String id;
+
+    private String externalUserId = null;
 
     public final boolean isPrimaryUser;
 
@@ -37,6 +38,15 @@ public class AuthRecipeUserInfo {
     public String[] tenantIds;
 
     public long timeJoined;
+
+    public void setExternalUserId(String externalUserId) {
+        this.externalUserId = externalUserId;
+        for (LoginMethod loginMethod : this.loginMethods) {
+            if (loginMethod.recipeUserId.equals(this.id)) {
+                loginMethod.externalUserId = externalUserId;
+            }
+        }
+    }
 
     protected AuthRecipeUserInfo(String id, Boolean isPrimaryUser, LoginMethod loginMethods) {
         assert (isPrimaryUser != null);
@@ -96,6 +106,7 @@ public class AuthRecipeUserInfo {
     }
 
     public JsonObject toJson() {
+        // TODO: also take into account external user ID
         throw new RuntimeException("TODO: Needs to be implemented");
     }
 
@@ -108,7 +119,8 @@ public class AuthRecipeUserInfo {
         }
         LoginMethod loginMethod = loginMethods[0];
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("id", loginMethod.recipeUserId);
+        jsonObject.addProperty("id",
+                loginMethod.externalUserId == null ? loginMethod.recipeUserId : loginMethod.externalUserId);
         jsonObject.addProperty("timeJoined", loginMethod.timeJoined);
         JsonArray tenantIds = new JsonArray();
         for (String tenant : loginMethod.tenantIds) {

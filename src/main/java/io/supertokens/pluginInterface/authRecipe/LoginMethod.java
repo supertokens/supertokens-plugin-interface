@@ -26,6 +26,8 @@ public class LoginMethod {
 
     public final String recipeUserId;
 
+    public String externalUserId;
+
     public final RECIPE_ID recipeId;
 
     public final String email;
