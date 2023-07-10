@@ -35,12 +35,24 @@ public class AuthRecipeUserInfo {
 
     public long timeJoined;
 
-    public AuthRecipeUserInfo(String id, boolean isPrimaryUser, LoginMethod loginMethods) {
+    protected AuthRecipeUserInfo(String id, boolean isPrimaryUser, LoginMethod loginMethods) {
         this.id = id;
         this.isPrimaryUser = isPrimaryUser;
         this.loginMethods = new LoginMethod[]{loginMethods};
         this.timeJoined = loginMethods.timeJoined;
         this.tenantIds = loginMethods.tenantIds;
+    }
+
+    public static AuthRecipeUserInfo create(String id, boolean isPrimaryUser, LoginMethod loginMethods) {
+        if (loginMethods.recipeId == RECIPE_ID.EMAIL_PASSWORD) {
+            return new io.supertokens.pluginInterface.emailpassword.UserInfo(id, isPrimaryUser, loginMethods);
+        } else if (loginMethods.recipeId == RECIPE_ID.PASSWORDLESS) {
+            return new io.supertokens.pluginInterface.passwordless.UserInfo(id, isPrimaryUser, loginMethods);
+        } else if (loginMethods.recipeId == RECIPE_ID.THIRD_PARTY) {
+            return new io.supertokens.pluginInterface.thirdparty.UserInfo(id, isPrimaryUser, loginMethods);
+        } else {
+            throw new UnsupportedOperationException("Please search for bugs");
+        }
     }
 
     public void addLoginMethod(LoginMethod loginMethod) {

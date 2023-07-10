@@ -27,8 +27,8 @@ public class UserInfo extends AuthRecipeUserInfo {
     // using transient, we tell Gson not to include this when creating a JSON
     public transient final String passwordHash;
 
-    public UserInfo(String id, boolean verified, LoginMethod loginMethod) {
-        super(id, verified, loginMethod);
+    public UserInfo(String id, boolean isPrimaryUser, LoginMethod loginMethod) {
+        super(id, isPrimaryUser, loginMethod);
         this.email = loginMethod.email;
         this.passwordHash = loginMethod.passwordHash;
     }

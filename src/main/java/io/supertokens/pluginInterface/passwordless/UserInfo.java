@@ -24,8 +24,8 @@ public class UserInfo extends AuthRecipeUserInfo {
     public final String email;
     public final String phoneNumber;
 
-    public UserInfo(String id, boolean verified, LoginMethod loginMethod) {
-        super(id, verified, loginMethod);
+    public UserInfo(String id, boolean isPrimaryUser, LoginMethod loginMethod) {
+        super(id, isPrimaryUser, loginMethod);
         this.email = loginMethod.email;
         this.phoneNumber = loginMethod.phoneNumber;
     }
