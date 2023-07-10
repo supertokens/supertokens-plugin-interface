@@ -16,6 +16,9 @@
 
 package io.supertokens.pluginInterface.authRecipe;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import io.supertokens.pluginInterface.RECIPE_ID;
 
 import java.util.Arrays;
@@ -35,7 +38,8 @@ public class AuthRecipeUserInfo {
 
     public long timeJoined;
 
-    protected AuthRecipeUserInfo(String id, boolean isPrimaryUser, LoginMethod loginMethods) {
+    protected AuthRecipeUserInfo(String id, Boolean isPrimaryUser, LoginMethod loginMethods) {
+        assert (isPrimaryUser != null);
         this.id = id;
         this.isPrimaryUser = isPrimaryUser;
         this.loginMethods = new LoginMethod[]{loginMethods};
@@ -43,7 +47,8 @@ public class AuthRecipeUserInfo {
         this.tenantIds = loginMethods.tenantIds;
     }
 
-    public static AuthRecipeUserInfo create(String id, boolean isPrimaryUser, LoginMethod loginMethods) {
+    public static AuthRecipeUserInfo create(String id, Boolean isPrimaryUser, LoginMethod loginMethods) {
+        assert (isPrimaryUser != null);
         if (loginMethods.recipeId == RECIPE_ID.EMAIL_PASSWORD) {
             return new io.supertokens.pluginInterface.emailpassword.UserInfo(id, isPrimaryUser, loginMethods);
         } else if (loginMethods.recipeId == RECIPE_ID.PASSWORDLESS) {
@@ -88,5 +93,48 @@ public class AuthRecipeUserInfo {
         return this.id.equals(otherUser.id) && this.isPrimaryUser == otherUser.isPrimaryUser
                 && this.timeJoined == otherUser.timeJoined && Arrays.equals(this.loginMethods, otherUser.loginMethods)
                 && Arrays.equals(this.tenantIds, otherUser.tenantIds);
+    }
+
+    public JsonObject toJson() {
+        throw new RuntimeException("TODO: Needs to be implemented");
+    }
+
+    public JsonObject toJsonWithoutAccountLinking() {
+        // this is for older CDI versions.
+        if (this.loginMethods.length != 1) {
+            throw new IllegalStateException(
+                    "Please use a CDI version that is greater than the one in which account linking feature was " +
+                            "enabled.");
+        }
+        LoginMethod loginMethod = loginMethods[0];
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("id", loginMethod.recipeUserId);
+        jsonObject.addProperty("timeJoined", loginMethod.timeJoined);
+        JsonArray tenantIds = new JsonArray();
+        for (String tenant : loginMethod.tenantIds) {
+            tenantIds.add(new JsonPrimitive(tenant));
+        }
+        jsonObject.add("tenantIds", tenantIds);
+        if (loginMethod.recipeId == RECIPE_ID.EMAIL_PASSWORD) {
+            jsonObject.addProperty("email", loginMethod.email);
+        } else if (loginMethod.recipeId == RECIPE_ID.THIRD_PARTY) {
+            jsonObject.addProperty("email", loginMethod.email);
+            JsonObject thirdPartyJson = new JsonObject();
+            assert loginMethod.thirdParty != null;
+            thirdPartyJson.addProperty("id", loginMethod.thirdParty.id);
+            thirdPartyJson.addProperty("userId", loginMethod.thirdParty.userId);
+            jsonObject.add("thirdParty", thirdPartyJson);
+        } else if (loginMethod.recipeId == RECIPE_ID.PASSWORDLESS) {
+            if (loginMethod.email != null) {
+                jsonObject.addProperty("email", loginMethod.email);
+            }
+            if (loginMethod.phoneNumber != null) {
+                jsonObject.addProperty("phoneNumber", loginMethod.phoneNumber);
+            }
+        } else {
+            throw new UnsupportedOperationException("Please search for bugs");
+        }
+
+        return jsonObject;
     }
 }
