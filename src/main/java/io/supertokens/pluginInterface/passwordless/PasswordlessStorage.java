@@ -37,7 +37,8 @@ public interface PasswordlessStorage extends AuthRecipeStorage {
     void createCode(TenantIdentifier tenantIdentifier, PasswordlessCode code)
             throws StorageQueryException, UnknownDeviceIdHash, DuplicateCodeIdException, DuplicateLinkCodeHashException;
 
-    UserInfo createUser(TenantIdentifier tenantIdentifier, String id, @Nullable String email, @Nullable String phoneNumber, long timeJoined)
+    UserInfo createUser(TenantIdentifier tenantIdentifier, String id, @Nullable String email,
+                        @Nullable String phoneNumber, long timeJoined)
             throws StorageQueryException, DuplicateEmailException, DuplicatePhoneNumberException,
             DuplicateUserIdException, TenantOrAppNotFoundException;
 
@@ -60,8 +61,6 @@ public interface PasswordlessStorage extends AuthRecipeStorage {
 
     PasswordlessCode getCodeByLinkCodeHash(TenantIdentifier tenantIdentifier, String linkCode)
             throws StorageQueryException;
-
-    UserInfo getUserById(AppIdentifier appIdentifier, String userId) throws StorageQueryException;
 
     UserInfo getUserByEmail(TenantIdentifier tenantIdentifier, @Nonnull String email) throws StorageQueryException;
 

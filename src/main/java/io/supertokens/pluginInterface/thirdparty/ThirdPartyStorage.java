@@ -39,8 +39,6 @@ public interface ThirdPartyStorage extends AuthRecipeStorage {
     UserInfo getThirdPartyUserInfoUsingId(TenantIdentifier tenantIdentifier, String thirdPartyId,
                                           String thirdPartyUserId) throws StorageQueryException;
 
-    UserInfo getThirdPartyUserInfoUsingId(AppIdentifier appIdentifier, String userId) throws StorageQueryException;
-
     UserInfo[] getThirdPartyUsersByEmail(TenantIdentifier tenantIdentifier, @Nonnull String email)
             throws StorageQueryException;
 }
