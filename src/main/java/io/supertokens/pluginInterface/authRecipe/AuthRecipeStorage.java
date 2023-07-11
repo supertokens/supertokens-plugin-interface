@@ -46,4 +46,7 @@ public interface AuthRecipeStorage extends Storage {
     boolean doesUserIdExist(TenantIdentifier tenantIdentifierIdentifier, String userId) throws StorageQueryException;
 
     AuthRecipeUserInfo getPrimaryUserById(AppIdentifier appIdentifier, String userId) throws StorageQueryException;
+
+    AuthRecipeUserInfo[] listPrimaryUsersByEmail(TenantIdentifier tenantIdentifier, String email)
+            throws StorageQueryException;
 }
