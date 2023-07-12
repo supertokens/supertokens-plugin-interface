@@ -49,4 +49,7 @@ public interface AuthRecipeStorage extends Storage {
 
     AuthRecipeUserInfo[] listPrimaryUsersByEmail(TenantIdentifier tenantIdentifier, String email)
             throws StorageQueryException;
+
+    AuthRecipeUserInfo[] listPrimaryUsersByPhoneNumber(TenantIdentifier tenantIdentifier, String phoneNumber)
+            throws StorageQueryException;
 }
