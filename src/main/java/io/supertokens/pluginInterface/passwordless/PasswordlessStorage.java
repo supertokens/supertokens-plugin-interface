@@ -62,8 +62,6 @@ public interface PasswordlessStorage extends AuthRecipeStorage {
     PasswordlessCode getCodeByLinkCodeHash(TenantIdentifier tenantIdentifier, String linkCode)
             throws StorageQueryException;
 
-    UserInfo getUserByEmail(TenantIdentifier tenantIdentifier, @Nonnull String email) throws StorageQueryException;
-
     UserInfo getUserByPhoneNumber(TenantIdentifier tenantIdentifier, @Nonnull String phoneNumber)
             throws StorageQueryException;
 }
