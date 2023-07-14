@@ -25,8 +25,6 @@ import io.supertokens.pluginInterface.multitenancy.exceptions.TenantOrAppNotFoun
 import io.supertokens.pluginInterface.thirdparty.exception.DuplicateThirdPartyUserException;
 import io.supertokens.pluginInterface.thirdparty.exception.DuplicateUserIdException;
 
-import javax.annotation.Nonnull;
-
 public interface ThirdPartyStorage extends AuthRecipeStorage {
 
     UserInfo signUp(TenantIdentifier tenantIdentifier, String id, String email, LoginMethod.ThirdParty thirdParty,
@@ -35,7 +33,4 @@ public interface ThirdPartyStorage extends AuthRecipeStorage {
             TenantOrAppNotFoundException;
 
     void deleteThirdPartyUser(AppIdentifier appIdentifier, String userId) throws StorageQueryException;
-
-    UserInfo[] getThirdPartyUsersByEmail(TenantIdentifier tenantIdentifier, @Nonnull String email)
-            throws StorageQueryException;
 }
