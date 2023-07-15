@@ -18,6 +18,8 @@ package io.supertokens.pluginInterface.authRecipe;
 
 import io.supertokens.pluginInterface.RECIPE_ID;
 
+import java.util.Arrays;
+
 public class LoginMethod {
 
     public final boolean verified;
@@ -109,6 +111,11 @@ public class LoginMethod {
             ThirdParty otherThirdParty = (ThirdParty) other;
             return this.id.equals(otherThirdParty.id) && this.userId.equals(otherThirdParty.userId);
         }
+
+        @Override
+        public int hashCode() {
+            return (id + "|" + userId).hashCode();
+        }
     }
 
     @Override
@@ -124,5 +131,22 @@ public class LoginMethod {
                 && java.util.Objects.equals(this.passwordHash, otherLoginMethod.passwordHash)
                 && java.util.Objects.equals(this.thirdParty, otherLoginMethod.thirdParty)
                 && java.util.Arrays.equals(this.tenantIds, otherLoginMethod.tenantIds);
+    }
+
+    @Override
+    public int hashCode() {
+        // combine hash codes of all fields
+        // We multiply with 31 because it's a prime number.
+        int result = 1;
+        result = 31 * result + (verified ? 1 : 0);
+        result = 31 * result + (int) (timeJoined ^ (timeJoined >>> 32));
+        result = 31 * result + recipeUserId.hashCode();
+        result = 31 * result + recipeId.hashCode();
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (phoneNumber != null ? phoneNumber.hashCode() : 0);
+        result = 31 * result + Arrays.hashCode(tenantIds);
+        result = 31 * result + (passwordHash != null ? passwordHash.hashCode() : 0);
+        result = 31 * result + (thirdParty != null ? thirdParty.hashCode() : 0);
+        return result;
     }
 }

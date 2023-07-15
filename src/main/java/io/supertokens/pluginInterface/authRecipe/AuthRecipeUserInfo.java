@@ -105,6 +105,18 @@ public class AuthRecipeUserInfo {
                 && Arrays.equals(this.tenantIds, otherUser.tenantIds);
     }
 
+    @Override
+    public int hashCode() {
+        // combine hash codes of all fields
+        // We multiply with 31 because it's a prime number.
+        int hashCode = this.id.hashCode();
+        hashCode = 31 * hashCode + Boolean.hashCode(this.isPrimaryUser);
+        hashCode = 31 * hashCode + Long.hashCode(this.timeJoined);
+        hashCode = 31 * hashCode + Arrays.hashCode(this.loginMethods);
+        hashCode = 31 * hashCode + Arrays.hashCode(this.tenantIds);
+        return hashCode;
+    }
+
     public JsonObject toJson() {
         // TODO: also take into account external user ID
         throw new RuntimeException("TODO: Needs to be implemented");
