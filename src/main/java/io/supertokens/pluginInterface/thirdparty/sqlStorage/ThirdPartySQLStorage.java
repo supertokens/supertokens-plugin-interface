@@ -21,12 +21,11 @@ import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
 import io.supertokens.pluginInterface.sqlStorage.SQLStorage;
 import io.supertokens.pluginInterface.sqlStorage.TransactionConnection;
 import io.supertokens.pluginInterface.thirdparty.ThirdPartyStorage;
-import io.supertokens.pluginInterface.thirdparty.UserInfo;
 
 public interface ThirdPartySQLStorage extends ThirdPartyStorage, SQLStorage {
 
-    UserInfo getUserInfoUsingId_Transaction(AppIdentifier appIdentifier, TransactionConnection con,
-                                            String thirdPartyId, String thirdPartyUserId)
+    String getEmailUsingThirdPartyInfo_Transaction(AppIdentifier appIdentifier, TransactionConnection con,
+                                                   String thirdPartyId, String thirdPartyUserId)
             throws StorageQueryException;
 
     void updateUserEmail_Transaction(AppIdentifier appIdentifier, TransactionConnection con, String thirdPartyId,
