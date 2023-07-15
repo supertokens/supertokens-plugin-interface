@@ -22,7 +22,6 @@ import com.google.gson.JsonPrimitive;
 import io.supertokens.pluginInterface.RECIPE_ID;
 
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Set;
 
 public class AuthRecipeUserInfo {
@@ -35,7 +34,7 @@ public class AuthRecipeUserInfo {
 
     public LoginMethod[] loginMethods;
 
-    public String[] tenantIds;
+    public Set<String> tenantIds;
 
     public long timeJoined;
 
@@ -84,10 +83,7 @@ public class AuthRecipeUserInfo {
             this.timeJoined = loginMethod.timeJoined;
         }
 
-        Set<String> tenantIds = new HashSet<>();
-        tenantIds.addAll(Arrays.asList(loginMethod.tenantIds));
-        tenantIds.addAll(Arrays.asList(this.tenantIds));
-        this.tenantIds = tenantIds.toArray(new String[0]);
+        this.tenantIds.addAll(loginMethod.tenantIds);
     }
 
     public RECIPE_ID getRecipeId() {
@@ -102,7 +98,7 @@ public class AuthRecipeUserInfo {
         AuthRecipeUserInfo otherUser = (AuthRecipeUserInfo) other;
         return this.id.equals(otherUser.id) && this.isPrimaryUser == otherUser.isPrimaryUser
                 && this.timeJoined == otherUser.timeJoined && Arrays.equals(this.loginMethods, otherUser.loginMethods)
-                && Arrays.equals(this.tenantIds, otherUser.tenantIds);
+                && this.tenantIds.equals(otherUser.tenantIds);
     }
 
     @Override
@@ -113,7 +109,7 @@ public class AuthRecipeUserInfo {
         hashCode = 31 * hashCode + Boolean.hashCode(this.isPrimaryUser);
         hashCode = 31 * hashCode + Long.hashCode(this.timeJoined);
         hashCode = 31 * hashCode + Arrays.hashCode(this.loginMethods);
-        hashCode = 31 * hashCode + Arrays.hashCode(this.tenantIds);
+        hashCode = 31 * hashCode + this.tenantIds.hashCode();
         return hashCode;
     }
 

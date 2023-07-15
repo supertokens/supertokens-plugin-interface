@@ -18,7 +18,9 @@ package io.supertokens.pluginInterface.authRecipe;
 
 import io.supertokens.pluginInterface.RECIPE_ID;
 
-import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 public class LoginMethod {
 
@@ -38,7 +40,7 @@ public class LoginMethod {
 
     public final ThirdParty thirdParty;
 
-    public final String[] tenantIds;
+    public final Set<String> tenantIds;
 
     public transient final String passwordHash;
 
@@ -51,7 +53,8 @@ public class LoginMethod {
         this.email = email;
         this.phoneNumber = null;
         this.thirdParty = null;
-        this.tenantIds = tenantIds;
+        this.tenantIds = new HashSet<>();
+        Collections.addAll(this.tenantIds, tenantIds);
         this.passwordHash = passwordHash;
     }
 
@@ -63,7 +66,8 @@ public class LoginMethod {
         this.recipeId = RECIPE_ID.PASSWORDLESS;
         this.email = passwordlessInfo.email;
         this.phoneNumber = passwordlessInfo.phoneNumber;
-        this.tenantIds = tenantIds;
+        this.tenantIds = new HashSet<>();
+        Collections.addAll(this.tenantIds, tenantIds);
         this.thirdParty = null;
         this.passwordHash = null;
     }
@@ -75,7 +79,8 @@ public class LoginMethod {
         this.recipeUserId = recipeUserId;
         this.recipeId = RECIPE_ID.THIRD_PARTY;
         this.email = email;
-        this.tenantIds = tenantIds;
+        this.tenantIds = new HashSet<>();
+        Collections.addAll(this.tenantIds, tenantIds);
         this.thirdParty = thirdPartyInfo;
         this.phoneNumber = null;
         this.passwordHash = null;
@@ -130,7 +135,7 @@ public class LoginMethod {
                 && java.util.Objects.equals(this.phoneNumber, otherLoginMethod.phoneNumber)
                 && java.util.Objects.equals(this.passwordHash, otherLoginMethod.passwordHash)
                 && java.util.Objects.equals(this.thirdParty, otherLoginMethod.thirdParty)
-                && java.util.Arrays.equals(this.tenantIds, otherLoginMethod.tenantIds);
+                && this.tenantIds.equals(otherLoginMethod.tenantIds);
     }
 
     @Override
@@ -144,7 +149,7 @@ public class LoginMethod {
         result = 31 * result + recipeId.hashCode();
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (phoneNumber != null ? phoneNumber.hashCode() : 0);
-        result = 31 * result + Arrays.hashCode(tenantIds);
+        result = 31 * result + tenantIds.hashCode();
         result = 31 * result + (passwordHash != null ? passwordHash.hashCode() : 0);
         result = 31 * result + (thirdParty != null ? thirdParty.hashCode() : 0);
         return result;
