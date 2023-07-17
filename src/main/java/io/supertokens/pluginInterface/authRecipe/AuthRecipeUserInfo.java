@@ -56,14 +56,14 @@ public class AuthRecipeUserInfo {
         this.tenantIds = loginMethods.tenantIds;
     }
 
-    public static AuthRecipeUserInfo create(String id, Boolean isPrimaryUser, LoginMethod loginMethods) {
+    public static AuthRecipeUserInfo create(String id, Boolean isPrimaryUser, LoginMethod loginMethod) {
         assert (isPrimaryUser != null);
-        if (loginMethods.recipeId == RECIPE_ID.EMAIL_PASSWORD) {
-            return new io.supertokens.pluginInterface.emailpassword.UserInfo(id, isPrimaryUser, loginMethods);
-        } else if (loginMethods.recipeId == RECIPE_ID.PASSWORDLESS) {
-            return new io.supertokens.pluginInterface.passwordless.UserInfo(id, isPrimaryUser, loginMethods);
-        } else if (loginMethods.recipeId == RECIPE_ID.THIRD_PARTY) {
-            return new io.supertokens.pluginInterface.thirdparty.UserInfo(id, isPrimaryUser, loginMethods);
+        if (loginMethod.recipeId == RECIPE_ID.EMAIL_PASSWORD) {
+            return new io.supertokens.pluginInterface.emailpassword.UserInfo(id, isPrimaryUser, loginMethod);
+        } else if (loginMethod.recipeId == RECIPE_ID.PASSWORDLESS) {
+            return new io.supertokens.pluginInterface.passwordless.UserInfo(id, isPrimaryUser, loginMethod);
+        } else if (loginMethod.recipeId == RECIPE_ID.THIRD_PARTY) {
+            return new io.supertokens.pluginInterface.thirdparty.UserInfo(id, isPrimaryUser, loginMethod);
         } else {
             throw new UnsupportedOperationException("Please search for bugs");
         }
