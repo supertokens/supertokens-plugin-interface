@@ -30,7 +30,7 @@ public class AuthRecipeUserInfo {
 
     private String externalUserId = null;
 
-    public final boolean isPrimaryUser;
+    public boolean isPrimaryUser;
 
     public LoginMethod[] loginMethods;
 
