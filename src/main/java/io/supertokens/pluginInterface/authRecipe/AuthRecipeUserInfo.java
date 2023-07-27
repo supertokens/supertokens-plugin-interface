@@ -78,7 +78,14 @@ public class AuthRecipeUserInfo {
         LoginMethod[] newLoginMethods = new LoginMethod[this.loginMethods.length + 1];
         System.arraycopy(this.loginMethods, 0, newLoginMethods, 0, this.loginMethods.length);
         newLoginMethods[this.loginMethods.length] = loginMethod;
-        this.loginMethods = newLoginMethods;
+        this.loginMethods = Arrays.stream(newLoginMethods).sorted((o1, o2) -> {
+            if (o1.timeJoined < o2.timeJoined) {
+                return -1;
+            } else if (o1.timeJoined > o2.timeJoined) {
+                return 1;
+            }
+            return 0;
+        }).toArray(LoginMethod[]::new);
         if (timeJoined > loginMethod.timeJoined) {
             this.timeJoined = loginMethod.timeJoined;
         }
