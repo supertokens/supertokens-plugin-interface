@@ -56,4 +56,7 @@ public interface AuthRecipeSQLStorage extends AuthRecipeStorage, SQLStorage {
     void linkAccounts_Transaction(AppIdentifier appIdentifier, TransactionConnection con, String recipeUserId,
                                   String primaryUserId) throws StorageQueryException;
 
+    void unlinkAccounts_Transaction(AppIdentifier appIdentifier, TransactionConnection con, String recipeUserId)
+            throws StorageQueryException;
+
 }
