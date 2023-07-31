@@ -81,4 +81,8 @@ public interface PasswordlessSQLStorage extends PasswordlessStorage, SQLStorage 
                                            @Nonnull String userId,
                                            @Nullable String phoneNumber)
             throws StorageQueryException, UnknownUserIdException, DuplicatePhoneNumberException;
+
+    void deletePasswordlessUser_Transaction(TransactionConnection con, AppIdentifier appIdentifier, String userId,
+                                            boolean deleteUserIdMappingToo)
+            throws StorageQueryException;
 }

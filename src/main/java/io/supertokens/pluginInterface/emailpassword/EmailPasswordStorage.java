@@ -33,9 +33,6 @@ public interface EmailPasswordStorage extends AuthRecipeStorage {
             throws StorageQueryException, DuplicateUserIdException, DuplicateEmailException,
             TenantOrAppNotFoundException;
 
-    // this deletion of a user is app wide since the same user ID can be shared across tenants
-    void deleteEmailPasswordUser(AppIdentifier appIdentifier, String userId) throws StorageQueryException;
-
     // password reset stuff is app wide cause changing the password for a user affects all the tenants
     // across which it's shared.
     void addPasswordResetToken(AppIdentifier appIdentifier, PasswordResetTokenInfo passwordResetTokenInfo)

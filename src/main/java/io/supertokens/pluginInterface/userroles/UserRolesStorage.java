@@ -54,6 +54,4 @@ public interface UserRolesStorage extends NonAuthRecipeStorage {
 
     // delete all roles for the input userId
     int deleteAllRolesForUser(TenantIdentifier tenantIdentifier, String userId) throws StorageQueryException;
-
-    void deleteAllRolesForUser(AppIdentifier appIdentifier, String userId) throws StorageQueryException;
 }

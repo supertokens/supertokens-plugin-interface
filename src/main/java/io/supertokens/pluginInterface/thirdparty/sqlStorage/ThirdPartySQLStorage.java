@@ -31,4 +31,8 @@ public interface ThirdPartySQLStorage extends ThirdPartyStorage, SQLStorage {
     void updateUserEmail_Transaction(AppIdentifier appIdentifier, TransactionConnection con, String thirdPartyId,
                                      String thirdPartyUserId,
                                      String newEmail) throws StorageQueryException;
+
+    void deleteThirdPartyUser_Transaction(TransactionConnection con, AppIdentifier appIdentifier, String userId,
+                                          boolean deleteUserIdMappingToo)
+            throws StorageQueryException;
 }

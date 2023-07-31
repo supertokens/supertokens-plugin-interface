@@ -19,7 +19,6 @@ package io.supertokens.pluginInterface.thirdparty;
 import io.supertokens.pluginInterface.authRecipe.AuthRecipeStorage;
 import io.supertokens.pluginInterface.authRecipe.LoginMethod;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
-import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
 import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
 import io.supertokens.pluginInterface.multitenancy.exceptions.TenantOrAppNotFoundException;
 import io.supertokens.pluginInterface.thirdparty.exception.DuplicateThirdPartyUserException;
@@ -31,6 +30,4 @@ public interface ThirdPartyStorage extends AuthRecipeStorage {
                     long timeJoined)
             throws StorageQueryException, DuplicateUserIdException, DuplicateThirdPartyUserException,
             TenantOrAppNotFoundException;
-
-    void deleteThirdPartyUser(AppIdentifier appIdentifier, String userId) throws StorageQueryException;
 }

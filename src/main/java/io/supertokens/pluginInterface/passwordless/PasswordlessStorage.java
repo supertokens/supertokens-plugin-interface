@@ -20,7 +20,6 @@ import io.supertokens.pluginInterface.authRecipe.AuthRecipeStorage;
 import io.supertokens.pluginInterface.emailpassword.exceptions.DuplicateEmailException;
 import io.supertokens.pluginInterface.emailpassword.exceptions.DuplicateUserIdException;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
-import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
 import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
 import io.supertokens.pluginInterface.multitenancy.exceptions.TenantOrAppNotFoundException;
 import io.supertokens.pluginInterface.passwordless.exception.*;
@@ -41,8 +40,6 @@ public interface PasswordlessStorage extends AuthRecipeStorage {
                         @Nullable String phoneNumber, long timeJoined)
             throws StorageQueryException, DuplicateEmailException, DuplicatePhoneNumberException,
             DuplicateUserIdException, TenantOrAppNotFoundException;
-
-    void deletePasswordlessUser(AppIdentifier appIdentifier, String userId) throws StorageQueryException;
 
     PasswordlessDevice getDevice(TenantIdentifier tenantIdentifier, String deviceIdHash) throws StorageQueryException;
 

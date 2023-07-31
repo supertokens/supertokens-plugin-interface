@@ -31,4 +31,7 @@ public interface UserMetadataSQLStorage extends UserMetadataStorage, SQLStorage 
     int setUserMetadata_Transaction(AppIdentifier appIdentifier, TransactionConnection con, String userId,
                                     JsonObject metadata)
             throws StorageQueryException, TenantOrAppNotFoundException;
+
+    int deleteUserMetadata_Transaction(TransactionConnection con, AppIdentifier appIdentifier, String userId)
+            throws StorageQueryException;
 }
