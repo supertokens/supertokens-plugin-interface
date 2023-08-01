@@ -38,7 +38,10 @@ public class AuthRecipeUserInfo {
 
     public long timeJoined;
 
+    private boolean didCallSetExternalUserId = false;
+
     public void setExternalUserId(String externalUserId) {
+        didCallSetExternalUserId = true;
         this.externalUserId = externalUserId;
         for (LoginMethod loginMethod : this.loginMethods) {
             if (loginMethod.recipeUserId.equals(this.id)) {
@@ -121,11 +124,17 @@ public class AuthRecipeUserInfo {
     }
 
     public JsonObject toJson() {
+        if (!didCallSetExternalUserId) {
+            throw new RuntimeException("Found a bug: Did you forget to call setExternalUserId?");
+        }
         // TODO: also take into account external user ID
         throw new RuntimeException("TODO: Needs to be implemented");
     }
 
     public JsonObject toJsonWithoutAccountLinking() {
+        if (!didCallSetExternalUserId) {
+            throw new RuntimeException("Found a bug: Did you forget to call setExternalUserId?");
+        }
         // this is for older CDI versions.
         if (this.loginMethods.length != 1) {
             throw new IllegalStateException(
