@@ -22,6 +22,7 @@ import com.google.gson.JsonPrimitive;
 import io.supertokens.pluginInterface.RECIPE_ID;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 
 public class AuthRecipeUserInfo {
@@ -127,8 +128,72 @@ public class AuthRecipeUserInfo {
         if (!didCallSetExternalUserId) {
             throw new RuntimeException("Found a bug: Did you forget to call setExternalUserId?");
         }
-        // TODO: also take into account external user ID
-        throw new RuntimeException("TODO: Needs to be implemented");
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("id",
+                this.externalUserId == null ? this.id : this.externalUserId);
+        jsonObject.addProperty("isPrimaryUser", this.isPrimaryUser);
+        JsonArray tenantIds = new JsonArray();
+        for (String tenant : this.tenantIds) {
+            tenantIds.add(new JsonPrimitive(tenant));
+        }
+        jsonObject.add("tenantIds", tenantIds);
+        jsonObject.addProperty("timeJoined", this.timeJoined);
+
+        // now we add unique emails, phone numbers and third party across all login methods
+        Set<String> emails = new HashSet<>();
+        Set<String> phoneNumbers = new HashSet<>();
+        Set<LoginMethod.ThirdParty> thirdParty = new HashSet<>();
+        for (LoginMethod loginMethod : this.loginMethods) {
+            if (loginMethod.email != null) {
+                emails.add(loginMethod.email);
+            } else if (loginMethod.phoneNumber != null) {
+                phoneNumbers.add(loginMethod.phoneNumber);
+            } else if (loginMethod.thirdParty != null) {
+                thirdParty.add(loginMethod.thirdParty);
+            }
+        }
+        JsonArray emailsJson = new JsonArray();
+        for (String email : emails) {
+            emailsJson.add(new JsonPrimitive(email));
+        }
+        jsonObject.add("emails", emailsJson);
+        JsonArray phoneNumbersJson = new JsonArray();
+        for (String phoneNumber : phoneNumbers) {
+            phoneNumbersJson.add(new JsonPrimitive(phoneNumber));
+        }
+        jsonObject.add("phoneNumbers", phoneNumbersJson);
+        JsonArray thirdPartyJson = new JsonArray();
+        for (LoginMethod.ThirdParty tpInfo : thirdParty) {
+            JsonObject j = new JsonObject();
+            j.addProperty("id", tpInfo.id);
+            j.addProperty("userId", tpInfo.userId);
+            thirdPartyJson.add(j);
+        }
+        jsonObject.add("thirdParty", thirdPartyJson);
+
+        // now we add login methods..
+        JsonArray loginMethodsArr = new JsonArray();
+        for (LoginMethod lM : this.loginMethods) {
+            JsonObject lMJsonObject = new JsonObject();
+            lMJsonObject.addProperty("verified", lM.verified);
+            lMJsonObject.addProperty("timeJoined", lM.timeJoined);
+            lMJsonObject.addProperty("recipeId", lM.recipeId.toString());
+            if (lM.email != null) {
+                lMJsonObject.addProperty("email", lM.email);
+            }
+            if (lM.phoneNumber != null) {
+                lMJsonObject.addProperty("phoneNumber", lM.phoneNumber);
+            }
+            if (lM.thirdParty != null) {
+                JsonObject thirdPartyJsonObject = new JsonObject();
+                thirdPartyJsonObject.addProperty("id", lM.thirdParty.id);
+                thirdPartyJsonObject.addProperty("userId", lM.thirdParty.userId);
+                lMJsonObject.add("thirdParty", thirdPartyJsonObject);
+            }
+            loginMethodsArr.add(lMJsonObject);
+        }
+        jsonObject.add("loginMethods", loginMethodsArr);
+        return jsonObject;
     }
 
     public JsonObject toJsonWithoutAccountLinking() {
