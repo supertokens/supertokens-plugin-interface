@@ -175,6 +175,11 @@ public class AuthRecipeUserInfo {
         JsonArray loginMethodsArr = new JsonArray();
         for (LoginMethod lM : this.loginMethods) {
             JsonObject lMJsonObject = new JsonObject();
+            JsonArray lMTenantIds = new JsonArray();
+            for (String tenant : lM.tenantIds) {
+                lMTenantIds.add(new JsonPrimitive(tenant));
+            }
+            lMJsonObject.add("tenantIds", lMTenantIds);
             lMJsonObject.addProperty("recipeUserId", lM.externalUserId == null ? lM.recipeUserId : lM.externalUserId);
             lMJsonObject.addProperty("verified", lM.verified);
             lMJsonObject.addProperty("timeJoined", lM.timeJoined);
