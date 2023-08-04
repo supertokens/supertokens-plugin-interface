@@ -146,9 +146,11 @@ public class AuthRecipeUserInfo {
         for (LoginMethod loginMethod : this.loginMethods) {
             if (loginMethod.email != null) {
                 emails.add(loginMethod.email);
-            } else if (loginMethod.phoneNumber != null) {
+            }
+            if (loginMethod.phoneNumber != null) {
                 phoneNumbers.add(loginMethod.phoneNumber);
-            } else if (loginMethod.thirdParty != null) {
+            }
+            if (loginMethod.thirdParty != null) {
                 thirdParty.add(loginMethod.thirdParty);
             }
         }
