@@ -45,10 +45,6 @@ public interface EmailPasswordSQLStorage extends EmailPasswordStorage, SQLStorag
                                       String email)
             throws StorageQueryException, DuplicateEmailException;
 
-    boolean lockEmailPasswordTableUsingId_Transaction(AppIdentifier appIdentifier, TransactionConnection con,
-                                                      String userId)
-            throws StorageQueryException;
-
     // this deletion of a user is app wide since the same user ID can be shared across tenants
     void deleteEmailPasswordUser_Transaction(TransactionConnection con, AppIdentifier appIdentifier, String userId,
                                              boolean deleteUserIdMappingToo)
