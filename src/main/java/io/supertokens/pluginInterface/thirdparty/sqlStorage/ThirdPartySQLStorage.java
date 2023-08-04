@@ -24,10 +24,6 @@ import io.supertokens.pluginInterface.thirdparty.ThirdPartyStorage;
 
 public interface ThirdPartySQLStorage extends ThirdPartyStorage, SQLStorage {
 
-    String getEmailUsingThirdPartyInfo_Transaction(AppIdentifier appIdentifier, TransactionConnection con,
-                                                   String thirdPartyId, String thirdPartyUserId)
-            throws StorageQueryException;
-
     void updateUserEmail_Transaction(AppIdentifier appIdentifier, TransactionConnection con, String thirdPartyId,
                                      String thirdPartyUserId,
                                      String newEmail) throws StorageQueryException;
