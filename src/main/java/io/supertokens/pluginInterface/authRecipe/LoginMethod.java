@@ -93,10 +93,9 @@ public class LoginMethod {
         this.externalUserId = externalUserId;
     }
 
-    public String getUserId() {
+    public String getSupertokensOrExternalUserId() {
         // TODO enable this while implementing external user id for login methods
         // assert (this.didCallSetExternalUserId);
-
         if (this.externalUserId != null) {
             return this.externalUserId;
         }
@@ -104,7 +103,7 @@ public class LoginMethod {
     }
 
     // This function should never be called in the API layer unless there is a strong reason to do so
-    public String getRecipeUserIdNotToBeReturnedFromAPI() {
+    public String getSupertokensUserId() {
         return this.recipeUserId;
     }
 
