@@ -182,7 +182,7 @@ public class AuthRecipeUserInfo {
                 lMTenantIds.add(new JsonPrimitive(tenant));
             }
             lMJsonObject.add("tenantIds", lMTenantIds);
-            lMJsonObject.addProperty("recipeUserId", lM.externalUserId == null ? lM.recipeUserId : lM.externalUserId);
+            lMJsonObject.addProperty("recipeUserId", lM.getUserIdToBeReturnedInAPI());
             lMJsonObject.addProperty("verified", lM.verified);
             lMJsonObject.addProperty("timeJoined", lM.timeJoined);
             lMJsonObject.addProperty("recipeId", lM.recipeId.toString());
@@ -216,8 +216,7 @@ public class AuthRecipeUserInfo {
         }
         LoginMethod loginMethod = loginMethods[0];
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("id",
-                loginMethod.externalUserId == null ? loginMethod.recipeUserId : loginMethod.externalUserId);
+        jsonObject.addProperty("id", loginMethod.getUserIdToBeReturnedInAPI());
         jsonObject.addProperty("timeJoined", loginMethod.timeJoined);
         JsonArray tenantIds = new JsonArray();
         for (String tenant : loginMethod.tenantIds) {

@@ -44,6 +44,8 @@ public class LoginMethod {
 
     public transient final String passwordHash;
 
+    private boolean didCallSetExternalUserId = false;
+
     public LoginMethod(String recipeUserId, long timeJoined, boolean verified, String email,
                        String passwordHash, String[] tenantIds) {
         this.verified = verified;
@@ -84,6 +86,21 @@ public class LoginMethod {
         this.thirdParty = thirdPartyInfo;
         this.phoneNumber = null;
         this.passwordHash = null;
+    }
+
+    public void setExternalUserId(String externalUserId) {
+        didCallSetExternalUserId = true;
+        this.externalUserId = externalUserId;
+    }
+
+    public String getUserIdToBeReturnedInAPI() {
+        // TODO enable this while implementing external user id for login methods
+        // assert (this.didCallSetExternalUserId);
+
+        if (this.externalUserId != null) {
+            return this.externalUserId;
+        }
+        return this.recipeUserId;
     }
 
     public static class PasswordlessInfo {
