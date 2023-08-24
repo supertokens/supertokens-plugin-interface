@@ -28,9 +28,9 @@ public class LoginMethod {
 
     public final long timeJoined;
 
-    public final String recipeUserId;
+    private final String recipeUserId;
 
-    public String externalUserId;
+    private String externalUserId;
 
     public final RECIPE_ID recipeId;
 
@@ -93,13 +93,18 @@ public class LoginMethod {
         this.externalUserId = externalUserId;
     }
 
-    public String getUserIdToBeReturnedInAPI() {
+    public String getUserIdToBeReturnedFromAPI() {
         // TODO enable this while implementing external user id for login methods
         // assert (this.didCallSetExternalUserId);
 
         if (this.externalUserId != null) {
             return this.externalUserId;
         }
+        return this.recipeUserId;
+    }
+
+    // This function should never be called in the API layer unless there is a strong reason to do so
+    public String getRecipeUserIdNotToBeReturnedFromAPI() {
         return this.recipeUserId;
     }
 
