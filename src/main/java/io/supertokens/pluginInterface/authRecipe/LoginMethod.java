@@ -28,9 +28,9 @@ public class LoginMethod {
 
     public final long timeJoined;
 
-    public final String recipeUserId;
+    private final String recipeUserId;
 
-    public String externalUserId;
+    private String externalUserId;
 
     public final RECIPE_ID recipeId;
 
@@ -43,6 +43,8 @@ public class LoginMethod {
     public final Set<String> tenantIds;
 
     public transient final String passwordHash;
+
+    private boolean didCallSetExternalUserId = false;
 
     public LoginMethod(String recipeUserId, long timeJoined, boolean verified, String email,
                        String passwordHash, String[] tenantIds) {
@@ -84,6 +86,25 @@ public class LoginMethod {
         this.thirdParty = thirdPartyInfo;
         this.phoneNumber = null;
         this.passwordHash = null;
+    }
+
+    public void setExternalUserId(String externalUserId) {
+        didCallSetExternalUserId = true;
+        this.externalUserId = externalUserId;
+    }
+
+    public String getSupertokensOrExternalUserId() {
+        // TODO enable this while implementing external user id for login methods
+        // assert (this.didCallSetExternalUserId);
+        if (this.externalUserId != null) {
+            return this.externalUserId;
+        }
+        return this.recipeUserId;
+    }
+
+    // This function should never be called in the API layer unless there is a strong reason to do so
+    public String getSupertokensUserId() {
+        return this.recipeUserId;
     }
 
     public static class PasswordlessInfo {

@@ -27,7 +27,7 @@ import java.util.Set;
 
 public class AuthRecipeUserInfo {
 
-    public final String id;
+    private final String id;
 
     private String externalUserId = null;
 
@@ -45,10 +45,23 @@ public class AuthRecipeUserInfo {
         didCallSetExternalUserId = true;
         this.externalUserId = externalUserId;
         for (LoginMethod loginMethod : this.loginMethods) {
-            if (loginMethod.recipeUserId.equals(this.id)) {
-                loginMethod.externalUserId = externalUserId;
+            if (loginMethod.getSupertokensUserId().equals(this.id)) {
+                loginMethod.setExternalUserId(externalUserId);
             }
         }
+    }
+
+    public String getSupertokensOrExternalUserId() {
+        assert (this.didCallSetExternalUserId);
+
+        if (this.externalUserId != null) {
+            return this.externalUserId;
+        }
+        return this.id;
+    }
+
+    public String getSupertokensUserId() {
+        return this.id;
     }
 
     protected AuthRecipeUserInfo(String id, Boolean isPrimaryUser, LoginMethod loginMethods) {
@@ -129,8 +142,7 @@ public class AuthRecipeUserInfo {
             throw new RuntimeException("Found a bug: Did you forget to call setExternalUserId?");
         }
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("id",
-                this.externalUserId == null ? this.id : this.externalUserId);
+        jsonObject.addProperty("id", getSupertokensOrExternalUserId());
         jsonObject.addProperty("isPrimaryUser", this.isPrimaryUser);
         JsonArray tenantIds = new JsonArray();
         for (String tenant : this.tenantIds) {
@@ -182,7 +194,7 @@ public class AuthRecipeUserInfo {
                 lMTenantIds.add(new JsonPrimitive(tenant));
             }
             lMJsonObject.add("tenantIds", lMTenantIds);
-            lMJsonObject.addProperty("recipeUserId", lM.externalUserId == null ? lM.recipeUserId : lM.externalUserId);
+            lMJsonObject.addProperty("recipeUserId", lM.getSupertokensOrExternalUserId());
             lMJsonObject.addProperty("verified", lM.verified);
             lMJsonObject.addProperty("timeJoined", lM.timeJoined);
             lMJsonObject.addProperty("recipeId", lM.recipeId.toString());
@@ -216,8 +228,7 @@ public class AuthRecipeUserInfo {
         }
         LoginMethod loginMethod = loginMethods[0];
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("id",
-                loginMethod.externalUserId == null ? loginMethod.recipeUserId : loginMethod.externalUserId);
+        jsonObject.addProperty("id", loginMethod.getSupertokensOrExternalUserId());
         jsonObject.addProperty("timeJoined", loginMethod.timeJoined);
         JsonArray tenantIds = new JsonArray();
         for (String tenant : loginMethod.tenantIds) {
