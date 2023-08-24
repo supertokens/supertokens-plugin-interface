@@ -93,7 +93,7 @@ public class LoginMethod {
         this.externalUserId = externalUserId;
     }
 
-    public String getUserIdToBeReturnedFromAPI() {
+    public String getUserId() {
         // TODO enable this while implementing external user id for login methods
         // assert (this.didCallSetExternalUserId);
 

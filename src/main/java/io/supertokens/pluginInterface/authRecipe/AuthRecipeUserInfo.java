@@ -51,7 +51,7 @@ public class AuthRecipeUserInfo {
         }
     }
 
-    public String getUserIdToBeReturnedFromAPI() {
+    public String getUserId() {
         assert (this.didCallSetExternalUserId);
 
         if (this.externalUserId != null) {
@@ -142,7 +142,7 @@ public class AuthRecipeUserInfo {
             throw new RuntimeException("Found a bug: Did you forget to call setExternalUserId?");
         }
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("id", getUserIdToBeReturnedFromAPI());
+        jsonObject.addProperty("id", getUserId());
         jsonObject.addProperty("isPrimaryUser", this.isPrimaryUser);
         JsonArray tenantIds = new JsonArray();
         for (String tenant : this.tenantIds) {
@@ -194,7 +194,7 @@ public class AuthRecipeUserInfo {
                 lMTenantIds.add(new JsonPrimitive(tenant));
             }
             lMJsonObject.add("tenantIds", lMTenantIds);
-            lMJsonObject.addProperty("recipeUserId", lM.getUserIdToBeReturnedFromAPI());
+            lMJsonObject.addProperty("recipeUserId", lM.getUserId());
             lMJsonObject.addProperty("verified", lM.verified);
             lMJsonObject.addProperty("timeJoined", lM.timeJoined);
             lMJsonObject.addProperty("recipeId", lM.recipeId.toString());
@@ -228,7 +228,7 @@ public class AuthRecipeUserInfo {
         }
         LoginMethod loginMethod = loginMethods[0];
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("id", loginMethod.getUserIdToBeReturnedFromAPI());
+        jsonObject.addProperty("id", loginMethod.getUserId());
         jsonObject.addProperty("timeJoined", loginMethod.timeJoined);
         JsonArray tenantIds = new JsonArray();
         for (String tenant : loginMethod.tenantIds) {
