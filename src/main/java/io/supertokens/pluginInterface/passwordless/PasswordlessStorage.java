@@ -17,6 +17,7 @@
 package io.supertokens.pluginInterface.passwordless;
 
 import io.supertokens.pluginInterface.authRecipe.AuthRecipeStorage;
+import io.supertokens.pluginInterface.authRecipe.AuthRecipeUserInfo;
 import io.supertokens.pluginInterface.emailpassword.exceptions.DuplicateEmailException;
 import io.supertokens.pluginInterface.emailpassword.exceptions.DuplicateUserIdException;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
@@ -36,8 +37,8 @@ public interface PasswordlessStorage extends AuthRecipeStorage {
     void createCode(TenantIdentifier tenantIdentifier, PasswordlessCode code)
             throws StorageQueryException, UnknownDeviceIdHash, DuplicateCodeIdException, DuplicateLinkCodeHashException;
 
-    UserInfo createUser(TenantIdentifier tenantIdentifier, String id, @Nullable String email,
-                        @Nullable String phoneNumber, long timeJoined)
+    AuthRecipeUserInfo createUser(TenantIdentifier tenantIdentifier, String id, @Nullable String email,
+                                  @Nullable String phoneNumber, long timeJoined)
             throws StorageQueryException, DuplicateEmailException, DuplicatePhoneNumberException,
             DuplicateUserIdException, TenantOrAppNotFoundException;
 

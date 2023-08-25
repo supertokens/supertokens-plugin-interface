@@ -17,6 +17,7 @@
 package io.supertokens.pluginInterface.thirdparty;
 
 import io.supertokens.pluginInterface.authRecipe.AuthRecipeStorage;
+import io.supertokens.pluginInterface.authRecipe.AuthRecipeUserInfo;
 import io.supertokens.pluginInterface.authRecipe.LoginMethod;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
@@ -26,8 +27,8 @@ import io.supertokens.pluginInterface.thirdparty.exception.DuplicateUserIdExcept
 
 public interface ThirdPartyStorage extends AuthRecipeStorage {
 
-    UserInfo signUp(TenantIdentifier tenantIdentifier, String id, String email, LoginMethod.ThirdParty thirdParty,
-                    long timeJoined)
+    AuthRecipeUserInfo signUp(TenantIdentifier tenantIdentifier, String id, String email, LoginMethod.ThirdParty thirdParty,
+                              long timeJoined)
             throws StorageQueryException, DuplicateUserIdException, DuplicateThirdPartyUserException,
             TenantOrAppNotFoundException;
 }

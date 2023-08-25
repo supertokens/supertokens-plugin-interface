@@ -75,15 +75,7 @@ public class AuthRecipeUserInfo {
 
     public static AuthRecipeUserInfo create(String id, Boolean isPrimaryUser, LoginMethod loginMethod) {
         assert (isPrimaryUser != null);
-        if (loginMethod.recipeId == RECIPE_ID.EMAIL_PASSWORD) {
-            return new io.supertokens.pluginInterface.emailpassword.UserInfo(id, isPrimaryUser, loginMethod);
-        } else if (loginMethod.recipeId == RECIPE_ID.PASSWORDLESS) {
-            return new io.supertokens.pluginInterface.passwordless.UserInfo(id, isPrimaryUser, loginMethod);
-        } else if (loginMethod.recipeId == RECIPE_ID.THIRD_PARTY) {
-            return new io.supertokens.pluginInterface.thirdparty.UserInfo(id, isPrimaryUser, loginMethod);
-        } else {
-            throw new UnsupportedOperationException("Please search for bugs");
-        }
+        return new AuthRecipeUserInfo(id, isPrimaryUser, loginMethod);
     }
 
     public void addLoginMethod(LoginMethod loginMethod) {
