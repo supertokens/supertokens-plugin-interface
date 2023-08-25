@@ -102,10 +102,6 @@ public class AuthRecipeUserInfo {
         this.tenantIds.addAll(loginMethod.tenantIds);
     }
 
-    public RECIPE_ID getRecipeId() {
-        throw new UnsupportedOperationException("Please search for bugs");
-    }
-
     @Override
     public boolean equals(Object other) {
         if (!(other instanceof AuthRecipeUserInfo)) {
