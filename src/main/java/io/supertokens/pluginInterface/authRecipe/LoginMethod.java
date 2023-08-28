@@ -24,7 +24,7 @@ import java.util.Set;
 
 public class LoginMethod {
 
-    public final boolean verified;
+    public boolean verified;
 
     public final long timeJoined;
 
@@ -91,6 +91,10 @@ public class LoginMethod {
     public void setExternalUserId(String externalUserId) {
         didCallSetExternalUserId = true;
         this.externalUserId = externalUserId;
+    }
+
+    public void setVerified() {
+        this.verified = true;
     }
 
     public String getSupertokensOrExternalUserId() {
