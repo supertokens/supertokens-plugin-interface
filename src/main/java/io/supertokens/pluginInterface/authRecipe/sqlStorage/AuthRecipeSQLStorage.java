@@ -20,7 +20,6 @@ import io.supertokens.pluginInterface.authRecipe.AuthRecipeStorage;
 import io.supertokens.pluginInterface.authRecipe.AuthRecipeUserInfo;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
-import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
 import io.supertokens.pluginInterface.sqlStorage.SQLStorage;
 import io.supertokens.pluginInterface.sqlStorage.TransactionConnection;
 
@@ -34,20 +33,20 @@ public interface AuthRecipeSQLStorage extends AuthRecipeStorage, SQLStorage {
     // - emailpassword table
     // - thirdparty table
     // - passwordless table
-    AuthRecipeUserInfo[] listPrimaryUsersByEmail_Transaction(TenantIdentifier tenantIdentifier,
+    AuthRecipeUserInfo[] listPrimaryUsersByEmail_Transaction(AppIdentifier appIdentifier,
                                                              TransactionConnection con,
                                                              String email)
             throws StorageQueryException;
 
     // locks only passwordless table
-    AuthRecipeUserInfo[] listPrimaryUsersByPhoneNumber_Transaction(TenantIdentifier tenantIdentifier,
+    AuthRecipeUserInfo[] listPrimaryUsersByPhoneNumber_Transaction(AppIdentifier appIdentifier,
                                                                    TransactionConnection con, String phoneNumber)
             throws StorageQueryException;
 
     // locks on thirdparty table
-    AuthRecipeUserInfo getPrimaryUsersByThirdPartyInfo_Transaction(TenantIdentifier tenantIdentifier,
-                                                                   TransactionConnection con, String thirdPartyId,
-                                                                   String thirdPartyUserId)
+    AuthRecipeUserInfo[] listPrimaryUsersByThirdPartyInfo_Transaction(AppIdentifier appIdentifier,
+                                                                      TransactionConnection con, String thirdPartyId,
+                                                                      String thirdPartyUserId)
             throws StorageQueryException;
 
     void makePrimaryUser_Transaction(AppIdentifier appIdentifier, TransactionConnection con, String userId)
