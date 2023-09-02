@@ -55,6 +55,9 @@ public interface AuthRecipeStorage extends Storage {
     AuthRecipeUserInfo[] listPrimaryUsersByPhoneNumber(TenantIdentifier tenantIdentifier, String phoneNumber)
             throws StorageQueryException;
 
+    AuthRecipeUserInfo[] listPrimaryUsersByThirdPartyInfo(AppIdentifier appIdentifier, String thirdPartyId, String thirdPartyUserId)
+            throws StorageQueryException;
+
     AuthRecipeUserInfo getPrimaryUserByThirdPartyInfo(TenantIdentifier tenantIdentifier, String thirdPartyId,
                                                       String thirdPartyUserId) throws StorageQueryException;
 }
