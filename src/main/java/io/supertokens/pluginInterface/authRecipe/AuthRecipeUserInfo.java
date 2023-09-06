@@ -21,9 +21,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import io.supertokens.pluginInterface.RECIPE_ID;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class AuthRecipeUserInfo {
 
@@ -70,7 +68,8 @@ public class AuthRecipeUserInfo {
         this.isPrimaryUser = isPrimaryUser;
         this.loginMethods = new LoginMethod[]{loginMethods};
         this.timeJoined = loginMethods.timeJoined;
-        this.tenantIds = loginMethods.tenantIds;
+        this.tenantIds = new HashSet<>();
+        this.tenantIds.addAll(loginMethods.tenantIds);
     }
 
     public static AuthRecipeUserInfo create(String id, Boolean isPrimaryUser, LoginMethod loginMethod) {
