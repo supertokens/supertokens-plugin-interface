@@ -60,4 +60,8 @@ public interface AuthRecipeStorage extends Storage {
 
     AuthRecipeUserInfo getPrimaryUserByThirdPartyInfo(TenantIdentifier tenantIdentifier, String thirdPartyId,
                                                       String thirdPartyUserId) throws StorageQueryException;
+
+    boolean checkIfUsesAccountLinking(AppIdentifier appIdentifier) throws StorageQueryException;
+
+    int getUsersCountWithMoreThanOneLoginMethod(AppIdentifier appIdentifier) throws StorageQueryException;
 }

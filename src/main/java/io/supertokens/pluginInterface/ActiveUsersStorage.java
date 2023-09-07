@@ -20,4 +20,6 @@ public interface ActiveUsersStorage extends NonAuthRecipeStorage {
 
     void deleteUserActive_Transaction(TransactionConnection con, AppIdentifier appIdentifier, String userId)
             throws StorageQueryException;
+
+    int countUsersThatHaveMoreThanOneLoginMethodAndActiveSince(AppIdentifier appIdentifier, long sinceTime) throws StorageQueryException;
 }
