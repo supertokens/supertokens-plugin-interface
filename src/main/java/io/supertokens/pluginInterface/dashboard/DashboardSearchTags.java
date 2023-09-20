@@ -1,17 +1,18 @@
 package io.supertokens.pluginInterface.dashboard;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.Nullable;
 
 public class DashboardSearchTags {
 
-    public ArrayList<String> emails;
-    public ArrayList<String> phoneNumbers;
-    public ArrayList<String> providers;
+    public List<String> emails;
+    public List<String> phoneNumbers;
+    public List<String> providers;
 
-    public DashboardSearchTags(@Nullable ArrayList<String> emails, @Nullable ArrayList<String> phones,
-            @Nullable ArrayList<String> providers) {
+    public DashboardSearchTags(@Nullable List<String> emails, @Nullable List<String> phones,
+            @Nullable List<String> providers) {
         this.emails = emails;
         this.phoneNumbers = phones;
         this.providers = providers;
@@ -19,14 +20,14 @@ public class DashboardSearchTags {
 
     public boolean shouldEmailPasswordTableBeSearched() {
 
-        ArrayList<SUPPORTED_SEARCH_TAGS> nonNullSearchTags = getNonNullSearchFields();
+        List<SUPPORTED_SEARCH_TAGS> nonNullSearchTags = getNonNullSearchFields();
         return nonNullSearchTags.contains(SUPPORTED_SEARCH_TAGS.EMAIL) && nonNullSearchTags.size() == 1;
 
     }
 
     public boolean shouldThirdPartyTableBeSearched() {
         
-        ArrayList<SUPPORTED_SEARCH_TAGS> nonNullSearchTags = getNonNullSearchFields();
+        List<SUPPORTED_SEARCH_TAGS> nonNullSearchTags = getNonNullSearchFields();
         if(nonNullSearchTags.contains(SUPPORTED_SEARCH_TAGS.EMAIL) && nonNullSearchTags.contains(SUPPORTED_SEARCH_TAGS.PROVIDER)){
             return nonNullSearchTags.size() == 2;
         }
@@ -39,7 +40,7 @@ public class DashboardSearchTags {
     }
 
     public boolean shouldPasswordlessTableBeSearched() {
-        ArrayList<SUPPORTED_SEARCH_TAGS> nonNullSearchTags = getNonNullSearchFields();
+        List<SUPPORTED_SEARCH_TAGS> nonNullSearchTags = getNonNullSearchFields();
         if(nonNullSearchTags.contains(SUPPORTED_SEARCH_TAGS.EMAIL) && nonNullSearchTags.contains(SUPPORTED_SEARCH_TAGS.PHONE)){
             return nonNullSearchTags.size() == 2;
         }
@@ -51,8 +52,8 @@ public class DashboardSearchTags {
         return false;
     }
 
-    private ArrayList<SUPPORTED_SEARCH_TAGS> getNonNullSearchFields() {
-        ArrayList<SUPPORTED_SEARCH_TAGS> nonNullSearchTags = new ArrayList<>();
+    private List<SUPPORTED_SEARCH_TAGS> getNonNullSearchFields() {
+        List<SUPPORTED_SEARCH_TAGS> nonNullSearchTags = new ArrayList<>();
 
         if (this.emails != null) {
             nonNullSearchTags.add(SUPPORTED_SEARCH_TAGS.EMAIL);
