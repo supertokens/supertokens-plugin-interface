@@ -52,10 +52,6 @@ public interface MultitenancyStorage extends Storage {
 
     TenantConfig[] getAllTenants() throws StorageQueryException;
 
-    boolean addUserIdToTenant(TenantIdentifier tenantIdentifier, String userId) throws TenantOrAppNotFoundException,
-            UnknownUserIdException, StorageQueryException, DuplicateEmailException, DuplicateThirdPartyUserException,
-            DuplicatePhoneNumberException;
-
     boolean removeUserIdFromTenant(TenantIdentifier tenantIdentifier, String userId)
             throws StorageQueryException;
 }

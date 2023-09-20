@@ -31,9 +31,8 @@ public interface EmailVerificationStorage extends NonAuthRecipeStorage {
     EmailVerificationTokenInfo getEmailVerificationTokenInfo(TenantIdentifier tenantIdentifier, String token)
             throws StorageQueryException;
 
-    void deleteEmailVerificationUserInfo(AppIdentifier appIdentifier, String userId) throws StorageQueryException;
-
-    boolean deleteEmailVerificationUserInfo(TenantIdentifier tenantIdentifier, String userId) throws StorageQueryException;
+    boolean deleteEmailVerificationUserInfo(TenantIdentifier tenantIdentifier, String userId)
+            throws StorageQueryException;
 
     void revokeAllTokens(TenantIdentifier tenantIdentifier, String userId, String email) throws StorageQueryException;
 
@@ -41,7 +40,8 @@ public interface EmailVerificationStorage extends NonAuthRecipeStorage {
 
     void deleteExpiredEmailVerificationTokens() throws StorageQueryException;
 
-    EmailVerificationTokenInfo[] getAllEmailVerificationTokenInfoForUser(TenantIdentifier tenantIdentifier, String userId,
+    EmailVerificationTokenInfo[] getAllEmailVerificationTokenInfoForUser(TenantIdentifier tenantIdentifier,
+                                                                         String userId,
                                                                          String email)
             throws StorageQueryException;
 

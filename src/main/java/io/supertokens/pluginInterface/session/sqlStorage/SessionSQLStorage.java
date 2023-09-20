@@ -55,4 +55,7 @@ public interface SessionSQLStorage extends SessionStorage, SQLStorage {
     void updateSessionInfo_Transaction(TenantIdentifier tenantIdentifier, TransactionConnection con,
                                        String sessionHandle, String refreshTokenHash2,
                                        long expiry) throws StorageQueryException;
+
+    void deleteSessionsOfUser_Transaction(TransactionConnection con, AppIdentifier appIdentifier, String userId)
+            throws StorageQueryException;
 }

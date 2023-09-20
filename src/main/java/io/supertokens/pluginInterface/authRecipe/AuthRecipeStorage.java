@@ -44,4 +44,24 @@ public interface AuthRecipeStorage extends Storage {
     boolean doesUserIdExist(AppIdentifier appIdentifier, String userId) throws StorageQueryException;
 
     boolean doesUserIdExist(TenantIdentifier tenantIdentifierIdentifier, String userId) throws StorageQueryException;
+
+    AuthRecipeUserInfo getPrimaryUserById(AppIdentifier appIdentifier, String userId) throws StorageQueryException;
+
+    String getPrimaryUserIdStrForUserId(AppIdentifier appIdentifier, String userId) throws StorageQueryException;
+
+    AuthRecipeUserInfo[] listPrimaryUsersByEmail(TenantIdentifier tenantIdentifier, String email)
+            throws StorageQueryException;
+
+    AuthRecipeUserInfo[] listPrimaryUsersByPhoneNumber(TenantIdentifier tenantIdentifier, String phoneNumber)
+            throws StorageQueryException;
+
+    AuthRecipeUserInfo[] listPrimaryUsersByThirdPartyInfo(AppIdentifier appIdentifier, String thirdPartyId, String thirdPartyUserId)
+            throws StorageQueryException;
+
+    AuthRecipeUserInfo getPrimaryUserByThirdPartyInfo(TenantIdentifier tenantIdentifier, String thirdPartyId,
+                                                      String thirdPartyUserId) throws StorageQueryException;
+
+    boolean checkIfUsesAccountLinking(AppIdentifier appIdentifier) throws StorageQueryException;
+
+    int getUsersCountWithMoreThanOneLoginMethod(AppIdentifier appIdentifier) throws StorageQueryException;
 }
