@@ -18,7 +18,6 @@ package io.supertokens.pluginInterface.emailpassword.sqlStorage;
 
 import io.supertokens.pluginInterface.emailpassword.EmailPasswordStorage;
 import io.supertokens.pluginInterface.emailpassword.PasswordResetTokenInfo;
-import io.supertokens.pluginInterface.emailpassword.UserInfo;
 import io.supertokens.pluginInterface.emailpassword.exceptions.DuplicateEmailException;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
@@ -46,6 +45,8 @@ public interface EmailPasswordSQLStorage extends EmailPasswordStorage, SQLStorag
                                       String email)
             throws StorageQueryException, DuplicateEmailException;
 
-    UserInfo getUserInfoUsingId_Transaction(AppIdentifier appIdentifier, TransactionConnection con, String userId)
+    // this deletion of a user is app wide since the same user ID can be shared across tenants
+    void deleteEmailPasswordUser_Transaction(TransactionConnection con, AppIdentifier appIdentifier, String userId,
+                                             boolean deleteUserIdMappingToo)
             throws StorageQueryException;
 }

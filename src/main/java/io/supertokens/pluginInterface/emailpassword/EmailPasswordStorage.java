@@ -17,6 +17,7 @@
 package io.supertokens.pluginInterface.emailpassword;
 
 import io.supertokens.pluginInterface.authRecipe.AuthRecipeStorage;
+import io.supertokens.pluginInterface.authRecipe.AuthRecipeUserInfo;
 import io.supertokens.pluginInterface.emailpassword.exceptions.DuplicateEmailException;
 import io.supertokens.pluginInterface.emailpassword.exceptions.DuplicatePasswordResetTokenException;
 import io.supertokens.pluginInterface.emailpassword.exceptions.DuplicateUserIdException;
@@ -29,18 +30,9 @@ import io.supertokens.pluginInterface.multitenancy.exceptions.TenantOrAppNotFoun
 public interface EmailPasswordStorage extends AuthRecipeStorage {
 
     // we pass tenantIdentifier here cause this also adds to the userId <-> tenantId mapping
-    UserInfo signUp(TenantIdentifier tenantIdentifier, String id, String email, String passwordHash, long timeJoined)
+    AuthRecipeUserInfo signUp(TenantIdentifier tenantIdentifier, String id, String email, String passwordHash, long timeJoined)
             throws StorageQueryException, DuplicateUserIdException, DuplicateEmailException,
             TenantOrAppNotFoundException;
-
-    // this deletion of a user is app wide since the same user ID can be shared across tenants
-    void deleteEmailPasswordUser(AppIdentifier appIdentifier, String userId) throws StorageQueryException;
-    
-    UserInfo getUserInfoUsingId(AppIdentifier appIdentifier, String id) throws StorageQueryException;
-
-    // Here we pass in TenantIdentifier cause the same email can be shared across tenants, but yield different
-    // user IDs
-    UserInfo getUserInfoUsingEmail(TenantIdentifier tenantIdentifier, String email) throws StorageQueryException;
 
     // password reset stuff is app wide cause changing the password for a user affects all the tenants
     // across which it's shared.

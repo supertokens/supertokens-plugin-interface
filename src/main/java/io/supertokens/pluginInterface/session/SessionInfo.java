@@ -22,16 +22,19 @@ public class SessionInfo {
     transient public String refreshTokenHash2;
     public String sessionHandle;
     public String userId;
+    public String recipeUserId;
     public JsonObject userDataInDatabase;
     public long expiry;
     public JsonObject userDataInJWT;
     public long timeCreated;
     public transient boolean useStaticKey;
 
-    public SessionInfo(String sessionHandle, String userId, String refreshTokenHash2, JsonObject userDataInDatabase,
-            long expiry, JsonObject userDataInJWT, long timeCreated, boolean useStaticKey) {
+    public SessionInfo(String sessionHandle, String userId, String recipeUserId, String refreshTokenHash2,
+                       JsonObject userDataInDatabase,
+                       long expiry, JsonObject userDataInJWT, long timeCreated, boolean useStaticKey) {
         this.sessionHandle = sessionHandle;
-        this.userId = userId;
+        this.userId = userId == null ? recipeUserId : userId;
+        this.recipeUserId = recipeUserId;
         this.refreshTokenHash2 = refreshTokenHash2;
         this.userDataInDatabase = userDataInDatabase;
         this.expiry = expiry;

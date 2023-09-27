@@ -24,9 +24,12 @@ public class PasswordResetTokenInfo {
 
     public final long tokenExpiry;
 
-    public PasswordResetTokenInfo(String userId, String token, long tokenExpiry) {
+    public final String email;
+
+    public PasswordResetTokenInfo(String userId, String token, long tokenExpiry, String email) {
         this.userId = userId;
         this.token = token;
         this.tokenExpiry = tokenExpiry;
+        this.email = email;
     }
 }
