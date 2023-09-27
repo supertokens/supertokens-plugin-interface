@@ -89,7 +89,7 @@ public class TenantConfig {
         return tenantIdentifier.hashCode();
     }
 
-    public JsonObject toJson(boolean shouldProtectDbConfig, Storage storage) {
+    public JsonObject toJson(boolean shouldProtectDbConfig, Storage storage, String[] protectedCoreConfigs) {
         Gson gson = new Gson();
         JsonObject tenantConfigObject = gson.toJsonTree(this).getAsJsonObject();
         tenantConfigObject.addProperty("tenantId", this.tenantIdentifier.getTenantId());
@@ -97,6 +97,12 @@ public class TenantConfig {
         if (shouldProtectDbConfig) {
             String[] protectedConfigs = storage.getProtectedConfigsFromSuperTokensSaaSUsers();
             for (String config : protectedConfigs) {
+                if (tenantConfigObject.get("coreConfig").getAsJsonObject().has(config)) {
+                    tenantConfigObject.get("coreConfig").getAsJsonObject().remove(config);
+                }
+            }
+
+            for (String config : protectedCoreConfigs) {
                 if (tenantConfigObject.get("coreConfig").getAsJsonObject().has(config)) {
                     tenantConfigObject.get("coreConfig").getAsJsonObject().remove(config);
                 }

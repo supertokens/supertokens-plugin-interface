@@ -17,10 +17,10 @@
 package io.supertokens.pluginInterface.passwordless;
 
 import io.supertokens.pluginInterface.authRecipe.AuthRecipeStorage;
+import io.supertokens.pluginInterface.authRecipe.AuthRecipeUserInfo;
 import io.supertokens.pluginInterface.emailpassword.exceptions.DuplicateEmailException;
 import io.supertokens.pluginInterface.emailpassword.exceptions.DuplicateUserIdException;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
-import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
 import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
 import io.supertokens.pluginInterface.multitenancy.exceptions.TenantOrAppNotFoundException;
 import io.supertokens.pluginInterface.passwordless.exception.*;
@@ -37,11 +37,10 @@ public interface PasswordlessStorage extends AuthRecipeStorage {
     void createCode(TenantIdentifier tenantIdentifier, PasswordlessCode code)
             throws StorageQueryException, UnknownDeviceIdHash, DuplicateCodeIdException, DuplicateLinkCodeHashException;
 
-    UserInfo createUser(TenantIdentifier tenantIdentifier, String id, @Nullable String email, @Nullable String phoneNumber, long timeJoined)
+    AuthRecipeUserInfo createUser(TenantIdentifier tenantIdentifier, String id, @Nullable String email,
+                                  @Nullable String phoneNumber, long timeJoined)
             throws StorageQueryException, DuplicateEmailException, DuplicatePhoneNumberException,
             DuplicateUserIdException, TenantOrAppNotFoundException;
-
-    void deletePasswordlessUser(AppIdentifier appIdentifier, String userId) throws StorageQueryException;
 
     PasswordlessDevice getDevice(TenantIdentifier tenantIdentifier, String deviceIdHash) throws StorageQueryException;
 
@@ -59,12 +58,5 @@ public interface PasswordlessStorage extends AuthRecipeStorage {
     PasswordlessCode getCode(TenantIdentifier tenantIdentifier, String codeId) throws StorageQueryException;
 
     PasswordlessCode getCodeByLinkCodeHash(TenantIdentifier tenantIdentifier, String linkCode)
-            throws StorageQueryException;
-
-    UserInfo getUserById(AppIdentifier appIdentifier, String userId) throws StorageQueryException;
-
-    UserInfo getUserByEmail(TenantIdentifier tenantIdentifier, @Nonnull String email) throws StorageQueryException;
-
-    UserInfo getUserByPhoneNumber(TenantIdentifier tenantIdentifier, @Nonnull String phoneNumber)
             throws StorageQueryException;
 }

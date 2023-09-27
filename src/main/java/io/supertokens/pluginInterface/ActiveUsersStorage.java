@@ -3,6 +3,7 @@ package io.supertokens.pluginInterface;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
 import io.supertokens.pluginInterface.nonAuthRecipe.NonAuthRecipeStorage;
+import io.supertokens.pluginInterface.sqlStorage.TransactionConnection;
 
 public interface ActiveUsersStorage extends NonAuthRecipeStorage {
     /* Update the last active time of a user to now */
@@ -24,5 +25,8 @@ public interface ActiveUsersStorage extends NonAuthRecipeStorage {
     int countUsersEnabledMfaAndActiveSince(AppIdentifier appIdentifier, long time) throws StorageQueryException;
 
     /* Delete a user from active users table */
-    void deleteUserActive(AppIdentifier appIdentifier, String userId) throws StorageQueryException;
+    void deleteUserActive_Transaction(TransactionConnection con, AppIdentifier appIdentifier, String userId)
+            throws StorageQueryException;
+
+    int countUsersThatHaveMoreThanOneLoginMethodAndActiveSince(AppIdentifier appIdentifier, long sinceTime) throws StorageQueryException;
 }

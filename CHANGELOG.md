@@ -9,6 +9,56 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 - Replace `TotpNotEnabledError` with `UnknownUserIdTotpError`.
 
+## [4.0.0] - 2023-09-19
+
+- Adds support for account linking
+- Adds `AuthRecipeUserInfo` class and removes `UserInfo` from emailpassword, passwordless and thirdparty.
+- ActiveUsersStorage interface changes
+  - Removes `deleteUserActive`
+  - Adds `deleteUserActive_Transaction`
+  - Adds `countUsersThatHaveMoreThanOneLoginMethodAndActiveSince`
+- EmailPasswordStorage interfaces changes
+  - Removes `deleteEmailPasswordUser`, `getUserInfoUsingId`, `getUserInfoUsingEmail`
+  - Changes return type of `signUp` from `UserInfo` to `AuthRecipeUserInfo`
+  - Changes `PasswordResetTokenInfo` to accept additional param `email`
+- EmailPasswordSQLStorage interface changes
+  - Removes `getUserInfoUsingId_Transaction`
+  - Adds `deleteEmailPasswordUser_Transaction`
+- EmailVerificationStorage interface changes
+  - Removes `deleteEmailVerificationUserInfo`
+- EmailVerificationSQLStorage interface changes
+  - Adds `deleteEmailVerificationUserInfo_Transaction`
+- MultitenancyStorage interface changes
+  - Removes `addUserIdToTenant`
+- MultitenancySQLStorage interface changes
+  - Adds `addUserIdToTenant_Transaction`
+- PasswordlessStorage interface changes
+  - Changes return type of `createUser` from `UserInfo` to `AuthRecipeUserInfo`
+  - Removes `deletePasswordlessUser`, `getUserById`, `getUserByEmail`, `getUserByPhoneNumber`
+- PasswordlessSQLStorage interface changes
+  - Adds `deletePasswordlessUser_Transaction`
+- SessionInfo accepts additional parameter `recipeUserId`
+- SessionSQLStorage interface changes
+  - Adds `deleteSessionsOfUser_Transaction`
+- ThirdPartyStorage interface changes
+  - Removes `deleteThirdPartyUser`, `getThirdPartyUserInfoUsingId`, `getThirdPartyUserInfoUsingId`, `getThirdPartyUsersByEmail`
+  - Changes return type of `signUp` from `UserInfo` to `AuthRecipeUserInfo`
+- ThirdPartySQLStorage interface changes
+  - Adds `deleteThirdPartyUser_Transaction`
+  - Removes `getUserInfoUsingId_Transaction`
+- UserIdMappingSQLStorage interface changes
+  - Adds `getUserIdMapping_Transaction`, `getUserIdMapping_Transaction`
+- UserMetadataSQLStorage interface changes
+  - Adds `deleteUserMetadata_Transaction`
+- UserRolesStorage interface changes
+  - Removes `deleteAllRolesForUser`
+- UserRolesSQLStorage interface changes
+  - Adds `deleteAllRolesForUser_Transaction`
+
+## [3.0.1] - 2023-07-04
+
+- Updates `TenantConfig` toJson function to protect core config as well.
+
 ## [3.0.0] - 2023-06-02
 
 - Adds support for multi-tenancy
@@ -20,7 +70,7 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [2.22.0] - 2023-03-30
 
-- Adds Support for Dashboard Search 
+- Adds Support for Dashboard Search
 
 ## [2.21.0] - 2023-03-27
 

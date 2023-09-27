@@ -32,7 +32,8 @@ public interface EmailVerificationSQLStorage extends EmailVerificationStorage, S
                                                                                      String userId, String email)
             throws StorageQueryException;
 
-    void deleteAllEmailVerificationTokensForUser_Transaction(TenantIdentifier tenantIdentifier, TransactionConnection con,
+    void deleteAllEmailVerificationTokensForUser_Transaction(TenantIdentifier tenantIdentifier,
+                                                             TransactionConnection con,
                                                              String userId, String email)
             throws StorageQueryException;
 
@@ -40,5 +41,8 @@ public interface EmailVerificationSQLStorage extends EmailVerificationStorage, S
                                            String email,
                                            boolean isEmailVerified)
             throws StorageQueryException, TenantOrAppNotFoundException;
+
+    void deleteEmailVerificationUserInfo_Transaction(TransactionConnection con, AppIdentifier appIdentifier,
+                                                     String userId) throws StorageQueryException;
 
 }

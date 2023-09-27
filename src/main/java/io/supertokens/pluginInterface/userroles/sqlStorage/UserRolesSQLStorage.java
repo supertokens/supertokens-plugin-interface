@@ -53,4 +53,7 @@ public interface UserRolesSQLStorage extends UserRolesStorage, SQLStorage {
     // check if a role exists
     boolean doesRoleExist_Transaction(AppIdentifier appIdentifier, TransactionConnection con, String role)
             throws StorageQueryException;
+
+    void deleteAllRolesForUser_Transaction(TransactionConnection con, AppIdentifier appIdentifier, String userId)
+            throws StorageQueryException;
 }
