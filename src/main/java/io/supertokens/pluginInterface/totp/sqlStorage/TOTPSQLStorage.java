@@ -9,6 +9,7 @@ import io.supertokens.pluginInterface.sqlStorage.TransactionConnection;
 import io.supertokens.pluginInterface.totp.TOTPDevice;
 import io.supertokens.pluginInterface.totp.TOTPStorage;
 import io.supertokens.pluginInterface.totp.TOTPUsedCode;
+import io.supertokens.pluginInterface.totp.exception.DeviceAlreadyExistsException;
 import io.supertokens.pluginInterface.totp.exception.UsedCodeAlreadyExistsException;
 import io.supertokens.pluginInterface.totp.exception.UnknownTotpUserIdException;
 
@@ -41,4 +42,8 @@ public interface TOTPSQLStorage extends TOTPStorage, SQLStorage {
             throws StorageQueryException, UnknownTotpUserIdException, UsedCodeAlreadyExistsException,
             TenantOrAppNotFoundException;
 
+    TOTPDevice getDeviceByName_Transaction(TransactionConnection con, AppIdentifier appIdentifier, String userId, String deviceName) throws StorageQueryException;
+
+    TOTPDevice createDevice_Transaction(TransactionConnection con, AppIdentifier appIdentifier, TOTPDevice device)
+            throws StorageQueryException, DeviceAlreadyExistsException, TenantOrAppNotFoundException;
 }
