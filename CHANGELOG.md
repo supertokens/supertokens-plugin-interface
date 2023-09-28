@@ -7,6 +7,8 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Replace `TotpNotEnabledException` with `UnknownUserTotpIdException`.
+
 ## [4.0.0] - 2023-09-19
 
 - Adds support for account linking
@@ -68,7 +70,7 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [2.22.0] - 2023-03-30
 
-- Adds Support for Dashboard Search 
+- Adds Support for Dashboard Search
 
 ## [2.21.0] - 2023-03-27
 
