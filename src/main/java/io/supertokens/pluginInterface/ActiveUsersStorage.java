@@ -24,9 +24,5 @@ public interface ActiveUsersStorage extends NonAuthRecipeStorage {
     /* Count the number of users who have enabled MFA and are active */
     int countUsersEnabledMfaAndActiveSince(AppIdentifier appIdentifier, long time) throws StorageQueryException;
 
-    /* Delete a user from active users table */
-    void deleteUserActive_Transaction(TransactionConnection con, AppIdentifier appIdentifier, String userId)
-            throws StorageQueryException;
-
     int countUsersThatHaveMoreThanOneLoginMethodAndActiveSince(AppIdentifier appIdentifier, long sinceTime) throws StorageQueryException;
 }
