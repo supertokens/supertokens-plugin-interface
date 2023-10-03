@@ -16,18 +16,18 @@
 
 package io.supertokens.pluginInterface.multitenancy;
 
-import io.supertokens.pluginInterface.ActiveUsersStorage;
+import io.supertokens.pluginInterface.ActiveUsersSQLStorage;
 import io.supertokens.pluginInterface.STORAGE_TYPE;
 import io.supertokens.pluginInterface.Storage;
 import io.supertokens.pluginInterface.authRecipe.AuthRecipeStorage;
 import io.supertokens.pluginInterface.dashboard.sqlStorage.DashboardSQLStorage;
 import io.supertokens.pluginInterface.emailpassword.sqlStorage.EmailPasswordSQLStorage;
 import io.supertokens.pluginInterface.emailverification.sqlStorage.EmailVerificationSQLStorage;
+import io.supertokens.pluginInterface.mfa.sqlStorage.MfaSQLStorage;
 import io.supertokens.pluginInterface.passwordless.sqlStorage.PasswordlessSQLStorage;
 import io.supertokens.pluginInterface.session.SessionStorage;
 import io.supertokens.pluginInterface.thirdparty.sqlStorage.ThirdPartySQLStorage;
 import io.supertokens.pluginInterface.totp.sqlStorage.TOTPSQLStorage;
-import io.supertokens.pluginInterface.mfa.MfaStorage;
 import io.supertokens.pluginInterface.useridmapping.UserIdMappingStorage;
 import io.supertokens.pluginInterface.usermetadata.sqlStorage.UserMetadataSQLStorage;
 import io.supertokens.pluginInterface.userroles.sqlStorage.UserRolesSQLStorage;
@@ -153,19 +153,19 @@ public class AppIdentifierWithStorage extends AppIdentifier {
         return (TOTPSQLStorage) this.storage;
     }
 
-    public MfaStorage getMfaStorage() {
+    public MfaSQLStorage getMfaStorage() {
         if (this.storage.getType() != STORAGE_TYPE.SQL) {
             // we only support SQL for now
             throw new UnsupportedOperationException("");
         }
-        return (MfaStorage) this.storage;
+        return (MfaSQLStorage) this.storage;
     }
 
-    public ActiveUsersStorage getActiveUsersStorage() {
+    public ActiveUsersSQLStorage getActiveUsersStorage() {
         if (this.storage.getType() != STORAGE_TYPE.SQL) {
             // we only support SQL for now
             throw new UnsupportedOperationException("");
         }
-        return (ActiveUsersStorage) this.storage;
+        return (ActiveUsersSQLStorage) this.storage;
     }
 }
