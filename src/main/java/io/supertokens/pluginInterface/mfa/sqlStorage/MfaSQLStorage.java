@@ -23,7 +23,4 @@ import io.supertokens.pluginInterface.sqlStorage.SQLStorage;
 import io.supertokens.pluginInterface.sqlStorage.TransactionConnection;
 
 public interface MfaSQLStorage extends MfaStorage, SQLStorage {
-    // Delete a user across all tenants (with all the relevant factors)
-    boolean deleteMfaInfoForUser_Transaction(TransactionConnection con, AppIdentifier appIdentifier, String userId) throws
-            StorageQueryException;
 }
