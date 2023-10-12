@@ -21,8 +21,7 @@ import io.supertokens.pluginInterface.exceptions.InvalidConfigException;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.Arrays;
-import java.util.Objects;
+import java.util.*;
 
 public class ThirdPartyConfig {
     public final boolean enabled;
@@ -108,11 +107,10 @@ public class ThirdPartyConfig {
             if (other instanceof Provider) {
                 Provider otherProvider = (Provider) other;
                 return otherProvider.thirdPartyId.equals(this.thirdPartyId) &&
-                        otherProvider.name.equals(this.name) &&
-                        Arrays.equals(otherProvider.clients, this.clients) &&
+                        Objects.equals(otherProvider.name, this.name) &&
+                        unorderedArrayEquals(otherProvider.clients, this.clients) &&
                         Objects.equals(otherProvider.authorizationEndpoint, this.authorizationEndpoint) &&
-                        Objects.equals(otherProvider.authorizationEndpointQueryParams,
-                                this.authorizationEndpointQueryParams) &&
+                        Objects.equals(otherProvider.authorizationEndpointQueryParams, this.authorizationEndpointQueryParams) &&
                         Objects.equals(otherProvider.tokenEndpoint, this.tokenEndpoint) &&
                         Objects.equals(otherProvider.tokenEndpointBodyParams, this.tokenEndpointBodyParams) &&
                         Objects.equals(otherProvider.userInfoEndpoint, this.userInfoEndpoint) &&
@@ -225,12 +223,42 @@ public class ThirdPartyConfig {
         }
     }
 
+    public static boolean unorderedArrayEquals(Object[] array1, Object[] array2) {
+        Set<Object> items1 = Set.of(array1);
+        Set<Object> items2 = new HashSet<>();
+        items2.addAll(Arrays.asList(array2));
+
+
+        if (items1.size() != items2.size()) return false;
+
+        for (Object p1 : items1) {
+            boolean found = false;
+            for (Object p2 : items2) {
+                if (p1.equals(p2)) {
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found) {
+                return false;
+            } else {
+                items2.remove(p1);
+            }
+        }
+
+        return true;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other instanceof ThirdPartyConfig) {
             ThirdPartyConfig otherThirdPartyConfig = (ThirdPartyConfig) other;
+
+
             return otherThirdPartyConfig.enabled == this.enabled &&
-                    Arrays.equals(otherThirdPartyConfig.providers, this.providers);
+                    unorderedArrayEquals(this.providers, otherThirdPartyConfig.providers);
+
         }
         return false;
     }
