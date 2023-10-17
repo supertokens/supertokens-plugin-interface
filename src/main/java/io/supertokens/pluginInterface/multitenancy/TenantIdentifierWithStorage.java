@@ -25,7 +25,6 @@ import io.supertokens.pluginInterface.passwordless.sqlStorage.PasswordlessSQLSto
 import io.supertokens.pluginInterface.session.SessionStorage;
 import io.supertokens.pluginInterface.thirdparty.sqlStorage.ThirdPartySQLStorage;
 import io.supertokens.pluginInterface.totp.sqlStorage.TOTPSQLStorage;
-import io.supertokens.pluginInterface.mfa.MfaStorage;
 import io.supertokens.pluginInterface.useridmapping.UserIdMappingStorage;
 import io.supertokens.pluginInterface.userroles.sqlStorage.UserRolesSQLStorage;
 
@@ -124,14 +123,6 @@ public class TenantIdentifierWithStorage extends TenantIdentifier {
         return (TOTPSQLStorage) this.storage;
     }
     
-    public MfaStorage getMfaStorage() {
-        if (this.storage.getType() != STORAGE_TYPE.SQL) {
-            // we only support SQL for now
-            throw new UnsupportedOperationException("");
-        }
-        return (MfaStorage) this.storage;
-    }
-
     public MultitenancyStorage getMultitenancyStorageWithTargetStorage() {
         if (this.storage.getType() != STORAGE_TYPE.SQL) {
             // we only support SQL for now

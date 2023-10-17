@@ -23,7 +23,6 @@ import io.supertokens.pluginInterface.authRecipe.AuthRecipeStorage;
 import io.supertokens.pluginInterface.dashboard.sqlStorage.DashboardSQLStorage;
 import io.supertokens.pluginInterface.emailpassword.sqlStorage.EmailPasswordSQLStorage;
 import io.supertokens.pluginInterface.emailverification.sqlStorage.EmailVerificationSQLStorage;
-import io.supertokens.pluginInterface.mfa.sqlStorage.MfaSQLStorage;
 import io.supertokens.pluginInterface.passwordless.sqlStorage.PasswordlessSQLStorage;
 import io.supertokens.pluginInterface.session.SessionStorage;
 import io.supertokens.pluginInterface.thirdparty.sqlStorage.ThirdPartySQLStorage;
@@ -151,14 +150,6 @@ public class AppIdentifierWithStorage extends AppIdentifier {
             throw new UnsupportedOperationException("");
         }
         return (TOTPSQLStorage) this.storage;
-    }
-
-    public MfaSQLStorage getMfaStorage() {
-        if (this.storage.getType() != STORAGE_TYPE.SQL) {
-            // we only support SQL for now
-            throw new UnsupportedOperationException("");
-        }
-        return (MfaSQLStorage) this.storage;
     }
 
     public ActiveUsersSQLStorage getActiveUsersStorage() {
