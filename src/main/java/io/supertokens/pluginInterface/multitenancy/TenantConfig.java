@@ -82,7 +82,7 @@ public class TenantConfig {
                         other.mfaConfig.firstFactors.builtIn.clone(),
                         other.mfaConfig.firstFactors.custom.clone()
                 ),
-                other.mfaConfig.defaultMFARequirements.clone());
+                other.mfaConfig.defaultRequiredFactors.clone());
     }
 
     public boolean deepEquals(TenantConfig other) {

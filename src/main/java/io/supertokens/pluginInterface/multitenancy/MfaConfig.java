@@ -23,11 +23,11 @@ import java.util.Set;
 
 public class MfaConfig {
     public final MfaFirstFactors firstFactors;
-    public final String[] defaultMFARequirements;
+    public final String[] defaultRequiredFactors;
 
-    public MfaConfig(MfaFirstFactors firstFactors, String[] defaultMFARequirements) {
+    public MfaConfig(MfaFirstFactors firstFactors, String[] defaultRequiredFactors) {
         this.firstFactors = firstFactors == null ? new MfaFirstFactors(null, null) : firstFactors;
-        this.defaultMFARequirements = defaultMFARequirements == null ? new String[0] : defaultMFARequirements;
+        this.defaultRequiredFactors = defaultRequiredFactors == null ? new String[0] : defaultRequiredFactors;
     }
 
     @Override
@@ -35,10 +35,10 @@ public class MfaConfig {
         if (other instanceof MfaConfig) {
             MfaConfig otherMfaConfig = (MfaConfig) other;
 
-            Set<String> thisDefaultMFARequirements = Set.of(this.defaultMFARequirements);
-            Set<String> otherDefaultMFARequirements = Set.of(otherMfaConfig.defaultMFARequirements);
+            Set<String> thisdefaultRequiredFactors = Set.of(this.defaultRequiredFactors);
+            Set<String> otherdefaultRequiredFactors = Set.of(otherMfaConfig.defaultRequiredFactors);
 
-            return this.firstFactors.equals(otherMfaConfig.firstFactors) && thisDefaultMFARequirements.equals(otherDefaultMFARequirements);
+            return this.firstFactors.equals(otherMfaConfig.firstFactors) && thisdefaultRequiredFactors.equals(otherdefaultRequiredFactors);
         }
         return false;
     }
