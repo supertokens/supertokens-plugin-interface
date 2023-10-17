@@ -16,28 +16,29 @@
 
 package io.supertokens.pluginInterface.multitenancy;
 
+import io.supertokens.pluginInterface.mfa.MfaFirstFactors;
+
+import java.util.HashSet;
 import java.util.Set;
 
 public class MfaConfig {
-    public final String[] firstFactors;
+    public final MfaFirstFactors firstFactors;
     public final String[] defaultMFARequirements;
 
-    public MfaConfig(String[] firstFactors, String[] defaultMFARequirements) {
-        this.firstFactors = firstFactors == null ? new String[0] : firstFactors;
+    public MfaConfig(MfaFirstFactors firstFactors, String[] defaultMFARequirements) {
+        this.firstFactors = firstFactors == null ? new MfaFirstFactors(null, null) : firstFactors;
         this.defaultMFARequirements = defaultMFARequirements == null ? new String[0] : defaultMFARequirements;
     }
 
     @Override
     public boolean equals(Object other) {
         if (other instanceof MfaConfig) {
-            MfaConfig otherTotpConfig = (MfaConfig) other;
-            Set<String> thisFirstFactors = Set.of(this.firstFactors);
-            Set<String> otherFirstFactors = Set.of(otherTotpConfig.firstFactors);
+            MfaConfig otherMfaConfig = (MfaConfig) other;
 
             Set<String> thisDefaultMFARequirements = Set.of(this.defaultMFARequirements);
-            Set<String> otherDefaultMFARequirements = Set.of(otherTotpConfig.defaultMFARequirements);
+            Set<String> otherDefaultMFARequirements = Set.of(otherMfaConfig.defaultMFARequirements);
 
-            return thisFirstFactors.equals(otherFirstFactors) && thisDefaultMFARequirements.equals(otherDefaultMFARequirements);
+            return this.firstFactors.equals(otherMfaConfig.firstFactors) && thisDefaultMFARequirements.equals(otherDefaultMFARequirements);
         }
         return false;
     }
