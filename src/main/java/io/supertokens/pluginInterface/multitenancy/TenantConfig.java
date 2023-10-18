@@ -116,6 +116,7 @@ public class TenantConfig {
         Gson gson = new Gson();
         JsonObject tenantConfigObject = gson.toJsonTree(this).getAsJsonObject();
         tenantConfigObject.addProperty("tenantId", this.tenantIdentifier.getTenantId());
+        tenantConfigObject.get("mfa").getAsJsonObject().add("firstFactors", this.mfaConfig.firstFactors.toJson());
 
         if (shouldProtectDbConfig) {
             String[] protectedConfigs = storage.getProtectedConfigsFromSuperTokensSaaSUsers();
