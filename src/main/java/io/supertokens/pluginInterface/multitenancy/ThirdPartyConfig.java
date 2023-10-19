@@ -152,7 +152,7 @@ public class ThirdPartyConfig {
             JsonObject result = new Gson().toJsonTree(this).getAsJsonObject();
 
             // These properties need to retain null values when serialized
-            if (this.authorizationEndpoint != null) {
+            if (this.authorizationEndpointQueryParams != null) {
                 result.add("authorizationEndpointQueryParams",
                         new GsonBuilder().serializeNulls().create().toJsonTree(this.authorizationEndpointQueryParams));
             } else {
