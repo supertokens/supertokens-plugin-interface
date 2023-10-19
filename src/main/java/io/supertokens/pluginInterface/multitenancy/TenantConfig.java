@@ -92,6 +92,9 @@ public class TenantConfig {
     public JsonObject toJson(boolean shouldProtectDbConfig, Storage storage, String[] protectedCoreConfigs) {
         Gson gson = new Gson();
         JsonObject tenantConfigObject = gson.toJsonTree(this).getAsJsonObject();
+
+        tenantConfigObject.add("thirdParty", this.thirdPartyConfig.toJson());
+
         tenantConfigObject.addProperty("tenantId", this.tenantIdentifier.getTenantId());
 
         if (shouldProtectDbConfig) {
