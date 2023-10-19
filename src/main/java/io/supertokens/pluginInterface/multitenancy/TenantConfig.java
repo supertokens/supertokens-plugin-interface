@@ -61,7 +61,7 @@ public class TenantConfig {
         this.coreConfig = gson.fromJson(other.coreConfig.toString(), JsonObject.class);
         this.emailPasswordConfig = new EmailPasswordConfig(other.emailPasswordConfig.enabled);
         this.passwordlessConfig = new PasswordlessConfig(other.passwordlessConfig.enabled);
-        this.thirdPartyConfig = gson.fromJson(gson.toJsonTree(other.thirdPartyConfig).getAsJsonObject(), ThirdPartyConfig.class);
+        this.thirdPartyConfig = new ThirdPartyConfig(other.thirdPartyConfig.enabled, other.thirdPartyConfig.providers.clone());
     }
 
     public boolean deepEquals(TenantConfig other) {
@@ -92,6 +92,9 @@ public class TenantConfig {
     public JsonObject toJson(boolean shouldProtectDbConfig, Storage storage, String[] protectedCoreConfigs) {
         Gson gson = new Gson();
         JsonObject tenantConfigObject = gson.toJsonTree(this).getAsJsonObject();
+
+        tenantConfigObject.add("thirdParty", this.thirdPartyConfig.toJson());
+
         tenantConfigObject.addProperty("tenantId", this.tenantIdentifier.getTenantId());
 
         if (shouldProtectDbConfig) {
