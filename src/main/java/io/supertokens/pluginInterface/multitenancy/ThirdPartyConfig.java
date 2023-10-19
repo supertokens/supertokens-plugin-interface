@@ -16,8 +16,10 @@
 
 package io.supertokens.pluginInterface.multitenancy;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import io.supertokens.pluginInterface.exceptions.InvalidConfigException;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -32,6 +34,18 @@ public class ThirdPartyConfig {
     public ThirdPartyConfig(boolean enabled, @Nullable Provider[] providers) {
         this.enabled = enabled;
         this.providers = providers == null ? new Provider[0] : providers;
+    }
+
+    public JsonObject toJson() {
+        JsonObject result = new JsonObject();
+        result.addProperty("enabled", this.enabled);
+        result.add("providers", new JsonArray());
+
+        for (Provider provider : this.providers) {
+            result.getAsJsonArray("providers").add(provider.toJson());
+        }
+
+        return result;
     }
 
     public static boolean unorderedArrayEquals(Object[] array1, Object[] array2) {
@@ -132,6 +146,37 @@ public class ThirdPartyConfig {
             this.oidcDiscoveryEndpoint = oidcDiscoveryEndpoint;
             this.requireEmail = requireEmail;
             this.userInfoMap = userInfoMap == null ? new UserInfoMap(null, null) : userInfoMap;
+        }
+
+        public JsonObject toJson() {
+            JsonObject result = new Gson().toJsonTree(this).getAsJsonObject();
+
+            // These properties need to retain null values when serialized
+            if (this.authorizationEndpoint != null) {
+                result.add("authorizationEndpointQueryParams",
+                        new GsonBuilder().serializeNulls().create().toJsonTree(this.authorizationEndpointQueryParams));
+            } else {
+                result.remove("authorizationEndpointQueryParams");
+            }
+
+            if (this.tokenEndpointBodyParams != null) {
+                result.add("tokenEndpointBodyParams", new GsonBuilder().serializeNulls().create().toJsonTree(this.tokenEndpointBodyParams));
+            } else {
+                result.remove("tokenEndpointBodyParams");
+            }
+
+            if (this.userInfoEndpointQueryParams != null) {
+                result.add("userInfoEndpointQueryParams", new GsonBuilder().serializeNulls().create().toJsonTree(this.userInfoEndpointQueryParams));
+            } else {
+                result.remove("userInfoEndpointQueryParams");
+            }
+
+            if (this.userInfoEndpointHeaders != null) {
+                result.add("userInfoEndpointHeaders", new GsonBuilder().serializeNulls().create().toJsonTree(this.userInfoEndpointHeaders));
+            } else {
+                result.remove("userInfoEndpointHeaders");
+            }
+            return result;
         }
 
         @Override
