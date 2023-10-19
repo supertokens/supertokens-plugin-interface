@@ -7,6 +7,10 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [4.0.1] - 2023-10-19
+
+- Fixes cloning of `TenantConfig` object to include `null` values
+
 ## [4.0.0] - 2023-09-19
 
 - Adds support for account linking

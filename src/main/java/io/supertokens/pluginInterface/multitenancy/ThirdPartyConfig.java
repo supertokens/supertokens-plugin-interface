@@ -21,8 +21,7 @@ import io.supertokens.pluginInterface.exceptions.InvalidConfigException;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.Arrays;
-import java.util.Objects;
+import java.util.*;
 
 public class ThirdPartyConfig {
     public final boolean enabled;
@@ -33,6 +32,38 @@ public class ThirdPartyConfig {
     public ThirdPartyConfig(boolean enabled, @Nullable Provider[] providers) {
         this.enabled = enabled;
         this.providers = providers == null ? new Provider[0] : providers;
+    }
+
+    public static boolean unorderedArrayEquals(Object[] array1, Object[] array2) {
+        if (array1 == null && array2 == null) {
+            return true;
+        } else if (array1 == null || array2 == null) {
+            return false;
+        }
+
+        List<Object> items1 = List.of(array1);
+        List<Object> items2 = new ArrayList<>();
+        items2.addAll(Arrays.asList(array2));
+
+        if (items1.size() != items2.size()) return false;
+
+        for (Object p1 : items1) {
+            boolean found = false;
+            for (Object p2 : items2) {
+                if (p1.equals(p2)) {
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found) {
+                return false;
+            } else {
+                items2.remove(p1);
+            }
+        }
+
+        return true;
     }
 
     public static class Provider {
@@ -105,11 +136,15 @@ public class ThirdPartyConfig {
 
         @Override
         public boolean equals(Object other) {
+            if (other == null) {
+                return false;
+            }
+
             if (other instanceof Provider) {
                 Provider otherProvider = (Provider) other;
-                return otherProvider.thirdPartyId.equals(this.thirdPartyId) &&
-                        otherProvider.name.equals(this.name) &&
-                        Arrays.equals(otherProvider.clients, this.clients) &&
+                return Objects.equals(otherProvider.thirdPartyId, this.thirdPartyId) &&
+                        Objects.equals(otherProvider.name, this.name) &&
+                        unorderedArrayEquals(otherProvider.clients, this.clients) &&
                         Objects.equals(otherProvider.authorizationEndpoint, this.authorizationEndpoint) &&
                         Objects.equals(otherProvider.authorizationEndpointQueryParams,
                                 this.authorizationEndpointQueryParams) &&
@@ -165,7 +200,7 @@ public class ThirdPartyConfig {
                 return Objects.equals(otherProviderClient.clientType, this.clientType) &&
                         otherProviderClient.clientId.equals(this.clientId) &&
                         Objects.equals(otherProviderClient.clientSecret, this.clientSecret) &&
-                        Arrays.equals(otherProviderClient.scope, this.scope) &&
+                        unorderedArrayEquals(otherProviderClient.scope, this.scope) &&
                         otherProviderClient.forcePKCE == this.forcePKCE &&
                         Objects.equals(otherProviderClient.additionalConfig, this.additionalConfig);
             }
@@ -230,7 +265,7 @@ public class ThirdPartyConfig {
         if (other instanceof ThirdPartyConfig) {
             ThirdPartyConfig otherThirdPartyConfig = (ThirdPartyConfig) other;
             return otherThirdPartyConfig.enabled == this.enabled &&
-                    Arrays.equals(otherThirdPartyConfig.providers, this.providers);
+                    unorderedArrayEquals(otherThirdPartyConfig.providers, this.providers);
         }
         return false;
     }
