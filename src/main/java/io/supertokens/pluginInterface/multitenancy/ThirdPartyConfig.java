@@ -191,7 +191,8 @@ public class ThirdPartyConfig {
                         Objects.equals(otherProvider.name, this.name) &&
                         unorderedArrayEquals(otherProvider.clients, this.clients) &&
                         Objects.equals(otherProvider.authorizationEndpoint, this.authorizationEndpoint) &&
-                        Objects.equals(otherProvider.authorizationEndpointQueryParams, this.authorizationEndpointQueryParams) &&
+                        Objects.equals(otherProvider.authorizationEndpointQueryParams,
+                                this.authorizationEndpointQueryParams) &&
                         Objects.equals(otherProvider.tokenEndpoint, this.tokenEndpoint) &&
                         Objects.equals(otherProvider.tokenEndpointBodyParams, this.tokenEndpointBodyParams) &&
                         Objects.equals(otherProvider.userInfoEndpoint, this.userInfoEndpoint) &&
@@ -310,7 +311,7 @@ public class ThirdPartyConfig {
             ThirdPartyConfig otherThirdPartyConfig = (ThirdPartyConfig) other;
 
             return otherThirdPartyConfig.enabled == this.enabled &&
-                    unorderedArrayEquals(this.providers, otherThirdPartyConfig.providers);
+                    unorderedArrayEquals(otherThirdPartyConfig.providers, this.providers);
         }
         return false;
     }

@@ -16,6 +16,9 @@
 
 package io.supertokens.pluginInterface.multitenancy;
 
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+
 import javax.annotation.Nullable;
 import java.util.HashSet;
 import java.util.Set;
@@ -45,6 +48,10 @@ public class MfaConfig {
         Set<String> set2 = Set.of(arr2);
 
         return set1.equals(set2);
+    }
+
+    public JsonObject toJson() {
+        return new GsonBuilder().serializeNulls().create().toJsonTree(this).getAsJsonObject();
     }
 
     @Override

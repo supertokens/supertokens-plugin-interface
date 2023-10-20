@@ -68,8 +68,9 @@ public class TenantConfig {
 
     public TenantConfig(TenantConfig other) {
         // copy constructor, that does a deep copy
+        Gson gson = new Gson();
         this.tenantIdentifier = new TenantIdentifier(other.tenantIdentifier.getConnectionUriDomain(), other.tenantIdentifier.getAppId(), other.tenantIdentifier.getTenantId());
-        this.coreConfig = new Gson().fromJson(other.coreConfig.toString(), JsonObject.class);
+        this.coreConfig = gson.fromJson(other.coreConfig.toString(), JsonObject.class);
         this.emailPasswordConfig = new EmailPasswordConfig(other.emailPasswordConfig.enabled);
         this.passwordlessConfig = new PasswordlessConfig(other.passwordlessConfig.enabled);
         this.thirdPartyConfig = new ThirdPartyConfig(other.thirdPartyConfig.enabled, other.thirdPartyConfig.providers.clone());
@@ -111,6 +112,7 @@ public class TenantConfig {
         JsonObject tenantConfigObject = gson.toJsonTree(this).getAsJsonObject();
 
         tenantConfigObject.add("thirdParty", this.thirdPartyConfig.toJson());
+        tenantConfigObject.add("mfa", this.mfaConfig.toJson());
 
         tenantConfigObject.addProperty("tenantId", this.tenantIdentifier.getTenantId());
 
