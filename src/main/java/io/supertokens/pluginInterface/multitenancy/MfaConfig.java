@@ -32,23 +32,31 @@ public class MfaConfig {
         this.defaultRequiredFactorIds = defaultRequiredFactorIds;
     }
 
+    private boolean compareStrArray(String[] arr1, String[] arr2) {
+        if (arr1 == null && arr2 == null) {
+            return true;
+        }
+
+        if (arr1 == null || arr2 == null) {
+            return false;
+        }
+
+        Set<String> set1 = Set.of(arr1);
+        Set<String> set2 = Set.of(arr2);
+
+        return set1.equals(set2);
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other == null) {
             return false;
         }
-
-        if (other instanceof MfaConfig) {
-            Set<String> thisFirstFactors = Set.of(this.firstFactors);
-            Set<String> otherFirstFactors = Set.of(((MfaConfig) other).firstFactors);
-
-            Set<String> thisdefaultRequiredFactorIds = Set.of(this.defaultRequiredFactorIds);
-            Set<String> otherdefaultRequiredFactorIds = Set.of(((MfaConfig) other).defaultRequiredFactorIds);
-
-            return thisFirstFactors.equals(otherFirstFactors) &&
-                    thisdefaultRequiredFactorIds.equals(otherdefaultRequiredFactorIds);
+        if (!(other instanceof MfaConfig)) {
+            return false;
         }
 
-        return false;
+        return compareStrArray(this.firstFactors, ((MfaConfig) other).firstFactors) &&
+                compareStrArray(this.defaultRequiredFactorIds, ((MfaConfig) other).defaultRequiredFactorIds);
     }
 }
