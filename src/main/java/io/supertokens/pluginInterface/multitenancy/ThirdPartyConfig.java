@@ -309,7 +309,6 @@ public class ThirdPartyConfig {
     public boolean equals(Object other) {
         if (other instanceof ThirdPartyConfig) {
             ThirdPartyConfig otherThirdPartyConfig = (ThirdPartyConfig) other;
-
             return otherThirdPartyConfig.enabled == this.enabled &&
                     unorderedArrayEquals(otherThirdPartyConfig.providers, this.providers);
         }
