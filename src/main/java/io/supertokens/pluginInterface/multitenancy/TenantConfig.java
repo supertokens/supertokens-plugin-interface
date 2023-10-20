@@ -17,12 +17,9 @@
 package io.supertokens.pluginInterface.multitenancy;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 import io.supertokens.pluginInterface.Storage;
-import io.supertokens.pluginInterface.mfa.MfaFirstFactors;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -78,11 +75,8 @@ public class TenantConfig {
         this.thirdPartyConfig = new ThirdPartyConfig(other.thirdPartyConfig.enabled, other.thirdPartyConfig.providers.clone());
         this.totpConfig = new TotpConfig(other.totpConfig.enabled);
         this.mfaConfig = new MfaConfig(
-                new MfaFirstFactors(
-                        other.mfaConfig.firstFactors.builtIn.clone(),
-                        other.mfaConfig.firstFactors.custom.clone()
-                ),
-                other.mfaConfig.defaultRequiredFactors.clone());
+                other.mfaConfig.firstFactors == null ? null : other.mfaConfig.firstFactors.clone(),
+                other.mfaConfig.defaultRequiredFactorIds == null ? null : other.mfaConfig.defaultRequiredFactorIds.clone());
     }
 
     public boolean deepEquals(TenantConfig other) {
@@ -116,7 +110,6 @@ public class TenantConfig {
         Gson gson = new Gson();
         JsonObject tenantConfigObject = gson.toJsonTree(this).getAsJsonObject();
         tenantConfigObject.addProperty("tenantId", this.tenantIdentifier.getTenantId());
-        tenantConfigObject.get("mfa").getAsJsonObject().add("firstFactors", this.mfaConfig.firstFactors.toJson());
 
         if (shouldProtectDbConfig) {
             String[] protectedConfigs = storage.getProtectedConfigsFromSuperTokensSaaSUsers();

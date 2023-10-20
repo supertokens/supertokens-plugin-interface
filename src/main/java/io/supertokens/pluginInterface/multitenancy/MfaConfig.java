@@ -16,30 +16,39 @@
 
 package io.supertokens.pluginInterface.multitenancy;
 
-import io.supertokens.pluginInterface.mfa.MfaFirstFactors;
-
+import javax.annotation.Nullable;
 import java.util.HashSet;
 import java.util.Set;
 
 public class MfaConfig {
-    public final MfaFirstFactors firstFactors;
-    public final String[] defaultRequiredFactors;
+    @Nullable
+    public final String[] firstFactors;
 
-    public MfaConfig(MfaFirstFactors firstFactors, String[] defaultRequiredFactors) {
-        this.firstFactors = firstFactors == null ? new MfaFirstFactors(null, null) : firstFactors;
-        this.defaultRequiredFactors = defaultRequiredFactors == null ? new String[0] : defaultRequiredFactors;
+    @Nullable
+    public final String[] defaultRequiredFactorIds;
+
+    public MfaConfig(@Nullable String[] firstFactors, @Nullable String[] defaultRequiredFactorIds) {
+        this.firstFactors = firstFactors;
+        this.defaultRequiredFactorIds = defaultRequiredFactorIds;
     }
 
     @Override
     public boolean equals(Object other) {
-        if (other instanceof MfaConfig) {
-            MfaConfig otherMfaConfig = (MfaConfig) other;
-
-            Set<String> thisdefaultRequiredFactors = Set.of(this.defaultRequiredFactors);
-            Set<String> otherdefaultRequiredFactors = Set.of(otherMfaConfig.defaultRequiredFactors);
-
-            return this.firstFactors.equals(otherMfaConfig.firstFactors) && thisdefaultRequiredFactors.equals(otherdefaultRequiredFactors);
+        if (other == null) {
+            return false;
         }
+
+        if (other instanceof MfaConfig) {
+            Set<String> thisFirstFactors = Set.of(this.firstFactors);
+            Set<String> otherFirstFactors = Set.of(((MfaConfig) other).firstFactors);
+
+            Set<String> thisdefaultRequiredFactorIds = Set.of(this.defaultRequiredFactorIds);
+            Set<String> otherdefaultRequiredFactorIds = Set.of(((MfaConfig) other).defaultRequiredFactorIds);
+
+            return thisFirstFactors.equals(otherFirstFactors) &&
+                    thisdefaultRequiredFactorIds.equals(otherdefaultRequiredFactorIds);
+        }
+
         return false;
     }
 }
