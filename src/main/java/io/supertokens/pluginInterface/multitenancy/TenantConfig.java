@@ -120,13 +120,6 @@ public class TenantConfig {
         JsonObject tenantConfigObject = gson.toJsonTree(this).getAsJsonObject();
 
         tenantConfigObject.add("thirdParty", this.thirdPartyConfig.toJson());
-        if (this.firstFactors == null) {
-            tenantConfigObject.add("firstFactors", null);
-        }
-        if (this.defaultRequiredFactorIds == null) {
-            tenantConfigObject.add("defaultRequiredFactorIds", null);
-        }
-
         tenantConfigObject.addProperty("tenantId", this.tenantIdentifier.getTenantId());
 
         if (shouldProtectDbConfig) {
