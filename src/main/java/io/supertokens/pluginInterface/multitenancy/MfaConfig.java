@@ -18,10 +18,9 @@ package io.supertokens.pluginInterface.multitenancy;
 
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
+import io.supertokens.pluginInterface.Utils;
 
 import javax.annotation.Nullable;
-import java.util.HashSet;
-import java.util.Set;
 
 public class MfaConfig {
     @Nullable
@@ -33,21 +32,6 @@ public class MfaConfig {
     public MfaConfig(@Nullable String[] firstFactors, @Nullable String[] defaultRequiredFactorIds) {
         this.firstFactors = firstFactors;
         this.defaultRequiredFactorIds = defaultRequiredFactorIds;
-    }
-
-    private boolean compareStrArray(String[] arr1, String[] arr2) {
-        if (arr1 == null && arr2 == null) {
-            return true;
-        }
-
-        if (arr1 == null || arr2 == null) {
-            return false;
-        }
-
-        Set<String> set1 = Set.of(arr1);
-        Set<String> set2 = Set.of(arr2);
-
-        return set1.equals(set2);
     }
 
     public JsonObject toJson() {
@@ -63,7 +47,7 @@ public class MfaConfig {
             return false;
         }
 
-        return compareStrArray(this.firstFactors, ((MfaConfig) other).firstFactors) &&
-                compareStrArray(this.defaultRequiredFactorIds, ((MfaConfig) other).defaultRequiredFactorIds);
+        return Utils.unorderedStringArrayEquals(this.firstFactors, ((MfaConfig) other).firstFactors) &&
+                Utils.unorderedStringArrayEquals(this.defaultRequiredFactorIds, ((MfaConfig) other).defaultRequiredFactorIds);
     }
 }
