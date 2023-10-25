@@ -14,7 +14,7 @@
  *    under the License.
  */
 
-package io.supertokens.pluginInterface;
+package io.supertokens.pluginInterface.utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;

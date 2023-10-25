@@ -18,7 +18,7 @@ package io.supertokens.pluginInterface.multitenancy;
 
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
-import io.supertokens.pluginInterface.Utils;
+import io.supertokens.pluginInterface.utils.Utils;
 
 import javax.annotation.Nullable;
 
