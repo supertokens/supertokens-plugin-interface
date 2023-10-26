@@ -25,6 +25,7 @@ import io.supertokens.pluginInterface.utils.Utils;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Objects;
 
 public class TenantConfig {
 
@@ -96,8 +97,8 @@ public class TenantConfig {
                 this.passwordlessConfig.equals(other.passwordlessConfig) &&
                 this.thirdPartyConfig.equals(other.thirdPartyConfig) &&
                 this.totpConfig.equals(other.totpConfig) &&
-                Utils.unorderedArrayEquals(this.firstFactors, other.firstFactors) &&
-                Utils.unorderedArrayEquals(this.defaultRequiredFactorIds, other.defaultRequiredFactorIds) &&
+                Utils.unorderedArrayEquals(this.firstFactors, other.firstFactors) && // order is not important
+                Objects.deepEquals(this.defaultRequiredFactorIds, other.defaultRequiredFactorIds) && // order is important
                 this.coreConfig.equals(other.coreConfig);
     }
 
