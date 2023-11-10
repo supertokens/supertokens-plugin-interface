@@ -47,4 +47,5 @@ public interface EmailVerificationStorage extends NonAuthRecipeStorage {
 
     boolean isEmailVerified(AppIdentifier appIdentifier, String userId, String email) throws StorageQueryException;
 
+    void updateIsEmailVerifiedToExternalUserId(AppIdentifier appIdentifier, String supertokensUserId, String externalUserId) throws StorageQueryException;
 }
