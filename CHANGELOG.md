@@ -7,6 +7,10 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [4.0.4] - 2023-11-28
+
+- Removes the error `Please use a CDI version that is greater than the one in which account linking feature was enabled` while querying users with linked accounts, but from an older version of CDI. We return details of the oldest login method in this case.
+
 ## [4.0.3] - 2023-11-10
 
 - Adds function to update userId to externalUserId for email verification
