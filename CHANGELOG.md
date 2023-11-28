@@ -9,6 +9,10 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 - Replace `TotpNotEnabledException` with `UnknownUserTotpIdException`.
 
+## [4.0.3] - 2023-11-10
+
+- Adds function to update userId to externalUserId for email verification
+
 ## [4.0.2] - 2023-10-19
 
 - Fixes serialization of thirdParty config
