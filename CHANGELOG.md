@@ -7,7 +7,21 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
-- Replace `TotpNotEnabledException` with `UnknownUserTotpIdException`.
+## [4.1.0] - 2023-11-29
+
+- Replace `TotpNotEnabledException` with `UnknownUserTotpIdException`
+- ActiveUsersSQLStorage interface changes
+  - Adds `deleteUserActive_Transaction` function
+- ActiveUsersStorage interface changes
+  - Removes `countUsersEnabledTotp`, `countUsersEnabledTotpAndActiveSince` and `deleteUserActive_Transaction` functions
+  - Adds `countUsersThatHaveMoreThanOneLoginMethodOrTOTPEnabledAndActiveSince` function
+- AuthRecipeStorage interface changes
+  - Adds `getUsersCountWithMoreThanOneLoginMethodOrTOTPEnabled` function
+- TenantConfig changes
+  - Adds `totpConfig`, `firstFactors` and `defaultRequiredFactorIds` fields
+- Adds `createdAt` field to `TOTPDevice`
+- TOTPSQLStorage interface changes
+  - Adds `getDeviceByName_Transaction` and `createDevice_Transaction` functions
 
 ## [4.0.3] - 2023-11-10
 
