@@ -69,7 +69,7 @@ public interface Storage {
 
     void setStorageLayerEnabled(boolean enabled);
 
-    boolean canBeUsed(JsonObject configJson);
+    boolean canBeUsed(JsonObject configJson) throws InvalidConfigException;
 
     // this function will be used in the createUserIdMapping and deleteUserIdMapping functions to check if the userId is
     // being used in NonAuth recipes.
