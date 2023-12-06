@@ -115,6 +115,8 @@ public class ConfigMapper {
                 }
             } else if (targetType == Double.class || targetType == double.class) {
                 return value.getAsDouble();
+            } else if (targetType == Float.class || targetType == float.class) {
+                return value.getAsFloat();
             } else if (targetType == Boolean.class || targetType == boolean.class) {
                 // Handle boolean conversion from strings like "true", "false"
                 return handleBooleanConversion(value, fieldName);
