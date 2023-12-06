@@ -10,7 +10,6 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ## [4.0.5] - 2023-12-05
 
 - Adds `InvalidConfigException` to throws list of `canBeUsed` function
-- Adds `ConfigMapper` utils class to convert `JsonObject` to config object
 
 ## [4.0.4] - 2023-11-28
 
