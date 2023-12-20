@@ -18,7 +18,7 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - AuthRecipeStorage interface changes
   - Adds `getUsersCountWithMoreThanOneLoginMethodOrTOTPEnabled` function
 - TenantConfig changes
-  - Adds `totpConfig`, `firstFactors` and `defaultRequiredFactorIds` fields
+  - Adds `firstFactors` and `requiredSecondaryFactors` fields
 - Adds `createdAt` field to `TOTPDevice`
 - TOTPSQLStorage interface changes
   - Adds `getDeviceByName_Transaction` and `createDevice_Transaction` functions
