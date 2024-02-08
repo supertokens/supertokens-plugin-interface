@@ -17,6 +17,7 @@
 
 package io.supertokens.pluginInterface;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import io.supertokens.pluginInterface.exceptions.DbInitException;
 import io.supertokens.pluginInterface.exceptions.InvalidConfigException;
@@ -88,6 +89,8 @@ public interface Storage {
     String[] getProtectedConfigsFromSuperTokensSaaSUsers();
 
     Set<String> getValidFieldsInConfig();
+
+    JsonArray getConfigFieldsJson();
 
     void setLogLevels(Set<LOG_LEVEL> logLevels);
 
