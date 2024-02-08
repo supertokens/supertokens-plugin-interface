@@ -7,6 +7,10 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [4.0.6] - 2024-02-08
+
+- Add a new method `getConfigFieldsJson` to fetch the plugin config as json
+
 ## [4.0.5] - 2023-12-05
 
 - Adds `InvalidConfigException` to throws list of `canBeUsed` function
