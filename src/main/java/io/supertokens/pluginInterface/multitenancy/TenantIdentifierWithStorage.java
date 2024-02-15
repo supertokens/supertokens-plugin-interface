@@ -132,12 +132,4 @@ public class TenantIdentifierWithStorage extends TenantIdentifier {
         }
         return (MultitenancyStorage) this.storage;
     }
-
-    public BulkImportStorage getBulkImportStorage() {
-        if (this.storage.getType() != STORAGE_TYPE.SQL) {
-            // we only support SQL for now
-            throw new UnsupportedOperationException("");
-        }
-        return (BulkImportStorage) this.storage;
-    }
 }

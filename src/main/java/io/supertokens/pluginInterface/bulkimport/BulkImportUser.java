@@ -38,7 +38,7 @@ public class BulkImportUser {
     public List<LoginMethod> loginMethods;
     public ArrayList<String> errors = new ArrayList<>();
 
-    public BulkImportUser(JsonObject userData, ArrayList<String> validTenantIds, String id) throws InvalidBulkImportDataException {
+    public BulkImportUser(JsonObject userData, String id) throws InvalidBulkImportDataException {
         this.id =  id != null ? id : UUID.randomUUID().toString();
         this.userData = userData;
         this.externalUserId = parseAndValidateField(userData, "externalUserId", ValueType.STRING, false, String.class,
@@ -47,7 +47,7 @@ public class BulkImportUser {
                 ".");
         this.userRoles = getParsedUserRoles(userData);
         this.totpDevices = getParsedTotpDevices(userData);
-        this.loginMethods = getParsedLoginMethods(userData, validTenantIds);
+        this.loginMethods = getParsedLoginMethods(userData);
 
         if (errors.size() > 0) {
             throw new InvalidBulkImportDataException(errors);
@@ -85,7 +85,7 @@ public class BulkImportUser {
         return totpDevices;
     }
 
-    private ArrayList<LoginMethod> getParsedLoginMethods(JsonObject userData, ArrayList<String> validTenantIds) {
+    private ArrayList<LoginMethod> getParsedLoginMethods(JsonObject userData) {
         JsonArray jsonLoginMethods = parseAndValidateField(userData, "loginMethods", ValueType.ARRAY_OF_OBJECT, true,
                 JsonArray.class, ".");
 
