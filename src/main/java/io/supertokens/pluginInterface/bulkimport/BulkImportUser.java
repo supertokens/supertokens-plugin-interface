@@ -53,11 +53,11 @@ public class BulkImportUser {
 
     public static class TotpDevice {
         public String secretKey;
-        public Number period;
-        public Number skew;
+        public Integer period;
+        public Integer skew;
         public String deviceName;
 
-        public TotpDevice(String secretKey, Number period, Number skew, String deviceName) {
+        public TotpDevice(String secretKey, Integer period, Integer skew, String deviceName) {
             this.secretKey = secretKey;
             this.period = period;
             this.skew = skew;

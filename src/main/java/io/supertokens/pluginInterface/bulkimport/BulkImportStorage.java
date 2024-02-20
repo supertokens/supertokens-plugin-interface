@@ -40,7 +40,7 @@ public interface BulkImportStorage extends NonAuthRecipeStorage {
      * Get users from the bulk_import_users table
      */
     List<BulkImportUserInfo> getBulkImportUsers(AppIdentifier appIdentifier, @Nonnull Integer limit, @Nullable BulkImportUserStatus status,
-            @Nullable String bulkImportUserId) throws StorageQueryException;
+            @Nullable String bulkImportUserId, @Nullable Long createdAt) throws StorageQueryException;
 
     /**
      * Delete users by id from the bulk_import_users table
