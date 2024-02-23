@@ -17,6 +17,7 @@
 package io.supertokens.pluginInterface;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class ConfigFieldInfo {
     @Nonnull
@@ -26,13 +27,14 @@ public class ConfigFieldInfo {
     public boolean isDifferentAcrossTenants;
     @Nonnull
     public String type;
+    @Nullable
     public String[] options;
 
-    public ConfigFieldInfo(String name, String description, boolean isDifferentAcrossTenants, String type) {
+    public ConfigFieldInfo(@Nonnull String name, @Nonnull String description, boolean isDifferentAcrossTenants, @Nonnull String type) {
         this(name, description, isDifferentAcrossTenants, type, null);
     }
 
-    public ConfigFieldInfo(String name, String description, boolean isDifferentAcrossTenants, String type, String[] options) {
+    public ConfigFieldInfo(@Nonnull String name, @Nonnull String description, boolean isDifferentAcrossTenants, @Nonnull String type, @Nullable String[] options) {
         this.name = name;
         this.description = description;
         this.isDifferentAcrossTenants = isDifferentAcrossTenants;
