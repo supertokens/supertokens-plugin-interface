@@ -53,11 +53,11 @@ public class BulkImportUser {
 
     public static class TotpDevice {
         public String secretKey;
-        public Integer period;
-        public Integer skew;
+        public int period;
+        public int skew;
         public String deviceName;
 
-        public TotpDevice(String secretKey, Integer period, Integer skew, String deviceName) {
+        public TotpDevice(String secretKey, int period, int skew, String deviceName) {
             this.secretKey = secretKey;
             this.period = period;
             this.skew = skew;
@@ -67,8 +67,8 @@ public class BulkImportUser {
 
     public static class LoginMethod {
         public String tenantId;
-        public Boolean isVerified;
-        public Boolean isPrimary;
+        public boolean isVerified;
+        public boolean isPrimary;
         public long timeJoinedInMSSinceEpoch;
         public String recipeId;
 
@@ -76,7 +76,7 @@ public class BulkImportUser {
         public ThirdPartyLoginMethod thirdPartyLoginMethod;
         public PasswordlessLoginMethod passwordlessLoginMethod;
 
-        public LoginMethod(String tenantId, String recipeId, Boolean isVerified, Boolean isPrimary, long timeJoinedInMSSinceEpoch, EmailPasswordLoginMethod emailPasswordLoginMethod, ThirdPartyLoginMethod thirdPartyLoginMethod, PasswordlessLoginMethod passwordlessLoginMethod) {
+        public LoginMethod(String tenantId, String recipeId, boolean isVerified, boolean isPrimary, long timeJoinedInMSSinceEpoch, EmailPasswordLoginMethod emailPasswordLoginMethod, ThirdPartyLoginMethod thirdPartyLoginMethod, PasswordlessLoginMethod passwordlessLoginMethod) {
             this.tenantId = tenantId;
             this.recipeId = recipeId;
             this.isVerified = isVerified;
