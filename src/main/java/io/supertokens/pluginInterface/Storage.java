@@ -90,7 +90,7 @@ public interface Storage {
 
     Set<String> getValidFieldsInConfig();
 
-    ArrayList<ConfigFieldInfo> getConfigFieldsInfo();
+    ArrayList<ConfigFieldInfo> getConfigFieldsInfo() throws InvalidConfigException;
 
     void setLogLevels(Set<LOG_LEVEL> logLevels);
 

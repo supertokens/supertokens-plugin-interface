@@ -16,10 +16,15 @@
  */
 package io.supertokens.pluginInterface;
 
+import javax.annotation.Nonnull;
+
 public class ConfigFieldInfo {
+    @Nonnull
     public String name;
+    @Nonnull
     public String description;
     public boolean isDifferentAcrossTenants;
+    @Nonnull
     public String type;
     public String[] options;
 
