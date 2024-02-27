@@ -16,7 +16,7 @@
 
 package io.supertokens.pluginInterface.multitenancy;
 
-import io.supertokens.pluginInterface.ActiveUsersStorage;
+import io.supertokens.pluginInterface.ActiveUsersSQLStorage;
 import io.supertokens.pluginInterface.STORAGE_TYPE;
 import io.supertokens.pluginInterface.Storage;
 import io.supertokens.pluginInterface.authRecipe.AuthRecipeStorage;
@@ -153,12 +153,12 @@ public class AppIdentifierWithStorage extends AppIdentifier {
         return (TOTPSQLStorage) this.storage;
     }
 
-    public ActiveUsersStorage getActiveUsersStorage() {
+    public ActiveUsersSQLStorage getActiveUsersStorage() {
         if (this.storage.getType() != STORAGE_TYPE.SQL) {
             // we only support SQL for now
             throw new UnsupportedOperationException("");
         }
-        return (ActiveUsersStorage) this.storage;
+        return (ActiveUsersSQLStorage) this.storage;
     }
 
     public BulkImportStorage getBulkImportStorage() {
