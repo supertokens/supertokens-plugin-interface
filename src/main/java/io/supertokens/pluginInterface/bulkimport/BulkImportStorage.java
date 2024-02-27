@@ -43,14 +43,9 @@ public interface BulkImportStorage extends NonAuthRecipeStorage {
             @Nullable String bulkImportUserId, @Nullable Long createdAt) throws StorageQueryException;
 
     /**
-     * Update the status of the users in the bulk_import_users table
-     */
-    void updateBulkImportUserStatus(AppIdentifier appIdentifier, @Nonnull String bulkImportUserId, @Nonnull BulkImportUserStatus status) throws StorageQueryException;
-
-    /**
      * Delete users by id from the bulk_import_users table
      */
-    void deleteBulkImportUsers(AppIdentifier appIdentifier, @Nonnull String[] bulkImportUserIds) throws StorageQueryException;
+    List<String> deleteBulkImportUsers(AppIdentifier appIdentifier, @Nonnull String[] bulkImportUserIds) throws StorageQueryException;
 
     public enum BulkImportUserStatus {
         NEW, PROCESSING, FAILED
