@@ -21,6 +21,8 @@ import java.util.List;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
+import io.supertokens.pluginInterface.bulkimport.BulkImportStorage.BulkImportUserStatus;
+
 public class BulkImportUser {
     public String id;
     public String externalUserId;
@@ -29,7 +31,13 @@ public class BulkImportUser {
     public List<TotpDevice> totpDevices;
     public List<LoginMethod> loginMethods;
 
-    public BulkImportUser(String id, String externalUserId, JsonObject userMetadata, List<String> userRoles, List<TotpDevice> totpDevices, List<LoginMethod> loginMethods) {
+    // Following fields come from the DB Record.
+    public BulkImportUserStatus status;
+    public Long createdAt;
+    public Long updatedAt;
+
+    public BulkImportUser(String id, String externalUserId, JsonObject userMetadata, List<String> userRoles,
+            List<TotpDevice> totpDevices, List<LoginMethod> loginMethods) {
         this.id = id;
         this.externalUserId = externalUserId;
         this.userMetadata = userMetadata;
@@ -38,17 +46,31 @@ public class BulkImportUser {
         this.loginMethods = loginMethods;
     }
 
-   public String toString() {
-        Gson gson = new Gson();
-        JsonObject json = new JsonObject();
+    public static BulkImportUser fromDBJson(String id, String rawData, BulkImportUserStatus status, long createdAt,
+            long updatedAt) {
+        BulkImportUser user = new Gson().fromJson(rawData, BulkImportUser.class);
+        user.id = id;
+        user.status = status;
+        user.createdAt = createdAt;
+        user.updatedAt = updatedAt;
+        return user;
+    }
 
-        json.addProperty("externalUserId", externalUserId);
-        json.add("userMetadata", userMetadata);
-        json.add("roles", gson.toJsonTree(userRoles));
-        json.add("totp", gson.toJsonTree(totpDevices));
-        json.add("loginMethods", gson.toJsonTree(loginMethods));
+    public String toString() {
+        return new Gson().toJson(this);
+    }
 
-        return json.toString();
+    // This method returns a JSON object string representation, excluding 'status', 'createdAt', and 'updatedAt'. Useful for test comparisons.
+    public String toRawData() {
+        JsonObject jsonObject = new Gson().fromJson(this.toString(), JsonObject.class);
+        jsonObject.remove("status");
+        jsonObject.remove("createdAt");
+        jsonObject.remove("updatedAt");
+        return jsonObject.toString();
+    }
+    
+    public JsonObject toJsonObject() {
+        return new Gson().fromJson(this.toString(), JsonObject.class);
     }
 
     public static class TotpDevice {
@@ -71,54 +93,27 @@ public class BulkImportUser {
         public boolean isPrimary;
         public long timeJoinedInMSSinceEpoch;
         public String recipeId;
+        public String email;
+        public String passwordHash;
+        public String hashingAlgorithm;
+        public String thirdPartyId;
+        public String thirdPartyUserId;
+        public String phoneNumber;
 
-        public EmailPasswordLoginMethod emailPasswordLoginMethod;
-        public ThirdPartyLoginMethod thirdPartyLoginMethod;
-        public PasswordlessLoginMethod passwordlessLoginMethod;
-
-        public LoginMethod(String tenantId, String recipeId, boolean isVerified, boolean isPrimary, long timeJoinedInMSSinceEpoch, EmailPasswordLoginMethod emailPasswordLoginMethod, ThirdPartyLoginMethod thirdPartyLoginMethod, PasswordlessLoginMethod passwordlessLoginMethod) {
+        public LoginMethod(String tenantId, String recipeId, boolean isVerified, boolean isPrimary,
+                long timeJoinedInMSSinceEpoch, String email, String passwordHash, String hashingAlgorithm,
+                String thirdPartyId, String thirdPartyUserId, String phoneNumber) {
             this.tenantId = tenantId;
             this.recipeId = recipeId;
             this.isVerified = isVerified;
             this.isPrimary = isPrimary;
             this.timeJoinedInMSSinceEpoch = timeJoinedInMSSinceEpoch;
-            this.emailPasswordLoginMethod = emailPasswordLoginMethod;
-            this.thirdPartyLoginMethod = thirdPartyLoginMethod;
-            this.passwordlessLoginMethod = passwordlessLoginMethod;
-        }
-
-        public static class EmailPasswordLoginMethod {
-            public String email;
-            public String passwordHash;
-            public String hashingAlgorithm;
-
-            public EmailPasswordLoginMethod(String email, String passwordHash, String hashingAlgorithm) {
-                this.email = email;
-                this.passwordHash = passwordHash;
-                this.hashingAlgorithm = hashingAlgorithm;
-            }
-        }
-
-        public static class ThirdPartyLoginMethod {
-            public String email;
-            public String thirdPartyId;
-            public String thirdPartyUserId;
-
-            public ThirdPartyLoginMethod(String email, String thirdPartyId, String thirdPartyUserId) {
-                this.email = email;
-                this.thirdPartyId = thirdPartyId;
-                this.thirdPartyUserId = thirdPartyUserId;
-            }
-        }
-
-        public static class PasswordlessLoginMethod {
-            public String email;
-            public String phoneNumber;
-
-            public PasswordlessLoginMethod(String email, String phoneNumber) {
-                this.email = email;
-                this.phoneNumber = phoneNumber;
-            }
+            this.email = email;
+            this.passwordHash = passwordHash;
+            this.hashingAlgorithm = hashingAlgorithm;
+            this.thirdPartyId = thirdPartyId;
+            this.thirdPartyUserId = thirdPartyUserId;
+            this.phoneNumber = phoneNumber;
         }
     }
 }
