@@ -46,14 +46,8 @@ public class BulkImportUser {
         this.loginMethods = loginMethods;
     }
 
-    public static BulkImportUser fromDBJson(String id, String rawData, BulkImportUserStatus status, long createdAt,
-            long updatedAt) {
-        BulkImportUser user = new Gson().fromJson(rawData, BulkImportUser.class);
-        user.id = id;
-        user.status = status;
-        user.createdAt = createdAt;
-        user.updatedAt = updatedAt;
-        return user;
+    public static BulkImportUser fromJson(JsonObject jsonObject) {
+        return new Gson().fromJson(jsonObject, BulkImportUser.class);
     }
 
     public String toString() {
