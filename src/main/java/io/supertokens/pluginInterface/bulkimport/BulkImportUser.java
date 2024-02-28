@@ -46,7 +46,7 @@ public class BulkImportUser {
         this.loginMethods = loginMethods;
     }
 
-    public static BulkImportUser fromJson(JsonObject jsonObject) {
+    public static BulkImportUser fromTesting_fromJson(JsonObject jsonObject) {
         return new Gson().fromJson(jsonObject, BulkImportUser.class);
     }
 
