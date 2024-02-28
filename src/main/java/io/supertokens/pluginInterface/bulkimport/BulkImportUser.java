@@ -21,7 +21,7 @@ import java.util.List;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
-import io.supertokens.pluginInterface.bulkimport.BulkImportStorage.BulkImportUserStatus;
+import io.supertokens.pluginInterface.bulkimport.BulkImportStorage.BULK_IMPORT_USER_STATUS;
 
 public class BulkImportUser {
     public String id;
@@ -32,7 +32,7 @@ public class BulkImportUser {
     public List<LoginMethod> loginMethods;
 
     // Following fields come from the DB Record.
-    public BulkImportUserStatus status;
+    public BULK_IMPORT_USER_STATUS status;
     public Long createdAt;
     public Long updatedAt;
 
@@ -50,21 +50,27 @@ public class BulkImportUser {
         return new Gson().fromJson(jsonObject, BulkImportUser.class);
     }
 
-    public String toString() {
-        return new Gson().toJson(this);
-    }
-
-    // This method returns a JSON object string representation, excluding 'status', 'createdAt', and 'updatedAt'. Useful for test comparisons.
-    public String toRawData() {
-        JsonObject jsonObject = new Gson().fromJson(this.toString(), JsonObject.class);
+    // This method returns a JSON object string representation, excluding 'status', 'createdAt', and 'updatedAt'.
+    // It is used for inserting the user into the database or during testing.
+    public String toRawDataForDbStorage() {
+        JsonObject jsonObject = new Gson().fromJson(new Gson().toJson(this), JsonObject.class);
         jsonObject.remove("status");
         jsonObject.remove("createdAt");
         jsonObject.remove("updatedAt");
         return jsonObject.toString();
     }
+
+    public static BulkImportUser fromRawDataFromDbStorage(String id, String rawData, BULK_IMPORT_USER_STATUS status, long createdAt, long updatedAt) {
+        BulkImportUser user = new Gson().fromJson(rawData, BulkImportUser.class);
+        user.id = id;
+        user.status = status;
+        user.createdAt = createdAt;
+        user.updatedAt = updatedAt;
+        return user;
+    }
     
     public JsonObject toJsonObject() {
-        return new Gson().fromJson(this.toString(), JsonObject.class);
+        return new Gson().fromJson(new Gson().toJson(this), JsonObject.class);
     }
 
     public static class TotpDevice {
