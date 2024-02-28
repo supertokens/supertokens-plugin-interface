@@ -30,5 +30,5 @@ public interface BulkImportSQLStorage extends BulkImportStorage, SQLStorage {
      * Update the status of the users in the bulk_import_users table
      */
     void updateBulkImportUserStatus_Transaction(AppIdentifier appIdentifier,
-            TransactionConnection con, @Nonnull String[] bulkImportUserIds, @Nonnull BulkImportUserStatus status) throws StorageQueryException;
+            TransactionConnection con, @Nonnull String[] bulkImportUserIds, @Nonnull BULK_IMPORT_USER_STATUS status) throws StorageQueryException;
 }
