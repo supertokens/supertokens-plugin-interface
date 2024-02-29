@@ -144,4 +144,8 @@ public class AppIdentifierWithStorage extends AppIdentifier {
         }
         return (ActiveUsersStorage) this.storage;
     }
+
+    public TenantIdentifierWithStorage getAsPublicTenantIdentifierWithStorage() {
+        return new TenantIdentifierWithStorage(this.getConnectionUriDomain(), this.getAppId(), null, this.storage);
+    }
 }
