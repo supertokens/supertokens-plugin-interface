@@ -28,7 +28,7 @@ public interface UserRolesStorage extends NonAuthRecipeStorage {
 
     // associate a userId with a role that exists
     void addRoleToUser(TenantIdentifier tenantIdentifier, String userId, String role)
-            throws StorageQueryException, UnknownRoleException, DuplicateUserRoleMappingException,
+            throws StorageQueryException, DuplicateUserRoleMappingException,
             TenantOrAppNotFoundException;
 
     // get all roles associated with the input userId
