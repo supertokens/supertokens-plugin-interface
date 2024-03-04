@@ -42,6 +42,9 @@ public interface UserRolesStorage extends NonAuthRecipeStorage {
     // get roles associated with the input permission
     String[] getRolesThatHavePermission(AppIdentifier appIdentifier, String permission) throws StorageQueryException;
 
+    // delete a role
+    boolean deleteRole(AppIdentifier appIdentifier, String role) throws StorageQueryException;
+
     // get all created roles
     String[] getRoles(AppIdentifier appIdentifier) throws StorageQueryException;
 
@@ -50,4 +53,8 @@ public interface UserRolesStorage extends NonAuthRecipeStorage {
 
     // delete all roles for the input userId
     int deleteAllRolesForUser(TenantIdentifier tenantIdentifier, String userId) throws StorageQueryException;
+
+    // delete all user association with a role (this is called before deleting the role)
+    boolean deleteAllUserRoleAssociationsForRole(AppIdentifier appIdentifier,
+                                                             String role) throws StorageQueryException;
 }
