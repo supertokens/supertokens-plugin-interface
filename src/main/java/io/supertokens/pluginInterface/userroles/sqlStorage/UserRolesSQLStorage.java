@@ -56,4 +56,10 @@ public interface UserRolesSQLStorage extends UserRolesStorage, SQLStorage {
 
     void deleteAllRolesForUser_Transaction(TransactionConnection con, AppIdentifier appIdentifier, String userId)
             throws StorageQueryException;
+
+    // delete a role
+    boolean deleteRole_Transaction(TransactionConnection con, AppIdentifier appIdentifier, String role) throws StorageQueryException;
+
+    boolean deleteAllUserRoleAssociationsForRole_Transaction(TransactionConnection con, AppIdentifier appIdentifier,
+                                                          String role) throws StorageQueryException;
 }
