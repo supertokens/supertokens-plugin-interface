@@ -22,13 +22,12 @@ import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
 import io.supertokens.pluginInterface.multitenancy.exceptions.TenantOrAppNotFoundException;
 import io.supertokens.pluginInterface.nonAuthRecipe.NonAuthRecipeStorage;
 import io.supertokens.pluginInterface.userroles.exception.DuplicateUserRoleMappingException;
-import io.supertokens.pluginInterface.userroles.exception.UnknownRoleException;
 
 public interface UserRolesStorage extends NonAuthRecipeStorage {
 
     // associate a userId with a role that exists
     void addRoleToUser(TenantIdentifier tenantIdentifier, String userId, String role)
-            throws StorageQueryException, UnknownRoleException, DuplicateUserRoleMappingException,
+            throws StorageQueryException, DuplicateUserRoleMappingException,
             TenantOrAppNotFoundException;
 
     // get all roles associated with the input userId
@@ -54,4 +53,8 @@ public interface UserRolesStorage extends NonAuthRecipeStorage {
 
     // delete all roles for the input userId
     int deleteAllRolesForUser(TenantIdentifier tenantIdentifier, String userId) throws StorageQueryException;
+
+    // delete all user association with a role (this is called before deleting the role)
+    boolean deleteAllUserRoleAssociationsForRole(AppIdentifier appIdentifier,
+                                                             String role) throws StorageQueryException;
 }
