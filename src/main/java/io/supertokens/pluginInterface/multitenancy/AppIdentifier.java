@@ -80,8 +80,4 @@ public class AppIdentifier {
     public TenantIdentifier getAsPublicTenantIdentifier() {
         return new TenantIdentifier(this.getConnectionUriDomain(), this.getAppId(), null);
     }
-
-    public AppIdentifierWithStorage withStorage(Storage storage) {
-        return new AppIdentifierWithStorage(this.getConnectionUriDomain(), this.getAppId(), storage);
-    }
 }
