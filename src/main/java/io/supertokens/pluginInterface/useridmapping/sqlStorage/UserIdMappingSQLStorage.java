@@ -16,13 +16,16 @@
 
 package io.supertokens.pluginInterface.useridmapping.sqlStorage;
 
+import javax.annotation.Nullable;
+
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
-import io.supertokens.pluginInterface.multitenancy.AppIdentifierWithStorage;
 import io.supertokens.pluginInterface.sqlStorage.SQLStorage;
 import io.supertokens.pluginInterface.sqlStorage.TransactionConnection;
 import io.supertokens.pluginInterface.useridmapping.UserIdMapping;
 import io.supertokens.pluginInterface.useridmapping.UserIdMappingStorage;
+import io.supertokens.pluginInterface.useridmapping.exception.UnknownSuperTokensUserIdException;
+import io.supertokens.pluginInterface.useridmapping.exception.UserIdMappingAlreadyExistsException;
 
 public interface UserIdMappingSQLStorage extends UserIdMappingStorage, SQLStorage {
     UserIdMapping getUserIdMapping_Transaction(TransactionConnection con, AppIdentifier appIdentifier, String userId, boolean isSuperTokensUserId)
@@ -30,4 +33,8 @@ public interface UserIdMappingSQLStorage extends UserIdMappingStorage, SQLStorag
 
     UserIdMapping[] getUserIdMapping_Transaction(TransactionConnection con, AppIdentifier appIdentifier, String userId)
             throws StorageQueryException;
+
+    void bulkImport_createUserIdMapping_Transaction(TransactionConnection con, AppIdentifier appIdentifier, String superTokensUserId, String externalUserId,
+            @Nullable String externalUserIdInfo)
+            throws StorageQueryException, UnknownSuperTokensUserIdException, UserIdMappingAlreadyExistsException;
 }

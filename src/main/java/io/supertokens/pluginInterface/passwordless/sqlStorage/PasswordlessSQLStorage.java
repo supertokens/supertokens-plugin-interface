@@ -16,11 +16,14 @@
 
 package io.supertokens.pluginInterface.passwordless.sqlStorage;
 
+import io.supertokens.pluginInterface.authRecipe.AuthRecipeUserInfo;
 import io.supertokens.pluginInterface.emailpassword.exceptions.DuplicateEmailException;
+import io.supertokens.pluginInterface.emailpassword.exceptions.DuplicateUserIdException;
 import io.supertokens.pluginInterface.emailpassword.exceptions.UnknownUserIdException;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
 import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
+import io.supertokens.pluginInterface.multitenancy.exceptions.TenantOrAppNotFoundException;
 import io.supertokens.pluginInterface.passwordless.PasswordlessCode;
 import io.supertokens.pluginInterface.passwordless.PasswordlessDevice;
 import io.supertokens.pluginInterface.passwordless.PasswordlessStorage;
@@ -85,4 +88,9 @@ public interface PasswordlessSQLStorage extends PasswordlessStorage, SQLStorage 
     void deletePasswordlessUser_Transaction(TransactionConnection con, AppIdentifier appIdentifier, String userId,
                                             boolean deleteUserIdMappingToo)
             throws StorageQueryException;
+
+    AuthRecipeUserInfo bulkImport_createUser_Transaction(TransactionConnection con, TenantIdentifier tenantIdentifier, String id, 
+                @Nullable String email, @Nullable String phoneNumber, long timeJoined)
+            throws StorageQueryException, DuplicateEmailException, DuplicatePhoneNumberException,
+            DuplicateUserIdException, TenantOrAppNotFoundException;
 }

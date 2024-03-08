@@ -27,16 +27,17 @@ public class BulkImportUser {
     public String id;
     public String externalUserId;
     public JsonObject userMetadata;
-    public List<String> userRoles;
+    public List<UserRole> userRoles;
     public List<TotpDevice> totpDevices;
     public List<LoginMethod> loginMethods;
 
     // Following fields come from the DB Record.
     public BULK_IMPORT_USER_STATUS status;
+    public String errorMessage;
     public Long createdAt;
     public Long updatedAt;
 
-    public BulkImportUser(String id, String externalUserId, JsonObject userMetadata, List<String> userRoles,
+    public BulkImportUser(String id, String externalUserId, JsonObject userMetadata, List<UserRole> userRoles,
             List<TotpDevice> totpDevices, List<LoginMethod> loginMethods) {
         this.id = id;
         this.externalUserId = externalUserId;
@@ -46,7 +47,7 @@ public class BulkImportUser {
         this.loginMethods = loginMethods;
     }
 
-    public static BulkImportUser fromTesting_fromJson(JsonObject jsonObject) {
+    public static BulkImportUser forTesting_fromJson(JsonObject jsonObject) {
         return new Gson().fromJson(jsonObject, BulkImportUser.class);
     }
 
@@ -60,10 +61,11 @@ public class BulkImportUser {
         return jsonObject.toString();
     }
 
-    public static BulkImportUser fromRawDataFromDbStorage(String id, String rawData, BULK_IMPORT_USER_STATUS status, long createdAt, long updatedAt) {
+    public static BulkImportUser fromRawDataFromDbStorage(String id, String rawData, BULK_IMPORT_USER_STATUS status, String errorMessage, long createdAt, long updatedAt) {
         BulkImportUser user = new Gson().fromJson(rawData, BulkImportUser.class);
         user.id = id;
         user.status = status;
+        user.errorMessage = errorMessage;
         user.createdAt = createdAt;
         user.updatedAt = updatedAt;
         return user;
@@ -71,6 +73,16 @@ public class BulkImportUser {
     
     public JsonObject toJsonObject() {
         return new Gson().fromJson(new Gson().toJson(this), JsonObject.class);
+    }
+
+    public static class UserRole {
+        public String role;
+        public List<String> tenantIds;
+
+        public UserRole(String role, List<String> tenantIds) {
+            this.role = role;
+            this.tenantIds = tenantIds;
+        }
     }
 
     public static class TotpDevice {
@@ -88,7 +100,7 @@ public class BulkImportUser {
     }
 
     public static class LoginMethod {
-        public String tenantId;
+        public List<String> tenantIds;
         public boolean isVerified;
         public boolean isPrimary;
         public long timeJoinedInMSSinceEpoch;
@@ -99,11 +111,12 @@ public class BulkImportUser {
         public String thirdPartyId;
         public String thirdPartyUserId;
         public String phoneNumber;
+        public String superTokensOrExternalUserId;
 
-        public LoginMethod(String tenantId, String recipeId, boolean isVerified, boolean isPrimary,
+        public LoginMethod(List<String> tenantIds, String recipeId, boolean isVerified, boolean isPrimary,
                 long timeJoinedInMSSinceEpoch, String email, String passwordHash, String hashingAlgorithm,
                 String thirdPartyId, String thirdPartyUserId, String phoneNumber) {
-            this.tenantId = tenantId;
+            this.tenantIds = tenantIds;
             this.recipeId = recipeId;
             this.isVerified = isVerified;
             this.isPrimary = isPrimary;
