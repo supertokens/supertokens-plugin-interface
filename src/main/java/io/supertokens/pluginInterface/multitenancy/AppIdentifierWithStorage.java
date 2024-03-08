@@ -28,7 +28,7 @@ import io.supertokens.pluginInterface.passwordless.sqlStorage.PasswordlessSQLSto
 import io.supertokens.pluginInterface.session.SessionStorage;
 import io.supertokens.pluginInterface.thirdparty.sqlStorage.ThirdPartySQLStorage;
 import io.supertokens.pluginInterface.totp.sqlStorage.TOTPSQLStorage;
-import io.supertokens.pluginInterface.useridmapping.UserIdMappingStorage;
+import io.supertokens.pluginInterface.useridmapping.sqlStorage.UserIdMappingSQLStorage;
 import io.supertokens.pluginInterface.usermetadata.sqlStorage.UserMetadataSQLStorage;
 import io.supertokens.pluginInterface.userroles.sqlStorage.UserRolesSQLStorage;
 
@@ -120,13 +120,13 @@ public class AppIdentifierWithStorage extends AppIdentifier {
         return (UserMetadataSQLStorage) this.storage;
     }
 
-    public UserIdMappingStorage getUserIdMappingStorage() {
+    public UserIdMappingSQLStorage getUserIdMappingStorage() {
         if (this.storage.getType() != STORAGE_TYPE.SQL) {
             // we only support SQL for now
             throw new UnsupportedOperationException("");
         }
 
-        return (UserIdMappingStorage) this.storage;
+        return (UserIdMappingSQLStorage) this.storage;
     }
 
     public UserRolesSQLStorage getUserRolesStorage() {

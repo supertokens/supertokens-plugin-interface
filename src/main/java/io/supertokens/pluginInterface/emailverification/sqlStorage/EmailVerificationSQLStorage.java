@@ -45,4 +45,5 @@ public interface EmailVerificationSQLStorage extends EmailVerificationStorage, S
     void deleteEmailVerificationUserInfo_Transaction(TransactionConnection con, AppIdentifier appIdentifier,
                                                      String userId) throws StorageQueryException;
 
+    void bulkImport_updateIsEmailVerifiedToExternalUserId_Transaction(TransactionConnection con, AppIdentifier appIdentifier, String supertokensUserId, String externalUserId) throws StorageQueryException;
 }

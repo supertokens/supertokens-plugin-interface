@@ -23,6 +23,7 @@ import io.supertokens.pluginInterface.multitenancy.exceptions.TenantOrAppNotFoun
 import io.supertokens.pluginInterface.sqlStorage.SQLStorage;
 import io.supertokens.pluginInterface.sqlStorage.TransactionConnection;
 import io.supertokens.pluginInterface.userroles.UserRolesStorage;
+import io.supertokens.pluginInterface.userroles.exception.DuplicateUserRoleMappingException;
 import io.supertokens.pluginInterface.userroles.exception.UnknownRoleException;
 
 public interface UserRolesSQLStorage extends UserRolesStorage, SQLStorage {
@@ -56,4 +57,8 @@ public interface UserRolesSQLStorage extends UserRolesStorage, SQLStorage {
 
     void deleteAllRolesForUser_Transaction(TransactionConnection con, AppIdentifier appIdentifier, String userId)
             throws StorageQueryException;
+
+    void bulkImport_addRoleToUser_Transaction(TransactionConnection con, TenantIdentifier tenantIdentifier, String userId, String role)
+            throws StorageQueryException, UnknownRoleException, DuplicateUserRoleMappingException,
+            TenantOrAppNotFoundException;
 }

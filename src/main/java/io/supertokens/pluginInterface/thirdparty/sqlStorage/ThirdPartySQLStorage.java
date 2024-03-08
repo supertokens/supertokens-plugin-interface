@@ -16,11 +16,17 @@
 
 package io.supertokens.pluginInterface.thirdparty.sqlStorage;
 
+import io.supertokens.pluginInterface.authRecipe.AuthRecipeUserInfo;
+import io.supertokens.pluginInterface.authRecipe.LoginMethod;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
+import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
+import io.supertokens.pluginInterface.multitenancy.exceptions.TenantOrAppNotFoundException;
 import io.supertokens.pluginInterface.sqlStorage.SQLStorage;
 import io.supertokens.pluginInterface.sqlStorage.TransactionConnection;
 import io.supertokens.pluginInterface.thirdparty.ThirdPartyStorage;
+import io.supertokens.pluginInterface.thirdparty.exception.DuplicateThirdPartyUserException;
+import io.supertokens.pluginInterface.thirdparty.exception.DuplicateUserIdException;
 
 public interface ThirdPartySQLStorage extends ThirdPartyStorage, SQLStorage {
 
@@ -31,4 +37,10 @@ public interface ThirdPartySQLStorage extends ThirdPartyStorage, SQLStorage {
     void deleteThirdPartyUser_Transaction(TransactionConnection con, AppIdentifier appIdentifier, String userId,
                                           boolean deleteUserIdMappingToo)
             throws StorageQueryException;
+
+    AuthRecipeUserInfo bulkImport_signUp_Transaction(TransactionConnection con, TenantIdentifier tenantIdentifier,
+            String id, String email, LoginMethod.ThirdParty thirdParty,
+            long timeJoined)
+            throws StorageQueryException, DuplicateUserIdException, DuplicateThirdPartyUserException,
+            TenantOrAppNotFoundException;
 }
