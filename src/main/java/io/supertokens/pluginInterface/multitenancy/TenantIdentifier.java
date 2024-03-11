@@ -87,9 +87,4 @@ public class TenantIdentifier {
     public AppIdentifier toAppIdentifier() {
         return new AppIdentifier(this.getConnectionUriDomain(), this.getAppId());
     }
-
-    public TenantIdentifierWithStorage withStorage(Storage storage) {
-        return new TenantIdentifierWithStorage(this.getConnectionUriDomain(), this.getAppId(), this.getTenantId(),
-                storage);
-    }
 }
