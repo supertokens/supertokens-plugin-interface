@@ -25,4 +25,8 @@ public interface ActiveUsersSQLStorage extends ActiveUsersStorage, SQLStorage {
     /* Delete a user from active users table */
     void deleteUserActive_Transaction(TransactionConnection con, AppIdentifier appIdentifier, String userId)
             throws StorageQueryException;
+    void setUserActive_Transaction(TransactionConnection con, AppIdentifier appIdentifier, String userId, long timestamp)
+            throws StorageQueryException;
+    long getLastActiveByUserId_Transaction(TransactionConnection con, AppIdentifier appIdentifier, String userId)
+            throws StorageQueryException;
 }
