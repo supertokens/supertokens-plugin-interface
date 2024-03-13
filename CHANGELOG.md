@@ -7,7 +7,7 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
-## [6.0.0] - 2024-03-04
+## [6.0.0] - 2024-03-13
 
 - Replace `TotpNotEnabledException` with `UnknownUserTotpIdException`
 - ActiveUsersSQLStorage interface changes
@@ -25,6 +25,7 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Adds a new `useStaticKey` param to `updateSessionInfo_Transaction`
   - This enables smooth switching between `useDynamicAccessTokenSigningKey` settings by allowing refresh calls to
     change the signing key type of a session
+  Adds `appIdentifier` parameter to `getUserIdMappingForSuperTokensIds` in `UserIdMappingStorage`
 
 ## [5.0.0] - 2024-03-05
 
