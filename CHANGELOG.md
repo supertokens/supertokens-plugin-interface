@@ -7,7 +7,7 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
-## [6.0.0] - 2024-03-04
+## [6.0.0] - 2024-03-13
 
 - Replace `TotpNotEnabledException` with `UnknownUserTotpIdException`
 - ActiveUsersSQLStorage interface changes
