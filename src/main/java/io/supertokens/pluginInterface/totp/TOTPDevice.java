@@ -7,15 +7,17 @@ public class TOTPDevice {
     public final int period;
     public final int skew;
     public final boolean verified;
+    public final long createdAt;
 
     public TOTPDevice(String userId, String deviceName, String secretKey, int period,
-                      int skew, boolean verified) {
+                      int skew, boolean verified, long createdAt) {
         this.userId = userId;
         this.deviceName = deviceName;
         this.secretKey = secretKey;
         this.period = period;
         this.skew = skew;
         this.verified = verified;
+        this.createdAt = createdAt;
     }
 
     @Override
