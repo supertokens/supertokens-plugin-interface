@@ -9,6 +9,11 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 - Add a new method `getConfigFieldsJson` to fetch the plugin config as json
 
+## [5.0.0] - 2024-03-05
+
+- Removes types `AppIdentifierWithStorage` and `TenantIdentifierWithStorage`
+- Adds `deleteAllUserRoleAssociationsForRole` function to `UserRolesStorage`
+
 ## [4.0.5] - 2023-12-05
 
 - Adds `InvalidConfigException` to throws list of `canBeUsed` function
