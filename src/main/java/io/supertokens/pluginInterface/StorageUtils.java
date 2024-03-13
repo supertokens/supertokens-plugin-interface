@@ -16,7 +16,6 @@
 
 package io.supertokens.pluginInterface;
 
-import io.supertokens.pluginInterface.authRecipe.AuthRecipeStorage;
 import io.supertokens.pluginInterface.authRecipe.sqlStorage.AuthRecipeSQLStorage;
 import io.supertokens.pluginInterface.dashboard.sqlStorage.DashboardSQLStorage;
 import io.supertokens.pluginInterface.emailpassword.sqlStorage.EmailPasswordSQLStorage;
@@ -118,12 +117,12 @@ public class StorageUtils {
         return (TOTPSQLStorage) storage;
     }
 
-    public static ActiveUsersStorage getActiveUsersStorage(Storage storage) {
+    public static ActiveUsersSQLStorage getActiveUsersStorage(Storage storage) {
         if (storage.getType() != STORAGE_TYPE.SQL) {
             // we only support SQL for now
             throw new UnsupportedOperationException("");
         }
-        return (ActiveUsersStorage) storage;
+        return (ActiveUsersSQLStorage) storage;
     }
 
     public static MultitenancyStorage getMultitenancyStorage(Storage storage) {
