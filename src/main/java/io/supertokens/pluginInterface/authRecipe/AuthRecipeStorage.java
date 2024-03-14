@@ -64,4 +64,6 @@ public interface AuthRecipeStorage extends Storage {
     boolean checkIfUsesAccountLinking(AppIdentifier appIdentifier) throws StorageQueryException;
 
     int getUsersCountWithMoreThanOneLoginMethod(AppIdentifier appIdentifier) throws StorageQueryException;
+
+    int getUsersCountWithMoreThanOneLoginMethodOrTOTPEnabled(AppIdentifier appIdentifier) throws StorageQueryException;
 }

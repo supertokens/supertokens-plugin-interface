@@ -20,6 +20,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import io.supertokens.pluginInterface.utils.Utils;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -46,38 +47,6 @@ public class ThirdPartyConfig {
         }
 
         return result;
-    }
-
-    public static boolean unorderedArrayEquals(Object[] array1, Object[] array2) {
-        if (array1 == null && array2 == null) {
-            return true;
-        } else if (array1 == null || array2 == null) {
-            return false;
-        }
-
-        List<Object> items1 = List.of(array1);
-        List<Object> items2 = new ArrayList<>();
-        items2.addAll(Arrays.asList(array2));
-
-        if (items1.size() != items2.size()) return false;
-
-        for (Object p1 : items1) {
-            boolean found = false;
-            for (Object p2 : items2) {
-                if (p1.equals(p2)) {
-                    found = true;
-                    break;
-                }
-            }
-
-            if (!found) {
-                return false;
-            } else {
-                items2.remove(p1);
-            }
-        }
-
-        return true;
     }
 
     public static class Provider {
@@ -189,7 +158,7 @@ public class ThirdPartyConfig {
                 Provider otherProvider = (Provider) other;
                 return Objects.equals(otherProvider.thirdPartyId, this.thirdPartyId) &&
                         Objects.equals(otherProvider.name, this.name) &&
-                        unorderedArrayEquals(otherProvider.clients, this.clients) &&
+                        Utils.unorderedArrayEquals(otherProvider.clients, this.clients) &&
                         Objects.equals(otherProvider.authorizationEndpoint, this.authorizationEndpoint) &&
                         Objects.equals(otherProvider.authorizationEndpointQueryParams,
                                 this.authorizationEndpointQueryParams) &&
@@ -245,7 +214,7 @@ public class ThirdPartyConfig {
                 return Objects.equals(otherProviderClient.clientType, this.clientType) &&
                         otherProviderClient.clientId.equals(this.clientId) &&
                         Objects.equals(otherProviderClient.clientSecret, this.clientSecret) &&
-                        unorderedArrayEquals(otherProviderClient.scope, this.scope) &&
+                        Utils.unorderedArrayEquals(otherProviderClient.scope, this.scope) &&
                         otherProviderClient.forcePKCE == this.forcePKCE &&
                         Objects.equals(otherProviderClient.additionalConfig, this.additionalConfig);
             }
@@ -310,7 +279,7 @@ public class ThirdPartyConfig {
         if (other instanceof ThirdPartyConfig) {
             ThirdPartyConfig otherThirdPartyConfig = (ThirdPartyConfig) other;
             return otherThirdPartyConfig.enabled == this.enabled &&
-                    unorderedArrayEquals(otherThirdPartyConfig.providers, this.providers);
+                    Utils.unorderedArrayEquals(otherThirdPartyConfig.providers, this.providers);
         }
         return false;
     }

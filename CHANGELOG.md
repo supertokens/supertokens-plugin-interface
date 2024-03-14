@@ -9,6 +9,26 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 - Add a new method `getConfigFieldsJson` to fetch the plugin config as json
 
+## [6.0.0] - 2024-03-13
+
+- Replace `TotpNotEnabledException` with `UnknownUserTotpIdException`
+- ActiveUsersSQLStorage interface changes
+  - Adds `deleteUserActive_Transaction` function
+- ActiveUsersStorage interface changes
+  - Removes `countUsersEnabledTotp`, `countUsersEnabledTotpAndActiveSince` and `deleteUserActive_Transaction` functions
+  - Adds `countUsersThatHaveMoreThanOneLoginMethodOrTOTPEnabledAndActiveSince` function
+- AuthRecipeStorage interface changes
+  - Adds `getUsersCountWithMoreThanOneLoginMethodOrTOTPEnabled` function
+- TenantConfig changes
+  - Adds `firstFactors` and `requiredSecondaryFactors` fields
+- Adds `createdAt` field to `TOTPDevice`
+- TOTPSQLStorage interface changes
+  - Adds `getDeviceByName_Transaction` and `createDevice_Transaction` functions
+- Adds a new `useStaticKey` param to `updateSessionInfo_Transaction`
+  - This enables smooth switching between `useDynamicAccessTokenSigningKey` settings by allowing refresh calls to
+    change the signing key type of a session
+  Adds `appIdentifier` parameter to `getUserIdMappingForSuperTokensIds` in `UserIdMappingStorage`
+
 ## [5.0.0] - 2024-03-05
 
 - Removes types `AppIdentifierWithStorage` and `TenantIdentifierWithStorage`
@@ -95,7 +115,7 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [2.22.0] - 2023-03-30
 
-- Adds Support for Dashboard Search 
+- Adds Support for Dashboard Search
 
 ## [2.21.0] - 2023-03-27
 
