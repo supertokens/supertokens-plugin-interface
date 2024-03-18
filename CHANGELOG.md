@@ -7,6 +7,8 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Add a new method `getConfigFieldsJson` to fetch the plugin config as json
+
 ## [6.0.0] - 2024-03-13
 
 - Replace `TotpNotEnabledException` with `UnknownUserTotpIdException`
