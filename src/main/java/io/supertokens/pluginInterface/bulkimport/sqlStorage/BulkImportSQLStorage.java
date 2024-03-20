@@ -17,6 +17,7 @@
 package io.supertokens.pluginInterface.bulkimport.sqlStorage;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import io.supertokens.pluginInterface.bulkimport.BulkImportStorage;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
@@ -30,5 +31,10 @@ public interface BulkImportSQLStorage extends BulkImportStorage, SQLStorage {
      * Update the status of the users in the bulk_import_users table
      */
     void updateBulkImportUserStatus_Transaction(AppIdentifier appIdentifier,
-            TransactionConnection con, @Nonnull String[] bulkImportUserIds, @Nonnull BULK_IMPORT_USER_STATUS status) throws StorageQueryException;
+            TransactionConnection con, @Nonnull String[] bulkImportUserIds, @Nonnull BULK_IMPORT_USER_STATUS status, @Nullable String errorMessage) throws StorageQueryException;
+
+    /**
+     * Delete users by id from the bulk_import_users table
+     */
+    void deleteBulkImportUser_Transaction(AppIdentifier appIdentifier, TransactionConnection con, @Nonnull String bulkImportUserId) throws StorageQueryException;
 }

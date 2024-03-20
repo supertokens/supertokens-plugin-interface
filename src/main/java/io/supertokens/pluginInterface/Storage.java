@@ -32,6 +32,8 @@ public interface Storage {
     // if silent is true, do not log anything out on the console
     void constructor(String processId, boolean silent, boolean isTesting);
 
+    Storage createBulkImportProxyStorageInstance();
+
     void loadConfig(JsonObject jsonConfig, Set<LOG_LEVEL> logLevels, TenantIdentifier tenantIdentifier) throws InvalidConfigException;
 
     // this returns a unique ID based on the db's connection URI and table prefix such that
