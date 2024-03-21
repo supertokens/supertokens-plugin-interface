@@ -7,6 +7,10 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [5.0.1] - 2024-03-21
+
+- Adds `appIdentifier` param to `getUserIdMappingForSuperTokensIds`
+
 ## [5.0.0] - 2024-03-05
 
 - Removes types `AppIdentifierWithStorage` and `TenantIdentifierWithStorage`
