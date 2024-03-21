@@ -50,6 +50,6 @@ public interface UserIdMappingStorage extends Storage {
     // This function will be used to retrieve the userId mapping for a list of userIds. The key of the HashMap will be
     // superTokensUserId and the value will be the externalUserId. If a mapping does not exist for an input userId,
     // it will not be in a part of the returned HashMap
-    HashMap<String, String> getUserIdMappingForSuperTokensIds(ArrayList<String> userIds) throws StorageQueryException;
+    HashMap<String, String> getUserIdMappingForSuperTokensIds(AppIdentifier appIdentifier, ArrayList<String> userIds) throws StorageQueryException;
 
 }
