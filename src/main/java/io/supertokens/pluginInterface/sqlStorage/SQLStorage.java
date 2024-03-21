@@ -45,4 +45,12 @@ public interface SQLStorage extends Storage {
     public enum TransactionIsolationLevel {
         SERIALIZABLE, REPEATABLE_READ, READ_COMMITTED, READ_UNCOMMITTED, NONE
     }
+
+    /* BulkImportProxyStorage methods */
+
+    void closeConnectionForBulkImportProxyStorage() throws StorageQueryException;
+
+    void commitTransactionForBulkImportProxyStorage() throws StorageQueryException;
+
+    void rollbackTransactionForBulkImportProxyStorage() throws StorageQueryException;
 }
