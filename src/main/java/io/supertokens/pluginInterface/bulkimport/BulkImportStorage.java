@@ -52,6 +52,12 @@ public interface BulkImportStorage extends NonAuthRecipeStorage {
     */
     List<BulkImportUser> getBulkImportUsersAndChangeStatusToProcessing(AppIdentifier appIdentifier, @Nonnull Integer limit) throws StorageQueryException;
 
+
+    /**
+    * Update the bulk_import_user's primary_user_id by bulk_import_user_id
+    */
+    void updateBulkImportUserPrimaryUserId(AppIdentifier appIdentifier, @Nonnull String bulkImportUserId, @Nonnull String primaryUserId) throws StorageQueryException;
+
     public enum BULK_IMPORT_USER_STATUS {
         NEW, PROCESSING, FAILED
     }

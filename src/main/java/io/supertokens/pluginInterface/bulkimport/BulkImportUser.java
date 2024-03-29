@@ -33,6 +33,7 @@ public class BulkImportUser {
 
     // Following fields come from the DB Record.
     public BULK_IMPORT_USER_STATUS status;
+    public String primaryUserId;
     public String errorMessage;
     public Long createdAt;
     public Long updatedAt;
@@ -61,10 +62,11 @@ public class BulkImportUser {
         return jsonObject.toString();
     }
 
-    public static BulkImportUser fromRawDataFromDbStorage(String id, String rawData, BULK_IMPORT_USER_STATUS status, String errorMessage, long createdAt, long updatedAt) {
+    public static BulkImportUser fromRawDataFromDbStorage(String id, String rawData, BULK_IMPORT_USER_STATUS status, String primaryUserId, String errorMessage, long createdAt, long updatedAt) {
         BulkImportUser user = new Gson().fromJson(rawData, BulkImportUser.class);
         user.id = id;
         user.status = status;
+        user.primaryUserId = primaryUserId;
         user.errorMessage = errorMessage;
         user.createdAt = createdAt;
         user.updatedAt = updatedAt;
@@ -111,7 +113,12 @@ public class BulkImportUser {
         public String thirdPartyId;
         public String thirdPartyUserId;
         public String phoneNumber;
-        public String superTokensOrExternalUserId;
+        public String superTokensUserId;
+        public String externalUserId;
+
+        public String getSuperTokenOrExternalUserId() {
+            return this.externalUserId != null ? this.externalUserId : this.superTokensUserId;
+        }
 
         public LoginMethod(List<String> tenantIds, String recipeId, boolean isVerified, boolean isPrimary,
                 long timeJoinedInMSSinceEpoch, String email, String passwordHash, String hashingAlgorithm,
