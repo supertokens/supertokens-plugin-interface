@@ -16,29 +16,51 @@
  */
 package io.supertokens.pluginInterface;
 
+import com.google.gson.JsonElement;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class ConfigFieldInfo {
     @Nonnull
-    public String name;
+    public String key;
+
+    @Nonnull
+    public String valueType;
+
+    Object value;
+
     @Nonnull
     public String description;
+
+    public boolean isSaasProtected;
+
     public boolean isDifferentAcrossTenants;
-    @Nonnull
-    public String type;
+
+    public boolean isConfigYamlOnly;
+
     @Nullable
-    public String[] options;
+    public String[] possibleValues;
 
-    public ConfigFieldInfo(@Nonnull String name, @Nonnull String description, boolean isDifferentAcrossTenants, @Nonnull String type) {
-        this(name, description, isDifferentAcrossTenants, type, null);
-    }
+    public boolean isNullable;
 
-    public ConfigFieldInfo(@Nonnull String name, @Nonnull String description, boolean isDifferentAcrossTenants, @Nonnull String type, @Nullable String[] options) {
-        this.name = name;
+    public Object defaultValue;
+
+    public boolean isPluginProperty;
+
+    public ConfigFieldInfo(@Nonnull String key, @Nonnull String valueType, JsonElement value, @Nonnull String description,
+                           boolean isSaasProtected, boolean isDifferentAcrossTenants, boolean isConfigYamlOnly,
+                           @Nullable String[] possibleValues, boolean isNullable, Object defaultValue, boolean isPluginProperty) {
+        this.key = key;
+        this.valueType = valueType;
+        this.value = value;
         this.description = description;
+        this.isSaasProtected = isSaasProtected;
         this.isDifferentAcrossTenants = isDifferentAcrossTenants;
-        this.type = type;
-        this.options = options;
+        this.isConfigYamlOnly = isConfigYamlOnly;
+        this.possibleValues = possibleValues;
+        this.isNullable = isNullable;
+        this.defaultValue = defaultValue;
+        this.isPluginProperty = isPluginProperty;
     }
 }
