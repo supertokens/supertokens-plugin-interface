@@ -48,9 +48,12 @@ public class ConfigFieldInfo {
 
     public boolean isPluginProperty;
 
+    public boolean isPluginPropertyEditable;
+
     public ConfigFieldInfo(@Nonnull String key, @Nonnull String valueType, JsonElement value, @Nonnull String description,
                            boolean isSaasProtected, boolean isDifferentAcrossTenants, boolean isConfigYamlOnly,
-                           @Nullable String[] possibleValues, boolean isNullable, Object defaultValue, boolean isPluginProperty) {
+                           @Nullable String[] possibleValues, boolean isNullable, Object defaultValue,
+                           boolean isPluginProperty, boolean isPluginPropertyEditable) {
         this.key = key;
         this.valueType = valueType;
         this.value = value;
@@ -62,5 +65,6 @@ public class ConfigFieldInfo {
         this.isNullable = isNullable;
         this.defaultValue = defaultValue;
         this.isPluginProperty = isPluginProperty;
+        this.isPluginPropertyEditable = isPluginPropertyEditable;
     }
 }
