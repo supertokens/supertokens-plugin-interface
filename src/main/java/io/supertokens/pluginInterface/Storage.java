@@ -54,6 +54,8 @@ public interface Storage {
     // load tables and create connection pools
     void initStorage(boolean shouldWait) throws DbInitException;
 
+    void addTenantIdentifier(TenantIdentifier tenantIdentifier);
+
     // used by the core to do transactions the right way.
     STORAGE_TYPE getType();
 
