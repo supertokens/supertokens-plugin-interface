@@ -7,6 +7,10 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [6.0.1] - 2024-04-17
+
+- Adds `addTenantIdentifier` to the storage interface.
+
 ## [6.0.0] - 2024-03-13
 
 - Replace `TotpNotEnabledException` with `UnknownUserTotpIdException`
