@@ -7,6 +7,10 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [5.1.0] - 2024-04-22
+
+- Adds `addTenantIdentifier` to the storage interface.
+
 ## [5.0.1] - 2024-03-21
 
 - Adds `appIdentifier` param to `getUserIdMappingForSuperTokensIds`

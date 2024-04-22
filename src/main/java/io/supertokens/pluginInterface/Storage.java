@@ -25,6 +25,7 @@ import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
 import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
 import io.supertokens.pluginInterface.multitenancy.exceptions.TenantOrAppNotFoundException;
 
+import java.util.List;
 import java.util.Set;
 
 public interface Storage {
@@ -52,7 +53,7 @@ public interface Storage {
     void stopLogging();
 
     // load tables and create connection pools
-    void initStorage(boolean shouldWait) throws DbInitException;
+    void initStorage(boolean shouldWait, List<TenantIdentifier> tenantIdentifiers) throws DbInitException;
 
     // used by the core to do transactions the right way.
     STORAGE_TYPE getType();
