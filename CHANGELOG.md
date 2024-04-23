@@ -9,6 +9,10 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 - Add a new method `getConfigFieldsJson` to fetch the plugin config as json
 
+## [6.1.0] - 2024-04-17
+
+- Adds `addTenantIdentifier` to the storage interface.
+
 ## [6.0.0] - 2024-03-13
 
 - Replace `TotpNotEnabledException` with `UnknownUserTotpIdException`
