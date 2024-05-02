@@ -24,6 +24,7 @@ import io.supertokens.pluginInterface.utils.Utils;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.List;
 
 public class TenantConfig {
 
@@ -46,6 +47,8 @@ public class TenantConfig {
     @SerializedName("firstFactors")
     public final String[] firstFactors;
 
+    public boolean useFirstFactorsFromStaticConfigIfEmpty;
+
     @Nullable
     @SerializedName("requiredSecondaryFactors")
     public final String[] requiredSecondaryFactors;
@@ -56,7 +59,8 @@ public class TenantConfig {
     public TenantConfig(@Nonnull TenantIdentifier tenantIdentifier, @Nonnull EmailPasswordConfig emailPasswordConfig,
                         @Nonnull ThirdPartyConfig thirdPartyConfig,
                         @Nonnull PasswordlessConfig passwordlessConfig,
-                        @Nullable String[] firstFactors, @Nullable String[] requiredSecondaryFactors,
+                        @Nullable String[] firstFactors, boolean useFirstFactorsFromStaticConfigIfEmpty,
+                        @Nullable String[] requiredSecondaryFactors,
                         @Nullable JsonObject coreConfig) {
         this.tenantIdentifier = tenantIdentifier;
         this.coreConfig = coreConfig == null ? new JsonObject() : coreConfig;
@@ -64,19 +68,27 @@ public class TenantConfig {
         this.passwordlessConfig = passwordlessConfig;
         this.thirdPartyConfig = thirdPartyConfig;
         this.firstFactors = firstFactors == null || firstFactors.length == 0 ? null : firstFactors;
-        this.requiredSecondaryFactors = requiredSecondaryFactors == null || requiredSecondaryFactors.length == 0 ? null : requiredSecondaryFactors;
+        this.useFirstFactorsFromStaticConfigIfEmpty = useFirstFactorsFromStaticConfigIfEmpty;
+        this.requiredSecondaryFactors =
+                requiredSecondaryFactors == null || requiredSecondaryFactors.length == 0 ? null :
+                        requiredSecondaryFactors;
     }
 
     public TenantConfig(TenantConfig other) {
         // copy constructor, that does a deep copy
         Gson gson = new Gson();
-        this.tenantIdentifier = new TenantIdentifier(other.tenantIdentifier.getConnectionUriDomain(), other.tenantIdentifier.getAppId(), other.tenantIdentifier.getTenantId());
+        this.tenantIdentifier = new TenantIdentifier(other.tenantIdentifier.getConnectionUriDomain(),
+                other.tenantIdentifier.getAppId(), other.tenantIdentifier.getTenantId());
         this.coreConfig = gson.fromJson(other.coreConfig.toString(), JsonObject.class);
         this.emailPasswordConfig = new EmailPasswordConfig(other.emailPasswordConfig.enabled);
         this.passwordlessConfig = new PasswordlessConfig(other.passwordlessConfig.enabled);
-        this.thirdPartyConfig = new ThirdPartyConfig(other.thirdPartyConfig.enabled, other.thirdPartyConfig.providers.clone());
+        this.thirdPartyConfig = new ThirdPartyConfig(
+                other.thirdPartyConfig.enabled, other.thirdPartyConfig.useThirdPartyProvidersFromStaticConfigIfEmpty,
+                other.thirdPartyConfig.providers.clone());
         this.firstFactors = other.firstFactors == null ? null : other.firstFactors.clone();
-        this.requiredSecondaryFactors = other.requiredSecondaryFactors == null ? null : other.requiredSecondaryFactors.clone();
+        this.useFirstFactorsFromStaticConfigIfEmpty = other.useFirstFactorsFromStaticConfigIfEmpty;
+        this.requiredSecondaryFactors =
+                other.requiredSecondaryFactors == null ? null : other.requiredSecondaryFactors.clone();
     }
 
     public boolean deepEquals(TenantConfig other) {
@@ -87,6 +99,7 @@ public class TenantConfig {
                 this.emailPasswordConfig.equals(other.emailPasswordConfig) &&
                 this.passwordlessConfig.equals(other.passwordlessConfig) &&
                 this.thirdPartyConfig.equals(other.thirdPartyConfig) &&
+                this.useFirstFactorsFromStaticConfigIfEmpty == other.useFirstFactorsFromStaticConfigIfEmpty &&
                 Utils.unorderedArrayEquals(this.firstFactors, other.firstFactors) && // order is not important
                 Utils.unorderedArrayEquals(this.requiredSecondaryFactors, other.requiredSecondaryFactors) && // order is not important
                 this.coreConfig.equals(other.coreConfig);
@@ -106,18 +119,21 @@ public class TenantConfig {
         return tenantIdentifier.hashCode();
     }
 
-    public JsonObject toJson(boolean shouldProtectDbConfig, Storage storage, String[] protectedCoreConfigs) {
+    public JsonObject toJson(boolean shouldProtectDbConfig, Storage storage, String[] protectedCoreConfigs,
+                             boolean computeRecipeEnabledUsingFirstFactors) {
         Gson gson = new Gson();
         JsonObject tenantConfigObject = gson.toJsonTree(this).getAsJsonObject();
 
         tenantConfigObject.add("thirdParty", this.thirdPartyConfig.toJson());
         tenantConfigObject.addProperty("tenantId", this.tenantIdentifier.getTenantId());
 
-        if (tenantConfigObject.has("firstFactors") && tenantConfigObject.get("firstFactors").getAsJsonArray().size() == 0) {
+        if (tenantConfigObject.has("firstFactors") &&
+                tenantConfigObject.get("firstFactors").getAsJsonArray().size() == 0) {
             tenantConfigObject.remove("firstFactors");
         }
 
-        if (tenantConfigObject.has("requiredSecondaryFactors") && tenantConfigObject.get("requiredSecondaryFactors").getAsJsonArray().size() == 0) {
+        if (tenantConfigObject.has("requiredSecondaryFactors") &&
+                tenantConfigObject.get("requiredSecondaryFactors").getAsJsonArray().size() == 0) {
             tenantConfigObject.remove("requiredSecondaryFactors");
         }
 
@@ -134,6 +150,38 @@ public class TenantConfig {
                     tenantConfigObject.get("coreConfig").getAsJsonObject().remove(config);
                 }
             }
+        }
+
+        if (computeRecipeEnabledUsingFirstFactors) {
+            // as per https://github.com/supertokens/supertokens-core/issues/979#issuecomment-2058528228
+            tenantConfigObject.get("emailPassword").getAsJsonObject().addProperty(
+                    "enabled",
+                    this.emailPasswordConfig.enabled && (
+                            (this.firstFactors == null &&
+                                    this.useFirstFactorsFromStaticConfigIfEmpty) ||
+                                    (this.firstFactors != null && List.of(this.firstFactors).contains("emailpassword"))
+                    )
+            );
+            tenantConfigObject.get("thirdParty").getAsJsonObject().addProperty(
+                    "enabled",
+                    this.thirdPartyConfig.enabled && (
+                            (this.firstFactors == null &&
+                                    this.useFirstFactorsFromStaticConfigIfEmpty) ||
+                                    (this.firstFactors != null && List.of(this.firstFactors).contains("thirdparty"))
+                    )
+            );
+            tenantConfigObject.get("passwordless").getAsJsonObject().addProperty(
+                    "enabled",
+                    this.passwordlessConfig.enabled && (
+                            (this.firstFactors == null &&
+                                    this.useFirstFactorsFromStaticConfigIfEmpty) ||
+                                    (this.firstFactors != null &&
+                                            (List.of(this.firstFactors).contains("otp-email") ||
+                                                    List.of(this.firstFactors).contains("otp-phone") ||
+                                                    List.of(this.firstFactors).contains("link-email") ||
+                                                    List.of(this.firstFactors).contains("link-phone")))
+                    )
+            );
         }
 
         return tenantConfigObject;
