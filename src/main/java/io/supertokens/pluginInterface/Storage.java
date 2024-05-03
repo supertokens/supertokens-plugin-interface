@@ -25,7 +25,6 @@ import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
 import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
 import io.supertokens.pluginInterface.multitenancy.exceptions.TenantOrAppNotFoundException;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -91,7 +90,7 @@ public interface Storage {
 
     Set<String> getValidFieldsInConfig();
 
-    ArrayList<ConfigFieldInfo> getConfigFieldsInfo();
+    List<ConfigFieldInfo> getConfigFieldsInfo();
 
     void setLogLevels(Set<LOG_LEVEL> logLevels);
 
