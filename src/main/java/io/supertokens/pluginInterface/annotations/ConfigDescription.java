@@ -21,9 +21,12 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.FIELD)
+/**
+ * Annotation to provide a description for a configuration fields. To be used on the fields of `CoreConfig` and config
+ * class in the plugin like `PostgreSQLConfig`, `MysqlConfig`, etc.
+ */
+@Retention(RetentionPolicy.RUNTIME) // Make annotation accessible at runtime so that config descriptions can be read from API
+@Target(ElementType.FIELD) // Annotation can only be applied to fields
 public @interface ConfigDescription {
-   String value() default "";
+   String value(); // String value that provides a description for the configuration field
 }
- 

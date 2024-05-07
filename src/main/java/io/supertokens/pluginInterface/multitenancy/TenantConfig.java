@@ -119,8 +119,54 @@ public class TenantConfig {
         return tenantIdentifier.hashCode();
     }
 
-    public JsonObject toJson(boolean shouldProtectDbConfig, Storage storage, String[] protectedCoreConfigs,
-                             boolean computeRecipeEnabledUsingFirstFactors) {
+    public JsonObject toJson3_0(boolean shouldProtectDbConfig, Storage storage, String[] protectedCoreConfigs) {
+        JsonObject tenantConfigObject = toJson5_0(shouldProtectDbConfig, storage, protectedCoreConfigs);
+
+        tenantConfigObject.remove("firstFactors");
+        tenantConfigObject.remove("requiredSecondaryFactors");
+
+        return tenantConfigObject;
+    }
+
+    public JsonObject toJson5_0(boolean shouldProtectDbConfig, Storage storage, String[] protectedCoreConfigs) {
+        JsonObject tenantConfigObject = toJson5_1(shouldProtectDbConfig, storage, protectedCoreConfigs);
+        tenantConfigObject.remove("useFirstFactorsFromStaticConfigIfEmpty");
+        tenantConfigObject.get("thirdParty").getAsJsonObject().remove("useThirdPartyProvidersFromStaticConfigIfEmpty");
+
+        // as per https://github.com/supertokens/supertokens-core/issues/979#issuecomment-2058528228
+        tenantConfigObject.get("emailPassword").getAsJsonObject().addProperty(
+                "enabled",
+                this.emailPasswordConfig.enabled && (
+                        (this.firstFactors == null &&
+                                this.useFirstFactorsFromStaticConfigIfEmpty) ||
+                                (this.firstFactors != null && List.of(this.firstFactors).contains("emailpassword"))
+                )
+        );
+        tenantConfigObject.get("thirdParty").getAsJsonObject().addProperty(
+                "enabled",
+                this.thirdPartyConfig.enabled && (
+                        (this.firstFactors == null &&
+                                this.useFirstFactorsFromStaticConfigIfEmpty) ||
+                                (this.firstFactors != null && List.of(this.firstFactors).contains("thirdparty"))
+                )
+        );
+        tenantConfigObject.get("passwordless").getAsJsonObject().addProperty(
+                "enabled",
+                this.passwordlessConfig.enabled && (
+                        (this.firstFactors == null &&
+                                this.useFirstFactorsFromStaticConfigIfEmpty) ||
+                                (this.firstFactors != null &&
+                                        (List.of(this.firstFactors).contains("otp-email") ||
+                                                List.of(this.firstFactors).contains("otp-phone") ||
+                                                List.of(this.firstFactors).contains("link-email") ||
+                                                List.of(this.firstFactors).contains("link-phone")))
+                )
+        );
+
+        return tenantConfigObject;
+    }
+
+    public JsonObject toJson5_1(boolean shouldProtectDbConfig, Storage storage, String[] protectedCoreConfigs) {
         Gson gson = new Gson();
         JsonObject tenantConfigObject = gson.toJsonTree(this).getAsJsonObject();
 
@@ -150,38 +196,6 @@ public class TenantConfig {
                     tenantConfigObject.get("coreConfig").getAsJsonObject().remove(config);
                 }
             }
-        }
-
-        if (computeRecipeEnabledUsingFirstFactors) {
-            // as per https://github.com/supertokens/supertokens-core/issues/979#issuecomment-2058528228
-            tenantConfigObject.get("emailPassword").getAsJsonObject().addProperty(
-                    "enabled",
-                    this.emailPasswordConfig.enabled && (
-                            (this.firstFactors == null &&
-                                    this.useFirstFactorsFromStaticConfigIfEmpty) ||
-                                    (this.firstFactors != null && List.of(this.firstFactors).contains("emailpassword"))
-                    )
-            );
-            tenantConfigObject.get("thirdParty").getAsJsonObject().addProperty(
-                    "enabled",
-                    this.thirdPartyConfig.enabled && (
-                            (this.firstFactors == null &&
-                                    this.useFirstFactorsFromStaticConfigIfEmpty) ||
-                                    (this.firstFactors != null && List.of(this.firstFactors).contains("thirdparty"))
-                    )
-            );
-            tenantConfigObject.get("passwordless").getAsJsonObject().addProperty(
-                    "enabled",
-                    this.passwordlessConfig.enabled && (
-                            (this.firstFactors == null &&
-                                    this.useFirstFactorsFromStaticConfigIfEmpty) ||
-                                    (this.firstFactors != null &&
-                                            (List.of(this.firstFactors).contains("otp-email") ||
-                                                    List.of(this.firstFactors).contains("otp-phone") ||
-                                                    List.of(this.firstFactors).contains("link-email") ||
-                                                    List.of(this.firstFactors).contains("link-phone")))
-                    )
-            );
         }
 
         return tenantConfigObject;
