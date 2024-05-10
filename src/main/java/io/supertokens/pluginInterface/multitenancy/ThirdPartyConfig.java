@@ -29,26 +29,24 @@ import java.util.*;
 public class ThirdPartyConfig {
     public final boolean enabled;
 
-    public boolean useThirdPartyProvidersFromStaticConfigIfEmpty;
-
     @Nonnull
     public final Provider[] providers;
 
-    public ThirdPartyConfig(boolean enabled, boolean useThirdPartyProvidersFromStaticConfigIfEmpty, @Nullable Provider[] providers) {
+    public ThirdPartyConfig(boolean enabled, @Nullable Provider[] providers) {
         this.enabled = enabled;
-        this.useThirdPartyProvidersFromStaticConfigIfEmpty = useThirdPartyProvidersFromStaticConfigIfEmpty;
-        this.providers = providers == null ? new Provider[0] : providers;
+        this.providers = providers;
     }
 
     public JsonObject toJson() {
         JsonObject result = new JsonObject();
         result.addProperty("enabled", this.enabled);
-        result.addProperty("useThirdPartyProvidersFromStaticConfigIfEmpty",
-                this.useThirdPartyProvidersFromStaticConfigIfEmpty);
-        result.add("providers", new JsonArray());
 
-        for (Provider provider : this.providers) {
-            result.getAsJsonArray("providers").add(provider.toJson());
+        if (this.providers != null) {
+            result.add("providers", new JsonArray());
+
+            for (Provider provider : this.providers) {
+                result.getAsJsonArray("providers").add(provider.toJson());
+            }
         }
 
         return result;

@@ -17,6 +17,7 @@
 package io.supertokens.pluginInterface.multitenancy;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 import io.supertokens.pluginInterface.Storage;
@@ -47,8 +48,6 @@ public class TenantConfig {
     @SerializedName("firstFactors")
     public final String[] firstFactors;
 
-    public boolean useFirstFactorsFromStaticConfigIfEmpty;
-
     @Nullable
     @SerializedName("requiredSecondaryFactors")
     public final String[] requiredSecondaryFactors;
@@ -59,7 +58,7 @@ public class TenantConfig {
     public TenantConfig(@Nonnull TenantIdentifier tenantIdentifier, @Nonnull EmailPasswordConfig emailPasswordConfig,
                         @Nonnull ThirdPartyConfig thirdPartyConfig,
                         @Nonnull PasswordlessConfig passwordlessConfig,
-                        @Nullable String[] firstFactors, boolean useFirstFactorsFromStaticConfigIfEmpty,
+                        @Nullable String[] firstFactors,
                         @Nullable String[] requiredSecondaryFactors,
                         @Nullable JsonObject coreConfig) {
         this.tenantIdentifier = tenantIdentifier;
@@ -67,8 +66,7 @@ public class TenantConfig {
         this.emailPasswordConfig = emailPasswordConfig;
         this.passwordlessConfig = passwordlessConfig;
         this.thirdPartyConfig = thirdPartyConfig;
-        this.firstFactors = firstFactors == null || firstFactors.length == 0 ? null : firstFactors;
-        this.useFirstFactorsFromStaticConfigIfEmpty = useFirstFactorsFromStaticConfigIfEmpty;
+        this.firstFactors = firstFactors;
         this.requiredSecondaryFactors =
                 requiredSecondaryFactors == null || requiredSecondaryFactors.length == 0 ? null :
                         requiredSecondaryFactors;
@@ -83,10 +81,9 @@ public class TenantConfig {
         this.emailPasswordConfig = new EmailPasswordConfig(other.emailPasswordConfig.enabled);
         this.passwordlessConfig = new PasswordlessConfig(other.passwordlessConfig.enabled);
         this.thirdPartyConfig = new ThirdPartyConfig(
-                other.thirdPartyConfig.enabled, other.thirdPartyConfig.useThirdPartyProvidersFromStaticConfigIfEmpty,
-                other.thirdPartyConfig.providers.clone());
+                other.thirdPartyConfig.enabled,
+                other.thirdPartyConfig.providers != null ? other.thirdPartyConfig.providers.clone() : null);
         this.firstFactors = other.firstFactors == null ? null : other.firstFactors.clone();
-        this.useFirstFactorsFromStaticConfigIfEmpty = other.useFirstFactorsFromStaticConfigIfEmpty;
         this.requiredSecondaryFactors =
                 other.requiredSecondaryFactors == null ? null : other.requiredSecondaryFactors.clone();
     }
@@ -99,7 +96,6 @@ public class TenantConfig {
                 this.emailPasswordConfig.equals(other.emailPasswordConfig) &&
                 this.passwordlessConfig.equals(other.passwordlessConfig) &&
                 this.thirdPartyConfig.equals(other.thirdPartyConfig) &&
-                this.useFirstFactorsFromStaticConfigIfEmpty == other.useFirstFactorsFromStaticConfigIfEmpty &&
                 Utils.unorderedArrayEquals(this.firstFactors, other.firstFactors) && // order is not important
                 Utils.unorderedArrayEquals(this.requiredSecondaryFactors, other.requiredSecondaryFactors) && // order is not important
                 this.coreConfig.equals(other.coreConfig);
@@ -122,6 +118,27 @@ public class TenantConfig {
     public JsonObject toJson3_0(boolean shouldProtectDbConfig, Storage storage, String[] protectedCoreConfigs) {
         JsonObject tenantConfigObject = toJson5_0(shouldProtectDbConfig, storage, protectedCoreConfigs);
 
+        // as per https://github.com/supertokens/supertokens-core/issues/979#issuecomment-2099971371
+        tenantConfigObject.get("emailPassword").getAsJsonObject().addProperty(
+                "enabled",
+                (this.firstFactors == null && this.emailPasswordConfig.enabled) ||
+                        (this.firstFactors != null && List.of(this.firstFactors).contains("emailpassword"))
+        );
+        tenantConfigObject.get("thirdParty").getAsJsonObject().addProperty(
+                "enabled",
+                (this.firstFactors == null && this.thirdPartyConfig.enabled) ||
+                        (this.firstFactors != null && List.of(this.firstFactors).contains("thirdparty"))
+        );
+        tenantConfigObject.get("passwordless").getAsJsonObject().addProperty(
+                "enabled",
+                (this.firstFactors == null && this.passwordlessConfig.enabled) ||
+                        (this.firstFactors != null &&
+                                (List.of(this.firstFactors).contains("otp-email") ||
+                                        List.of(this.firstFactors).contains("otp-phone") ||
+                                        List.of(this.firstFactors).contains("link-email") ||
+                                        List.of(this.firstFactors).contains("link-phone")))
+        );
+
         tenantConfigObject.remove("firstFactors");
         tenantConfigObject.remove("requiredSecondaryFactors");
 
@@ -129,59 +146,12 @@ public class TenantConfig {
     }
 
     public JsonObject toJson5_0(boolean shouldProtectDbConfig, Storage storage, String[] protectedCoreConfigs) {
-        JsonObject tenantConfigObject = toJson5_1(shouldProtectDbConfig, storage, protectedCoreConfigs);
-        tenantConfigObject.remove("useFirstFactorsFromStaticConfigIfEmpty");
-        tenantConfigObject.get("thirdParty").getAsJsonObject().remove("useThirdPartyProvidersFromStaticConfigIfEmpty");
 
-        // as per https://github.com/supertokens/supertokens-core/issues/979#issuecomment-2058528228
-        tenantConfigObject.get("emailPassword").getAsJsonObject().addProperty(
-                "enabled",
-                this.emailPasswordConfig.enabled && (
-                        (this.firstFactors == null &&
-                                this.useFirstFactorsFromStaticConfigIfEmpty) ||
-                                (this.firstFactors != null && List.of(this.firstFactors).contains("emailpassword"))
-                )
-        );
-        tenantConfigObject.get("thirdParty").getAsJsonObject().addProperty(
-                "enabled",
-                this.thirdPartyConfig.enabled && (
-                        (this.firstFactors == null &&
-                                this.useFirstFactorsFromStaticConfigIfEmpty) ||
-                                (this.firstFactors != null && List.of(this.firstFactors).contains("thirdparty"))
-                )
-        );
-        tenantConfigObject.get("passwordless").getAsJsonObject().addProperty(
-                "enabled",
-                this.passwordlessConfig.enabled && (
-                        (this.firstFactors == null &&
-                                this.useFirstFactorsFromStaticConfigIfEmpty) ||
-                                (this.firstFactors != null &&
-                                        (List.of(this.firstFactors).contains("otp-email") ||
-                                                List.of(this.firstFactors).contains("otp-phone") ||
-                                                List.of(this.firstFactors).contains("link-email") ||
-                                                List.of(this.firstFactors).contains("link-phone")))
-                )
-        );
-
-        return tenantConfigObject;
-    }
-
-    public JsonObject toJson5_1(boolean shouldProtectDbConfig, Storage storage, String[] protectedCoreConfigs) {
         Gson gson = new Gson();
         JsonObject tenantConfigObject = gson.toJsonTree(this).getAsJsonObject();
 
         tenantConfigObject.add("thirdParty", this.thirdPartyConfig.toJson());
         tenantConfigObject.addProperty("tenantId", this.tenantIdentifier.getTenantId());
-
-        if (tenantConfigObject.has("firstFactors") &&
-                tenantConfigObject.get("firstFactors").getAsJsonArray().size() == 0) {
-            tenantConfigObject.remove("firstFactors");
-        }
-
-        if (tenantConfigObject.has("requiredSecondaryFactors") &&
-                tenantConfigObject.get("requiredSecondaryFactors").getAsJsonArray().size() == 0) {
-            tenantConfigObject.remove("requiredSecondaryFactors");
-        }
 
         if (shouldProtectDbConfig) {
             String[] protectedConfigs = storage.getProtectedConfigsFromSuperTokensSaaSUsers();
@@ -198,6 +168,106 @@ public class TenantConfig {
             }
         }
 
+        tenantConfigObject.remove("useFirstFactorsFromStaticConfigIfEmpty");
+        tenantConfigObject.get("thirdParty").getAsJsonObject().remove("useThirdPartyProvidersFromStaticConfigIfEmpty");
+
+        if (!tenantConfigObject.get("thirdParty").getAsJsonObject().has("providers")) {
+            tenantConfigObject.get("thirdParty").getAsJsonObject().add("providers", new JsonArray());
+        }
+
+        // as per https://github.com/supertokens/supertokens-core/issues/979#issuecomment-2099971371
+        tenantConfigObject.get("emailPassword").getAsJsonObject().addProperty(
+                "enabled",
+                (this.firstFactors == null && this.emailPasswordConfig.enabled) ||
+                        (this.firstFactors != null && List.of(this.firstFactors).contains("emailpassword")) ||
+                        (this.requiredSecondaryFactors != null && List.of(this.requiredSecondaryFactors).contains("emailpassword"))
+        );
+        tenantConfigObject.get("thirdParty").getAsJsonObject().addProperty(
+                "enabled",
+                (this.firstFactors == null && this.thirdPartyConfig.enabled) ||
+                        (this.firstFactors != null && List.of(this.firstFactors).contains("thirdparty")) ||
+                        (this.requiredSecondaryFactors != null && List.of(this.requiredSecondaryFactors).contains("thirdparty"))
+        );
+        tenantConfigObject.get("passwordless").getAsJsonObject().addProperty(
+                "enabled",
+                (this.firstFactors == null && this.passwordlessConfig.enabled) ||
+                        (this.firstFactors != null &&
+                                (List.of(this.firstFactors).contains("otp-email") ||
+                                        List.of(this.firstFactors).contains("otp-phone") ||
+                                        List.of(this.firstFactors).contains("link-email") ||
+                                        List.of(this.firstFactors).contains("link-phone"))) ||
+                        (this.requiredSecondaryFactors != null &&
+                                (List.of(this.requiredSecondaryFactors).contains("otp-email") ||
+                                        List.of(this.requiredSecondaryFactors).contains("otp-phone") ||
+                                        List.of(this.requiredSecondaryFactors).contains("link-email") ||
+                                        List.of(this.requiredSecondaryFactors).contains("link-phone")))
+        );
+
         return tenantConfigObject;
+    }
+
+    public JsonObject toJson_v2(boolean shouldProtectDbConfig, Storage storage, String[] protectedCoreConfigs) {
+
+        Gson gson = new Gson();
+        JsonObject tenantConfigObject = gson.toJsonTree(this).getAsJsonObject();
+
+        tenantConfigObject.add("thirdParty", this.thirdPartyConfig.toJson());
+        tenantConfigObject.addProperty("tenantId", this.tenantIdentifier.getTenantId());
+
+        if (shouldProtectDbConfig) {
+            String[] protectedConfigs = storage.getProtectedConfigsFromSuperTokensSaaSUsers();
+            for (String config : protectedConfigs) {
+                if (tenantConfigObject.get("coreConfig").getAsJsonObject().has(config)) {
+                    tenantConfigObject.get("coreConfig").getAsJsonObject().remove(config);
+                }
+            }
+
+            for (String config : protectedCoreConfigs) {
+                if (tenantConfigObject.get("coreConfig").getAsJsonObject().has(config)) {
+                    tenantConfigObject.get("coreConfig").getAsJsonObject().remove(config);
+                }
+            }
+        }
+
+        // as per https://github.com/supertokens/supertokens-core/issues/979#issuecomment-2099971371
+        tenantConfigObject.remove("emailPassword");
+        tenantConfigObject.remove("passwordless");
+        tenantConfigObject.get("thirdParty").getAsJsonObject().remove("enabled");
+
+        return tenantConfigObject;
+    }
+
+    public boolean isEmailPasswordEnabled() {
+        return this.emailPasswordConfig.enabled ||
+                this.firstFactors == null ||
+                (this.firstFactors != null && List.of(this.firstFactors).contains("emailpassword")) ||
+                this.requiredSecondaryFactors == null ||
+                (this.requiredSecondaryFactors != null && List.of(this.requiredSecondaryFactors).contains(
+                        "emailpassword"));
+    }
+
+    public boolean isThirdPartyEnabled() {
+        return this.thirdPartyConfig.enabled ||
+                this.firstFactors == null ||
+                (this.firstFactors != null && List.of(this.firstFactors).contains("thirdparty")) ||
+                this.requiredSecondaryFactors == null ||
+                (this.requiredSecondaryFactors != null && List.of(this.requiredSecondaryFactors).contains(
+                        "thirdparty"));
+    }
+
+    public boolean isPasswordlessEnabled() {
+        return this.passwordlessConfig.enabled ||
+                this.firstFactors == null ||
+                (this.firstFactors != null &&
+                    (List.of(this.firstFactors).contains("otp-email") ||
+                        List.of(this.firstFactors).contains("otp-phone") ||
+                        List.of(this.firstFactors).contains("link-email") ||
+                        List.of(this.firstFactors).contains("link-phone"))) ||
+                this.requiredSecondaryFactors == null ||
+                (this.requiredSecondaryFactors != null &&
+                    (List.of(this.requiredSecondaryFactors).contains("otp-email") ||
+                        List.of(this.requiredSecondaryFactors).contains("otp-phone") ||
+                        List.of(this.requiredSecondaryFactors).contains("link-email") ||
+                        List.of(this.requiredSecondaryFactors).contains("link-phone")));
     }
 }
