@@ -7,7 +7,12 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
-- Add a new method `getConfigFieldsJson` to fetch the plugin config as json
+## [6.2.0]
+
+- Adds new class `ConfigFieldInfo` that represents a core config field
+- Adds new method `getConfigFieldsJson` to fetch the plugin config as json
+- Updates `TenantConfig` to support `null` and empty array state for `firstFactors`
+- Update `ThirdPartyConfig` to support `null` and empty array state for `providers`
 
 ## [6.1.0] - 2024-04-17
 
