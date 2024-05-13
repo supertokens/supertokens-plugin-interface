@@ -168,9 +168,6 @@ public class TenantConfig {
             }
         }
 
-        tenantConfigObject.remove("useFirstFactorsFromStaticConfigIfEmpty");
-        tenantConfigObject.get("thirdParty").getAsJsonObject().remove("useThirdPartyProvidersFromStaticConfigIfEmpty");
-
         if (!tenantConfigObject.get("thirdParty").getAsJsonObject().has("providers")) {
             tenantConfigObject.get("thirdParty").getAsJsonObject().add("providers", new JsonArray());
         }
@@ -202,6 +199,10 @@ public class TenantConfig {
                                         List.of(this.requiredSecondaryFactors).contains("link-email") ||
                                         List.of(this.requiredSecondaryFactors).contains("link-phone")))
         );
+
+        if (tenantConfigObject.has("firstFactors") && tenantConfigObject.get("firstFactors").getAsJsonArray().size() == 0) {
+            tenantConfigObject.remove("firstFactors");
+        }
 
         return tenantConfigObject;
     }
