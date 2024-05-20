@@ -90,7 +90,7 @@ public interface Storage {
 
     Set<String> getValidFieldsInConfig();
 
-    List<ConfigFieldInfo> getConfigFieldsInfo();
+    List<ConfigFieldInfo> getConfigFieldsInfoForDashboard();
 
     void setLogLevels(Set<LOG_LEVEL> logLevels);
 
