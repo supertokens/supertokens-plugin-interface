@@ -29,7 +29,7 @@ import java.util.*;
 public class ThirdPartyConfig {
     public final boolean enabled;
 
-    @Nonnull
+    @Nullable
     public final Provider[] providers;
 
     public ThirdPartyConfig(boolean enabled, @Nullable Provider[] providers) {
