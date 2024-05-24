@@ -90,8 +90,6 @@ public interface Storage {
 
     Set<String> getValidFieldsInConfig();
 
-    List<ConfigFieldInfo> getConfigFieldsInfoForDashboard();
-
     void setLogLevels(Set<LOG_LEVEL> logLevels);
 
     String[] getAllTablesInTheDatabase() throws StorageQueryException;
