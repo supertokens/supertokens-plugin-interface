@@ -242,7 +242,6 @@ public class TenantConfig {
         return this.emailPasswordConfig.enabled ||
                 this.firstFactors == null ||
                 (this.firstFactors != null && List.of(this.firstFactors).contains("emailpassword")) ||
-                this.requiredSecondaryFactors == null ||
                 (this.requiredSecondaryFactors != null && List.of(this.requiredSecondaryFactors).contains(
                         "emailpassword"));
     }
@@ -251,7 +250,6 @@ public class TenantConfig {
         return this.thirdPartyConfig.enabled ||
                 this.firstFactors == null ||
                 (this.firstFactors != null && List.of(this.firstFactors).contains("thirdparty")) ||
-                this.requiredSecondaryFactors == null ||
                 (this.requiredSecondaryFactors != null && List.of(this.requiredSecondaryFactors).contains(
                         "thirdparty"));
     }
@@ -264,7 +262,6 @@ public class TenantConfig {
                         List.of(this.firstFactors).contains("otp-phone") ||
                         List.of(this.firstFactors).contains("link-email") ||
                         List.of(this.firstFactors).contains("link-phone"))) ||
-                this.requiredSecondaryFactors == null ||
                 (this.requiredSecondaryFactors != null &&
                     (List.of(this.requiredSecondaryFactors).contains("otp-email") ||
                         List.of(this.requiredSecondaryFactors).contains("otp-phone") ||
