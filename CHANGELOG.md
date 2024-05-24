@@ -7,7 +7,7 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
-## [6.2.0]
+## [6.2.0] - 2024-05-24
 
 - Adds new class `ConfigFieldInfo` that represents a core config field
 - Adds new method `getConfigFieldsJson` to fetch the plugin config as json
