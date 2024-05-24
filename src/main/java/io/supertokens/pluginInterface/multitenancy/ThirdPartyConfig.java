@@ -29,21 +29,24 @@ import java.util.*;
 public class ThirdPartyConfig {
     public final boolean enabled;
 
-    @Nonnull
+    @Nullable
     public final Provider[] providers;
 
     public ThirdPartyConfig(boolean enabled, @Nullable Provider[] providers) {
         this.enabled = enabled;
-        this.providers = providers == null ? new Provider[0] : providers;
+        this.providers = providers;
     }
 
     public JsonObject toJson() {
         JsonObject result = new JsonObject();
         result.addProperty("enabled", this.enabled);
-        result.add("providers", new JsonArray());
 
-        for (Provider provider : this.providers) {
-            result.getAsJsonArray("providers").add(provider.toJson());
+        if (this.providers != null) {
+            result.add("providers", new JsonArray());
+
+            for (Provider provider : this.providers) {
+                result.getAsJsonArray("providers").add(provider.toJson());
+            }
         }
 
         return result;
