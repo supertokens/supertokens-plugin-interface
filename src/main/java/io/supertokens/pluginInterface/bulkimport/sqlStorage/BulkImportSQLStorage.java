@@ -32,9 +32,4 @@ public interface BulkImportSQLStorage extends BulkImportStorage, SQLStorage {
     */
     void updateBulkImportUserStatus_Transaction(AppIdentifier appIdentifier,
             TransactionConnection con, @Nonnull String bulkImportUserId, @Nonnull BULK_IMPORT_USER_STATUS status, @Nullable String errorMessage) throws StorageQueryException;
-
-    /**
-    * Delete users by id from the bulk_import_users table
-    */
-    void deleteBulkImportUser_Transaction(AppIdentifier appIdentifier, TransactionConnection con, @Nonnull String bulkImportUserId) throws StorageQueryException;
 }

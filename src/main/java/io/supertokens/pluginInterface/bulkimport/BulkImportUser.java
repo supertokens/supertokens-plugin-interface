@@ -52,8 +52,12 @@ public class BulkImportUser {
         return new Gson().fromJson(jsonObject, BulkImportUser.class);
     }
 
-    // This method returns a JSON object string representation, excluding 'status', 'createdAt', and 'updatedAt'.
-    // It is used for inserting the user into the database or during testing.
+    // The bulk_import_users table stores users to be imported via a Cron Job.
+    // It has a `raw_data` column containing user data in JSON format.
+
+    // The BulkImportUser class represents this `raw_data`, including additional fields like `status`, `createdAt`, and `updatedAt`.
+    // First, we validate all fields of `raw_data` using the BulkImportUser class, then store this data in the bulk_import_users table.
+    // This function retrieves the `raw_data` after removing the additional fields.
     public String toRawDataForDbStorage() {
         JsonObject jsonObject = new Gson().fromJson(new Gson().toJson(this), JsonObject.class);
         jsonObject.remove("status");
@@ -62,6 +66,10 @@ public class BulkImportUser {
         return jsonObject.toString();
     }
 
+    // The bulk_import_users table contains a `raw_data` column with user data in JSON format, along with other columns such as `id`, `status`, `primary_user_id`, and `error_msg` etc.
+
+    // When creating an instance of the BulkImportUser class, the extra fields must be passed separately as they are not part of the `raw_data`. 
+    // This function creates a BulkImportUser instance from a stored bulk_import_user entry.
     public static BulkImportUser fromRawDataFromDbStorage(String id, String rawData, BULK_IMPORT_USER_STATUS status, String primaryUserId, String errorMessage, long createdAt, long updatedAt) {
         BulkImportUser user = new Gson().fromJson(rawData, BulkImportUser.class);
         user.id = id;
@@ -110,6 +118,7 @@ public class BulkImportUser {
         public String email;
         public String passwordHash;
         public String hashingAlgorithm;
+        public String plainTextPassword;
         public String thirdPartyId;
         public String thirdPartyUserId;
         public String phoneNumber;
@@ -121,7 +130,7 @@ public class BulkImportUser {
         }
 
         public LoginMethod(List<String> tenantIds, String recipeId, boolean isVerified, boolean isPrimary,
-                long timeJoinedInMSSinceEpoch, String email, String passwordHash, String hashingAlgorithm,
+                long timeJoinedInMSSinceEpoch, String email, String passwordHash, String hashingAlgorithm, String plainTextPassword,
                 String thirdPartyId, String thirdPartyUserId, String phoneNumber) {
             this.tenantIds = tenantIds;
             this.recipeId = recipeId;
@@ -131,6 +140,7 @@ public class BulkImportUser {
             this.email = email;
             this.passwordHash = passwordHash;
             this.hashingAlgorithm = hashingAlgorithm;
+            this.plainTextPassword = plainTextPassword;
             this.thirdPartyId = thirdPartyId;
             this.thirdPartyUserId = thirdPartyUserId;
             this.phoneNumber = phoneNumber;

@@ -21,7 +21,6 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
 import io.supertokens.pluginInterface.multitenancy.exceptions.TenantOrAppNotFoundException;
@@ -57,6 +56,11 @@ public interface BulkImportStorage extends NonAuthRecipeStorage {
     * Update the bulk_import_user's primary_user_id by bulk_import_user_id
     */
     void updateBulkImportUserPrimaryUserId(AppIdentifier appIdentifier, @Nonnull String bulkImportUserId, @Nonnull String primaryUserId) throws StorageQueryException;
+
+    /**
+    * Returns the count of users from the bulk_import_users table
+    */
+    long getBulkImportUsersCount(AppIdentifier appIdentifier, @Nullable BULK_IMPORT_USER_STATUS status) throws StorageQueryException;
 
     public enum BULK_IMPORT_USER_STATUS {
         NEW, PROCESSING, FAILED
