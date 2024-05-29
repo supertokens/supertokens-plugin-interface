@@ -7,6 +7,17 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [6.2.0] - 2024-04-25
+
+### Added
+
+- Adds support for Bulk Import
+- Adds `BulkImportUser` class to represent a bulk import user
+- Adds `BulkImportStorage` interface
+- Adds `DuplicateUserIdException` class
+- Adds `createBulkImportProxyStorageInstance` method in `Storage` class
+- Adds `closeConnectionForBulkImportProxyStorage`, `commitTransactionForBulkImportProxyStorage`, and `rollbackTransactionForBulkImportProxyStorage` method in `SQLStorage` class
+
 ## [6.1.0] - 2024-04-17
 
 - Adds `addTenantIdentifier` to the storage interface.
