@@ -209,35 +209,4 @@ public class TenantConfig {
 
         return result;
     }
-
-    public boolean isEmailPasswordEnabled() {
-        return Boolean.TRUE.equals(this.emailPasswordConfig.enabled) ||
-                this.firstFactors == null ||
-                (this.firstFactors != null && List.of(this.firstFactors).contains("emailpassword")) ||
-                (this.requiredSecondaryFactors != null && List.of(this.requiredSecondaryFactors).contains(
-                        "emailpassword"));
-    }
-
-    public boolean isThirdPartyEnabled() {
-        return Boolean.TRUE.equals(this.thirdPartyConfig.enabled) ||
-                this.firstFactors == null ||
-                (this.firstFactors != null && List.of(this.firstFactors).contains("thirdparty")) ||
-                (this.requiredSecondaryFactors != null && List.of(this.requiredSecondaryFactors).contains(
-                        "thirdparty"));
-    }
-
-    public boolean isPasswordlessEnabled() {
-        return Boolean.TRUE.equals(this.passwordlessConfig.enabled) ||
-                this.firstFactors == null ||
-                (this.firstFactors != null &&
-                    (List.of(this.firstFactors).contains("otp-email") ||
-                        List.of(this.firstFactors).contains("otp-phone") ||
-                        List.of(this.firstFactors).contains("link-email") ||
-                        List.of(this.firstFactors).contains("link-phone"))) ||
-                (this.requiredSecondaryFactors != null &&
-                    (List.of(this.requiredSecondaryFactors).contains("otp-email") ||
-                        List.of(this.requiredSecondaryFactors).contains("otp-phone") ||
-                        List.of(this.requiredSecondaryFactors).contains("link-email") ||
-                        List.of(this.requiredSecondaryFactors).contains("link-phone")));
-    }
 }
