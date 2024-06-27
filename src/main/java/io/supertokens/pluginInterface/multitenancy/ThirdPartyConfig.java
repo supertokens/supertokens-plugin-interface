@@ -16,10 +16,7 @@
 
 package io.supertokens.pluginInterface.multitenancy;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
+import com.google.gson.*;
 import io.supertokens.pluginInterface.utils.Utils;
 
 import javax.annotation.Nonnull;
@@ -37,18 +34,42 @@ public class ThirdPartyConfig {
         this.providers = providers;
     }
 
-    public JsonObject toJson() {
-        JsonObject result = new JsonObject();
-        result.addProperty("enabled", this.enabled);
+    private void addProvidersToJson(JsonObject result) {
+        if (this.providers != null && this.providers.length > 0) {
+            JsonArray providersArray = new JsonArray();
+            for (Provider provider : this.providers) {
+                providersArray.add(provider.toJson());
+            }
+            result.add("providers", providersArray);
+        }
+    }
 
+    public JsonElement toJson3_0(String[] firstFactors) {
+        JsonObject result = new JsonObject();
+        result.addProperty("enabled",
+                this.enabled && (
+                        firstFactors == null || List.of(firstFactors).contains("thirdparty")
+                ));
+        this.addProvidersToJson(result);
+        return result;
+    }
+
+    public JsonElement toJson5_0(String[] firstFactors) {
+        JsonObject result = new JsonObject();
+        result.addProperty("enabled",
+                this.enabled && (
+                        firstFactors == null || firstFactors.length > 0
+                ));
+        this.addProvidersToJson(result);
+        return result;
+    }
+
+    public JsonElement toJson_v2_5_1() {
+        JsonObject result = new JsonObject();
         if (this.providers != null) {
             result.add("providers", new JsonArray());
-
-            for (Provider provider : this.providers) {
-                result.getAsJsonArray("providers").add(provider.toJson());
-            }
         }
-
+        this.addProvidersToJson(result);
         return result;
     }
 

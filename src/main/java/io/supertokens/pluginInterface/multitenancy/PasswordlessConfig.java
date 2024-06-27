@@ -16,6 +16,13 @@
 
 package io.supertokens.pluginInterface.multitenancy;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
+
 public class PasswordlessConfig {
     public boolean enabled;
 
@@ -30,5 +37,28 @@ public class PasswordlessConfig {
             return otherPasswordlessConfig.enabled == this.enabled;
         }
         return false;
+    }
+
+    public JsonElement toJson3_0(@Nullable String[] firstFactors) {
+        JsonObject result = new JsonObject();
+        List<String> firstFactorsList = firstFactors == null ? new ArrayList<>() : List.of(firstFactors);
+        result.addProperty("enabled",
+                this.enabled && (
+                        firstFactors == null ||
+                                firstFactorsList.contains("otp-phone") ||
+                                firstFactorsList.contains("otp-email") ||
+                                firstFactorsList.contains("link-phone") ||
+                                firstFactorsList.contains("link-email")
+                ));
+        return result;
+    }
+
+    public JsonElement toJson5_0(String[] firstFactors) {
+        JsonObject result = new JsonObject();
+        result.addProperty("enabled",
+                this.enabled && (
+                        firstFactors == null || firstFactors.length > 0
+                ));
+        return result;
     }
 }
