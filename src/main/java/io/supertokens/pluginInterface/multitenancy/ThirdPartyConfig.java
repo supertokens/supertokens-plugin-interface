@@ -35,13 +35,13 @@ public class ThirdPartyConfig {
     }
 
     private void addProvidersToJson(JsonObject result) {
-        if (this.providers != null && this.providers.length > 0) {
-            JsonArray providersArray = new JsonArray();
+        JsonArray providersArray = new JsonArray();
+        if (this.providers != null) {
             for (Provider provider : this.providers) {
                 providersArray.add(provider.toJson());
             }
-            result.add("providers", providersArray);
         }
+        result.add("providers", providersArray);
     }
 
     public JsonElement toJson3_0(String[] firstFactors) {
@@ -49,6 +49,8 @@ public class ThirdPartyConfig {
         result.addProperty("enabled",
                 this.enabled && (
                         firstFactors == null || List.of(firstFactors).contains("thirdparty")
+                ) && (
+                        providers == null || providers.length > 0
                 ));
         this.addProvidersToJson(result);
         return result;
@@ -59,6 +61,8 @@ public class ThirdPartyConfig {
         result.addProperty("enabled",
                 this.enabled && (
                         firstFactors == null || firstFactors.length > 0
+                ) && (
+                        providers == null || providers.length > 0
                 ));
         this.addProvidersToJson(result);
         return result;
@@ -66,10 +70,9 @@ public class ThirdPartyConfig {
 
     public JsonElement toJson_v2_5_1() {
         JsonObject result = new JsonObject();
-        if (this.providers != null) {
-            result.add("providers", new JsonArray());
+        if (providers != null) {
+            this.addProvidersToJson(result);
         }
-        this.addProvidersToJson(result);
         return result;
     }
 
