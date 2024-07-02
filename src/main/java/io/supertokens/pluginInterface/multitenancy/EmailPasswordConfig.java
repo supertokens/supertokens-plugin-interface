@@ -16,6 +16,11 @@
 
 package io.supertokens.pluginInterface.multitenancy;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
+import java.util.List;
+
 public class EmailPasswordConfig {
     public final boolean enabled;
 
@@ -32,4 +37,21 @@ public class EmailPasswordConfig {
         return false;
     }
 
+    public JsonElement toJson3_0(String[] firstFactors) {
+        JsonObject result = new JsonObject();
+        result.addProperty("enabled",
+                this.enabled && (
+                        firstFactors == null || List.of(firstFactors).contains("emailpassword")
+                    ));
+        return result;
+    }
+
+    public JsonElement toJson5_0(String[] firstFactors) {
+        JsonObject result = new JsonObject();
+        result.addProperty("enabled",
+                this.enabled && (
+                        firstFactors == null || firstFactors.length > 0
+                    ));
+        return result;
+    }
 }
