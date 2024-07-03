@@ -39,26 +39,34 @@ public class PasswordlessConfig {
         return false;
     }
 
-    public JsonElement toJson3_0(@Nullable String[] firstFactors) {
-        JsonObject result = new JsonObject();
+    public boolean isEnabledInLesserThanOrEqualTo4_0(@Nullable String[] firstFactors) {
         List<String> firstFactorsList = firstFactors == null ? new ArrayList<>() : List.of(firstFactors);
+        return this.enabled && (
+                firstFactors == null ||
+                        firstFactorsList.contains("otp-phone") ||
+                        firstFactorsList.contains("otp-email") ||
+                        firstFactorsList.contains("link-phone") ||
+                        firstFactorsList.contains("link-email")
+        );
+    }
+
+    public JsonElement toJsonLesserThanOrEqualTo4_0(@Nullable String[] firstFactors) {
+        JsonObject result = new JsonObject();
         result.addProperty("enabled",
-                this.enabled && (
-                        firstFactors == null ||
-                                firstFactorsList.contains("otp-phone") ||
-                                firstFactorsList.contains("otp-email") ||
-                                firstFactorsList.contains("link-phone") ||
-                                firstFactorsList.contains("link-email")
-                ));
+                this.isEnabledInLesserThanOrEqualTo4_0(firstFactors));
         return result;
+    }
+
+    public boolean isEnabledIn5_0(@Nullable String[] firstFactors) {
+        return this.enabled && (
+                firstFactors == null || firstFactors.length > 0
+        );
     }
 
     public JsonElement toJson5_0(String[] firstFactors) {
         JsonObject result = new JsonObject();
         result.addProperty("enabled",
-                this.enabled && (
-                        firstFactors == null || firstFactors.length > 0
-                ));
+                this.isEnabledIn5_0(firstFactors));
         return result;
     }
 }

@@ -42,22 +42,30 @@ public class ThirdPartyConfig {
         result.add("providers", providersArray);
     }
 
-    public JsonElement toJson3_0(String[] firstFactors) {
+    public boolean isEnabledInLesserThanOrEqualTo4_0(String[] firstFactors) {
+        return this.enabled && (
+                firstFactors == null || List.of(firstFactors).contains("thirdparty")
+        );
+    }
+
+    public JsonElement toJsonLesserThanOrEqualTo4_0(String[] firstFactors) {
         JsonObject result = new JsonObject();
         result.addProperty("enabled",
-                this.enabled && (
-                        firstFactors == null || List.of(firstFactors).contains("thirdparty")
-                ));
+                this.isEnabledInLesserThanOrEqualTo4_0(firstFactors));
         this.addProvidersToJson(result);
         return result;
+    }
+
+    public boolean isEnabledIn5_0(String[] firstFactors) {
+        return this.enabled && (
+                firstFactors == null || firstFactors.length > 0
+        );
     }
 
     public JsonElement toJson5_0(String[] firstFactors) {
         JsonObject result = new JsonObject();
         result.addProperty("enabled",
-                this.enabled && (
-                        firstFactors == null || firstFactors.length > 0
-                ));
+                this.isEnabledIn5_0(firstFactors));
         this.addProvidersToJson(result);
         return result;
     }

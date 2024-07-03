@@ -17,7 +17,6 @@
 package io.supertokens.pluginInterface.multitenancy;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 import io.supertokens.pluginInterface.Storage;
@@ -131,12 +130,12 @@ public class TenantConfig {
         }
     }
 
-    public JsonObject toJson3_0(boolean shouldProtectDbConfig, Storage storage, String[] protectedCoreConfigs) {
+    public JsonObject toJsonLesserThanOrEqualTo4_0(boolean shouldProtectDbConfig, Storage storage, String[] protectedCoreConfigs) {
         JsonObject result = new JsonObject();
         result.addProperty("tenantId", this.tenantIdentifier.getTenantId());
-        result.add("emailPassword", this.emailPasswordConfig.toJson3_0(this.firstFactors));
-        result.add("thirdParty", this.thirdPartyConfig.toJson3_0(this.firstFactors));
-        result.add("passwordless", this.passwordlessConfig.toJson3_0(this.firstFactors));
+        result.add("emailPassword", this.emailPasswordConfig.toJsonLesserThanOrEqualTo4_0(this.firstFactors));
+        result.add("thirdParty", this.thirdPartyConfig.toJsonLesserThanOrEqualTo4_0(this.firstFactors));
+        result.add("passwordless", this.passwordlessConfig.toJsonLesserThanOrEqualTo4_0(this.firstFactors));
         result.add("coreConfig", this.coreConfig);
 
         if (shouldProtectDbConfig) {
