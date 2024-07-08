@@ -21,7 +21,7 @@ import io.supertokens.pluginInterface.utils.Utils;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.*;
+import java.util.Objects;
 
 public class ThirdPartyConfig {
     public final boolean enabled;
@@ -126,7 +126,8 @@ public class ThirdPartyConfig {
                         @Nullable JsonObject tokenEndpointBodyParams,
                         @Nullable String userInfoEndpoint, @Nullable JsonObject userInfoEndpointQueryParams,
                         @Nullable JsonObject userInfoEndpointHeaders,
-                        @Nullable String jwksURI, @Nullable String oidcDiscoveryEndpoint, @Nullable Boolean requireEmail,
+                        @Nullable String jwksURI, @Nullable String oidcDiscoveryEndpoint,
+                        @Nullable Boolean requireEmail,
                         @Nullable UserInfoMap userInfoMap) {
             this.thirdPartyId = thirdPartyId;
             this.name = name;
@@ -156,19 +157,22 @@ public class ThirdPartyConfig {
             }
 
             if (this.tokenEndpointBodyParams != null) {
-                result.add("tokenEndpointBodyParams", new GsonBuilder().serializeNulls().create().toJsonTree(this.tokenEndpointBodyParams));
+                result.add("tokenEndpointBodyParams",
+                        new GsonBuilder().serializeNulls().create().toJsonTree(this.tokenEndpointBodyParams));
             } else {
                 result.remove("tokenEndpointBodyParams");
             }
 
             if (this.userInfoEndpointQueryParams != null) {
-                result.add("userInfoEndpointQueryParams", new GsonBuilder().serializeNulls().create().toJsonTree(this.userInfoEndpointQueryParams));
+                result.add("userInfoEndpointQueryParams",
+                        new GsonBuilder().serializeNulls().create().toJsonTree(this.userInfoEndpointQueryParams));
             } else {
                 result.remove("userInfoEndpointQueryParams");
             }
 
             if (this.userInfoEndpointHeaders != null) {
-                result.add("userInfoEndpointHeaders", new GsonBuilder().serializeNulls().create().toJsonTree(this.userInfoEndpointHeaders));
+                result.add("userInfoEndpointHeaders",
+                        new GsonBuilder().serializeNulls().create().toJsonTree(this.userInfoEndpointHeaders));
             } else {
                 result.remove("userInfoEndpointHeaders");
             }
@@ -258,8 +262,10 @@ public class ThirdPartyConfig {
 
         public UserInfoMap(@Nullable UserInfoMapKeyValue fromIdTokenPayload,
                            @Nullable UserInfoMapKeyValue fromUserInfoAPI) {
-            this.fromIdTokenPayload = fromIdTokenPayload == null ? new UserInfoMapKeyValue(null, null, null) : fromIdTokenPayload;
-            this.fromUserInfoAPI = fromUserInfoAPI == null ? new UserInfoMapKeyValue(null, null, null) : fromUserInfoAPI;
+            this.fromIdTokenPayload =
+                    fromIdTokenPayload == null ? new UserInfoMapKeyValue(null, null, null) : fromIdTokenPayload;
+            this.fromUserInfoAPI =
+                    fromUserInfoAPI == null ? new UserInfoMapKeyValue(null, null, null) : fromUserInfoAPI;
         }
 
         @Override

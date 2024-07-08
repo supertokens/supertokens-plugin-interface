@@ -97,7 +97,8 @@ public class TenantConfig {
                 this.passwordlessConfig.equals(other.passwordlessConfig) &&
                 this.thirdPartyConfig.equals(other.thirdPartyConfig) &&
                 Utils.unorderedArrayEquals(this.firstFactors, other.firstFactors) && // order is not important
-                Utils.unorderedArrayEquals(this.requiredSecondaryFactors, other.requiredSecondaryFactors) && // order is not important
+                Utils.unorderedArrayEquals(this.requiredSecondaryFactors, other.requiredSecondaryFactors) &&
+                // order is not important
                 this.coreConfig.equals(other.coreConfig);
     }
 
