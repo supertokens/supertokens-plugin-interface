@@ -64,19 +64,24 @@ public class TenantConfig {
         this.passwordlessConfig = passwordlessConfig;
         this.thirdPartyConfig = thirdPartyConfig;
         this.firstFactors = firstFactors == null || firstFactors.length == 0 ? null : firstFactors;
-        this.requiredSecondaryFactors = requiredSecondaryFactors == null || requiredSecondaryFactors.length == 0 ? null : requiredSecondaryFactors;
+        this.requiredSecondaryFactors =
+                requiredSecondaryFactors == null || requiredSecondaryFactors.length == 0 ? null :
+                        requiredSecondaryFactors;
     }
 
     public TenantConfig(TenantConfig other) {
         // copy constructor, that does a deep copy
         Gson gson = new Gson();
-        this.tenantIdentifier = new TenantIdentifier(other.tenantIdentifier.getConnectionUriDomain(), other.tenantIdentifier.getAppId(), other.tenantIdentifier.getTenantId());
+        this.tenantIdentifier = new TenantIdentifier(other.tenantIdentifier.getConnectionUriDomain(),
+                other.tenantIdentifier.getAppId(), other.tenantIdentifier.getTenantId());
         this.coreConfig = gson.fromJson(other.coreConfig.toString(), JsonObject.class);
         this.emailPasswordConfig = new EmailPasswordConfig(other.emailPasswordConfig.enabled);
         this.passwordlessConfig = new PasswordlessConfig(other.passwordlessConfig.enabled);
-        this.thirdPartyConfig = new ThirdPartyConfig(other.thirdPartyConfig.enabled, other.thirdPartyConfig.providers.clone());
+        this.thirdPartyConfig = new ThirdPartyConfig(other.thirdPartyConfig.enabled,
+                other.thirdPartyConfig.providers.clone());
         this.firstFactors = other.firstFactors == null ? null : other.firstFactors.clone();
-        this.requiredSecondaryFactors = other.requiredSecondaryFactors == null ? null : other.requiredSecondaryFactors.clone();
+        this.requiredSecondaryFactors =
+                other.requiredSecondaryFactors == null ? null : other.requiredSecondaryFactors.clone();
     }
 
     public boolean deepEquals(TenantConfig other) {
@@ -88,7 +93,8 @@ public class TenantConfig {
                 this.passwordlessConfig.equals(other.passwordlessConfig) &&
                 this.thirdPartyConfig.equals(other.thirdPartyConfig) &&
                 Utils.unorderedArrayEquals(this.firstFactors, other.firstFactors) && // order is not important
-                Utils.unorderedArrayEquals(this.requiredSecondaryFactors, other.requiredSecondaryFactors) && // order is not important
+                Utils.unorderedArrayEquals(this.requiredSecondaryFactors, other.requiredSecondaryFactors) &&
+                // order is not important
                 this.coreConfig.equals(other.coreConfig);
     }
 
@@ -113,11 +119,13 @@ public class TenantConfig {
         tenantConfigObject.add("thirdParty", this.thirdPartyConfig.toJson());
         tenantConfigObject.addProperty("tenantId", this.tenantIdentifier.getTenantId());
 
-        if (tenantConfigObject.has("firstFactors") && tenantConfigObject.get("firstFactors").getAsJsonArray().size() == 0) {
+        if (tenantConfigObject.has("firstFactors") &&
+                tenantConfigObject.get("firstFactors").getAsJsonArray().size() == 0) {
             tenantConfigObject.remove("firstFactors");
         }
 
-        if (tenantConfigObject.has("requiredSecondaryFactors") && tenantConfigObject.get("requiredSecondaryFactors").getAsJsonArray().size() == 0) {
+        if (tenantConfigObject.has("requiredSecondaryFactors") &&
+                tenantConfigObject.get("requiredSecondaryFactors").getAsJsonArray().size() == 0) {
             tenantConfigObject.remove("requiredSecondaryFactors");
         }
 

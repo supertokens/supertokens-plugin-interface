@@ -42,7 +42,8 @@ public interface TOTPSQLStorage extends TOTPStorage, SQLStorage {
             throws StorageQueryException, UnknownTotpUserIdException, UsedCodeAlreadyExistsException,
             TenantOrAppNotFoundException;
 
-    TOTPDevice getDeviceByName_Transaction(TransactionConnection con, AppIdentifier appIdentifier, String userId, String deviceName) throws StorageQueryException;
+    TOTPDevice getDeviceByName_Transaction(TransactionConnection con, AppIdentifier appIdentifier, String userId,
+                                           String deviceName) throws StorageQueryException;
 
     TOTPDevice createDevice_Transaction(TransactionConnection con, AppIdentifier appIdentifier, TOTPDevice device)
             throws StorageQueryException, DeviceAlreadyExistsException, TenantOrAppNotFoundException;

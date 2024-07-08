@@ -12,7 +12,7 @@ public class DashboardSearchTags {
     public List<String> providers;
 
     public DashboardSearchTags(@Nullable List<String> emails, @Nullable List<String> phones,
-            @Nullable List<String> providers) {
+                               @Nullable List<String> providers) {
         this.emails = emails;
         this.phoneNumbers = phones;
         this.providers = providers;
@@ -26,13 +26,15 @@ public class DashboardSearchTags {
     }
 
     public boolean shouldThirdPartyTableBeSearched() {
-        
+
         List<SUPPORTED_SEARCH_TAGS> nonNullSearchTags = getNonNullSearchFields();
-        if(nonNullSearchTags.contains(SUPPORTED_SEARCH_TAGS.EMAIL) && nonNullSearchTags.contains(SUPPORTED_SEARCH_TAGS.PROVIDER)){
+        if (nonNullSearchTags.contains(SUPPORTED_SEARCH_TAGS.EMAIL) &&
+                nonNullSearchTags.contains(SUPPORTED_SEARCH_TAGS.PROVIDER)) {
             return nonNullSearchTags.size() == 2;
         }
 
-        if(nonNullSearchTags.contains(SUPPORTED_SEARCH_TAGS.EMAIL) || nonNullSearchTags.contains(SUPPORTED_SEARCH_TAGS.PROVIDER)){
+        if (nonNullSearchTags.contains(SUPPORTED_SEARCH_TAGS.EMAIL) ||
+                nonNullSearchTags.contains(SUPPORTED_SEARCH_TAGS.PROVIDER)) {
             return nonNullSearchTags.size() == 1;
         }
 
@@ -41,11 +43,13 @@ public class DashboardSearchTags {
 
     public boolean shouldPasswordlessTableBeSearched() {
         List<SUPPORTED_SEARCH_TAGS> nonNullSearchTags = getNonNullSearchFields();
-        if(nonNullSearchTags.contains(SUPPORTED_SEARCH_TAGS.EMAIL) && nonNullSearchTags.contains(SUPPORTED_SEARCH_TAGS.PHONE)){
+        if (nonNullSearchTags.contains(SUPPORTED_SEARCH_TAGS.EMAIL) &&
+                nonNullSearchTags.contains(SUPPORTED_SEARCH_TAGS.PHONE)) {
             return nonNullSearchTags.size() == 2;
         }
 
-        if(nonNullSearchTags.contains(SUPPORTED_SEARCH_TAGS.EMAIL) || nonNullSearchTags.contains(SUPPORTED_SEARCH_TAGS.PHONE)){
+        if (nonNullSearchTags.contains(SUPPORTED_SEARCH_TAGS.EMAIL) ||
+                nonNullSearchTags.contains(SUPPORTED_SEARCH_TAGS.PHONE)) {
             return nonNullSearchTags.size() == 1;
         }
 

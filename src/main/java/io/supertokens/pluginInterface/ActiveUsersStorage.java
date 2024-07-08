@@ -11,7 +11,9 @@ public interface ActiveUsersStorage extends NonAuthRecipeStorage {
     /* Count the number of users who did some activity after given timestamp */
     int countUsersActiveSince(AppIdentifier appIdentifier, long time) throws StorageQueryException;
 
-    int countUsersThatHaveMoreThanOneLoginMethodAndActiveSince(AppIdentifier appIdentifier, long sinceTime) throws StorageQueryException;
+    int countUsersThatHaveMoreThanOneLoginMethodAndActiveSince(AppIdentifier appIdentifier, long sinceTime)
+            throws StorageQueryException;
 
-    int countUsersThatHaveMoreThanOneLoginMethodOrTOTPEnabledAndActiveSince(AppIdentifier appIdentifier, long timestamp) throws StorageQueryException;
+    int countUsersThatHaveMoreThanOneLoginMethodOrTOTPEnabledAndActiveSince(AppIdentifier appIdentifier, long timestamp)
+            throws StorageQueryException;
 }
