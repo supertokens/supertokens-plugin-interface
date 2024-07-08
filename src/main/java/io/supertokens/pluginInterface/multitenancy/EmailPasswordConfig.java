@@ -40,7 +40,7 @@ public class EmailPasswordConfig {
     public boolean isEnabledInLesserThanOrEqualTo4_0(String[] firstFactors) {
         return this.enabled && (
                 firstFactors == null || List.of(firstFactors).contains("emailpassword")
-            );
+        );
     }
 
     public JsonElement toJsonLesserThanOrEqualTo4_0(String[] firstFactors) {
@@ -53,7 +53,7 @@ public class EmailPasswordConfig {
     public boolean isEnabledIn5_0(String[] firstFactors) {
         return this.enabled && (
                 firstFactors == null || firstFactors.length > 0
-            );
+        );
     }
 
     public JsonElement toJson5_0(String[] firstFactors) {

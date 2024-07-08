@@ -131,7 +131,8 @@ public class TenantConfig {
         }
     }
 
-    public JsonObject toJsonLesserThanOrEqualTo4_0(boolean shouldProtectDbConfig, Storage storage, String[] protectedCoreConfigs) {
+    public JsonObject toJsonLesserThanOrEqualTo4_0(boolean shouldProtectDbConfig, Storage storage,
+                                                   String[] protectedCoreConfigs) {
         JsonObject result = new JsonObject();
         result.addProperty("tenantId", this.tenantIdentifier.getTenantId());
         result.add("emailPassword", this.emailPasswordConfig.toJsonLesserThanOrEqualTo4_0(this.firstFactors));
