@@ -22,21 +22,22 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 - Replace `TotpNotEnabledException` with `UnknownUserTotpIdException`
 - ActiveUsersSQLStorage interface changes
-  - Adds `deleteUserActive_Transaction` function
+    - Adds `deleteUserActive_Transaction` function
 - ActiveUsersStorage interface changes
-  - Removes `countUsersEnabledTotp`, `countUsersEnabledTotpAndActiveSince` and `deleteUserActive_Transaction` functions
-  - Adds `countUsersThatHaveMoreThanOneLoginMethodOrTOTPEnabledAndActiveSince` function
+    - Removes `countUsersEnabledTotp`, `countUsersEnabledTotpAndActiveSince` and `deleteUserActive_Transaction`
+      functions
+    - Adds `countUsersThatHaveMoreThanOneLoginMethodOrTOTPEnabledAndActiveSince` function
 - AuthRecipeStorage interface changes
-  - Adds `getUsersCountWithMoreThanOneLoginMethodOrTOTPEnabled` function
+    - Adds `getUsersCountWithMoreThanOneLoginMethodOrTOTPEnabled` function
 - TenantConfig changes
-  - Adds `firstFactors` and `requiredSecondaryFactors` fields
+    - Adds `firstFactors` and `requiredSecondaryFactors` fields
 - Adds `createdAt` field to `TOTPDevice`
 - TOTPSQLStorage interface changes
-  - Adds `getDeviceByName_Transaction` and `createDevice_Transaction` functions
+    - Adds `getDeviceByName_Transaction` and `createDevice_Transaction` functions
 - Adds a new `useStaticKey` param to `updateSessionInfo_Transaction`
-  - This enables smooth switching between `useDynamicAccessTokenSigningKey` settings by allowing refresh calls to
-    change the signing key type of a session
-  Adds `appIdentifier` parameter to `getUserIdMappingForSuperTokensIds` in `UserIdMappingStorage`
+    - This enables smooth switching between `useDynamicAccessTokenSigningKey` settings by allowing refresh calls to
+      change the signing key type of a session
+      Adds `appIdentifier` parameter to `getUserIdMappingForSuperTokensIds` in `UserIdMappingStorage`
 
 ## [5.0.0] - 2024-03-05
 
@@ -49,7 +50,9 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [4.0.4] - 2023-11-28
 
-- Removes the error `Please use a CDI version that is greater than the one in which account linking feature was enabled` while querying users with linked accounts, but from an older version of CDI. We return details of the oldest login method in this case.
+- Removes the error `Please use a CDI version that is greater than the one in which account linking feature was enabled`
+  while querying users with linked accounts, but from an older version of CDI. We return details of the oldest login
+  method in this case.
 
 ## [4.0.3] - 2023-11-10
 
@@ -68,46 +71,47 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Adds support for account linking
 - Adds `AuthRecipeUserInfo` class and removes `UserInfo` from emailpassword, passwordless and thirdparty.
 - ActiveUsersStorage interface changes
-  - Removes `deleteUserActive`
-  - Adds `deleteUserActive_Transaction`
-  - Adds `countUsersThatHaveMoreThanOneLoginMethodAndActiveSince`
+    - Removes `deleteUserActive`
+    - Adds `deleteUserActive_Transaction`
+    - Adds `countUsersThatHaveMoreThanOneLoginMethodAndActiveSince`
 - EmailPasswordStorage interfaces changes
-  - Removes `deleteEmailPasswordUser`, `getUserInfoUsingId`, `getUserInfoUsingEmail`
-  - Changes return type of `signUp` from `UserInfo` to `AuthRecipeUserInfo`
-  - Changes `PasswordResetTokenInfo` to accept additional param `email`
+    - Removes `deleteEmailPasswordUser`, `getUserInfoUsingId`, `getUserInfoUsingEmail`
+    - Changes return type of `signUp` from `UserInfo` to `AuthRecipeUserInfo`
+    - Changes `PasswordResetTokenInfo` to accept additional param `email`
 - EmailPasswordSQLStorage interface changes
-  - Removes `getUserInfoUsingId_Transaction`
-  - Adds `deleteEmailPasswordUser_Transaction`
+    - Removes `getUserInfoUsingId_Transaction`
+    - Adds `deleteEmailPasswordUser_Transaction`
 - EmailVerificationStorage interface changes
-  - Removes `deleteEmailVerificationUserInfo`
+    - Removes `deleteEmailVerificationUserInfo`
 - EmailVerificationSQLStorage interface changes
-  - Adds `deleteEmailVerificationUserInfo_Transaction`
+    - Adds `deleteEmailVerificationUserInfo_Transaction`
 - MultitenancyStorage interface changes
-  - Removes `addUserIdToTenant`
+    - Removes `addUserIdToTenant`
 - MultitenancySQLStorage interface changes
-  - Adds `addUserIdToTenant_Transaction`
+    - Adds `addUserIdToTenant_Transaction`
 - PasswordlessStorage interface changes
-  - Changes return type of `createUser` from `UserInfo` to `AuthRecipeUserInfo`
-  - Removes `deletePasswordlessUser`, `getUserById`, `getUserByEmail`, `getUserByPhoneNumber`
+    - Changes return type of `createUser` from `UserInfo` to `AuthRecipeUserInfo`
+    - Removes `deletePasswordlessUser`, `getUserById`, `getUserByEmail`, `getUserByPhoneNumber`
 - PasswordlessSQLStorage interface changes
-  - Adds `deletePasswordlessUser_Transaction`
+    - Adds `deletePasswordlessUser_Transaction`
 - SessionInfo accepts additional parameter `recipeUserId`
 - SessionSQLStorage interface changes
-  - Adds `deleteSessionsOfUser_Transaction`
+    - Adds `deleteSessionsOfUser_Transaction`
 - ThirdPartyStorage interface changes
-  - Removes `deleteThirdPartyUser`, `getThirdPartyUserInfoUsingId`, `getThirdPartyUserInfoUsingId`, `getThirdPartyUsersByEmail`
-  - Changes return type of `signUp` from `UserInfo` to `AuthRecipeUserInfo`
+    -
+    Removes `deleteThirdPartyUser`, `getThirdPartyUserInfoUsingId`, `getThirdPartyUserInfoUsingId`, `getThirdPartyUsersByEmail`
+    - Changes return type of `signUp` from `UserInfo` to `AuthRecipeUserInfo`
 - ThirdPartySQLStorage interface changes
-  - Adds `deleteThirdPartyUser_Transaction`
-  - Removes `getUserInfoUsingId_Transaction`
+    - Adds `deleteThirdPartyUser_Transaction`
+    - Removes `getUserInfoUsingId_Transaction`
 - UserIdMappingSQLStorage interface changes
-  - Adds `getUserIdMapping_Transaction`, `getUserIdMapping_Transaction`
+    - Adds `getUserIdMapping_Transaction`, `getUserIdMapping_Transaction`
 - UserMetadataSQLStorage interface changes
-  - Adds `deleteUserMetadata_Transaction`
+    - Adds `deleteUserMetadata_Transaction`
 - UserRolesStorage interface changes
-  - Removes `deleteAllRolesForUser`
+    - Removes `deleteAllRolesForUser`
 - UserRolesSQLStorage interface changes
-  - Adds `deleteAllRolesForUser_Transaction`
+    - Adds `deleteAllRolesForUser_Transaction`
 
 ## [3.0.1] - 2023-07-04
 

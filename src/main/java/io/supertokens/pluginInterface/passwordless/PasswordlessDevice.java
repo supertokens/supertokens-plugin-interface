@@ -24,7 +24,7 @@ public class PasswordlessDevice {
     public final int failedAttempts;
 
     public PasswordlessDevice(String deviceIdHash, String email, String phoneNumber, String linkCodeSalt,
-            int failedAttempts) {
+                              int failedAttempts) {
         this.deviceIdHash = deviceIdHash;
         this.email = email;
         this.phoneNumber = phoneNumber;

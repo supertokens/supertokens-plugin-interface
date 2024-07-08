@@ -46,7 +46,8 @@ public class ConfigFieldInfo {
 
     public boolean isPluginPropertyEditable;
 
-    public ConfigFieldInfo(@Nonnull String key, @Nonnull String valueType, JsonElement value, @Nonnull String description,
+    public ConfigFieldInfo(@Nonnull String key, @Nonnull String valueType, JsonElement value,
+                           @Nonnull String description,
                            boolean isDifferentAcrossTenants,
                            @Nullable String[] possibleValues, boolean isNullable, Object defaultValue,
                            boolean isPluginProperty, boolean isPluginPropertyEditable) {

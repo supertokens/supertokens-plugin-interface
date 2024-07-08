@@ -36,7 +36,7 @@ public interface MultitenancyStorage extends Storage {
     void deleteTenantIdInTargetStorage(TenantIdentifier tenantIdentifier)
             throws TenantOrAppNotFoundException, StorageQueryException;
 
-    void overwriteTenantConfig(TenantConfig config) throws TenantOrAppNotFoundException, 
+    void overwriteTenantConfig(TenantConfig config) throws TenantOrAppNotFoundException,
             DuplicateThirdPartyIdException, DuplicateClientTypeException, StorageQueryException;
 
     boolean deleteTenantInfoInBaseStorage(TenantIdentifier tenantIdentifier) throws StorageQueryException;

@@ -97,7 +97,8 @@ public class TenantConfig {
                 this.passwordlessConfig.equals(other.passwordlessConfig) &&
                 this.thirdPartyConfig.equals(other.thirdPartyConfig) &&
                 Utils.unorderedArrayEquals(this.firstFactors, other.firstFactors) && // order is not important
-                Utils.unorderedArrayEquals(this.requiredSecondaryFactors, other.requiredSecondaryFactors) && // order is not important
+                Utils.unorderedArrayEquals(this.requiredSecondaryFactors, other.requiredSecondaryFactors) &&
+                // order is not important
                 this.coreConfig.equals(other.coreConfig);
     }
 
@@ -177,13 +178,15 @@ public class TenantConfig {
                 "enabled",
                 (this.firstFactors == null && this.emailPasswordConfig.enabled) ||
                         (this.firstFactors != null && List.of(this.firstFactors).contains("emailpassword")) ||
-                        (this.requiredSecondaryFactors != null && List.of(this.requiredSecondaryFactors).contains("emailpassword"))
+                        (this.requiredSecondaryFactors != null &&
+                                List.of(this.requiredSecondaryFactors).contains("emailpassword"))
         );
         tenantConfigObject.get("thirdParty").getAsJsonObject().addProperty(
                 "enabled",
                 (this.firstFactors == null && this.thirdPartyConfig.enabled) ||
                         (this.firstFactors != null && List.of(this.firstFactors).contains("thirdparty")) ||
-                        (this.requiredSecondaryFactors != null && List.of(this.requiredSecondaryFactors).contains("thirdparty"))
+                        (this.requiredSecondaryFactors != null &&
+                                List.of(this.requiredSecondaryFactors).contains("thirdparty"))
         );
         tenantConfigObject.get("passwordless").getAsJsonObject().addProperty(
                 "enabled",
@@ -200,7 +203,8 @@ public class TenantConfig {
                                         List.of(this.requiredSecondaryFactors).contains("link-phone")))
         );
 
-        if (tenantConfigObject.has("firstFactors") && tenantConfigObject.get("firstFactors").getAsJsonArray().size() == 0) {
+        if (tenantConfigObject.has("firstFactors") &&
+                tenantConfigObject.get("firstFactors").getAsJsonArray().size() == 0) {
             tenantConfigObject.remove("firstFactors");
         }
 
@@ -258,14 +262,14 @@ public class TenantConfig {
         return this.passwordlessConfig.enabled ||
                 this.firstFactors == null ||
                 (this.firstFactors != null &&
-                    (List.of(this.firstFactors).contains("otp-email") ||
-                        List.of(this.firstFactors).contains("otp-phone") ||
-                        List.of(this.firstFactors).contains("link-email") ||
-                        List.of(this.firstFactors).contains("link-phone"))) ||
+                        (List.of(this.firstFactors).contains("otp-email") ||
+                                List.of(this.firstFactors).contains("otp-phone") ||
+                                List.of(this.firstFactors).contains("link-email") ||
+                                List.of(this.firstFactors).contains("link-phone"))) ||
                 (this.requiredSecondaryFactors != null &&
-                    (List.of(this.requiredSecondaryFactors).contains("otp-email") ||
-                        List.of(this.requiredSecondaryFactors).contains("otp-phone") ||
-                        List.of(this.requiredSecondaryFactors).contains("link-email") ||
-                        List.of(this.requiredSecondaryFactors).contains("link-phone")));
+                        (List.of(this.requiredSecondaryFactors).contains("otp-email") ||
+                                List.of(this.requiredSecondaryFactors).contains("otp-phone") ||
+                                List.of(this.requiredSecondaryFactors).contains("link-email") ||
+                                List.of(this.requiredSecondaryFactors).contains("link-phone")));
     }
 }

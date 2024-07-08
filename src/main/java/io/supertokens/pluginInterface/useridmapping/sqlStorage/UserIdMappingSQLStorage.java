@@ -24,7 +24,8 @@ import io.supertokens.pluginInterface.useridmapping.UserIdMapping;
 import io.supertokens.pluginInterface.useridmapping.UserIdMappingStorage;
 
 public interface UserIdMappingSQLStorage extends UserIdMappingStorage, SQLStorage {
-    UserIdMapping getUserIdMapping_Transaction(TransactionConnection con, AppIdentifier appIdentifier, String userId, boolean isSuperTokensUserId)
+    UserIdMapping getUserIdMapping_Transaction(TransactionConnection con, AppIdentifier appIdentifier, String userId,
+                                               boolean isSuperTokensUserId)
             throws StorageQueryException;
 
     UserIdMapping[] getUserIdMapping_Transaction(TransactionConnection con, AppIdentifier appIdentifier, String userId)
