@@ -12,7 +12,6 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Adds new class `ConfigFieldInfo` that represents a core config field
 - Adds new method `getPluginConfigFieldsInfo` to fetch the plugin config as json in `DashboardStorage`
 - Updates `TenantConfig` to support `null` and empty array state for `firstFactors`
-- Update `ThirdPartyConfig` to support `null` and empty array state for `providers`
 
 ## [6.1.0] - 2024-04-17
 
@@ -98,8 +97,8 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - SessionSQLStorage interface changes
     - Adds `deleteSessionsOfUser_Transaction`
 - ThirdPartyStorage interface changes
-    -
-    Removes `deleteThirdPartyUser`, `getThirdPartyUserInfoUsingId`, `getThirdPartyUserInfoUsingId`, `getThirdPartyUsersByEmail`
+  -
+  Removes `deleteThirdPartyUser`, `getThirdPartyUserInfoUsingId`, `getThirdPartyUserInfoUsingId`, `getThirdPartyUsersByEmail`
     - Changes return type of `signUp` from `UserInfo` to `AuthRecipeUserInfo`
 - ThirdPartySQLStorage interface changes
     - Adds `deleteThirdPartyUser_Transaction`

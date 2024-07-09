@@ -16,39 +16,64 @@
 
 package io.supertokens.pluginInterface.multitenancy;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
+import com.google.gson.*;
 import io.supertokens.pluginInterface.utils.Utils;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.List;
 import java.util.Objects;
 
 public class ThirdPartyConfig {
     public final boolean enabled;
 
-    @Nullable
+    @Nonnull
     public final Provider[] providers;
 
     public ThirdPartyConfig(boolean enabled, @Nullable Provider[] providers) {
         this.enabled = enabled;
-        this.providers = providers;
+        this.providers = providers == null ? new Provider[0] : providers;
     }
 
-    public JsonObject toJson() {
-        JsonObject result = new JsonObject();
-        result.addProperty("enabled", this.enabled);
-
-        if (this.providers != null) {
-            result.add("providers", new JsonArray());
-
-            for (Provider provider : this.providers) {
-                result.getAsJsonArray("providers").add(provider.toJson());
-            }
+    private void addProvidersToJson(JsonObject result) {
+        JsonArray providersArray = new JsonArray();
+        for (Provider provider : this.providers) {
+            providersArray.add(provider.toJson());
         }
+        result.add("providers", providersArray);
+    }
 
+    public boolean isEnabledInLesserThanOrEqualTo4_0(String[] firstFactors) {
+        return this.enabled && (
+                firstFactors == null || List.of(firstFactors).contains("thirdparty")
+        );
+    }
+
+    public JsonElement toJsonLesserThanOrEqualTo4_0(String[] firstFactors) {
+        JsonObject result = new JsonObject();
+        result.addProperty("enabled",
+                this.isEnabledInLesserThanOrEqualTo4_0(firstFactors));
+        this.addProvidersToJson(result);
+        return result;
+    }
+
+    public boolean isEnabledIn5_0(String[] firstFactors) {
+        return this.enabled && (
+                firstFactors == null || firstFactors.length > 0
+        );
+    }
+
+    public JsonElement toJson5_0(String[] firstFactors) {
+        JsonObject result = new JsonObject();
+        result.addProperty("enabled",
+                this.isEnabledIn5_0(firstFactors));
+        this.addProvidersToJson(result);
+        return result;
+    }
+
+    public JsonElement toJson_v2_5_1() {
+        JsonObject result = new JsonObject();
+        this.addProvidersToJson(result);
         return result;
     }
 
