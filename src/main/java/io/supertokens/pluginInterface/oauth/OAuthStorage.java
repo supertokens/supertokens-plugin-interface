@@ -16,9 +16,15 @@
 
 package io.supertokens.pluginInterface.oauth;
 
+import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
 import io.supertokens.pluginInterface.nonAuthRecipe.NonAuthRecipeStorage;
+import io.supertokens.pluginInterface.sqlStorage.TransactionConnection;
 
 public interface OAuthStorage extends NonAuthRecipeStorage {
-    public boolean doesClientIdExistForThisApp(AppIdentifier appIdentifier, String clientId);
+
+    public boolean doesClientIdExistForThisApp(AppIdentifier appIdentifier, String clientId) throws
+            StorageQueryException;
+
+    public void addClientForApp(AppIdentifier appIdentifier, String clientId) throws StorageQueryException;
 }

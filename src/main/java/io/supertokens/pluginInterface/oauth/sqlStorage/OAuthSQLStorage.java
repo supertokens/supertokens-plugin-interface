@@ -20,4 +20,5 @@ import io.supertokens.pluginInterface.oauth.OAuthStorage;
 import io.supertokens.pluginInterface.sqlStorage.SQLStorage;
 
 public interface OAuthSQLStorage extends OAuthStorage, SQLStorage {
+
 }
