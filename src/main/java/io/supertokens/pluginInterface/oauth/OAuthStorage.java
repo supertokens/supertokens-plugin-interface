@@ -30,4 +30,6 @@ public interface OAuthStorage extends NonAuthRecipeStorage {
             OAuth2ClientAlreadyExistsForAppException;
 
     public boolean isClientIdAlreadyExists(String clientId) throws StorageQueryException;
+
+    public void removeAppClientAssociation(AppIdentifier appIdentifier, String clientId) throws StorageQueryException;
 }
