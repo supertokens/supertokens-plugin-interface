@@ -18,7 +18,7 @@ package io.supertokens.pluginInterface.oauth.exceptions;
 
 import java.io.Serial;
 
-public class ClientAlreadyExistsForAppException extends Exception{
+public class OAuth2ClientAlreadyExistsForAppException extends Exception{
     @Serial
     private static final long serialVersionUID = 2792232552559552544L;
 }
