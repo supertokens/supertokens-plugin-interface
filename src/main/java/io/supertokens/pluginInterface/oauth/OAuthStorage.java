@@ -21,6 +21,8 @@ import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
 import io.supertokens.pluginInterface.nonAuthRecipe.NonAuthRecipeStorage;
 import io.supertokens.pluginInterface.oauth.exceptions.OAuth2ClientAlreadyExistsForAppException;
 
+import java.util.List;
+
 public interface OAuthStorage extends NonAuthRecipeStorage {
 
     public boolean doesClientIdExistForThisApp(AppIdentifier appIdentifier, String clientId) throws
@@ -30,4 +32,6 @@ public interface OAuthStorage extends NonAuthRecipeStorage {
             OAuth2ClientAlreadyExistsForAppException;
 
     public boolean removeAppClientAssociation(AppIdentifier appIdentifier, String clientId) throws StorageQueryException;
+
+    List<String> listClientsForApp(AppIdentifier appIdentifier) throws StorageQueryException;
 }
