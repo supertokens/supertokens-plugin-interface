@@ -37,5 +37,5 @@ public interface OAuthStorage extends NonAuthRecipeStorage {
 
     public void revoke(AppIdentifier appIdentifier, String targetType, String targetValue) throws StorageQueryException;
 
-    public boolean isRevoked(AppIdentifier appIdentifier, String targetType, String targetValue, long issuedAt) throws StorageQueryException;
+    public boolean isRevoked(AppIdentifier appIdentifier, String[] targetTypes, String[] targetValues, long issuedAt) throws StorageQueryException;
 }
