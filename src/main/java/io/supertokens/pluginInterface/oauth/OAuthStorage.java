@@ -37,6 +37,8 @@ public interface OAuthStorage extends NonAuthRecipeStorage {
 
     public boolean isRevoked(AppIdentifier appIdentifier, String[] targetTypes, String[] targetValues, long issuedAt) throws StorageQueryException;
 
+    public void addM2MToken(AppIdentifier appIdentifier, String clientId, long iat, long exp) throws StorageQueryException;
+
     public int countTotalNumberOfClientsForApp(AppIdentifier appIdentifier) throws StorageQueryException;
 
     public int countTotalNumberOfClientCredentialsOnlyClientsForApp(AppIdentifier appIdentifier) throws StorageQueryException;
