@@ -33,7 +33,7 @@ public interface OAuthStorage extends NonAuthRecipeStorage {
 
     public List<String> listClientsForApp(AppIdentifier appIdentifier) throws StorageQueryException;
 
-    public void revoke(AppIdentifier appIdentifier, String targetType, String targetValue) throws StorageQueryException;
+    public void revoke(AppIdentifier appIdentifier, String targetType, String targetValue, long exp) throws StorageQueryException;
 
     public boolean isRevoked(AppIdentifier appIdentifier, String[] targetTypes, String[] targetValues, long issuedAt) throws StorageQueryException;
 
@@ -46,4 +46,6 @@ public interface OAuthStorage extends NonAuthRecipeStorage {
     public int countTotalNumberOfM2MTokensCreatedSince(AppIdentifier appIdentifier, long since) throws StorageQueryException;
 
     public int countTotalNumberOfM2MTokensAlive(AppIdentifier appIdentifier) throws StorageQueryException;
+
+    public void cleanUpExpiredAndRevokedTokens(AppIdentifier appIdentifier) throws StorageQueryException;
 }
