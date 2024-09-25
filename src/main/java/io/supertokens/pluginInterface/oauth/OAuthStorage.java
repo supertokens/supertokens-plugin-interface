@@ -19,19 +19,33 @@ package io.supertokens.pluginInterface.oauth;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
 import io.supertokens.pluginInterface.nonAuthRecipe.NonAuthRecipeStorage;
-import io.supertokens.pluginInterface.oauth.exceptions.OAuth2ClientAlreadyExistsForAppException;
 
 import java.util.List;
 
 public interface OAuthStorage extends NonAuthRecipeStorage {
 
-    public boolean doesClientIdExistForThisApp(AppIdentifier appIdentifier, String clientId) throws
+    public boolean doesClientIdExistForApp(AppIdentifier appIdentifier, String clientId) throws
             StorageQueryException;
 
-    public void addClientForApp(AppIdentifier appIdentifier, String clientId) throws StorageQueryException,
-            OAuth2ClientAlreadyExistsForAppException;
+    public void addOrUpdateClientForApp(AppIdentifier appIdentifier, String clientId, boolean isClientCredentialsOnly) throws StorageQueryException;
 
     public boolean removeAppClientAssociation(AppIdentifier appIdentifier, String clientId) throws StorageQueryException;
 
-    List<String> listClientsForApp(AppIdentifier appIdentifier) throws StorageQueryException;
+    public List<String> listClientsForApp(AppIdentifier appIdentifier) throws StorageQueryException;
+
+    public void revoke(AppIdentifier appIdentifier, String targetType, String targetValue, long exp) throws StorageQueryException;
+
+    public boolean isRevoked(AppIdentifier appIdentifier, String[] targetTypes, String[] targetValues, long issuedAt) throws StorageQueryException;
+
+    public void addM2MToken(AppIdentifier appIdentifier, String clientId, long iat, long exp) throws StorageQueryException;
+
+    public int countTotalNumberOfClientsForApp(AppIdentifier appIdentifier) throws StorageQueryException;
+
+    public int countTotalNumberOfClientCredentialsOnlyClientsForApp(AppIdentifier appIdentifier) throws StorageQueryException;
+
+    public int countTotalNumberOfM2MTokensCreatedSince(AppIdentifier appIdentifier, long since) throws StorageQueryException;
+
+    public int countTotalNumberOfM2MTokensAlive(AppIdentifier appIdentifier) throws StorageQueryException;
+
+    public void cleanUpExpiredAndRevokedTokens(AppIdentifier appIdentifier) throws StorageQueryException;
 }
