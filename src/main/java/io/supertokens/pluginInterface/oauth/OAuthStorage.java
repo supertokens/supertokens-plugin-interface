@@ -49,7 +49,7 @@ public interface OAuthStorage extends NonAuthRecipeStorage {
 
     public void cleanUpExpiredAndRevokedTokens(AppIdentifier appIdentifier) throws StorageQueryException;
 
-    public void addLogoutChallenge(AppIdentifier appIdentifier, String challenge, String clientId, String postLogoutRedirectionUri, String state, long timeCreated) throws StorageQueryException;
+    public void addLogoutChallenge(AppIdentifier appIdentifier, String challenge, String clientId, String postLogoutRedirectionUri, String sessionHandle, String state, long timeCreated) throws StorageQueryException;
 
     public OAuthLogoutChallenge getLogoutChallenge(AppIdentifier appIdentifier, String challenge) throws StorageQueryException;
 
