@@ -7,6 +7,8 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Adds `BulkImportTransactionRolledBackException` for signaling if the transaction was rolled back by the DBMS
+
 ## [6.2.0] - 2024-04-25
 
 ### Added
