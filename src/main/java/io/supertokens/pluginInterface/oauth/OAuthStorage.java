@@ -48,4 +48,12 @@ public interface OAuthStorage extends NonAuthRecipeStorage {
     public int countTotalNumberOfM2MTokensAlive(AppIdentifier appIdentifier) throws StorageQueryException;
 
     public void cleanUpExpiredAndRevokedTokens(AppIdentifier appIdentifier) throws StorageQueryException;
+
+    public void addLogoutChallenge(AppIdentifier appIdentifier, String challenge, String clientId, String postLogoutRedirectionUri, String sessionHandle, String state, long timeCreated) throws StorageQueryException;
+
+    public OAuthLogoutChallenge getLogoutChallenge(AppIdentifier appIdentifier, String challenge) throws StorageQueryException;
+
+    public void deleteLogoutChallenge(AppIdentifier appIdentifier, String challenge) throws StorageQueryException;
+
+    public void deleteLogoutChallengesBefore(AppIdentifier appIdentifier, long time) throws StorageQueryException;
 }
