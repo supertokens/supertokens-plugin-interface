@@ -35,7 +35,8 @@ public interface Storage {
 
     Storage createBulkImportProxyStorageInstance();
 
-    void loadConfig(JsonObject jsonConfig, Set<LOG_LEVEL> logLevels, TenantIdentifier tenantIdentifier) throws InvalidConfigException;
+    void loadConfig(JsonObject jsonConfig, Set<LOG_LEVEL> logLevels, TenantIdentifier tenantIdentifier)
+            throws InvalidConfigException;
 
     // this returns a unique ID based on the db's connection URI and table prefix such that
     // two different user pool IDs imply that the data for those two user pools are completely isolated.
@@ -80,7 +81,8 @@ public interface Storage {
             throws StorageQueryException;
 
     // to be used for testing purposes only. This function will add dummy data to non-auth tables.
-    void addInfoToNonAuthRecipesBasedOnUserId(TenantIdentifier tenantIdentifier, String className, String userId) throws StorageQueryException;
+    void addInfoToNonAuthRecipesBasedOnUserId(TenantIdentifier tenantIdentifier, String className, String userId)
+            throws StorageQueryException;
 
     // this function is used during testing in the core so that the core can
     // create multiple user pools across any plugin being used.

@@ -16,15 +16,13 @@
 
 package io.supertokens.pluginInterface.multitenancy;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
+import com.google.gson.*;
 import io.supertokens.pluginInterface.utils.Utils;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.*;
+import java.util.List;
+import java.util.Objects;
 
 public class ThirdPartyConfig {
     public final boolean enabled;
@@ -37,15 +35,45 @@ public class ThirdPartyConfig {
         this.providers = providers == null ? new Provider[0] : providers;
     }
 
-    public JsonObject toJson() {
-        JsonObject result = new JsonObject();
-        result.addProperty("enabled", this.enabled);
-        result.add("providers", new JsonArray());
-
+    private void addProvidersToJson(JsonObject result) {
+        JsonArray providersArray = new JsonArray();
         for (Provider provider : this.providers) {
-            result.getAsJsonArray("providers").add(provider.toJson());
+            providersArray.add(provider.toJson());
         }
+        result.add("providers", providersArray);
+    }
 
+    public boolean isEnabledInLesserThanOrEqualTo4_0(String[] firstFactors) {
+        return this.enabled && (
+                firstFactors == null || List.of(firstFactors).contains("thirdparty")
+        );
+    }
+
+    public JsonElement toJsonLesserThanOrEqualTo4_0(String[] firstFactors) {
+        JsonObject result = new JsonObject();
+        result.addProperty("enabled",
+                this.isEnabledInLesserThanOrEqualTo4_0(firstFactors));
+        this.addProvidersToJson(result);
+        return result;
+    }
+
+    public boolean isEnabledIn5_0(String[] firstFactors) {
+        return this.enabled && (
+                firstFactors == null || firstFactors.length > 0
+        );
+    }
+
+    public JsonElement toJson5_0(String[] firstFactors) {
+        JsonObject result = new JsonObject();
+        result.addProperty("enabled",
+                this.isEnabledIn5_0(firstFactors));
+        this.addProvidersToJson(result);
+        return result;
+    }
+
+    public JsonElement toJson_v2_5_1() {
+        JsonObject result = new JsonObject();
+        this.addProvidersToJson(result);
         return result;
     }
 
@@ -99,7 +127,8 @@ public class ThirdPartyConfig {
                         @Nullable JsonObject tokenEndpointBodyParams,
                         @Nullable String userInfoEndpoint, @Nullable JsonObject userInfoEndpointQueryParams,
                         @Nullable JsonObject userInfoEndpointHeaders,
-                        @Nullable String jwksURI, @Nullable String oidcDiscoveryEndpoint, @Nullable Boolean requireEmail,
+                        @Nullable String jwksURI, @Nullable String oidcDiscoveryEndpoint,
+                        @Nullable Boolean requireEmail,
                         @Nullable UserInfoMap userInfoMap) {
             this.thirdPartyId = thirdPartyId;
             this.name = name;
@@ -129,19 +158,22 @@ public class ThirdPartyConfig {
             }
 
             if (this.tokenEndpointBodyParams != null) {
-                result.add("tokenEndpointBodyParams", new GsonBuilder().serializeNulls().create().toJsonTree(this.tokenEndpointBodyParams));
+                result.add("tokenEndpointBodyParams",
+                        new GsonBuilder().serializeNulls().create().toJsonTree(this.tokenEndpointBodyParams));
             } else {
                 result.remove("tokenEndpointBodyParams");
             }
 
             if (this.userInfoEndpointQueryParams != null) {
-                result.add("userInfoEndpointQueryParams", new GsonBuilder().serializeNulls().create().toJsonTree(this.userInfoEndpointQueryParams));
+                result.add("userInfoEndpointQueryParams",
+                        new GsonBuilder().serializeNulls().create().toJsonTree(this.userInfoEndpointQueryParams));
             } else {
                 result.remove("userInfoEndpointQueryParams");
             }
 
             if (this.userInfoEndpointHeaders != null) {
-                result.add("userInfoEndpointHeaders", new GsonBuilder().serializeNulls().create().toJsonTree(this.userInfoEndpointHeaders));
+                result.add("userInfoEndpointHeaders",
+                        new GsonBuilder().serializeNulls().create().toJsonTree(this.userInfoEndpointHeaders));
             } else {
                 result.remove("userInfoEndpointHeaders");
             }
@@ -231,8 +263,10 @@ public class ThirdPartyConfig {
 
         public UserInfoMap(@Nullable UserInfoMapKeyValue fromIdTokenPayload,
                            @Nullable UserInfoMapKeyValue fromUserInfoAPI) {
-            this.fromIdTokenPayload = fromIdTokenPayload == null ? new UserInfoMapKeyValue(null, null, null) : fromIdTokenPayload;
-            this.fromUserInfoAPI = fromUserInfoAPI == null ? new UserInfoMapKeyValue(null, null, null) : fromUserInfoAPI;
+            this.fromIdTokenPayload =
+                    fromIdTokenPayload == null ? new UserInfoMapKeyValue(null, null, null) : fromIdTokenPayload;
+            this.fromUserInfoAPI =
+                    fromUserInfoAPI == null ? new UserInfoMapKeyValue(null, null, null) : fromUserInfoAPI;
         }
 
         @Override
