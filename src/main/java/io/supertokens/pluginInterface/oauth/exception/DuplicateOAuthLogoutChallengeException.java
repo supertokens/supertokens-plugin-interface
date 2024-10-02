@@ -1,5 +1,5 @@
 /*
- *    Copyright (c) 2024, VRAI Labs and/or its affiliates. All rights reserved.
+ *    Copyright (c) 2021, VRAI Labs and/or its affiliates. All rights reserved.
  *
  *    This software is licensed under the Apache License, Version 2.0 (the
  *    "License") as published by the Apache Software Foundation.
@@ -14,11 +14,8 @@
  *    under the License.
  */
 
-package io.supertokens.pluginInterface.oauth.sqlStorage;
+package io.supertokens.pluginInterface.oauth.exception;
 
-import io.supertokens.pluginInterface.oauth.OAuthStorage;
-import io.supertokens.pluginInterface.sqlStorage.SQLStorage;
-
-public interface OAuthSQLStorage extends OAuthStorage, SQLStorage {
-
+public class DuplicateOAuthLogoutChallengeException extends Exception {
+    private static final long serialVersionUID = -7183235655606906540L;
 }
