@@ -7,6 +7,10 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [6.3.0] - 2024-10-02
+
+- Adds `OAuthStorage` interface
+
 ## [6.2.0] - 2024-05-24
 
 - Adds new class `ConfigFieldInfo` that represents a core config field
