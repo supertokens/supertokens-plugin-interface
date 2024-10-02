@@ -9,7 +9,7 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [6.3.0] - 2024-10-02
 
-- Adds `OAuthStorage` interface
+- Adds `OAuthStorage` interface for OAuth Provider support
 
 ## [6.2.0] - 2024-05-24
 
