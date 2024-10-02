@@ -25,37 +25,37 @@ import java.util.List;
 
 public interface OAuthStorage extends NonAuthRecipeStorage {
 
-    public boolean doesClientIdExistForApp(AppIdentifier appIdentifier, String clientId) throws
+    public boolean doesOAuthClientIdExist(AppIdentifier appIdentifier, String clientId) throws
             StorageQueryException;
 
-    public void addOrUpdateClientForApp(AppIdentifier appIdentifier, String clientId, boolean isClientCredentialsOnly) throws StorageQueryException;
+    public void addOrUpdateOauthClient(AppIdentifier appIdentifier, String clientId, boolean isClientCredentialsOnly) throws StorageQueryException;
 
-    public boolean removeAppClientAssociation(AppIdentifier appIdentifier, String clientId) throws StorageQueryException;
+    public boolean deleteOAuthClient(AppIdentifier appIdentifier, String clientId) throws StorageQueryException;
 
-    public List<String> listClientsForApp(AppIdentifier appIdentifier) throws StorageQueryException;
+    public List<String> listOAuthClients(AppIdentifier appIdentifier) throws StorageQueryException;
 
-    public void revoke(AppIdentifier appIdentifier, String targetType, String targetValue, long exp) throws StorageQueryException;
+    public void revokeOAuthTokensBasedOnTargetFields(AppIdentifier appIdentifier, OAuthRevokeTargetType targetType, String targetValue, long exp) throws StorageQueryException;
 
-    public boolean isRevoked(AppIdentifier appIdentifier, String[] targetTypes, String[] targetValues, long issuedAt) throws StorageQueryException;
+    public boolean isOAuthTokenRevokedBasedOnTargetFields(AppIdentifier appIdentifier, OAuthRevokeTargetType[] targetTypes, String[] targetValues, long issuedAt) throws StorageQueryException;
 
-    public void addM2MToken(AppIdentifier appIdentifier, String clientId, long iat, long exp) throws StorageQueryException;
+    public void addOAuthM2MTokenForStats(AppIdentifier appIdentifier, String clientId, long iat, long exp) throws StorageQueryException;
 
-    public int countTotalNumberOfClientsForApp(AppIdentifier appIdentifier) throws StorageQueryException;
+    public void cleanUpExpiredAndRevokedOAuthTokensList() throws StorageQueryException;
 
-    public int countTotalNumberOfClientCredentialsOnlyClientsForApp(AppIdentifier appIdentifier) throws StorageQueryException;
-
-    public int countTotalNumberOfM2MTokensCreatedSince(AppIdentifier appIdentifier, long since) throws StorageQueryException;
-
-    public int countTotalNumberOfM2MTokensAlive(AppIdentifier appIdentifier) throws StorageQueryException;
-
-    public void cleanUpExpiredAndRevokedTokens(AppIdentifier appIdentifier) throws StorageQueryException;
-
-    public void addLogoutChallenge(AppIdentifier appIdentifier, String challenge, String clientId, String postLogoutRedirectionUri, String sessionHandle, String state, long timeCreated) throws
+    public void addOAuthLogoutChallenge(AppIdentifier appIdentifier, String challenge, String clientId, String postLogoutRedirectionUri, String sessionHandle, String state, long timeCreated) throws
             DuplicateOAuthLogoutChallengeException, StorageQueryException;
 
-    public OAuthLogoutChallenge getLogoutChallenge(AppIdentifier appIdentifier, String challenge) throws StorageQueryException;
+    public OAuthLogoutChallenge getOAuthLogoutChallenge(AppIdentifier appIdentifier, String challenge) throws StorageQueryException;
 
-    public void deleteLogoutChallenge(AppIdentifier appIdentifier, String challenge) throws StorageQueryException;
+    public void deleteOAuthLogoutChallenge(AppIdentifier appIdentifier, String challenge) throws StorageQueryException;
 
-    public void deleteLogoutChallengesBefore(AppIdentifier appIdentifier, long time) throws StorageQueryException;
+    public void deleteOAuthLogoutChallengesBefore(long time) throws StorageQueryException;
+
+    public int countTotalNumberOfOAuthClients(AppIdentifier appIdentifier) throws StorageQueryException;
+
+    public int countTotalNumberOfClientCredentialsOnlyOAuthClients(AppIdentifier appIdentifier) throws StorageQueryException;
+
+    public int countTotalNumberOfOAuthM2MTokensCreatedSince(AppIdentifier appIdentifier, long since) throws StorageQueryException;
+
+    public int countTotalNumberOfOAuthM2MTokensAlive(AppIdentifier appIdentifier) throws StorageQueryException;
 }
