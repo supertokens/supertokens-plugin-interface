@@ -18,8 +18,10 @@ package io.supertokens.pluginInterface.oauth;
 
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
+import io.supertokens.pluginInterface.multitenancy.exceptions.TenantOrAppNotFoundException;
 import io.supertokens.pluginInterface.nonAuthRecipe.NonAuthRecipeStorage;
 import io.supertokens.pluginInterface.oauth.exception.DuplicateOAuthLogoutChallengeException;
+import io.supertokens.pluginInterface.oauth.exception.OAuthClientNotFoundException;
 
 import java.util.List;
 
@@ -28,22 +30,22 @@ public interface OAuthStorage extends NonAuthRecipeStorage {
     public boolean doesOAuthClientIdExist(AppIdentifier appIdentifier, String clientId) throws
             StorageQueryException;
 
-    public void addOrUpdateOauthClient(AppIdentifier appIdentifier, String clientId, boolean isClientCredentialsOnly) throws StorageQueryException;
+    public void addOrUpdateOauthClient(AppIdentifier appIdentifier, String clientId, boolean isClientCredentialsOnly) throws TenantOrAppNotFoundException, StorageQueryException;
 
     public boolean deleteOAuthClient(AppIdentifier appIdentifier, String clientId) throws StorageQueryException;
 
     public List<String> listOAuthClients(AppIdentifier appIdentifier) throws StorageQueryException;
 
-    public void revokeOAuthTokensBasedOnTargetFields(AppIdentifier appIdentifier, OAuthRevokeTargetType targetType, String targetValue, long exp) throws StorageQueryException;
+    public void revokeOAuthTokensBasedOnTargetFields(AppIdentifier appIdentifier, OAuthRevokeTargetType targetType, String targetValue, long exp) throws TenantOrAppNotFoundException, StorageQueryException;
 
     public boolean isOAuthTokenRevokedBasedOnTargetFields(AppIdentifier appIdentifier, OAuthRevokeTargetType[] targetTypes, String[] targetValues, long issuedAt) throws StorageQueryException;
 
-    public void addOAuthM2MTokenForStats(AppIdentifier appIdentifier, String clientId, long iat, long exp) throws StorageQueryException;
+    public void addOAuthM2MTokenForStats(AppIdentifier appIdentifier, String clientId, long iat, long exp) throws OAuthClientNotFoundException, StorageQueryException;
 
     public void cleanUpExpiredAndRevokedOAuthTokensList() throws StorageQueryException;
 
     public void addOAuthLogoutChallenge(AppIdentifier appIdentifier, String challenge, String clientId, String postLogoutRedirectionUri, String sessionHandle, String state, long timeCreated) throws
-            DuplicateOAuthLogoutChallengeException, StorageQueryException;
+            DuplicateOAuthLogoutChallengeException, OAuthClientNotFoundException, StorageQueryException;
 
     public OAuthLogoutChallenge getOAuthLogoutChallenge(AppIdentifier appIdentifier, String challenge) throws StorageQueryException;
 
