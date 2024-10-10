@@ -27,14 +27,14 @@ import java.util.List;
 
 public interface OAuthStorage extends NonAuthRecipeStorage {
 
-    public boolean doesOAuthClientIdExist(AppIdentifier appIdentifier, String clientId) throws
-            StorageQueryException;
+    public OAuthClient getOAuthClientById(AppIdentifier appIdentifier, String clientId) throws
+            OAuthClientNotFoundException, StorageQueryException;
 
-    public void addOrUpdateOauthClient(AppIdentifier appIdentifier, String clientId, boolean isClientCredentialsOnly) throws TenantOrAppNotFoundException, StorageQueryException;
+    public void addOrUpdateOauthClient(AppIdentifier appIdentifier, String clientId, String clientSecret, boolean isClientCredentialsOnly, boolean enableRefreshTokenRotation) throws TenantOrAppNotFoundException, StorageQueryException;
 
     public boolean deleteOAuthClient(AppIdentifier appIdentifier, String clientId) throws StorageQueryException;
 
-    public List<String> listOAuthClients(AppIdentifier appIdentifier) throws StorageQueryException;
+    public List<OAuthClient> getOAuthClients(AppIdentifier appIdentifier, List<String> clientIds) throws StorageQueryException;
 
     public void revokeOAuthTokensBasedOnTargetFields(AppIdentifier appIdentifier, OAuthRevokeTargetType targetType, String targetValue, long exp) throws TenantOrAppNotFoundException, StorageQueryException;
 
@@ -52,6 +52,12 @@ public interface OAuthStorage extends NonAuthRecipeStorage {
     public void deleteOAuthLogoutChallenge(AppIdentifier appIdentifier, String challenge) throws StorageQueryException;
 
     public void deleteOAuthLogoutChallengesBefore(long time) throws StorageQueryException;
+
+    public void createOrUpdateRefreshTokenMapping(AppIdentifier appIdentifier, String superTokensRefreshToken, String oauthProviderRefreshToken, long exp) throws StorageQueryException;
+
+    public String getRefreshTokenMapping(AppIdentifier appIdentifier, String superTokensRefreshToken) throws StorageQueryException;
+
+    public void deleteRefreshTokenMapping(AppIdentifier appIdentifier, String superTokensRefreshToken) throws StorageQueryException;
 
     public int countTotalNumberOfOAuthClients(AppIdentifier appIdentifier) throws StorageQueryException;
 
