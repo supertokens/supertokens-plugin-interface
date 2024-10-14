@@ -40,9 +40,11 @@ public interface OAuthStorage extends NonAuthRecipeStorage {
 
     public boolean isOAuthTokenRevokedBasedOnTargetFields(AppIdentifier appIdentifier, OAuthRevokeTargetType[] targetTypes, String[] targetValues, long issuedAt) throws StorageQueryException;
 
+    public void deleteExpiredRevokedOAuthTokens(long exp) throws StorageQueryException;
+
     public void addOAuthM2MTokenForStats(AppIdentifier appIdentifier, String clientId, long iat, long exp) throws OAuthClientNotFoundException, StorageQueryException;
 
-    public void cleanUpExpiredAndRevokedOAuthTokensList() throws StorageQueryException;
+    public void deleteExpiredOAuthM2MTokens(long exp) throws StorageQueryException;
 
     public void addOAuthLogoutChallenge(AppIdentifier appIdentifier, String challenge, String clientId, String postLogoutRedirectionUri, String sessionHandle, String state, long timeCreated) throws
             DuplicateOAuthLogoutChallengeException, OAuthClientNotFoundException, StorageQueryException;
@@ -58,6 +60,8 @@ public interface OAuthStorage extends NonAuthRecipeStorage {
     public String getRefreshTokenMapping(AppIdentifier appIdentifier, String superTokensRefreshToken) throws StorageQueryException;
 
     public void deleteRefreshTokenMapping(AppIdentifier appIdentifier, String superTokensRefreshToken) throws StorageQueryException;
+
+    public void deleteExpiredRefreshTokenMappings(long exp) throws StorageQueryException;
 
     public int countTotalNumberOfOAuthClients(AppIdentifier appIdentifier) throws StorageQueryException;
 
