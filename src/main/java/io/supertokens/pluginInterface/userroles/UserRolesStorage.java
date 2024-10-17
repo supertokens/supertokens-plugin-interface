@@ -56,5 +56,5 @@ public interface UserRolesStorage extends NonAuthRecipeStorage {
 
     // delete all user association with a role (this is called before deleting the role)
     boolean deleteAllUserRoleAssociationsForRole(AppIdentifier appIdentifier,
-                                                             String role) throws StorageQueryException;
+                                                 String role) throws StorageQueryException;
 }

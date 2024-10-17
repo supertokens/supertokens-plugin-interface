@@ -27,7 +27,8 @@ import io.supertokens.pluginInterface.thirdparty.exception.DuplicateUserIdExcept
 
 public interface ThirdPartyStorage extends AuthRecipeStorage {
 
-    AuthRecipeUserInfo signUp(TenantIdentifier tenantIdentifier, String id, String email, LoginMethod.ThirdParty thirdParty,
+    AuthRecipeUserInfo signUp(TenantIdentifier tenantIdentifier, String id, String email,
+                              LoginMethod.ThirdParty thirdParty,
                               long timeJoined)
             throws StorageQueryException, DuplicateUserIdException, DuplicateThirdPartyUserException,
             TenantOrAppNotFoundException;
