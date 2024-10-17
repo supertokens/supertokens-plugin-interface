@@ -38,6 +38,8 @@ public class BulkImportUser {
     public Long createdAt;
     public Long updatedAt;
 
+    private static final Gson gson = new Gson();
+
     public BulkImportUser(String id, String externalUserId, JsonObject userMetadata, List<UserRole> userRoles,
             List<TotpDevice> totpDevices, List<LoginMethod> loginMethods) {
         this.id = id;
@@ -49,7 +51,7 @@ public class BulkImportUser {
     }
 
     public static BulkImportUser forTesting_fromJson(JsonObject jsonObject) {
-        return new Gson().fromJson(jsonObject, BulkImportUser.class);
+        return gson.fromJson(jsonObject, BulkImportUser.class);
     }
 
     // The bulk_import_users table stores users to be imported via a Cron Job.
@@ -59,7 +61,7 @@ public class BulkImportUser {
     // First, we validate all fields of `raw_data` using the BulkImportUser class, then store this data in the bulk_import_users table.
     // This function retrieves the `raw_data` after removing the additional fields.
     public String toRawDataForDbStorage() {
-        JsonObject jsonObject = new Gson().fromJson(new Gson().toJson(this), JsonObject.class);
+        JsonObject jsonObject = gson.fromJson(new Gson().toJson(this), JsonObject.class);
         jsonObject.remove("status");
         jsonObject.remove("createdAt");
         jsonObject.remove("updatedAt");
@@ -71,7 +73,7 @@ public class BulkImportUser {
     // When creating an instance of the BulkImportUser class, the extra fields must be passed separately as they are not part of the `raw_data`. 
     // This function creates a BulkImportUser instance from a stored bulk_import_user entry.
     public static BulkImportUser fromRawDataFromDbStorage(String id, String rawData, BULK_IMPORT_USER_STATUS status, String primaryUserId, String errorMessage, long createdAt, long updatedAt) {
-        BulkImportUser user = new Gson().fromJson(rawData, BulkImportUser.class);
+        BulkImportUser user = gson.fromJson(rawData, BulkImportUser.class);
         user.id = id;
         user.status = status;
         user.primaryUserId = primaryUserId;
@@ -82,7 +84,7 @@ public class BulkImportUser {
     }
     
     public JsonObject toJsonObject() {
-        return new Gson().fromJson(new Gson().toJson(this), JsonObject.class);
+        return gson.fromJson(gson.toJson(this), JsonObject.class);
     }
 
     public static class UserRole {
