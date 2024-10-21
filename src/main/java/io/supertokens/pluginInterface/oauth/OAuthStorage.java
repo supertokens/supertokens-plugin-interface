@@ -55,11 +55,11 @@ public interface OAuthStorage extends NonAuthRecipeStorage {
 
     public void deleteOAuthLogoutChallengesBefore(long time) throws StorageQueryException;
 
-    public void createOrUpdateRefreshTokenMapping(AppIdentifier appIdentifier, String superTokensRefreshToken, String oauthProviderRefreshToken, long exp) throws StorageQueryException;
+    public void createOrUpdateRefreshTokenMapping(AppIdentifier appIdentifier, String externalRefreshToken, String internalRefreshToken, long exp) throws StorageQueryException;
 
-    public String getRefreshTokenMapping(AppIdentifier appIdentifier, String superTokensRefreshToken) throws StorageQueryException;
+    public String getRefreshTokenMapping(AppIdentifier appIdentifier, String externalRefreshToken) throws StorageQueryException;
 
-    public void deleteRefreshTokenMapping(AppIdentifier appIdentifier, String superTokensRefreshToken) throws StorageQueryException;
+    public void deleteRefreshTokenMapping(AppIdentifier appIdentifier, String externalRefreshToken) throws StorageQueryException;
 
     public void deleteExpiredRefreshTokenMappings(long exp) throws StorageQueryException;
 
