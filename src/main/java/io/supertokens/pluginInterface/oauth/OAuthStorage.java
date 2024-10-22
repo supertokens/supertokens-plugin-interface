@@ -36,12 +36,6 @@ public interface OAuthStorage extends NonAuthRecipeStorage {
 
     public List<OAuthClient> getOAuthClients(AppIdentifier appIdentifier, List<String> clientIds) throws StorageQueryException;
 
-    public void revokeOAuthTokensBasedOnTargetFields(AppIdentifier appIdentifier, OAuthRevokeTargetType targetType, String targetValue, long exp) throws TenantOrAppNotFoundException, StorageQueryException;
-
-    public boolean isOAuthTokenRevokedBasedOnTargetFields(AppIdentifier appIdentifier, OAuthRevokeTargetType[] targetTypes, String[] targetValues, long issuedAt) throws StorageQueryException;
-
-    public void deleteExpiredRevokedOAuthTokens(long exp) throws StorageQueryException;
-
     public void addOAuthM2MTokenForStats(AppIdentifier appIdentifier, String clientId, long iat, long exp) throws OAuthClientNotFoundException, StorageQueryException;
 
     public void deleteExpiredOAuthM2MTokens(long exp) throws StorageQueryException;
@@ -55,13 +49,13 @@ public interface OAuthStorage extends NonAuthRecipeStorage {
 
     public void deleteOAuthLogoutChallengesBefore(long time) throws StorageQueryException;
 
-    public void createOrUpdateRefreshTokenMapping(AppIdentifier appIdentifier, String externalRefreshToken, String internalRefreshToken, long exp) throws StorageQueryException;
+    public void createOrUpdateOAuthSession(AppIdentifier appIdentifier, String gid, String clientId, String externalRefreshToken, String internalRefreshToken, String sessionHandle, List<String> jtis, long exp) throws StorageQueryException;
 
     public String getRefreshTokenMapping(AppIdentifier appIdentifier, String externalRefreshToken) throws StorageQueryException;
 
     public void deleteRefreshTokenMapping(AppIdentifier appIdentifier, String externalRefreshToken) throws StorageQueryException;
 
-    public void deleteExpiredRefreshTokenMappings(long exp) throws StorageQueryException;
+    public void deleteExpiredOAuthSessions(long exp) throws StorageQueryException;
 
     public int countTotalNumberOfOAuthClients(AppIdentifier appIdentifier) throws StorageQueryException;
 
@@ -70,4 +64,21 @@ public interface OAuthStorage extends NonAuthRecipeStorage {
     public int countTotalNumberOfOAuthM2MTokensCreatedSince(AppIdentifier appIdentifier, long since) throws StorageQueryException;
 
     public int countTotalNumberOfOAuthM2MTokensAlive(AppIdentifier appIdentifier) throws StorageQueryException;
+
+    public boolean revokeOAuthTokenByGID( AppIdentifier appIdentifier, String gid) throws StorageQueryException;
+
+    public boolean revokeOAuthTokenByClientId(AppIdentifier appIdentifier, String clientId) throws StorageQueryException;
+
+    public boolean revokeOAuthTokenBySessionHandle(AppIdentifier appIdentifier, String sessionHandle) throws StorageQueryException;
+
+    public boolean revokeOAuthTokenByJTI(AppIdentifier appIdentifier, String gid, String jti) throws StorageQueryException;
+
+    public boolean isOAuthTokenRevokedByGID(AppIdentifier appIdentifier, String gid) throws StorageQueryException;
+
+    public boolean isOAuthTokenRevokedByClientId(AppIdentifier appIdentifier, String clientId) throws StorageQueryException;
+
+    public boolean isOAuthTokenRevokedBySessionHandle(AppIdentifier appIdentifier, String sessionHandle) throws StorageQueryException;
+
+    public boolean isOAuthTokenRevokedByJTI(AppIdentifier appIdentifier, String gid, String jti) throws StorageQueryException;
 }
+
