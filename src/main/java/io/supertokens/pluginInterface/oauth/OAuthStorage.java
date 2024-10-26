@@ -49,11 +49,9 @@ public interface OAuthStorage extends NonAuthRecipeStorage {
 
     public void deleteOAuthLogoutChallengesBefore(long time) throws StorageQueryException;
 
-    public void createOrUpdateOAuthSession(AppIdentifier appIdentifier, String gid, String clientId, String externalRefreshToken, String internalRefreshToken, String sessionHandle, List<String> jtis, long exp) throws StorageQueryException;
+    public void createOrUpdateOAuthSession(AppIdentifier appIdentifier, String gid, String clientId, String externalRefreshToken, String internalRefreshToken, String sessionHandle, List<String> jtis, long exp) throws StorageQueryException, OAuthClientNotFoundException;
 
     public String getRefreshTokenMapping(AppIdentifier appIdentifier, String externalRefreshToken) throws StorageQueryException;
-
-    public void deleteRefreshTokenMapping(AppIdentifier appIdentifier, String externalRefreshToken) throws StorageQueryException;
 
     public void deleteExpiredOAuthSessions(long exp) throws StorageQueryException;
 
@@ -73,12 +71,8 @@ public interface OAuthStorage extends NonAuthRecipeStorage {
 
     public boolean revokeOAuthTokenByJTI(AppIdentifier appIdentifier, String gid, String jti) throws StorageQueryException;
 
-    public boolean isOAuthTokenRevokedByGID(AppIdentifier appIdentifier, String gid) throws StorageQueryException;
-
-    public boolean isOAuthTokenRevokedByClientId(AppIdentifier appIdentifier, String clientId) throws StorageQueryException;
-
-    public boolean isOAuthTokenRevokedBySessionHandle(AppIdentifier appIdentifier, String sessionHandle) throws StorageQueryException;
-
     public boolean isOAuthTokenRevokedByJTI(AppIdentifier appIdentifier, String gid, String jti) throws StorageQueryException;
+
+    public boolean isOAuthTokenRevokedByGID(AppIdentifier appIdentifier, String gid) throws StorageQueryException;
 }
 
