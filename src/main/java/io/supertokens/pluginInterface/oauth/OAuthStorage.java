@@ -49,7 +49,7 @@ public interface OAuthStorage extends NonAuthRecipeStorage {
 
     public void deleteOAuthLogoutChallengesBefore(long time) throws StorageQueryException;
 
-    public void createOrUpdateOAuthSession(AppIdentifier appIdentifier, String gid, String clientId, String externalRefreshToken, String internalRefreshToken, String sessionHandle, List<String> jtis, long exp) throws StorageQueryException, OAuthClientNotFoundException;
+    public void createOrUpdateOAuthSession(AppIdentifier appIdentifier, String gid, String clientId, String externalRefreshToken, String internalRefreshToken, String sessionHandle, String jti, long exp) throws StorageQueryException, OAuthClientNotFoundException;
 
     public String getRefreshTokenMapping(AppIdentifier appIdentifier, String externalRefreshToken) throws StorageQueryException;
 
