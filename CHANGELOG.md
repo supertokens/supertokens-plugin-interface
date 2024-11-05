@@ -15,12 +15,15 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Adds `closeConnectionForBulkImportProxyStorage`, `commitTransactionForBulkImportProxyStorage`, and `rollbackTransactionForBulkImportProxyStorage` method in `SQLStorage` class
 - Adds `BulkImportTransactionRolledBackException` for signaling if the transaction was rolled back by the DBMS
 
+## [6.3.0] - 2024-10-02
+
+- Adds `OAuthStorage` interface for OAuth Provider support
+
 ## [6.2.0] - 2024-05-24
 
 - Adds new class `ConfigFieldInfo` that represents a core config field
 - Adds new method `getPluginConfigFieldsInfo` to fetch the plugin config as json in `DashboardStorage`
 - Updates `TenantConfig` to support `null` and empty array state for `firstFactors`
->>>>>>> master
 
 ## [6.1.0] - 2024-04-17
 
