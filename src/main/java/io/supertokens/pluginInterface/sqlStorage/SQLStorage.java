@@ -39,7 +39,8 @@ public interface SQLStorage extends Storage {
             throws StorageQueryException;
 
     interface TransactionLogic<T> {
-        T mainLogicAndCommit(TransactionConnection con) throws StorageQueryException, StorageTransactionLogicException;
+        T mainLogicAndCommit(TransactionConnection con)
+                throws StorageQueryException, StorageTransactionLogicException, TenantOrAppNotFoundException;
     }
 
     public enum TransactionIsolationLevel {

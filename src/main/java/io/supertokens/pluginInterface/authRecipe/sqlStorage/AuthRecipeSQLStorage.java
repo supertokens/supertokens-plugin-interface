@@ -23,10 +23,17 @@ import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
 import io.supertokens.pluginInterface.sqlStorage.SQLStorage;
 import io.supertokens.pluginInterface.sqlStorage.TransactionConnection;
 
+import java.util.List;
+import java.util.Map;
+
 public interface AuthRecipeSQLStorage extends AuthRecipeStorage, SQLStorage {
 
     AuthRecipeUserInfo getPrimaryUserById_Transaction(AppIdentifier appIdentifier, TransactionConnection con,
                                                       String userId)
+            throws StorageQueryException;
+
+    List<AuthRecipeUserInfo> getPrimaryUsersByIds_Transaction(AppIdentifier appIdentifier, TransactionConnection con,
+                                                              List<String> userIds)
             throws StorageQueryException;
 
     // lock order:
@@ -52,8 +59,14 @@ public interface AuthRecipeSQLStorage extends AuthRecipeStorage, SQLStorage {
     void makePrimaryUser_Transaction(AppIdentifier appIdentifier, TransactionConnection con, String userId)
             throws StorageQueryException;
 
+    void makePrimaryUsers_Transaction(AppIdentifier appIdentifier, TransactionConnection con, List<String> userIds)
+            throws StorageQueryException;
+
     void linkAccounts_Transaction(AppIdentifier appIdentifier, TransactionConnection con, String recipeUserId,
                                   String primaryUserId) throws StorageQueryException;
+
+    void linkMultipleAccounts_Transaction(AppIdentifier appIdentifier, TransactionConnection con,
+                                          Map<String, String> recipeUserIdByPrimaryUserId) throws StorageQueryException;
 
     void unlinkAccounts_Transaction(AppIdentifier appIdentifier, TransactionConnection con, String primaryUserId,
                                     String recipeUserId)

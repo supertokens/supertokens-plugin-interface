@@ -23,6 +23,7 @@ import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
 import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
 import io.supertokens.pluginInterface.passwordless.PasswordlessCode;
 import io.supertokens.pluginInterface.passwordless.PasswordlessDevice;
+import io.supertokens.pluginInterface.passwordless.PasswordlessImportUser;
 import io.supertokens.pluginInterface.passwordless.PasswordlessStorage;
 import io.supertokens.pluginInterface.passwordless.exception.DuplicatePhoneNumberException;
 import io.supertokens.pluginInterface.sqlStorage.SQLStorage;
@@ -30,6 +31,7 @@ import io.supertokens.pluginInterface.sqlStorage.TransactionConnection;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Collection;
 
 public interface PasswordlessSQLStorage extends PasswordlessStorage, SQLStorage {
     PasswordlessDevice getDevice_Transaction(TenantIdentifier tenantIdentifier, TransactionConnection con,
@@ -84,5 +86,8 @@ public interface PasswordlessSQLStorage extends PasswordlessStorage, SQLStorage 
 
     void deletePasswordlessUser_Transaction(TransactionConnection con, AppIdentifier appIdentifier, String userId,
                                             boolean deleteUserIdMappingToo)
+            throws StorageQueryException;
+
+    void importPasswordlessUsers_Transaction(TransactionConnection con, Collection<PasswordlessImportUser> users)
             throws StorageQueryException;
 }

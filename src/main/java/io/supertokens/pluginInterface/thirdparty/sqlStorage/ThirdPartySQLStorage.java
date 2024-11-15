@@ -20,7 +20,10 @@ import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
 import io.supertokens.pluginInterface.sqlStorage.SQLStorage;
 import io.supertokens.pluginInterface.sqlStorage.TransactionConnection;
+import io.supertokens.pluginInterface.thirdparty.ThirdPartyImportUser;
 import io.supertokens.pluginInterface.thirdparty.ThirdPartyStorage;
+
+import java.util.Collection;
 
 public interface ThirdPartySQLStorage extends ThirdPartyStorage, SQLStorage {
 
@@ -31,4 +34,7 @@ public interface ThirdPartySQLStorage extends ThirdPartyStorage, SQLStorage {
     void deleteThirdPartyUser_Transaction(TransactionConnection con, AppIdentifier appIdentifier, String userId,
                                           boolean deleteUserIdMappingToo)
             throws StorageQueryException;
+
+    void importThirdPartyUsers_Transaction(TransactionConnection con, Collection<ThirdPartyImportUser> usersToImport)
+        throws  StorageQueryException;
 }
