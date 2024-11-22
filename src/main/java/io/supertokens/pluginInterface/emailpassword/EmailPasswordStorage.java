@@ -23,12 +23,9 @@ import io.supertokens.pluginInterface.emailpassword.exceptions.DuplicatePassword
 import io.supertokens.pluginInterface.emailpassword.exceptions.DuplicateUserIdException;
 import io.supertokens.pluginInterface.emailpassword.exceptions.UnknownUserIdException;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
-import io.supertokens.pluginInterface.exceptions.StorageTransactionLogicException;
 import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
 import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
 import io.supertokens.pluginInterface.multitenancy.exceptions.TenantOrAppNotFoundException;
-
-import java.util.List;
 
 public interface EmailPasswordStorage extends AuthRecipeStorage {
 
@@ -37,10 +34,6 @@ public interface EmailPasswordStorage extends AuthRecipeStorage {
                               long timeJoined)
             throws StorageQueryException, DuplicateUserIdException, DuplicateEmailException,
             TenantOrAppNotFoundException;
-
-    void signUpMultiple(List<EmailPasswordImportUser> users)
-            throws StorageQueryException, DuplicateUserIdException, DuplicateEmailException,
-            TenantOrAppNotFoundException, StorageTransactionLogicException;
 
     // password reset stuff is app wide cause changing the password for a user affects all the tenants
     // across which it's shared.

@@ -26,6 +26,7 @@ import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
 import io.supertokens.pluginInterface.multitenancy.exceptions.TenantOrAppNotFoundException;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public interface Storage {
@@ -79,6 +80,9 @@ public interface Storage {
     // being used in NonAuth recipes.
     boolean isUserIdBeingUsedInNonAuthRecipe(AppIdentifier appIdentifier, String className, String userId)
             throws StorageQueryException;
+
+    Map<String, List<String>> findNonAuthRecipesWhereForUserIdsUsed(AppIdentifier appIdentifier, List<String> userIds)
+        throws StorageQueryException;
 
     // to be used for testing purposes only. This function will add dummy data to non-auth tables.
     void addInfoToNonAuthRecipesBasedOnUserId(TenantIdentifier tenantIdentifier, String className, String userId)

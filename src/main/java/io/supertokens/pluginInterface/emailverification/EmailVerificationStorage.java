@@ -23,6 +23,8 @@ import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
 import io.supertokens.pluginInterface.multitenancy.exceptions.TenantOrAppNotFoundException;
 import io.supertokens.pluginInterface.nonAuthRecipe.NonAuthRecipeStorage;
 
+import java.util.Map;
+
 public interface EmailVerificationStorage extends NonAuthRecipeStorage {
 
     void addEmailVerificationToken(TenantIdentifier tenantIdentifier, EmailVerificationTokenInfo emailVerificationInfo)
@@ -49,4 +51,7 @@ public interface EmailVerificationStorage extends NonAuthRecipeStorage {
 
     void updateIsEmailVerifiedToExternalUserId(AppIdentifier appIdentifier, String supertokensUserId,
                                                String externalUserId) throws StorageQueryException;
+
+    void updateMultipleIsEmailVerifiedToExternalUserIds(AppIdentifier appIdentifier,
+                                                        Map<String, String> supertokensUserIdToExternalUserId) throws StorageQueryException;
 }

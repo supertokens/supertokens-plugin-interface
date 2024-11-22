@@ -16,14 +16,15 @@
 
 package io.supertokens.pluginInterface.bulkimport.sqlStorage;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import io.supertokens.pluginInterface.bulkimport.BulkImportStorage;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
 import io.supertokens.pluginInterface.sqlStorage.SQLStorage;
 import io.supertokens.pluginInterface.sqlStorage.TransactionConnection;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.Map;
 
 public interface BulkImportSQLStorage extends BulkImportStorage, SQLStorage {
 
@@ -32,4 +33,7 @@ public interface BulkImportSQLStorage extends BulkImportStorage, SQLStorage {
     */
     void updateBulkImportUserStatus_Transaction(AppIdentifier appIdentifier,
             TransactionConnection con, @Nonnull String bulkImportUserId, @Nonnull BULK_IMPORT_USER_STATUS status, @Nullable String errorMessage) throws StorageQueryException;
+
+    void updateMultipleBulkImportUsersStatusToError_Transaction(AppIdentifier appIdentifier,
+            TransactionConnection con, @Nonnull Map<String, String> bulkImportUserIdToErrorMessage) throws StorageQueryException;
 }

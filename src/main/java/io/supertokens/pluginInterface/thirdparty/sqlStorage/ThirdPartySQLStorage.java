@@ -17,13 +17,15 @@
 package io.supertokens.pluginInterface.thirdparty.sqlStorage;
 
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
+import io.supertokens.pluginInterface.exceptions.StorageTransactionLogicException;
 import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
+import io.supertokens.pluginInterface.multitenancy.exceptions.TenantOrAppNotFoundException;
 import io.supertokens.pluginInterface.sqlStorage.SQLStorage;
 import io.supertokens.pluginInterface.sqlStorage.TransactionConnection;
 import io.supertokens.pluginInterface.thirdparty.ThirdPartyImportUser;
 import io.supertokens.pluginInterface.thirdparty.ThirdPartyStorage;
 
-import java.util.Collection;
+import java.util.List;
 
 public interface ThirdPartySQLStorage extends ThirdPartyStorage, SQLStorage {
 
@@ -35,6 +37,6 @@ public interface ThirdPartySQLStorage extends ThirdPartyStorage, SQLStorage {
                                           boolean deleteUserIdMappingToo)
             throws StorageQueryException;
 
-    void importThirdPartyUsers_Transaction(TransactionConnection con, Collection<ThirdPartyImportUser> usersToImport)
-        throws  StorageQueryException;
+    void importThirdPartyUsers_Transaction(TransactionConnection con, List<ThirdPartyImportUser> usersToImport)
+            throws StorageQueryException, StorageTransactionLogicException, TenantOrAppNotFoundException;
 }

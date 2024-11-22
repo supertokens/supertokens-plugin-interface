@@ -21,6 +21,7 @@ import io.supertokens.pluginInterface.emailpassword.exceptions.UnknownUserIdExce
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
 import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
+import io.supertokens.pluginInterface.multitenancy.exceptions.TenantOrAppNotFoundException;
 import io.supertokens.pluginInterface.passwordless.PasswordlessCode;
 import io.supertokens.pluginInterface.passwordless.PasswordlessDevice;
 import io.supertokens.pluginInterface.passwordless.PasswordlessImportUser;
@@ -31,7 +32,7 @@ import io.supertokens.pluginInterface.sqlStorage.TransactionConnection;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.Collection;
+import java.util.List;
 
 public interface PasswordlessSQLStorage extends PasswordlessStorage, SQLStorage {
     PasswordlessDevice getDevice_Transaction(TenantIdentifier tenantIdentifier, TransactionConnection con,
@@ -88,6 +89,6 @@ public interface PasswordlessSQLStorage extends PasswordlessStorage, SQLStorage 
                                             boolean deleteUserIdMappingToo)
             throws StorageQueryException;
 
-    void importPasswordlessUsers_Transaction(TransactionConnection con, Collection<PasswordlessImportUser> users)
-            throws StorageQueryException;
+    void importPasswordlessUsers_Transaction(TransactionConnection con, List<PasswordlessImportUser> users)
+            throws StorageQueryException, TenantOrAppNotFoundException;
 }

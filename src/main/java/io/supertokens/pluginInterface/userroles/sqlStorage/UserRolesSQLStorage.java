@@ -25,6 +25,7 @@ import io.supertokens.pluginInterface.sqlStorage.TransactionConnection;
 import io.supertokens.pluginInterface.userroles.UserRolesStorage;
 import io.supertokens.pluginInterface.userroles.exception.UnknownRoleException;
 
+import java.util.List;
 import java.util.Map;
 
 public interface UserRolesSQLStorage extends UserRolesStorage, SQLStorage {
@@ -54,6 +55,9 @@ public interface UserRolesSQLStorage extends UserRolesStorage, SQLStorage {
 
     // check if a role exists
     boolean doesRoleExist_Transaction(AppIdentifier appIdentifier, TransactionConnection con, String role)
+            throws StorageQueryException;
+
+    List<Boolean> doesMultipleRoleExist_Transaction(AppIdentifier appIdentifier, TransactionConnection con, List<String> roles)
             throws StorageQueryException;
 
     void deleteAllRolesForUser_Transaction(TransactionConnection con, AppIdentifier appIdentifier, String userId)
