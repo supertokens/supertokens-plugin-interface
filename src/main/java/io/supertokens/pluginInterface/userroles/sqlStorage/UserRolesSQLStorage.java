@@ -57,12 +57,12 @@ public interface UserRolesSQLStorage extends UserRolesStorage, SQLStorage {
     boolean doesRoleExist_Transaction(AppIdentifier appIdentifier, TransactionConnection con, String role)
             throws StorageQueryException;
 
-    List<Boolean> doesMultipleRoleExist_Transaction(AppIdentifier appIdentifier, TransactionConnection con, List<String> roles)
+    List<String> doesMultipleRoleExist_Transaction(AppIdentifier appIdentifier, TransactionConnection con, List<String> roles)
             throws StorageQueryException;
 
     void deleteAllRolesForUser_Transaction(TransactionConnection con, AppIdentifier appIdentifier, String userId)
             throws StorageQueryException;
 
-    void addRolesToUsers_Transaction(TransactionConnection connection, Map<TenantIdentifier, Map<String, String>> rolesToUserByTenants)
+    void addRolesToUsers_Transaction(TransactionConnection connection, Map<TenantIdentifier, Map<String, List<String>>> rolesToUserByTenants)
         throws StorageQueryException;
 }
