@@ -7,6 +7,8 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [6.4.0] 
+
 - Adds support for Bulk Import
 - Adds `BulkImportUser` class to represent a bulk import user
 - Adds `BulkImportStorage` interface
