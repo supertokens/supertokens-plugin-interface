@@ -25,6 +25,8 @@ import io.supertokens.pluginInterface.multitenancy.exceptions.TenantOrAppNotFoun
 import io.supertokens.pluginInterface.sqlStorage.SQLStorage;
 import io.supertokens.pluginInterface.sqlStorage.TransactionConnection;
 
+import java.util.Map;
+
 public interface EmailVerificationSQLStorage extends EmailVerificationStorage, SQLStorage {
 
     EmailVerificationTokenInfo[] getAllEmailVerificationTokenInfoForUser_Transaction(TenantIdentifier tenantIdentifier,
@@ -40,6 +42,10 @@ public interface EmailVerificationSQLStorage extends EmailVerificationStorage, S
     void updateIsEmailVerified_Transaction(AppIdentifier appIdentifier, TransactionConnection con, String userId,
                                            String email,
                                            boolean isEmailVerified)
+            throws StorageQueryException, TenantOrAppNotFoundException;
+
+    void updateMultipleIsEmailVerified_Transaction(AppIdentifier appIdentifier, TransactionConnection con,
+                                                   Map<String, String> emailToUserId, boolean isEmailVerified)
             throws StorageQueryException, TenantOrAppNotFoundException;
 
     void deleteEmailVerificationUserInfo_Transaction(TransactionConnection con, AppIdentifier appIdentifier,

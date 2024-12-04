@@ -16,13 +16,17 @@
 
 package io.supertokens.pluginInterface.emailpassword.sqlStorage;
 
+import io.supertokens.pluginInterface.emailpassword.EmailPasswordImportUser;
 import io.supertokens.pluginInterface.emailpassword.EmailPasswordStorage;
 import io.supertokens.pluginInterface.emailpassword.PasswordResetTokenInfo;
 import io.supertokens.pluginInterface.emailpassword.exceptions.DuplicateEmailException;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
+import io.supertokens.pluginInterface.exceptions.StorageTransactionLogicException;
 import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
 import io.supertokens.pluginInterface.sqlStorage.SQLStorage;
 import io.supertokens.pluginInterface.sqlStorage.TransactionConnection;
+
+import java.util.List;
 
 public interface EmailPasswordSQLStorage extends EmailPasswordStorage, SQLStorage {
 
@@ -49,4 +53,7 @@ public interface EmailPasswordSQLStorage extends EmailPasswordStorage, SQLStorag
     void deleteEmailPasswordUser_Transaction(TransactionConnection con, AppIdentifier appIdentifier, String userId,
                                              boolean deleteUserIdMappingToo)
             throws StorageQueryException;
+
+    void signUpMultipleViaBulkImport_Transaction(TransactionConnection connection, List<EmailPasswordImportUser> users)
+            throws StorageQueryException, StorageTransactionLogicException;
 }

@@ -24,6 +24,8 @@ import io.supertokens.pluginInterface.exceptions.StorageTransactionLogicExceptio
 import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
 import io.supertokens.pluginInterface.multitenancy.exceptions.TenantOrAppNotFoundException;
 
+import java.sql.SQLException;
+
 public interface SQLStorage extends Storage {
     <T> T startTransaction(TransactionLogic<T> logic, TransactionIsolationLevel isolationLevel)
             throws StorageQueryException, StorageTransactionLogicException;
@@ -39,10 +41,20 @@ public interface SQLStorage extends Storage {
             throws StorageQueryException;
 
     interface TransactionLogic<T> {
-        T mainLogicAndCommit(TransactionConnection con) throws StorageQueryException, StorageTransactionLogicException;
+        T mainLogicAndCommit(TransactionConnection con)
+                throws StorageQueryException, StorageTransactionLogicException, TenantOrAppNotFoundException,
+                SQLException;
     }
 
     public enum TransactionIsolationLevel {
         SERIALIZABLE, REPEATABLE_READ, READ_COMMITTED, READ_UNCOMMITTED, NONE
     }
+
+    /* BulkImportProxyStorage methods */
+
+    void closeConnectionForBulkImportProxyStorage() throws StorageQueryException;
+
+    void commitTransactionForBulkImportProxyStorage() throws StorageQueryException;
+
+    void rollbackTransactionForBulkImportProxyStorage() throws StorageQueryException;
 }

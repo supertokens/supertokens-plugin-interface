@@ -25,6 +25,7 @@ import io.supertokens.pluginInterface.useridmapping.exception.UserIdMappingAlrea
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public interface UserIdMappingStorage extends Storage {
 
@@ -34,6 +35,10 @@ public interface UserIdMappingStorage extends Storage {
     void createUserIdMapping(AppIdentifier appIdentifier, String superTokensUserId, String externalUserId,
                              @Nullable String externalUserIdInfo)
             throws StorageQueryException, UnknownSuperTokensUserIdException, UserIdMappingAlreadyExistsException;
+
+    // support method for bulk migration
+    void createBulkUserIdMapping(AppIdentifier appIdentifier, Map<String,String> superTokensUserIdToExternalUserId)
+            throws StorageQueryException;
 
     boolean deleteUserIdMapping(AppIdentifier appIdentifier, String userId, boolean isSuperTokensUserId)
             throws StorageQueryException;

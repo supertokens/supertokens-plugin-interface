@@ -26,12 +26,15 @@ import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
 import io.supertokens.pluginInterface.multitenancy.exceptions.TenantOrAppNotFoundException;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public interface Storage {
 
     // if silent is true, do not log anything out on the console
     void constructor(String processId, boolean silent, boolean isTesting);
+
+    Storage createBulkImportProxyStorageInstance();
 
     void loadConfig(JsonObject jsonConfig, Set<LOG_LEVEL> logLevels, TenantIdentifier tenantIdentifier)
             throws InvalidConfigException;
@@ -77,6 +80,9 @@ public interface Storage {
     // being used in NonAuth recipes.
     boolean isUserIdBeingUsedInNonAuthRecipe(AppIdentifier appIdentifier, String className, String userId)
             throws StorageQueryException;
+
+    Map<String, List<String>> findNonAuthRecipesWhereForUserIdsUsed(AppIdentifier appIdentifier, List<String> userIds)
+        throws StorageQueryException;
 
     // to be used for testing purposes only. This function will add dummy data to non-auth tables.
     void addInfoToNonAuthRecipesBasedOnUserId(TenantIdentifier tenantIdentifier, String className, String userId)
