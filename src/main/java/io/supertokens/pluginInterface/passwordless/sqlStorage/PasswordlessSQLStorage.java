@@ -16,6 +16,7 @@
 
 package io.supertokens.pluginInterface.passwordless.sqlStorage;
 
+import io.supertokens.pluginInterface.bulkimport.exceptions.BulkImportTransactionRolledBackException;
 import io.supertokens.pluginInterface.emailpassword.exceptions.DuplicateEmailException;
 import io.supertokens.pluginInterface.emailpassword.exceptions.UnknownUserIdException;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
@@ -90,5 +91,5 @@ public interface PasswordlessSQLStorage extends PasswordlessStorage, SQLStorage 
             throws StorageQueryException;
 
     void importPasswordlessUsers_Transaction(TransactionConnection con, List<PasswordlessImportUser> users)
-            throws StorageQueryException, TenantOrAppNotFoundException;
+            throws StorageQueryException, TenantOrAppNotFoundException, BulkImportTransactionRolledBackException;
 }
