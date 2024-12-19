@@ -24,12 +24,22 @@ import io.supertokens.pluginInterface.sqlStorage.SQLStorage;
 import io.supertokens.pluginInterface.sqlStorage.TransactionConnection;
 import io.supertokens.pluginInterface.usermetadata.UserMetadataStorage;
 
+import java.util.List;
+import java.util.Map;
+
 public interface UserMetadataSQLStorage extends UserMetadataStorage, SQLStorage {
     JsonObject getUserMetadata_Transaction(AppIdentifier appIdentifier, TransactionConnection con, String userId)
             throws StorageQueryException;
 
+    Map<String, JsonObject> getMultipleUsersMetadatas_Transaction(AppIdentifier appIdentifier, TransactionConnection
+            con, List<String> userIds)
+            throws StorageQueryException;
+
     int setUserMetadata_Transaction(AppIdentifier appIdentifier, TransactionConnection con, String userId,
                                     JsonObject metadata)
+            throws StorageQueryException, TenantOrAppNotFoundException;
+
+    void setMultipleUsersMetadatas_Transaction(AppIdentifier appIdentifier, TransactionConnection con, Map<String, JsonObject> metadataByUserId)
             throws StorageQueryException, TenantOrAppNotFoundException;
 
     int deleteUserMetadata_Transaction(TransactionConnection con, AppIdentifier appIdentifier, String userId)
