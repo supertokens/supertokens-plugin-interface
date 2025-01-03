@@ -16,12 +16,11 @@
 
 package io.supertokens.pluginInterface.bulkimport;
 
-import java.util.List;
-
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-
 import io.supertokens.pluginInterface.bulkimport.BulkImportStorage.BULK_IMPORT_USER_STATUS;
+
+import java.util.List;
 
 public class BulkImportUser {
     public String id;
@@ -38,7 +37,7 @@ public class BulkImportUser {
     public Long createdAt;
     public Long updatedAt;
 
-    private static final Gson gson = new Gson();
+    private volatile static Gson gson = new Gson();
 
     public BulkImportUser(String id, String externalUserId, JsonObject userMetadata, List<UserRole> userRoles,
             List<TotpDevice> totpDevices, List<LoginMethod> loginMethods) {
