@@ -16,15 +16,14 @@
 
 package io.supertokens.pluginInterface.bulkimport;
 
-import java.util.List;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
 import io.supertokens.pluginInterface.multitenancy.exceptions.TenantOrAppNotFoundException;
 import io.supertokens.pluginInterface.nonAuthRecipe.NonAuthRecipeStorage;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.List;
 
 public interface BulkImportStorage extends NonAuthRecipeStorage {
     /**
@@ -32,8 +31,7 @@ public interface BulkImportStorage extends NonAuthRecipeStorage {
     */
     void addBulkImportUsers(AppIdentifier appIdentifier, List<BulkImportUser> users)
             throws StorageQueryException,
-            TenantOrAppNotFoundException,
-            io.supertokens.pluginInterface.bulkimport.exceptions.DuplicateUserIdException;
+            TenantOrAppNotFoundException;
 
     /**
     * Get users from the bulk_import_users table
