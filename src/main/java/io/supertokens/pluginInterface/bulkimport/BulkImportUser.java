@@ -37,7 +37,7 @@ public class BulkImportUser {
     public Long createdAt;
     public Long updatedAt;
 
-    private volatile static Gson gson = new Gson();
+    private static final Gson gson = new Gson();
 
     public BulkImportUser(String id, String externalUserId, JsonObject userMetadata, List<UserRole> userRoles,
             List<TotpDevice> totpDevices, List<LoginMethod> loginMethods) {
