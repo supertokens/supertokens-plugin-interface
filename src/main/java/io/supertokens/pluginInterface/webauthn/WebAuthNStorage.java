@@ -22,6 +22,8 @@ import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
 
 public interface WebAuthNStorage extends AuthRecipeStorage {
 
+    void saveCredentials(TenantIdentifier tenantIdentifier, WebAuthNStoredCredential credential) throws StorageQueryException;
+
     void saveGeneratedOptions(TenantIdentifier tenantIdentifier, WebAuthNOptions optionsToSave) throws StorageQueryException;
 
     WebAuthNOptions loadOptionsById(TenantIdentifier tenantIdentifier, String optionsId) throws  StorageQueryException;
