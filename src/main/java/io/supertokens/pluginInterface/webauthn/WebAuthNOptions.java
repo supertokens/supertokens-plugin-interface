@@ -20,6 +20,7 @@ public class WebAuthNOptions {
 
     public String generatedOptionsId;
     public String relyingPartyId;
+    public String relyingPartyName;
     public String userEmail;
     public Long timeout;
     public String challenge; //base64 encoded

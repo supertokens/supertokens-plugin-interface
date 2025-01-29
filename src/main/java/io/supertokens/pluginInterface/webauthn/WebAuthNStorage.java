@@ -17,7 +17,6 @@
 package io.supertokens.pluginInterface.webauthn;
 
 import io.supertokens.pluginInterface.authRecipe.AuthRecipeStorage;
-import io.supertokens.pluginInterface.authRecipe.AuthRecipeUserInfo;
 import io.supertokens.pluginInterface.emailpassword.PasswordResetTokenInfo;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
@@ -25,13 +24,11 @@ import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
 
 public interface WebAuthNStorage extends AuthRecipeStorage {
 
-    void saveCredentials(TenantIdentifier tenantIdentifier, WebAuthNStoredCredential credential) throws StorageQueryException;
+    WebAuthNStoredCredential saveCredentials(TenantIdentifier tenantIdentifier, WebAuthNStoredCredential credential) throws StorageQueryException;
 
-    void saveGeneratedOptions(TenantIdentifier tenantIdentifier, WebAuthNOptions optionsToSave) throws StorageQueryException;
+    WebAuthNOptions saveGeneratedOptions(TenantIdentifier tenantIdentifier, WebAuthNOptions optionsToSave) throws StorageQueryException;
 
     WebAuthNOptions loadOptionsById(TenantIdentifier tenantIdentifier, String optionsId) throws  StorageQueryException;
-
-    AuthRecipeUserInfo signUp(TenantIdentifier tenantIdentifier, String userId, String email, String relyingPartyId) throws StorageQueryException;
 
     void addRecoverAccountToken(AppIdentifier appIdentifier, PasswordResetTokenInfo passwordResetTokenInfo) throws DuplicateRecoverAccountTokenException, StorageQueryException;
 }
