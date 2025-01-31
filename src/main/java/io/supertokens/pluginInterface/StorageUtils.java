@@ -29,7 +29,7 @@ import io.supertokens.pluginInterface.totp.sqlStorage.TOTPSQLStorage;
 import io.supertokens.pluginInterface.useridmapping.UserIdMappingStorage;
 import io.supertokens.pluginInterface.usermetadata.sqlStorage.UserMetadataSQLStorage;
 import io.supertokens.pluginInterface.userroles.sqlStorage.UserRolesSQLStorage;
-import io.supertokens.pluginInterface.webauthn.WebAuthNStorage;
+import io.supertokens.pluginInterface.webauthn.slqStorage.WebAuthNSQLStorage;
 
 public class StorageUtils {
     public static AuthRecipeSQLStorage getAuthRecipeStorage(Storage storage) {
@@ -143,10 +143,10 @@ public class StorageUtils {
         return (OAuthStorage) storage;
     }
 
-    public static WebAuthNStorage getWebAuthNStorage(Storage storage) {
+    public static WebAuthNSQLStorage getWebAuthNStorage(Storage storage) {
         if (storage.getType() != STORAGE_TYPE.SQL) {
             throw new UnsupportedOperationException("");
         }
-        return (WebAuthNStorage) storage;
+        return (WebAuthNSQLStorage) storage;
     }
 }

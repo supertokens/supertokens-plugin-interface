@@ -17,7 +17,6 @@
 package io.supertokens.pluginInterface.webauthn;
 
 import io.supertokens.pluginInterface.authRecipe.AuthRecipeStorage;
-import io.supertokens.pluginInterface.emailpassword.PasswordResetTokenInfo;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
 import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
@@ -30,5 +29,5 @@ public interface WebAuthNStorage extends AuthRecipeStorage {
 
     WebAuthNOptions loadOptionsById(TenantIdentifier tenantIdentifier, String optionsId) throws  StorageQueryException;
 
-    void addRecoverAccountToken(AppIdentifier appIdentifier, PasswordResetTokenInfo passwordResetTokenInfo) throws DuplicateRecoverAccountTokenException, StorageQueryException;
+    void addRecoverAccountToken(AppIdentifier appIdentifier, AccountRecoveryTokenInfo accountRecoveryTokenInfo) throws DuplicateRecoverAccountTokenException, StorageQueryException;
 }
