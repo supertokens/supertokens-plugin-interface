@@ -42,4 +42,5 @@ public interface WebAuthNSQLStorage extends WebAuthNStorage, SQLStorage {
 
     AccountRecoveryTokenInfo getAccountRecoveryTokenInfoByToken_Transaction(TenantIdentifier tenantIdentifier, TransactionConnection con, String token) throws StorageQueryException;
     void deleteAccountRecoveryTokenByEmail_Transaction(TenantIdentifier tenantIdentifier, TransactionConnection con, String email) throws StorageQueryException;
+    void deleteExpiredAccountRecoveryTokens_Transaction(TransactionConnection con) throws StorageQueryException;
 }

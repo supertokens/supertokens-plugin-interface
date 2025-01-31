@@ -22,14 +22,14 @@ public class AccountRecoveryTokenInfo {
 
     public final String token;
 
-    public final long tokenExpiry;
+    public final long expiresAt;
 
     public final String email;
 
-    public AccountRecoveryTokenInfo(String userId, String token, long tokenExpiry, String email) {
+    public AccountRecoveryTokenInfo(String userId, String email, String token, long expiresAt) {
         this.userId = userId;
-        this.token = token;
-        this.tokenExpiry = tokenExpiry;
         this.email = email;
+        this.token = token;
+        this.expiresAt = expiresAt;
     }
 }
