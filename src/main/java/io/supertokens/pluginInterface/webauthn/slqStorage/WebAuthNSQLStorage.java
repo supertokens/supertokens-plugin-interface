@@ -36,11 +36,26 @@ public interface WebAuthNSQLStorage extends WebAuthNStorage, SQLStorage {
 
     WebAuthNOptions loadOptionsById_Transaction(TenantIdentifier tenantIdentifier,  TransactionConnection con, String optionsId) throws  StorageQueryException;
 
-    AuthRecipeUserInfo signUp_Transaction(TenantIdentifier tenantIdentifier,  TransactionConnection con, String userId, String email, String relyingPartyId)
+    WebAuthNStoredCredential loadCredentialById_Transaction(TenantIdentifier tenantIdentifier, TransactionConnection con, String credentialId) throws StorageQueryException;
+
+    AuthRecipeUserInfo signUp_Transaction(TenantIdentifier tenantIdentifier,  TransactionConnection con, String userId,
+                                          String email, String relyingPartyId)
             throws StorageQueryException, DuplicateUserIdException, TenantOrAppNotFoundException,
             DuplicateEmailException;
 
+    AuthRecipeUserInfo signUpWithCredentialsRegister_Transaction(TenantIdentifier tenantIdentifier, TransactionConnection con,
+                                                                        String userId, String email, String relyingPartyId, WebAuthNStoredCredential credential)
+            throws StorageQueryException, DuplicateUserIdException, TenantOrAppNotFoundException,
+            DuplicateEmailException;
+
+    AuthRecipeUserInfo getUserInfoByCredentialId_Transaction(TenantIdentifier tenantIdentifier,  TransactionConnection con, String credentialId)
+        throws StorageQueryException;
+
+    void updateCounter_Transaction(TenantIdentifier tenantIdentifier,  TransactionConnection con, String credentialId, long counter) throws StorageQueryException;
+
     AccountRecoveryTokenInfo getAccountRecoveryTokenInfoByToken_Transaction(TenantIdentifier tenantIdentifier, TransactionConnection con, String token) throws StorageQueryException;
+
     void deleteAccountRecoveryTokenByEmail_Transaction(TenantIdentifier tenantIdentifier, TransactionConnection con, String email) throws StorageQueryException;
+
     void deleteExpiredAccountRecoveryTokens_Transaction(TransactionConnection con) throws StorageQueryException;
 }

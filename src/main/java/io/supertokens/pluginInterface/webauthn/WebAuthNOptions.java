@@ -23,7 +23,7 @@ public class WebAuthNOptions {
     public String relyingPartyName;
     public String userEmail;
     public Long timeout;
-    public String challenge; //base64 encoded
+    public String challenge; //base64 url encoded
     public String origin;
     public Long expiresAt;
     public Long createdAt;
