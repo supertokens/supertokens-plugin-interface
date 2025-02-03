@@ -24,6 +24,7 @@ import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
 import io.supertokens.pluginInterface.multitenancy.exceptions.TenantOrAppNotFoundException;
 import io.supertokens.pluginInterface.sqlStorage.SQLStorage;
 import io.supertokens.pluginInterface.sqlStorage.TransactionConnection;
+import io.supertokens.pluginInterface.webauthn.AccountRecoveryTokenInfo;
 import io.supertokens.pluginInterface.webauthn.WebAuthNOptions;
 import io.supertokens.pluginInterface.webauthn.WebAuthNStorage;
 import io.supertokens.pluginInterface.webauthn.WebAuthNStoredCredential;
@@ -52,4 +53,9 @@ public interface WebAuthNSQLStorage extends WebAuthNStorage, SQLStorage {
 
     void updateCounter_Transaction(TenantIdentifier tenantIdentifier,  TransactionConnection con, String credentialId, long counter) throws StorageQueryException;
 
+    AccountRecoveryTokenInfo getAccountRecoveryTokenInfoByToken_Transaction(TenantIdentifier tenantIdentifier, TransactionConnection con, String token) throws StorageQueryException;
+
+    void deleteAccountRecoveryTokenByEmail_Transaction(TenantIdentifier tenantIdentifier, TransactionConnection con, String email) throws StorageQueryException;
+
+    void deleteExpiredAccountRecoveryTokens_Transaction(TransactionConnection con) throws StorageQueryException;
 }
