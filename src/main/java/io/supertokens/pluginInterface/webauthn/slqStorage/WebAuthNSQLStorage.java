@@ -37,7 +37,13 @@ public interface WebAuthNSQLStorage extends WebAuthNStorage, SQLStorage {
 
     WebAuthNStoredCredential loadCredentialById_Transaction(TenantIdentifier tenantIdentifier, TransactionConnection con, String credentialId) throws StorageQueryException;
 
-    AuthRecipeUserInfo signUp_Transaction(TenantIdentifier tenantIdentifier,  TransactionConnection con, String userId, String email, String relyingPartyId)
+    AuthRecipeUserInfo signUp_Transaction(TenantIdentifier tenantIdentifier,  TransactionConnection con, String userId,
+                                          String email, String relyingPartyId)
+            throws StorageQueryException, DuplicateUserIdException, TenantOrAppNotFoundException,
+            DuplicateEmailException;
+
+    AuthRecipeUserInfo signUpWithCredentialsRegister_Transaction(TenantIdentifier tenantIdentifier, TransactionConnection con,
+                                                                        String userId, String email, String relyingPartyId, WebAuthNStoredCredential credential)
             throws StorageQueryException, DuplicateUserIdException, TenantOrAppNotFoundException,
             DuplicateEmailException;
 

@@ -16,12 +16,15 @@
 
 package io.supertokens.pluginInterface.authRecipe;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import io.supertokens.pluginInterface.RECIPE_ID;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 public class AuthRecipeUserInfo {
 
@@ -196,6 +199,11 @@ public class AuthRecipeUserInfo {
                 thirdPartyJsonObject.addProperty("id", lM.thirdParty.id);
                 thirdPartyJsonObject.addProperty("userId", lM.thirdParty.userId);
                 lMJsonObject.add("thirdParty", thirdPartyJsonObject);
+            }
+            if(lM.webauthN != null) {
+                JsonObject webauthNJson = new JsonObject();
+                webauthNJson.add("credentialIds", new Gson().toJsonTree(lM.webauthN.credentialIds));
+                lMJsonObject.add("webauthn", webauthNJson);
             }
             loginMethodsArr.add(lMJsonObject);
         }
