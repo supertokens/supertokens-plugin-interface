@@ -35,5 +35,8 @@ public interface WebAuthNStorage extends AuthRecipeStorage {
     void removeCredential(TenantIdentifier tenantIdentifier, String userId, String credentialId)
             throws StorageQueryException, CredentialNotExistsException;
 
+    void removeOptions(TenantIdentifier tenantIdentifier, String optionsId)
+            throws StorageQueryException, OptionsNotExistsException;
+
     List<WebAuthNStoredCredential> listCredentialsForUser(TenantIdentifier tenantIdentifier, String userId) throws StorageQueryException;
 }
