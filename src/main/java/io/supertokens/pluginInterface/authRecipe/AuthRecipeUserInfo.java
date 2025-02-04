@@ -145,6 +145,7 @@ public class AuthRecipeUserInfo {
         Set<String> emails = new HashSet<>();
         Set<String> phoneNumbers = new HashSet<>();
         Set<LoginMethod.ThirdParty> thirdParty = new HashSet<>();
+        Set<String> webauthn = new HashSet<>();
         for (LoginMethod loginMethod : this.loginMethods) {
             if (loginMethod.email != null) {
                 emails.add(loginMethod.email);
@@ -154,6 +155,9 @@ public class AuthRecipeUserInfo {
             }
             if (loginMethod.thirdParty != null) {
                 thirdParty.add(loginMethod.thirdParty);
+            }
+            if(loginMethod.webauthN != null) {
+                webauthn.addAll(loginMethod.webauthN.credentialIds);
             }
         }
         JsonArray emailsJson = new JsonArray();
@@ -174,6 +178,12 @@ public class AuthRecipeUserInfo {
             thirdPartyJson.add(j);
         }
         jsonObject.add("thirdParty", thirdPartyJson);
+
+        JsonObject webauthnJson = new JsonObject();
+        JsonArray j = new JsonArray();
+        j.addAll(new Gson().toJsonTree(webauthn).getAsJsonArray());
+        webauthnJson.add("credentialIds", j);
+        jsonObject.add("webauthn", webauthnJson);
 
         // now we add login methods..
         JsonArray loginMethodsArr = new JsonArray();

@@ -20,6 +20,8 @@ import io.supertokens.pluginInterface.authRecipe.AuthRecipeStorage;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
 
+import java.util.List;
+
 public interface WebAuthNStorage extends AuthRecipeStorage {
 
     WebAuthNStoredCredential saveCredentials(TenantIdentifier tenantIdentifier, WebAuthNStoredCredential credential) throws StorageQueryException;
@@ -29,4 +31,9 @@ public interface WebAuthNStorage extends AuthRecipeStorage {
     WebAuthNOptions loadOptionsById(TenantIdentifier tenantIdentifier, String optionsId) throws  StorageQueryException;
 
     void addRecoverAccountToken(TenantIdentifier tenantIdentifier, AccountRecoveryTokenInfo accountRecoveryTokenInfo) throws DuplicateRecoverAccountTokenException, StorageQueryException;
+
+    void removeCredential(TenantIdentifier tenantIdentifier, String userId, String credentialId)
+            throws StorageQueryException, CredentialNotExistsException;
+
+    List<WebAuthNStoredCredential> listCredentialsForUser(TenantIdentifier tenantIdentifier, String userId) throws StorageQueryException;
 }
