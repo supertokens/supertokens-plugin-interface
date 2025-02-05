@@ -16,7 +16,7 @@
 
 package io.supertokens.pluginInterface.webauthn;
 
-public class WebAuthNStoredCredential {
+public class WebAuthNStoredCredential{
     public String id;
     public String appId;
     public String rpId;

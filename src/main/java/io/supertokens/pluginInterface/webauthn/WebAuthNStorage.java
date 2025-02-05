@@ -42,4 +42,8 @@ public interface WebAuthNStorage extends AuthRecipeStorage {
 
     void updateUserEmail(TenantIdentifier tenantIdentifier, String userId, String newEmail)
             throws StorageQueryException, UserIdNotFoundException, DuplicateUserEmailException;
+
+    void deleteExpiredAccountRecoveryTokens() throws StorageQueryException;
+
+    void deleteExpiredGeneratedOptions() throws StorageQueryException;
 }
