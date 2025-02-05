@@ -39,4 +39,7 @@ public interface WebAuthNStorage extends AuthRecipeStorage {
             throws StorageQueryException, OptionsNotExistsException;
 
     List<WebAuthNStoredCredential> listCredentialsForUser(TenantIdentifier tenantIdentifier, String userId) throws StorageQueryException;
+
+    void updateUserEmail(TenantIdentifier tenantIdentifier, String userId, String newEmail)
+            throws StorageQueryException, UserIdNotFoundException, DuplicateUserEmailException;
 }

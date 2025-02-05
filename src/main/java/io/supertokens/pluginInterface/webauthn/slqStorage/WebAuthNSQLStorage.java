@@ -17,17 +17,12 @@
 package io.supertokens.pluginInterface.webauthn.slqStorage;
 
 import io.supertokens.pluginInterface.authRecipe.AuthRecipeUserInfo;
-import io.supertokens.pluginInterface.emailpassword.exceptions.DuplicateEmailException;
-import io.supertokens.pluginInterface.emailpassword.exceptions.DuplicateUserIdException;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
 import io.supertokens.pluginInterface.multitenancy.exceptions.TenantOrAppNotFoundException;
 import io.supertokens.pluginInterface.sqlStorage.SQLStorage;
 import io.supertokens.pluginInterface.sqlStorage.TransactionConnection;
-import io.supertokens.pluginInterface.webauthn.AccountRecoveryTokenInfo;
-import io.supertokens.pluginInterface.webauthn.WebAuthNOptions;
-import io.supertokens.pluginInterface.webauthn.WebAuthNStorage;
-import io.supertokens.pluginInterface.webauthn.WebAuthNStoredCredential;
+import io.supertokens.pluginInterface.webauthn.*;
 
 public interface WebAuthNSQLStorage extends WebAuthNStorage, SQLStorage {
 
@@ -41,12 +36,12 @@ public interface WebAuthNSQLStorage extends WebAuthNStorage, SQLStorage {
     AuthRecipeUserInfo signUp_Transaction(TenantIdentifier tenantIdentifier,  TransactionConnection con, String userId,
                                           String email, String relyingPartyId)
             throws StorageQueryException, DuplicateUserIdException, TenantOrAppNotFoundException,
-            DuplicateEmailException;
+            DuplicateUserEmailException;
 
     AuthRecipeUserInfo signUpWithCredentialsRegister_Transaction(TenantIdentifier tenantIdentifier, TransactionConnection con,
                                                                         String userId, String email, String relyingPartyId, WebAuthNStoredCredential credential)
             throws StorageQueryException, DuplicateUserIdException, TenantOrAppNotFoundException,
-            DuplicateEmailException;
+            DuplicateUserEmailException;
 
     AuthRecipeUserInfo getUserInfoByCredentialId_Transaction(TenantIdentifier tenantIdentifier,  TransactionConnection con, String credentialId)
         throws StorageQueryException;
