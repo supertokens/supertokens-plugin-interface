@@ -27,4 +27,6 @@ public class WebAuthNOptions {
     public String origin;
     public Long expiresAt;
     public Long createdAt;
+    public boolean userPresenceRequired;
+    public String userVerification;
 }
