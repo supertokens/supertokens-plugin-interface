@@ -30,6 +30,8 @@ public interface WebAuthNStorage extends AuthRecipeStorage {
 
     WebAuthNOptions loadOptionsById(TenantIdentifier tenantIdentifier, String optionsId) throws  StorageQueryException;
 
+    WebAuthNStoredCredential loadCredentialById(TenantIdentifier tenantIdentifier, String credentialId) throws  StorageQueryException;
+
     void addRecoverAccountToken(TenantIdentifier tenantIdentifier, AccountRecoveryTokenInfo accountRecoveryTokenInfo) throws DuplicateRecoverAccountTokenException, StorageQueryException;
 
     void removeCredential(TenantIdentifier tenantIdentifier, String userId, String credentialId)
