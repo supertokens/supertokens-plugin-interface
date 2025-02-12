@@ -14,7 +14,8 @@
  *    under the License.
  */
 
-package io.supertokens.pluginInterface.webauthn;
+package io.supertokens.pluginInterface.webauthn.exceptions;
 
-public class DuplicateUserEmailException extends Exception {
+public class WebauthNCredentialNotExistsException extends Exception {
+
 }

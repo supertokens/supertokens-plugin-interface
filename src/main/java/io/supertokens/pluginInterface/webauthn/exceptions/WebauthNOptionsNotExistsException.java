@@ -14,8 +14,8 @@
  *    under the License.
  */
 
-package io.supertokens.pluginInterface.webauthn;
+package io.supertokens.pluginInterface.webauthn.exceptions;
 
-public class UserIdNotFoundException extends Exception {
+public class WebauthNOptionsNotExistsException extends Exception {
 
 }

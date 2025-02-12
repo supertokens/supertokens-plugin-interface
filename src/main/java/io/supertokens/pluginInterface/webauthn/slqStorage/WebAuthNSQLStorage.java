@@ -22,7 +22,12 @@ import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
 import io.supertokens.pluginInterface.multitenancy.exceptions.TenantOrAppNotFoundException;
 import io.supertokens.pluginInterface.sqlStorage.SQLStorage;
 import io.supertokens.pluginInterface.sqlStorage.TransactionConnection;
-import io.supertokens.pluginInterface.webauthn.*;
+import io.supertokens.pluginInterface.webauthn.AccountRecoveryTokenInfo;
+import io.supertokens.pluginInterface.webauthn.WebAuthNOptions;
+import io.supertokens.pluginInterface.webauthn.WebAuthNStorage;
+import io.supertokens.pluginInterface.webauthn.WebAuthNStoredCredential;
+import io.supertokens.pluginInterface.webauthn.exceptions.DuplicateUserEmailException;
+import io.supertokens.pluginInterface.webauthn.exceptions.DuplicateUserIdException;
 
 public interface WebAuthNSQLStorage extends WebAuthNStorage, SQLStorage {
 

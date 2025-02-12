@@ -19,6 +19,7 @@ package io.supertokens.pluginInterface.webauthn;
 import io.supertokens.pluginInterface.authRecipe.AuthRecipeStorage;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
+import io.supertokens.pluginInterface.webauthn.exceptions.*;
 
 import java.util.List;
 
@@ -30,15 +31,16 @@ public interface WebAuthNStorage extends AuthRecipeStorage {
 
     WebAuthNOptions loadOptionsById(TenantIdentifier tenantIdentifier, String optionsId) throws  StorageQueryException;
 
-    WebAuthNStoredCredential loadCredentialById(TenantIdentifier tenantIdentifier, String credentialId) throws  StorageQueryException;
+    WebAuthNStoredCredential loadCredentialByIdForUser(TenantIdentifier tenantIdentifier, String credentialId, String recipeUserId) throws  StorageQueryException;
 
-    void addRecoverAccountToken(TenantIdentifier tenantIdentifier, AccountRecoveryTokenInfo accountRecoveryTokenInfo) throws DuplicateRecoverAccountTokenException, StorageQueryException;
+    void addRecoverAccountToken(TenantIdentifier tenantIdentifier, AccountRecoveryTokenInfo accountRecoveryTokenInfo) throws
+            DuplicateRecoverAccountTokenException, StorageQueryException;
 
     void removeCredential(TenantIdentifier tenantIdentifier, String userId, String credentialId)
-            throws StorageQueryException, CredentialNotExistsException;
+            throws StorageQueryException, WebauthNCredentialNotExistsException;
 
     void removeOptions(TenantIdentifier tenantIdentifier, String optionsId)
-            throws StorageQueryException, OptionsNotExistsException;
+            throws StorageQueryException, WebauthNOptionsNotExistsException;
 
     List<WebAuthNStoredCredential> listCredentialsForUser(TenantIdentifier tenantIdentifier, String userId) throws StorageQueryException;
 
