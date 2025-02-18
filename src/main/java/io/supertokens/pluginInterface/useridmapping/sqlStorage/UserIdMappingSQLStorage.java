@@ -23,6 +23,8 @@ import io.supertokens.pluginInterface.sqlStorage.TransactionConnection;
 import io.supertokens.pluginInterface.useridmapping.UserIdMapping;
 import io.supertokens.pluginInterface.useridmapping.UserIdMappingStorage;
 
+import java.util.List;
+
 public interface UserIdMappingSQLStorage extends UserIdMappingStorage, SQLStorage {
     UserIdMapping getUserIdMapping_Transaction(TransactionConnection con, AppIdentifier appIdentifier, String userId,
                                                boolean isSuperTokensUserId)
@@ -30,4 +32,8 @@ public interface UserIdMappingSQLStorage extends UserIdMappingStorage, SQLStorag
 
     UserIdMapping[] getUserIdMapping_Transaction(TransactionConnection con, AppIdentifier appIdentifier, String userId)
             throws StorageQueryException;
+
+    List<UserIdMapping> getMultipleUserIdMapping_Transaction(TransactionConnection connection, AppIdentifier appIdentifier,
+                                                             List<String> userIds, boolean isSupertokensIds)
+        throws StorageQueryException;
 }

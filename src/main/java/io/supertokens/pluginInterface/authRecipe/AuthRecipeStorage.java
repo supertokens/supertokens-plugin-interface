@@ -26,6 +26,7 @@ import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.List;
 
 public interface AuthRecipeStorage extends Storage {
 
@@ -44,6 +45,8 @@ public interface AuthRecipeStorage extends Storage {
     boolean doesUserIdExist(AppIdentifier appIdentifier, String userId) throws StorageQueryException;
 
     boolean doesUserIdExist(TenantIdentifier tenantIdentifierIdentifier, String userId) throws StorageQueryException;
+
+    List<String> findExistingUserIds(AppIdentifier appIdentifier, List<String> userIds) throws StorageQueryException;
 
     AuthRecipeUserInfo getPrimaryUserById(AppIdentifier appIdentifier, String userId) throws StorageQueryException;
 

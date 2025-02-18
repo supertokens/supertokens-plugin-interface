@@ -13,6 +13,8 @@ import io.supertokens.pluginInterface.totp.exception.DeviceAlreadyExistsExceptio
 import io.supertokens.pluginInterface.totp.exception.UnknownTotpUserIdException;
 import io.supertokens.pluginInterface.totp.exception.UsedCodeAlreadyExistsException;
 
+import java.util.List;
+
 public interface TOTPSQLStorage extends TOTPStorage, SQLStorage {
     public int deleteDevice_Transaction(TransactionConnection con, AppIdentifier appIdentifier, String userId,
                                         String deviceName)
@@ -47,4 +49,7 @@ public interface TOTPSQLStorage extends TOTPStorage, SQLStorage {
 
     TOTPDevice createDevice_Transaction(TransactionConnection con, AppIdentifier appIdentifier, TOTPDevice device)
             throws StorageQueryException, DeviceAlreadyExistsException, TenantOrAppNotFoundException;
+
+    void createDevices_Transaction(TransactionConnection con, AppIdentifier appIdentifier, List<TOTPDevice> devices)
+            throws StorageQueryException, TenantOrAppNotFoundException;
 }
