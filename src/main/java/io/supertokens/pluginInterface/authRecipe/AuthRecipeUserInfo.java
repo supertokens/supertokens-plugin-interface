@@ -127,7 +127,7 @@ public class AuthRecipeUserInfo {
         return hashCode;
     }
 
-    public JsonObject toJson() {
+    public JsonObject toJson(boolean includeWebauthn) {
         if (!didCallSetExternalUserId) {
             throw new RuntimeException("Found a bug: Did you forget to call setExternalUserId?");
         }
@@ -147,6 +147,11 @@ public class AuthRecipeUserInfo {
         Set<LoginMethod.ThirdParty> thirdParty = new HashSet<>();
         Set<String> webauthn = new HashSet<>();
         for (LoginMethod loginMethod : this.loginMethods) {
+            if (!includeWebauthn) {
+                if (loginMethod.recipeId == RECIPE_ID.WEBAUTHN) {
+                    continue;
+                }
+            }
             if (loginMethod.email != null) {
                 emails.add(loginMethod.email);
             }
@@ -179,11 +184,13 @@ public class AuthRecipeUserInfo {
         }
         jsonObject.add("thirdParty", thirdPartyJson);
 
-        JsonObject webauthnJson = new JsonObject();
-        JsonArray j = new JsonArray();
-        j.addAll(new Gson().toJsonTree(webauthn).getAsJsonArray());
-        webauthnJson.add("credentialIds", j);
-        jsonObject.add("webauthn", webauthnJson);
+        if (includeWebauthn) {
+            JsonObject webauthnJson = new JsonObject();
+            JsonArray j = new JsonArray();
+            j.addAll(new Gson().toJsonTree(webauthn).getAsJsonArray());
+            webauthnJson.add("credentialIds", j);
+            jsonObject.add("webauthn", webauthnJson);
+        }
 
         // now we add login methods..
         JsonArray loginMethodsArr = new JsonArray();
@@ -210,10 +217,12 @@ public class AuthRecipeUserInfo {
                 thirdPartyJsonObject.addProperty("userId", lM.thirdParty.userId);
                 lMJsonObject.add("thirdParty", thirdPartyJsonObject);
             }
-            if(lM.webauthN != null) {
-                JsonObject webauthNJson = new JsonObject();
-                webauthNJson.add("credentialIds", new Gson().toJsonTree(lM.webauthN.credentialIds));
-                lMJsonObject.add("webauthn", webauthNJson);
+            if (includeWebauthn) {
+                if(lM.webauthN != null) {
+                    JsonObject webauthNJson = new JsonObject();
+                    webauthNJson.add("credentialIds", new Gson().toJsonTree(lM.webauthN.credentialIds));
+                    lMJsonObject.add("webauthn", webauthNJson);
+                }
             }
             loginMethodsArr.add(lMJsonObject);
         }
