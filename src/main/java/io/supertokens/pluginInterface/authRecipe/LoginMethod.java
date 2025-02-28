@@ -20,6 +20,7 @@ import io.supertokens.pluginInterface.RECIPE_ID;
 
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class LoginMethod {
@@ -42,6 +43,8 @@ public class LoginMethod {
 
     public final Set<String> tenantIds;
 
+    public final WebAuthN webauthN;
+
     public transient final String passwordHash;
 
     private boolean didCallSetExternalUserId = false;
@@ -55,6 +58,7 @@ public class LoginMethod {
         this.email = email;
         this.phoneNumber = null;
         this.thirdParty = null;
+        this.webauthN = null;
         this.tenantIds = new HashSet<>();
         Collections.addAll(this.tenantIds, tenantIds);
         this.passwordHash = passwordHash;
@@ -71,6 +75,7 @@ public class LoginMethod {
         this.tenantIds = new HashSet<>();
         Collections.addAll(this.tenantIds, tenantIds);
         this.thirdParty = null;
+        this.webauthN = null;
         this.passwordHash = null;
     }
 
@@ -84,6 +89,22 @@ public class LoginMethod {
         this.tenantIds = new HashSet<>();
         Collections.addAll(this.tenantIds, tenantIds);
         this.thirdParty = thirdPartyInfo;
+        this.webauthN = null;
+        this.phoneNumber = null;
+        this.passwordHash = null;
+    }
+
+    public LoginMethod(String recipeUserId, long timeJoined, boolean verified, String email, WebAuthN webauthN,
+                       String[] tenantIds) {
+        this.verified = verified;
+        this.timeJoined = timeJoined;
+        this.recipeUserId = recipeUserId;
+        this.recipeId = RECIPE_ID.WEBAUTHN;
+        this.email = email;
+        this.tenantIds = new HashSet<>();
+        Collections.addAll(this.tenantIds, tenantIds);
+        this.webauthN = webauthN;
+        this.thirdParty = null;
         this.phoneNumber = null;
         this.passwordHash = null;
     }
@@ -147,6 +168,32 @@ public class LoginMethod {
         }
     }
 
+    public static class WebAuthN {
+        public List<String> credentialIds;
+
+        public WebAuthN(List<String> credentialIds) {
+            this.credentialIds = credentialIds;
+        }
+
+        public void addCredentialId(String credentialId) {
+            this.credentialIds.add(credentialId);
+        }
+
+        @Override
+        public boolean equals(Object other) {
+            if (!(other instanceof WebAuthN)) {
+                return false;
+            }
+            WebAuthN webauthN = (WebAuthN) other;
+            return this.credentialIds.equals(webauthN.credentialIds);
+        }
+
+        @Override
+        public int hashCode() {
+            return credentialIds.hashCode();
+        }
+    }
+
     @Override
     public boolean equals(Object other) {
         if (!(other instanceof LoginMethod)) {
@@ -159,6 +206,7 @@ public class LoginMethod {
                 && java.util.Objects.equals(this.phoneNumber, otherLoginMethod.phoneNumber)
                 && java.util.Objects.equals(this.passwordHash, otherLoginMethod.passwordHash)
                 && java.util.Objects.equals(this.thirdParty, otherLoginMethod.thirdParty)
+                && java.util.Objects.equals(this.webauthN, otherLoginMethod.webauthN)
                 && this.tenantIds.equals(otherLoginMethod.tenantIds);
     }
 
@@ -176,6 +224,7 @@ public class LoginMethod {
         result = 31 * result + tenantIds.hashCode();
         result = 31 * result + (passwordHash != null ? passwordHash.hashCode() : 0);
         result = 31 * result + (thirdParty != null ? thirdParty.hashCode() : 0);
+        result = 31 * result + (webauthN != null ? webauthN.hashCode() : 0);
         return result;
     }
 }

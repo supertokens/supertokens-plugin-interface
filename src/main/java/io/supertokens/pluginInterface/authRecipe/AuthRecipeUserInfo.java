@@ -16,12 +16,15 @@
 
 package io.supertokens.pluginInterface.authRecipe;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import io.supertokens.pluginInterface.RECIPE_ID;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 public class AuthRecipeUserInfo {
 
@@ -124,7 +127,7 @@ public class AuthRecipeUserInfo {
         return hashCode;
     }
 
-    public JsonObject toJson() {
+    public JsonObject toJson(boolean includeWebauthn) {
         if (!didCallSetExternalUserId) {
             throw new RuntimeException("Found a bug: Did you forget to call setExternalUserId?");
         }
@@ -142,7 +145,13 @@ public class AuthRecipeUserInfo {
         Set<String> emails = new HashSet<>();
         Set<String> phoneNumbers = new HashSet<>();
         Set<LoginMethod.ThirdParty> thirdParty = new HashSet<>();
+        Set<String> webauthn = new HashSet<>();
         for (LoginMethod loginMethod : this.loginMethods) {
+            if (!includeWebauthn) {
+                if (loginMethod.recipeId == RECIPE_ID.WEBAUTHN) {
+                    continue;
+                }
+            }
             if (loginMethod.email != null) {
                 emails.add(loginMethod.email);
             }
@@ -151,6 +160,9 @@ public class AuthRecipeUserInfo {
             }
             if (loginMethod.thirdParty != null) {
                 thirdParty.add(loginMethod.thirdParty);
+            }
+            if(loginMethod.webauthN != null) {
+                webauthn.addAll(loginMethod.webauthN.credentialIds);
             }
         }
         JsonArray emailsJson = new JsonArray();
@@ -171,6 +183,14 @@ public class AuthRecipeUserInfo {
             thirdPartyJson.add(j);
         }
         jsonObject.add("thirdParty", thirdPartyJson);
+
+        if (includeWebauthn) {
+            JsonObject webauthnJson = new JsonObject();
+            JsonArray j = new JsonArray();
+            j.addAll(new Gson().toJsonTree(webauthn).getAsJsonArray());
+            webauthnJson.add("credentialIds", j);
+            jsonObject.add("webauthn", webauthnJson);
+        }
 
         // now we add login methods..
         JsonArray loginMethodsArr = new JsonArray();
@@ -196,6 +216,13 @@ public class AuthRecipeUserInfo {
                 thirdPartyJsonObject.addProperty("id", lM.thirdParty.id);
                 thirdPartyJsonObject.addProperty("userId", lM.thirdParty.userId);
                 lMJsonObject.add("thirdParty", thirdPartyJsonObject);
+            }
+            if (includeWebauthn) {
+                if(lM.webauthN != null) {
+                    JsonObject webauthNJson = new JsonObject();
+                    webauthNJson.add("credentialIds", new Gson().toJsonTree(lM.webauthN.credentialIds));
+                    lMJsonObject.add("webauthn", webauthNJson);
+                }
             }
             loginMethodsArr.add(lMJsonObject);
         }

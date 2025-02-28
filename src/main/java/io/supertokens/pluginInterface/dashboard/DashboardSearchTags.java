@@ -55,6 +55,11 @@ public class DashboardSearchTags {
         return false;
     }
 
+    public boolean shouldWebauthnTableBeSearched() {
+        List<SUPPORTED_SEARCH_TAGS> nonNullSearchTags = getNonNullSearchFields();
+        return nonNullSearchTags.contains(SUPPORTED_SEARCH_TAGS.EMAIL) && nonNullSearchTags.size() == 1;
+    }
+
     private List<SUPPORTED_SEARCH_TAGS> getNonNullSearchFields() {
         List<SUPPORTED_SEARCH_TAGS> nonNullSearchTags = new ArrayList<>();
 

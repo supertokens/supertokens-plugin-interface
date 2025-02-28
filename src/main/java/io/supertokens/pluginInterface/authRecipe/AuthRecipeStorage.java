@@ -58,6 +58,9 @@ public interface AuthRecipeStorage extends Storage {
     AuthRecipeUserInfo[] listPrimaryUsersByPhoneNumber(TenantIdentifier tenantIdentifier, String phoneNumber)
             throws StorageQueryException;
 
+    AuthRecipeUserInfo getPrimaryUserByWebauthNCredentialId(TenantIdentifier tenantIdentifier, String webauthNCredentialId)
+            throws StorageQueryException;
+
     AuthRecipeUserInfo[] listPrimaryUsersByThirdPartyInfo(AppIdentifier appIdentifier, String thirdPartyId,
                                                           String thirdPartyUserId)
             throws StorageQueryException;
