@@ -7,6 +7,11 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+
+## [7.1.0]
+
+- Adds support for Webauthn (passkeys)
+
 ## [7.0.0] 
 
 - Adds support for Bulk Import
