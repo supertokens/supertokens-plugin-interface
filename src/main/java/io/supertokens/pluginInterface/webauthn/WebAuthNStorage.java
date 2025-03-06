@@ -19,13 +19,16 @@ package io.supertokens.pluginInterface.webauthn;
 import io.supertokens.pluginInterface.authRecipe.AuthRecipeStorage;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
+import io.supertokens.pluginInterface.multitenancy.exceptions.TenantOrAppNotFoundException;
 import io.supertokens.pluginInterface.webauthn.exceptions.*;
 
 import java.util.List;
 
 public interface WebAuthNStorage extends AuthRecipeStorage {
 
-    WebAuthNStoredCredential saveCredentials(TenantIdentifier tenantIdentifier, WebAuthNStoredCredential credential) throws StorageQueryException;
+    WebAuthNStoredCredential saveCredentials(TenantIdentifier tenantIdentifier, WebAuthNStoredCredential credential)
+            throws StorageQueryException, DuplicateCredentialException, UserIdNotFoundException,
+            TenantOrAppNotFoundException;
 
     WebAuthNOptions saveGeneratedOptions(TenantIdentifier tenantIdentifier, WebAuthNOptions optionsToSave) throws StorageQueryException;
 
