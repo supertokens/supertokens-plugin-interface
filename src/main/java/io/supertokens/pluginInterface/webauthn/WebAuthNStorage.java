@@ -30,7 +30,8 @@ public interface WebAuthNStorage extends AuthRecipeStorage {
             throws StorageQueryException, DuplicateCredentialException, UserIdNotFoundException,
             TenantOrAppNotFoundException;
 
-    WebAuthNOptions saveGeneratedOptions(TenantIdentifier tenantIdentifier, WebAuthNOptions optionsToSave) throws StorageQueryException;
+    WebAuthNOptions saveGeneratedOptions(TenantIdentifier tenantIdentifier, WebAuthNOptions optionsToSave)
+            throws StorageQueryException, DuplicateOptionsIdException, TenantOrAppNotFoundException;
 
     WebAuthNOptions loadOptionsById(TenantIdentifier tenantIdentifier, String optionsId) throws  StorageQueryException;
 
