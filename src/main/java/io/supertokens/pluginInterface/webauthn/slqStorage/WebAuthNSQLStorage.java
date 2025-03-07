@@ -32,9 +32,6 @@ import io.supertokens.pluginInterface.webauthn.exceptions.UserIdNotFoundExceptio
 
 public interface WebAuthNSQLStorage extends WebAuthNStorage, SQLStorage {
 
-    WebAuthNStoredCredential saveCredentials_Transaction(TenantIdentifier tenantIdentifier, TransactionConnection con,
-                                                         WebAuthNStoredCredential credential) throws StorageQueryException;
-
     WebAuthNOptions loadOptionsById_Transaction(TenantIdentifier tenantIdentifier,  TransactionConnection con, String optionsId) throws  StorageQueryException;
 
     WebAuthNStoredCredential loadCredentialById_Transaction(TenantIdentifier tenantIdentifier, TransactionConnection con, String credentialId) throws StorageQueryException;
