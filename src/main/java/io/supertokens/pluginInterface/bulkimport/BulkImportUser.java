@@ -17,6 +17,7 @@
 package io.supertokens.pluginInterface.bulkimport;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import io.supertokens.pluginInterface.bulkimport.BulkImportStorage.BULK_IMPORT_USER_STATUS;
 
@@ -86,6 +87,38 @@ public class BulkImportUser {
         return gson.fromJson(gson.toJson(this), JsonObject.class);
     }
 
+    public JsonObject toResponseJson(){
+        JsonObject response = new JsonObject();
+        response.addProperty("userId", externalUserId == null ? id : externalUserId);
+        JsonArray loginArray = new JsonArray();
+        for(LoginMethod loginMethod: loginMethods){
+            JsonObject lmObj = new JsonObject();
+            lmObj.addProperty("recipeId", loginMethod.recipeId);
+            lmObj.addProperty("userId", loginMethod.getSuperTokenOrExternalUserId());
+            lmObj.add("tenants", gson.toJsonTree(loginMethod.tenantIds));
+            switch (loginMethod.recipeId) {
+                case "emailpassword": {
+                    lmObj.addProperty("email", loginMethod.email);
+                    break;
+                }
+                case "thirdparty": {
+                    lmObj.addProperty("email", loginMethod.email);
+                    lmObj.addProperty("thirdpartyId", loginMethod.thirdPartyId);
+                    lmObj.addProperty("thirdpartyUserId", loginMethod.thirdPartyUserId);
+                    break;
+                }
+                case "passwordless": {
+                    lmObj.addProperty("email", loginMethod.email);
+                    lmObj.addProperty("phoneNumber", loginMethod.phoneNumber);
+                    break;
+                }
+            }
+            loginArray.add(lmObj);
+        }
+        response.add("loginMethods", loginArray);
+        return response;
+    }
+
     public static class UserRole {
         public String role;
         public List<String> tenantIds;
@@ -132,7 +165,7 @@ public class BulkImportUser {
 
         public LoginMethod(List<String> tenantIds, String recipeId, boolean isVerified, boolean isPrimary,
                 long timeJoinedInMSSinceEpoch, String email, String passwordHash, String hashingAlgorithm, String plainTextPassword,
-                String thirdPartyId, String thirdPartyUserId, String phoneNumber) {
+                String thirdPartyId, String thirdPartyUserId, String phoneNumber, String superTokensUserId) {
             this.tenantIds = tenantIds;
             this.recipeId = recipeId;
             this.isVerified = isVerified;
@@ -145,6 +178,7 @@ public class BulkImportUser {
             this.thirdPartyId = thirdPartyId;
             this.thirdPartyUserId = thirdPartyUserId;
             this.phoneNumber = phoneNumber;
+            this.superTokensUserId = superTokensUserId;
         }
     }
 }
