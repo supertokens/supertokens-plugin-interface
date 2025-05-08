@@ -7,6 +7,10 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [8.0.0]
+
+- Updates JRE to 21.
+
 ## [7.1.1]
 
 - Adds support for BulkImportUser's id generation while the upload is happening

@@ -2,7 +2,7 @@ plugins {
     id 'java-library'
 }
 
-version = "7.1.1"
+version = "8.0.0"
 
 repositories {
     mavenCentral()
@@ -10,7 +10,7 @@ repositories {
 
 dependencies {
     // https://mvnrepository.com/artifact/com.google.code.gson/gson
-    compileOnly group: 'com.google.code.gson', name: 'gson', version: '2.3.1'
+    compileOnly group: 'com.google.code.gson', name: 'gson', version: '2.13.1'
 
     // https://mvnrepository.com/artifact/com.google.code.findbugs/jsr305
     compileOnly group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.2'
@@ -19,11 +19,11 @@ dependencies {
 jar {
     archiveBaseName.set('plugin-interface')
 }
-
-task copyJars(type: Copy) {
-    into "$buildDir/dependencies"
+tasks.register('copyJars', Copy) {
     from configurations.runtimeClasspath
+    into layout.buildDirectory.dir("dependencies")
 }
+
 
 test {
     systemProperty 'noSetup', System.getProperty('noSetup')
