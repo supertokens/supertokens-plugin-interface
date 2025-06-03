@@ -7,6 +7,10 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [8.0.1]
+
+- Removes unnecessary `implementationDependencies.json` file
+
 ## [8.0.0]
 
 - Updates JRE to 21.
