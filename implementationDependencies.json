@@ -4,17 +4,17 @@
 	{
 		"jar":"https://repo.maven.apache.org/maven2/com/google/code/gson/gson/2.13.1/gson-2.13.1.jar",
 		"name":"gson 2.13.1",
-		"source":"https://repo.maven.apache.org/maven2/com/google/code/gson/gson/2.13.1/gson-2.13.1-sources.jar"
+		"src":"https://repo.maven.apache.org/maven2/com/google/code/gson/gson/2.13.1/gson-2.13.1-sources.jar"
 	},
 	{
 		"jar":"https://repo.maven.apache.org/maven2/com/google/errorprone/error_prone_annotations/2.38.0/error_prone_annotations-2.38.0.jar",
 		"name":"error_prone_annotations 2.38.0",
-		"source":"https://repo.maven.apache.org/maven2/com/google/errorprone/error_prone_annotations/2.38.0/error_prone_annotations-2.38.0-sources.jar"
+		"src":"https://repo.maven.apache.org/maven2/com/google/errorprone/error_prone_annotations/2.38.0/error_prone_annotations-2.38.0-sources.jar"
 	},
 	{
 		"jar":"https://repo.maven.apache.org/maven2/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar",
 		"name":"jsr305 3.0.2",
-		"source":"https://repo.maven.apache.org/maven2/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2-sources.jar"
+		"src":"https://repo.maven.apache.org/maven2/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2-sources.jar"
 	}
 ]
 }
