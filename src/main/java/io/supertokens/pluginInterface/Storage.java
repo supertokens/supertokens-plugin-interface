@@ -24,6 +24,7 @@ import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
 import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
 import io.supertokens.pluginInterface.multitenancy.exceptions.TenantOrAppNotFoundException;
+import io.supertokens.pluginInterface.opentelemetry.OtelProvider;
 
 import java.util.List;
 import java.util.Map;
@@ -52,7 +53,7 @@ public interface Storage {
     // then this function should throw an error since this is a misconfig from ther user's side.
     void assertThatConfigFromSameUserPoolIsNotConflicting(JsonObject otherConfig) throws InvalidConfigException;
 
-    void initFileLogging(String infoLogPath, String errorLogPath);
+    void initFileLogging(String infoLogPath, String errorLogPath, OtelProvider otelProvider);
 
     void stopLogging();
 
