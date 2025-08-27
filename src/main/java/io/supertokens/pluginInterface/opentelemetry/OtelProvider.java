@@ -25,4 +25,11 @@ public interface OtelProvider {
 
     public void createLogEvent(TenantIdentifier tenantIdentifier, String logMessage, String logLevel);
     public void createLogEvent(TenantIdentifier tenantIdentifier, String logMessage, String logLevel, Map<String, String> additionalAttributes);
+
+    public <T> T wrapInSpanWithReturn(TenantIdentifier tenantIdentifier, String spanName,
+                                      Map<String, String> additionalAttributes, RunnableWithOtel<T> runWithOtel);
+
+    public void createSpanWithAttributes(TenantIdentifier tenantIdentifier, String spanName,
+                                         Map<String, String> additionalAttributes);
+
 }
