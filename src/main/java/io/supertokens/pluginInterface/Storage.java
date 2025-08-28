@@ -75,6 +75,8 @@ public interface Storage {
 
     void setStorageLayerEnabled(boolean enabled);
 
+    void updateConfigJsonFromEnv(JsonObject configJson);
+
     boolean canBeUsed(JsonObject configJson) throws InvalidConfigException;
 
     // this function will be used in the createUserIdMapping and deleteUserIdMapping functions to check if the userId is
