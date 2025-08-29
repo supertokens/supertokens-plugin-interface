@@ -28,7 +28,7 @@ public interface OtelProvider {
 
     public <T> T wrapInSpanWithReturn(TenantIdentifier tenantIdentifier, String spanName,
                                       Map<String, String> additionalAttributes, RunnableWithOtel<T> runWithOtel);
-
+    
     public void createSpanWithAttributes(TenantIdentifier tenantIdentifier, String spanName,
                                          Map<String, String> additionalAttributes);
 
