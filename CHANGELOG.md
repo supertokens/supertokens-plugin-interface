@@ -7,9 +7,13 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
-## [8.1.0]
+## [8.1.1]
 
 - Adds OpenTelemetry support for the plugin interface
+
+## [8.1.0]
+
+- Adds `updateConfigJsonFromEnv` for the plugin interface
 
 ## [8.0.2]
 
