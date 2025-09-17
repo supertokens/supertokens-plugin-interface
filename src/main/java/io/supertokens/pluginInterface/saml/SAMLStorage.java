@@ -28,4 +28,7 @@ public interface SAMLStorage extends NonAuthRecipeStorage {
     public void removeSAMLClient(TenantIdentifier tenantIdentifier, String clientId) throws StorageQueryException;
     public SAMLClient getSAMLClient(TenantIdentifier tenantIdentifier, String clientId) throws StorageQueryException;
     public List<SAMLClient> getSAMLClients(TenantIdentifier tenantIdentifier) throws StorageQueryException;
+
+    public void saveRelayStateInfo(TenantIdentifier tenantIdentifier, SAMLRelayStateInfo relayStateInfo) throws StorageQueryException;
+    public SAMLRelayStateInfo getRelayStateInfo(TenantIdentifier tenantIdentifier, String relayState) throws StorageQueryException;
 }
