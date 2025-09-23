@@ -18,11 +18,7 @@
 package io.supertokens.pluginInterface.saml;
 
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
-
-import java.util.List;
 
 public class SAMLClient {
     public final String clientId;
@@ -30,13 +26,17 @@ public class SAMLClient {
     public final JsonArray redirectURIs;
     public final String defaultRedirectURI;
     public final String spEntityId;
+    public final String idpEntityId;
+    public final String idpSigningCertificate;
 
-    public SAMLClient(String clientId, String ssoLoginURL, JsonArray redirectURIs, String defaultRedirectURI, String spEntityId) {
+    public SAMLClient(String clientId, String ssoLoginURL, JsonArray redirectURIs, String defaultRedirectURI, String spEntityId, String idpEntityId, String idpSigningCertificate) {
         this.clientId = clientId;
         this.ssoLoginURL = ssoLoginURL;
         this.redirectURIs = redirectURIs;
         this.defaultRedirectURI = defaultRedirectURI;
         this.spEntityId = spEntityId;
+        this.idpEntityId = idpEntityId;
+        this.idpSigningCertificate = idpSigningCertificate;
     }
 
     public JsonObject toJson() {
