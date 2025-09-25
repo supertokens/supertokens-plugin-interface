@@ -46,8 +46,10 @@ public class SAMLClient {
         res.addProperty("defaultRedirectURI", this.defaultRedirectURI);
         res.add("redirectURIs", redirectURIs);
 
-        if (this.spEntityId != null) {
-            res.addProperty("spEntityId", spEntityId);
+        res.addProperty("spEntityId", spEntityId);
+        res.addProperty("idpEntityId", this.idpEntityId);
+        if (this.idpSigningCertificate != null) {
+            res.addProperty("idpSigningCertificate", this.idpSigningCertificate);
         }
 
         return res;
