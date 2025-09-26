@@ -26,7 +26,7 @@ import io.supertokens.pluginInterface.nonAuthRecipe.NonAuthRecipeStorage;
 
 public interface SAMLStorage extends NonAuthRecipeStorage {
     public SAMLClient createOrUpdateSAMLClient(TenantIdentifier tenantIdentifier, SAMLClient samlClient) throws StorageQueryException;
-    public void removeSAMLClient(TenantIdentifier tenantIdentifier, String clientId) throws StorageQueryException;
+    public boolean removeSAMLClient(TenantIdentifier tenantIdentifier, String clientId) throws StorageQueryException;
     public SAMLClient getSAMLClient(TenantIdentifier tenantIdentifier, String clientId) throws StorageQueryException;
     public List<SAMLClient> getSAMLClients(TenantIdentifier tenantIdentifier) throws StorageQueryException;
 
