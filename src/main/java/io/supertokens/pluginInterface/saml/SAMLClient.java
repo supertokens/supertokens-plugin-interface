@@ -28,8 +28,9 @@ public class SAMLClient {
     public final String spEntityId;
     public final String idpEntityId;
     public final String idpSigningCertificate;
+    public final boolean allowIDPInitiatedLogin;
 
-    public SAMLClient(String clientId, String ssoLoginURL, JsonArray redirectURIs, String defaultRedirectURI, String spEntityId, String idpEntityId, String idpSigningCertificate) {
+    public SAMLClient(String clientId, String ssoLoginURL, JsonArray redirectURIs, String defaultRedirectURI, String spEntityId, String idpEntityId, String idpSigningCertificate, boolean allowIDPInitiatedLogin) {
         this.clientId = clientId;
         this.ssoLoginURL = ssoLoginURL;
         this.redirectURIs = redirectURIs;
@@ -37,6 +38,7 @@ public class SAMLClient {
         this.spEntityId = spEntityId;
         this.idpEntityId = idpEntityId;
         this.idpSigningCertificate = idpSigningCertificate;
+        this.allowIDPInitiatedLogin = allowIDPInitiatedLogin;
     }
 
     public JsonObject toJson() {
@@ -51,6 +53,7 @@ public class SAMLClient {
         if (this.idpSigningCertificate != null) {
             res.addProperty("idpSigningCertificate", this.idpSigningCertificate);
         }
+        res.addProperty("allowIDPInitiatedLogin", this.allowIDPInitiatedLogin);
 
         return res;
     }
