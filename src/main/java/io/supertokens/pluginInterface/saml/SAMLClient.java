@@ -22,19 +22,23 @@ import com.google.gson.JsonObject;
 
 public class SAMLClient {
     public final String clientId;
+    public final String clientSecret;
     public final String ssoLoginURL;
     public final JsonArray redirectURIs;
     public final String defaultRedirectURI;
+    public final String metadataURL;
     public final String spEntityId;
     public final String idpEntityId;
     public final String idpSigningCertificate;
     public final boolean allowIDPInitiatedLogin;
 
-    public SAMLClient(String clientId, String ssoLoginURL, JsonArray redirectURIs, String defaultRedirectURI, String spEntityId, String idpEntityId, String idpSigningCertificate, boolean allowIDPInitiatedLogin) {
+    public SAMLClient(String clientId, String clientSecret, String ssoLoginURL, JsonArray redirectURIs, String defaultRedirectURI, String metadataURL, String spEntityId, String idpEntityId, String idpSigningCertificate, boolean allowIDPInitiatedLogin) {
         this.clientId = clientId;
+        this.clientSecret = clientSecret;
         this.ssoLoginURL = ssoLoginURL;
         this.redirectURIs = redirectURIs;
         this.defaultRedirectURI = defaultRedirectURI;
+        this.metadataURL = metadataURL;
         this.spEntityId = spEntityId;
         this.idpEntityId = idpEntityId;
         this.idpSigningCertificate = idpSigningCertificate;
@@ -45,8 +49,14 @@ public class SAMLClient {
         JsonObject res = new JsonObject();
 
         res.addProperty("clientId", this.clientId);
+        if (this.clientSecret != null) {
+            res.addProperty("clientSecret", this.clientSecret);
+        }
         res.addProperty("defaultRedirectURI", this.defaultRedirectURI);
         res.add("redirectURIs", redirectURIs);
+        if (this.metadataURL != null) {
+            res.addProperty("metadataURL", this.metadataURL);
+        }
 
         res.addProperty("spEntityId", spEntityId);
         res.addProperty("idpEntityId", this.idpEntityId);
