@@ -26,20 +26,18 @@ public class SAMLClient {
     public final String ssoLoginURL;
     public final JsonArray redirectURIs;
     public final String defaultRedirectURI;
-    public final String metadataURL;
     public final String spEntityId;
     public final String idpEntityId;
     public final String idpSigningCertificate;
     public final boolean allowIDPInitiatedLogin;
     public final boolean enableRequestSigning;
 
-    public SAMLClient(String clientId, String clientSecret, String ssoLoginURL, JsonArray redirectURIs, String defaultRedirectURI, String metadataURL, String spEntityId, String idpEntityId, String idpSigningCertificate, boolean allowIDPInitiatedLogin, boolean enableRequestSigning) {
+    public SAMLClient(String clientId, String clientSecret, String ssoLoginURL, JsonArray redirectURIs, String defaultRedirectURI, String spEntityId, String idpEntityId, String idpSigningCertificate, boolean allowIDPInitiatedLogin, boolean enableRequestSigning) {
         this.clientId = clientId;
         this.clientSecret = clientSecret;
         this.ssoLoginURL = ssoLoginURL;
         this.redirectURIs = redirectURIs;
         this.defaultRedirectURI = defaultRedirectURI;
-        this.metadataURL = metadataURL;
         this.spEntityId = spEntityId;
         this.idpEntityId = idpEntityId;
         this.idpSigningCertificate = idpSigningCertificate;
@@ -56,9 +54,6 @@ public class SAMLClient {
         }
         res.addProperty("defaultRedirectURI", this.defaultRedirectURI);
         res.add("redirectURIs", redirectURIs);
-        if (this.metadataURL != null) {
-            res.addProperty("metadataURL", this.metadataURL);
-        }
 
         res.addProperty("spEntityId", spEntityId);
         res.addProperty("idpEntityId", this.idpEntityId);
