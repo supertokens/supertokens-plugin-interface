@@ -7,7 +7,7 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
-## [8.1.1]
+## [8.2.0]
 
 - Adds OpenTelemetry javaagent support
 
