@@ -16,8 +16,6 @@
 
 package io.supertokens.pluginInterface.multitenancy;
 
-import io.supertokens.pluginInterface.Storage;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -82,6 +80,11 @@ public class TenantIdentifier {
     public int hashCode() {
         return (this.getTenantId() + "|" + this.getConnectionUriDomain() + "|" +
                 this.getAppId()).hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return getConnectionUriDomain() + " | " + getAppId() + " | " + getTenantId();
     }
 
     public AppIdentifier toAppIdentifier() {

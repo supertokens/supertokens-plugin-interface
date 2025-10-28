@@ -16,17 +16,6 @@
 
 package io.supertokens.pluginInterface.multitenancy;
 
-import io.supertokens.pluginInterface.STORAGE_TYPE;
-import io.supertokens.pluginInterface.Storage;
-import io.supertokens.pluginInterface.authRecipe.AuthRecipeStorage;
-import io.supertokens.pluginInterface.emailpassword.sqlStorage.EmailPasswordSQLStorage;
-import io.supertokens.pluginInterface.emailverification.sqlStorage.EmailVerificationSQLStorage;
-import io.supertokens.pluginInterface.multitenancy.exceptions.TenantOrAppNotFoundException;
-import io.supertokens.pluginInterface.session.SessionStorage;
-import io.supertokens.pluginInterface.useridmapping.UserIdMappingStorage;
-import io.supertokens.pluginInterface.usermetadata.sqlStorage.UserMetadataSQLStorage;
-import io.supertokens.pluginInterface.userroles.sqlStorage.UserRolesSQLStorage;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -75,6 +64,11 @@ public class AppIdentifier {
     public int hashCode() {
         return (this.getConnectionUriDomain() + "|" +
                 this.getAppId()).hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return getConnectionUriDomain() + " | " + getAppId();
     }
 
     public TenantIdentifier getAsPublicTenantIdentifier() {
