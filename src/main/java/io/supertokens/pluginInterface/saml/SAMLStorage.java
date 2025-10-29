@@ -24,9 +24,10 @@ import com.google.gson.JsonObject;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
 import io.supertokens.pluginInterface.nonAuthRecipe.NonAuthRecipeStorage;
+import io.supertokens.pluginInterface.saml.exception.DuplicateEntityIdException;
 
 public interface SAMLStorage extends NonAuthRecipeStorage {
-    public SAMLClient createOrUpdateSAMLClient(TenantIdentifier tenantIdentifier, SAMLClient samlClient) throws StorageQueryException;
+    public SAMLClient createOrUpdateSAMLClient(TenantIdentifier tenantIdentifier, SAMLClient samlClient) throws StorageQueryException, DuplicateEntityIdException;
     public boolean removeSAMLClient(TenantIdentifier tenantIdentifier, String clientId) throws StorageQueryException;
     public SAMLClient getSAMLClient(TenantIdentifier tenantIdentifier, String clientId) throws StorageQueryException;
     public SAMLClient getSAMLClientByIDPEntityId(TenantIdentifier tenantIdentifier, String idpEntityId) throws StorageQueryException;
