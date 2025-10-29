@@ -40,4 +40,5 @@ public interface SAMLStorage extends NonAuthRecipeStorage {
     public SAMLClaimsInfo getSAMLClaimsAndRemoveCode(TenantIdentifier tenantIdentifier, String code) throws StorageQueryException;
 
     public void removeExpiredSAMLCodesAndRelayStates() throws StorageQueryException;
+    public int countSAMLClients(TenantIdentifier tenantIdentifier) throws StorageQueryException;
 }
