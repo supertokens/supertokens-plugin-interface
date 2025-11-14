@@ -33,10 +33,10 @@ public interface SAMLStorage extends NonAuthRecipeStorage {
     public SAMLClient getSAMLClientByIDPEntityId(TenantIdentifier tenantIdentifier, String idpEntityId) throws StorageQueryException;
     public List<SAMLClient> getSAMLClients(TenantIdentifier tenantIdentifier) throws StorageQueryException;
 
-    public void saveRelayStateInfo(TenantIdentifier tenantIdentifier, SAMLRelayStateInfo relayStateInfo) throws StorageQueryException;
+    public void saveRelayStateInfo(TenantIdentifier tenantIdentifier, SAMLRelayStateInfo relayStateInfo, long relayStateValidity) throws StorageQueryException;
     public SAMLRelayStateInfo getRelayStateInfo(TenantIdentifier tenantIdentifier, String relayState) throws StorageQueryException;
 
-    public void saveSAMLClaims(TenantIdentifier tenantIdentifier, String clientId, String code, JsonObject claims) throws StorageQueryException;
+    public void saveSAMLClaims(TenantIdentifier tenantIdentifier, String clientId, String code, JsonObject claims, long claimsValidity) throws StorageQueryException;
     public SAMLClaimsInfo getSAMLClaimsAndRemoveCode(TenantIdentifier tenantIdentifier, String code) throws StorageQueryException;
 
     public void removeExpiredSAMLCodesAndRelayStates() throws StorageQueryException;
