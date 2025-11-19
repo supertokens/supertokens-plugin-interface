@@ -24,6 +24,7 @@ import io.supertokens.pluginInterface.emailverification.sqlStorage.EmailVerifica
 import io.supertokens.pluginInterface.multitenancy.MultitenancyStorage;
 import io.supertokens.pluginInterface.oauth.OAuthStorage;
 import io.supertokens.pluginInterface.passwordless.sqlStorage.PasswordlessSQLStorage;
+import io.supertokens.pluginInterface.saml.SAMLStorage;
 import io.supertokens.pluginInterface.session.SessionStorage;
 import io.supertokens.pluginInterface.thirdparty.sqlStorage.ThirdPartySQLStorage;
 import io.supertokens.pluginInterface.totp.sqlStorage.TOTPSQLStorage;
@@ -158,5 +159,12 @@ public class StorageUtils {
             throw new UnsupportedOperationException("");
         }
         return (WebAuthNSQLStorage) storage;
+    }
+
+    public static SAMLStorage getSAMLStorage(Storage storage) {
+        if (storage.getType() != STORAGE_TYPE.SQL) {
+            throw new UnsupportedOperationException("");
+        }
+        return (SAMLStorage) storage;
     }
 }
