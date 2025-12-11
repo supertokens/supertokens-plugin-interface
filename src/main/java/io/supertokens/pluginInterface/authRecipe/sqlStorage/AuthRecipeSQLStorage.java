@@ -18,6 +18,8 @@ package io.supertokens.pluginInterface.authRecipe.sqlStorage;
 
 import io.supertokens.pluginInterface.authRecipe.AuthRecipeStorage;
 import io.supertokens.pluginInterface.authRecipe.AuthRecipeUserInfo;
+import io.supertokens.pluginInterface.authRecipe.LoginMethod;
+import io.supertokens.pluginInterface.authRecipe.exceptions.AccountInfoAlreadyAssociatedWithAnotherPrimaryUserIdException;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
 import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
@@ -26,6 +28,7 @@ import io.supertokens.pluginInterface.sqlStorage.TransactionConnection;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public interface AuthRecipeSQLStorage extends AuthRecipeStorage, SQLStorage {
 
@@ -86,4 +89,7 @@ public interface AuthRecipeSQLStorage extends AuthRecipeStorage, SQLStorage {
 
     boolean doesUserIdExist_Transaction(TransactionConnection con, AppIdentifier appIdentifier, String externalUserId)
             throws StorageQueryException;
+
+    void checkIfLoginMethodCanBecomePrimary_Transaction(AppIdentifier appIdentifier, TransactionConnection con, LoginMethod loginMethod) throws
+            AccountInfoAlreadyAssociatedWithAnotherPrimaryUserIdException, StorageQueryException;
 }
