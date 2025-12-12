@@ -94,4 +94,7 @@ public interface AuthRecipeSQLStorage extends AuthRecipeStorage, SQLStorage {
             AccountInfoAlreadyAssociatedWithAnotherPrimaryUserIdException, StorageQueryException;
 
     void checkIfLoginMethodsCanBeLinked_Transaction(TransactionConnection con, AppIdentifier appIdentifier, Set<String> tenantIds, Set<String> emails, Set<String> phoneNumbers, Set<LoginMethod.ThirdParty> thirdParties, String primaryUserId) throws AccountInfoAlreadyAssociatedWithAnotherPrimaryUserIdException, StorageQueryException;
+
+    void addTenantIdToPrimaryUser_Transaction(TenantIdentifier tenantIdentifier, TransactionConnection con, String supertokensUserId)
+            throws StorageQueryException;
 }
