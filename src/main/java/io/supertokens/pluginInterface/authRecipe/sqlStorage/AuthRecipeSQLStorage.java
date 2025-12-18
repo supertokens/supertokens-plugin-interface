@@ -20,6 +20,9 @@ import io.supertokens.pluginInterface.authRecipe.AuthRecipeStorage;
 import io.supertokens.pluginInterface.authRecipe.AuthRecipeUserInfo;
 import io.supertokens.pluginInterface.authRecipe.LoginMethod;
 import io.supertokens.pluginInterface.authRecipe.exceptions.AccountInfoAlreadyAssociatedWithAnotherPrimaryUserIdException;
+import io.supertokens.pluginInterface.authRecipe.exceptions.AnotherPrimaryUserWithEmailAlreadyExistsException;
+import io.supertokens.pluginInterface.authRecipe.exceptions.AnotherPrimaryUserWithPhoneNumberAlreadyExistsException;
+import io.supertokens.pluginInterface.authRecipe.exceptions.AnotherPrimaryUserWithThirdPartyInfoAlreadyExistsException;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
 import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
@@ -96,5 +99,9 @@ public interface AuthRecipeSQLStorage extends AuthRecipeStorage, SQLStorage {
     void checkIfLoginMethodsCanBeLinked_Transaction(TransactionConnection con, AppIdentifier appIdentifier, Set<String> tenantIds, Set<String> emails, Set<String> phoneNumbers, Set<LoginMethod.ThirdParty> thirdParties, String primaryUserId) throws AccountInfoAlreadyAssociatedWithAnotherPrimaryUserIdException, StorageQueryException;
 
     void addTenantIdToPrimaryUser_Transaction(TenantIdentifier tenantIdentifier, TransactionConnection con, String supertokensUserId)
-            throws StorageQueryException;
+            throws AnotherPrimaryUserWithPhoneNumberAlreadyExistsException,
+            AnotherPrimaryUserWithEmailAlreadyExistsException,
+            AnotherPrimaryUserWithThirdPartyInfoAlreadyExistsException, StorageQueryException;
+
+    void deleteAccountInfoReservations_Transaction(TransactionConnection con, AppIdentifier appIdentifier, String userId) throws StorageQueryException;
 }
