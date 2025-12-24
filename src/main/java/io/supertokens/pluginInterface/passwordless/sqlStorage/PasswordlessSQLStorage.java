@@ -16,6 +16,7 @@
 
 package io.supertokens.pluginInterface.passwordless.sqlStorage;
 
+import io.supertokens.pluginInterface.authRecipe.exceptions.EmailChangeNotAllowedException;
 import io.supertokens.pluginInterface.bulkimport.exceptions.BulkImportTransactionRolledBackException;
 import io.supertokens.pluginInterface.emailpassword.exceptions.DuplicateEmailException;
 import io.supertokens.pluginInterface.emailpassword.exceptions.UnknownUserIdException;
@@ -79,7 +80,7 @@ public interface PasswordlessSQLStorage extends PasswordlessStorage, SQLStorage 
 
     void updateUserEmail_Transaction(AppIdentifier appIdentifier, TransactionConnection con, @Nonnull String userId,
                                      @Nullable String email)
-            throws StorageQueryException, UnknownUserIdException, DuplicateEmailException;
+            throws StorageQueryException, UnknownUserIdException, DuplicateEmailException, EmailChangeNotAllowedException;
 
     void updateUserPhoneNumber_Transaction(AppIdentifier appIdentifier, TransactionConnection con,
                                            @Nonnull String userId,

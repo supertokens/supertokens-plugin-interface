@@ -14,7 +14,7 @@
  *    under the License.
  */
 
-package io.supertokens.pluginInterface.webauthn.exceptions;
+package io.supertokens.pluginInterface.authRecipe.exceptions;
 
-public class DuplicateUserEmailException extends Exception {
+public class PhoneNumberChangeNotAllowedException extends Exception {
 }
