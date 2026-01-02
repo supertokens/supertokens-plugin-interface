@@ -18,8 +18,9 @@ package io.supertokens.pluginInterface.authRecipe.sqlStorage;
 
 import io.supertokens.pluginInterface.authRecipe.AuthRecipeStorage;
 import io.supertokens.pluginInterface.authRecipe.AuthRecipeUserInfo;
+import io.supertokens.pluginInterface.authRecipe.CanBecomePrimaryResult;
+import io.supertokens.pluginInterface.authRecipe.CanLinkAccountsResult;
 import io.supertokens.pluginInterface.authRecipe.LoginMethod;
-import io.supertokens.pluginInterface.authRecipe.exceptions.AccountInfoAlreadyAssociatedWithAnotherPrimaryUserIdException;
 import io.supertokens.pluginInterface.authRecipe.exceptions.AnotherPrimaryUserWithEmailAlreadyExistsException;
 import io.supertokens.pluginInterface.authRecipe.exceptions.AnotherPrimaryUserWithPhoneNumberAlreadyExistsException;
 import io.supertokens.pluginInterface.authRecipe.exceptions.AnotherPrimaryUserWithThirdPartyInfoAlreadyExistsException;
@@ -93,10 +94,14 @@ public interface AuthRecipeSQLStorage extends AuthRecipeStorage, SQLStorage {
     boolean doesUserIdExist_Transaction(TransactionConnection con, AppIdentifier appIdentifier, String externalUserId)
             throws StorageQueryException;
 
-    void checkIfLoginMethodCanBecomePrimary_Transaction(AppIdentifier appIdentifier, TransactionConnection con, LoginMethod loginMethod) throws
-            AccountInfoAlreadyAssociatedWithAnotherPrimaryUserIdException, StorageQueryException;
+    CanBecomePrimaryResult checkIfLoginMethodCanBecomePrimary_Transaction(AppIdentifier appIdentifier, TransactionConnection con, LoginMethod loginMethod) throws
+            StorageQueryException;
 
-    void checkIfLoginMethodsCanBeLinked_Transaction(TransactionConnection con, AppIdentifier appIdentifier, Set<String> tenantIds, Set<String> emails, Set<String> phoneNumbers, Set<LoginMethod.ThirdParty> thirdParties, String primaryUserId) throws AccountInfoAlreadyAssociatedWithAnotherPrimaryUserIdException, StorageQueryException;
+    CanLinkAccountsResult checkIfLoginMethodsCanBeLinked_Transaction(TransactionConnection con, AppIdentifier appIdentifier,
+                                                                    Set<String> tenantIds, Set<String> emails,
+                                                                    Set<String> phoneNumbers,
+                                                                    Set<LoginMethod.ThirdParty> thirdParties,
+                                                                    String primaryUserId) throws StorageQueryException;
 
     void addTenantIdToPrimaryUser_Transaction(TenantIdentifier tenantIdentifier, TransactionConnection con, String supertokensUserId)
             throws AnotherPrimaryUserWithPhoneNumberAlreadyExistsException,
