@@ -16,11 +16,16 @@
 
 package io.supertokens.pluginInterface.authRecipe.sqlStorage;
 
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import io.supertokens.pluginInterface.authRecipe.AuthRecipeStorage;
 import io.supertokens.pluginInterface.authRecipe.AuthRecipeUserInfo;
 import io.supertokens.pluginInterface.authRecipe.CanBecomePrimaryResult;
 import io.supertokens.pluginInterface.authRecipe.CanLinkAccountsResult;
 import io.supertokens.pluginInterface.authRecipe.LoginMethod;
+import io.supertokens.pluginInterface.authRecipe.PrimaryUserIdByAccountInfo;
 import io.supertokens.pluginInterface.authRecipe.exceptions.AnotherPrimaryUserWithEmailAlreadyExistsException;
 import io.supertokens.pluginInterface.authRecipe.exceptions.AnotherPrimaryUserWithPhoneNumberAlreadyExistsException;
 import io.supertokens.pluginInterface.authRecipe.exceptions.AnotherPrimaryUserWithThirdPartyInfoAlreadyExistsException;
@@ -29,10 +34,6 @@ import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
 import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
 import io.supertokens.pluginInterface.sqlStorage.SQLStorage;
 import io.supertokens.pluginInterface.sqlStorage.TransactionConnection;
-
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 public interface AuthRecipeSQLStorage extends AuthRecipeStorage, SQLStorage {
 
@@ -109,4 +110,11 @@ public interface AuthRecipeSQLStorage extends AuthRecipeStorage, SQLStorage {
             AnotherPrimaryUserWithThirdPartyInfoAlreadyExistsException, StorageQueryException;
 
     void deleteAccountInfoReservations_Transaction(TransactionConnection con, AppIdentifier appIdentifier, String userId) throws StorageQueryException;
+
+    List<PrimaryUserIdByAccountInfo> getPrimaryUserIdsByAccountInfo_Transaction(AppIdentifier appIdentifier,
+                                                                                TransactionConnection con,
+                                                                                List<String> emails,
+                                                                                List<String> phoneNumbers,
+                                                                                Map<String, String> thirdPartyIdToThirdPartyUserId)
+            throws StorageQueryException;
 }
