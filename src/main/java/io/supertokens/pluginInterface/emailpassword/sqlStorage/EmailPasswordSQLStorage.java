@@ -49,8 +49,7 @@ public interface EmailPasswordSQLStorage extends EmailPasswordStorage, SQLStorag
 
     void updateUsersEmail_Transaction(AppIdentifier appIdentifier, TransactionConnection conn, String userId,
                                       String email)
-            throws StorageQueryException, DuplicateEmailException, EmailChangeNotAllowedException,
-            PhoneNumberChangeNotAllowedException;
+            throws StorageQueryException, DuplicateEmailException, EmailChangeNotAllowedException;
 
     // this deletion of a user is app wide since the same user ID can be shared across tenants
     void deleteEmailPasswordUser_Transaction(TransactionConnection con, AppIdentifier appIdentifier, String userId,

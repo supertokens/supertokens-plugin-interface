@@ -18,12 +18,12 @@ package io.supertokens.pluginInterface.authRecipe;
 
 public class CanBecomePrimaryResult {
     public final boolean ok;
-    public final String primaryUserId;
+    public final String conflictingPrimaryUserId;
     public final String message;
 
-    private CanBecomePrimaryResult(boolean ok, String primaryUserId, String message) {
+    private CanBecomePrimaryResult(boolean ok, String conflictingPrimaryUserId, String message) {
         this.ok = ok;
-        this.primaryUserId = primaryUserId;
+        this.conflictingPrimaryUserId = conflictingPrimaryUserId;
         this.message = message;
     }
 
@@ -31,7 +31,7 @@ public class CanBecomePrimaryResult {
         return new CanBecomePrimaryResult(true, null, null);
     }
 
-    public static CanBecomePrimaryResult notOkResult(String primaryUserId, String message) {
-        return new CanBecomePrimaryResult(false, primaryUserId, message);
+    public static CanBecomePrimaryResult notOkResult(String conflictingPrimaryUserId, String message) {
+        return new CanBecomePrimaryResult(false, conflictingPrimaryUserId, message);
     }
 }

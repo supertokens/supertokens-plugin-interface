@@ -18,12 +18,12 @@ package io.supertokens.pluginInterface.authRecipe;
 
 public class CanLinkAccountsResult {
     public final boolean ok;
-    public final String primaryUserId;
+    public final String conflictingPrimaryUserId;
     public final String message;
 
-    private CanLinkAccountsResult(boolean ok, String primaryUserId, String message) {
+    private CanLinkAccountsResult(boolean ok, String conflictingPrimaryUserId, String message) {
         this.ok = ok;
-        this.primaryUserId = primaryUserId;
+        this.conflictingPrimaryUserId = conflictingPrimaryUserId;
         this.message = message;
     }
 
@@ -31,7 +31,7 @@ public class CanLinkAccountsResult {
         return new CanLinkAccountsResult(true, null, null);
     }
 
-    public static CanLinkAccountsResult notOkResult(String primaryUserId, String message) {
-        return new CanLinkAccountsResult(false, primaryUserId, message);
+    public static CanLinkAccountsResult notOkResult(String conflictingPrimaryUserId, String message) {
+        return new CanLinkAccountsResult(false, conflictingPrimaryUserId, message);
     }
 }
