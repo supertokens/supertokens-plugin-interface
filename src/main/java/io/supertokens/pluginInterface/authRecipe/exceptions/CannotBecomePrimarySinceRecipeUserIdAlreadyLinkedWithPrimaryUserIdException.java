@@ -1,5 +1,5 @@
 /*
- *    Copyright (c) 2020, VRAI Labs and/or its affiliates. All rights reserved.
+ *    Copyright (c) 2026, VRAI Labs and/or its affiliates. All rights reserved.
  *
  *    This software is licensed under the Apache License, Version 2.0 (the
  *    "License") as published by the Apache Software Foundation.
@@ -14,8 +14,13 @@
  *    under the License.
  */
 
-package io.supertokens.pluginInterface.emailpassword.exceptions;
+package io.supertokens.pluginInterface.authRecipe.exceptions;
 
-public class UnknownUserIdException extends EmailPasswordException {
-    private static final long serialVersionUID = 7345237610253685511L;
+public class CannotBecomePrimarySinceRecipeUserIdAlreadyLinkedWithPrimaryUserIdException extends Exception {
+    public final String primaryUserId;
+
+    public CannotBecomePrimarySinceRecipeUserIdAlreadyLinkedWithPrimaryUserIdException(String primaryUserId, String description) {
+        super(description);
+        this.primaryUserId = primaryUserId;
+    }
 }

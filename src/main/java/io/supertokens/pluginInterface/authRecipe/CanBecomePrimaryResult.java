@@ -17,21 +17,33 @@
 package io.supertokens.pluginInterface.authRecipe;
 
 public class CanBecomePrimaryResult {
-    public final boolean ok;
+    public static enum RESULT {
+        OK, WAS_ALREADY_A_PRIMARY_USER, LINKED_WITH_ANOTHER_PRIMARY_USER, CONFLICTING_ACCOUNT_INFO
+    }
+
+    public final RESULT status;
     public final String conflictingPrimaryUserId;
     public final String message;
 
-    private CanBecomePrimaryResult(boolean ok, String conflictingPrimaryUserId, String message) {
-        this.ok = ok;
+    private CanBecomePrimaryResult(RESULT status, String conflictingPrimaryUserId, String message) {
+        this.status = status;
         this.conflictingPrimaryUserId = conflictingPrimaryUserId;
         this.message = message;
     }
 
     public static CanBecomePrimaryResult okResult() {
-        return new CanBecomePrimaryResult(true, null, null);
+        return new CanBecomePrimaryResult(RESULT.OK, null, null);
     }
 
-    public static CanBecomePrimaryResult notOkResult(String conflictingPrimaryUserId, String message) {
-        return new CanBecomePrimaryResult(false, conflictingPrimaryUserId, message);
+    public static CanBecomePrimaryResult wasAlreadyAPrimeryUserResult() {
+        return new CanBecomePrimaryResult(RESULT.WAS_ALREADY_A_PRIMARY_USER, null, null);
+    }
+
+    public static CanBecomePrimaryResult linkedWithAnotherPrimaryUserResult(String conflictingPrimaryUserId) {
+        return new CanBecomePrimaryResult(RESULT.LINKED_WITH_ANOTHER_PRIMARY_USER, conflictingPrimaryUserId, null);
+    }
+
+    public static CanBecomePrimaryResult conflictingAccountInfoResult(String conflictingPrimaryUserId, String message) {
+        return new CanBecomePrimaryResult(RESULT.CONFLICTING_ACCOUNT_INFO, conflictingPrimaryUserId, message);
     }
 }

@@ -26,9 +26,7 @@ import io.supertokens.pluginInterface.authRecipe.CanBecomePrimaryResult;
 import io.supertokens.pluginInterface.authRecipe.CanLinkAccountsResult;
 import io.supertokens.pluginInterface.authRecipe.LoginMethod;
 import io.supertokens.pluginInterface.authRecipe.PrimaryUserIdByAccountInfo;
-import io.supertokens.pluginInterface.authRecipe.exceptions.AnotherPrimaryUserWithEmailAlreadyExistsException;
-import io.supertokens.pluginInterface.authRecipe.exceptions.AnotherPrimaryUserWithPhoneNumberAlreadyExistsException;
-import io.supertokens.pluginInterface.authRecipe.exceptions.AnotherPrimaryUserWithThirdPartyInfoAlreadyExistsException;
+import io.supertokens.pluginInterface.authRecipe.exceptions.*;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
 import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
@@ -76,8 +74,10 @@ public interface AuthRecipeSQLStorage extends AuthRecipeStorage, SQLStorage {
                                                                       String thirdPartyUserId)
             throws StorageQueryException;
 
-    void makePrimaryUser_Transaction(AppIdentifier appIdentifier, TransactionConnection con, String userId)
-            throws StorageQueryException;
+    boolean makePrimaryUser_Transaction(AppIdentifier appIdentifier, TransactionConnection con, String userId)
+            throws StorageQueryException, UnknownUserIdException,
+            AccountInfoAlreadyAssociatedWithAnotherPrimaryUserIdException,
+            CannotBecomePrimarySinceRecipeUserIdAlreadyLinkedWithPrimaryUserIdException;
 
     void makePrimaryUsers_Transaction(AppIdentifier appIdentifier, TransactionConnection con, List<String> userIds)
             throws StorageQueryException;
@@ -95,8 +95,8 @@ public interface AuthRecipeSQLStorage extends AuthRecipeStorage, SQLStorage {
     boolean doesUserIdExist_Transaction(TransactionConnection con, AppIdentifier appIdentifier, String externalUserId)
             throws StorageQueryException;
 
-    CanBecomePrimaryResult checkIfLoginMethodCanBecomePrimary_Transaction(AppIdentifier appIdentifier, TransactionConnection con, LoginMethod loginMethod) throws
-            StorageQueryException;
+    CanBecomePrimaryResult checkIfLoginMethodCanBecomePrimary(AppIdentifier appIdentifier, String recipeUserId) throws
+            StorageQueryException, UnknownUserIdException; // TODO move this to regular storage, not SQLStorage
 
     CanLinkAccountsResult checkIfLoginMethodsCanBeLinked_Transaction(TransactionConnection con, AppIdentifier appIdentifier,
                                                                     Set<String> tenantIds, Set<String> emails,

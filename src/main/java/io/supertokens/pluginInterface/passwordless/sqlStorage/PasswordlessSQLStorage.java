@@ -20,7 +20,7 @@ import io.supertokens.pluginInterface.authRecipe.exceptions.EmailChangeNotAllowe
 import io.supertokens.pluginInterface.authRecipe.exceptions.PhoneNumberChangeNotAllowedException;
 import io.supertokens.pluginInterface.bulkimport.exceptions.BulkImportTransactionRolledBackException;
 import io.supertokens.pluginInterface.emailpassword.exceptions.DuplicateEmailException;
-import io.supertokens.pluginInterface.emailpassword.exceptions.UnknownUserIdException;
+import io.supertokens.pluginInterface.authRecipe.exceptions.UnknownUserIdException;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
 import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
