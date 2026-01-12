@@ -1,5 +1,5 @@
 /*
- *    Copyright (c) 2025, VRAI Labs and/or its affiliates. All rights reserved.
+ *    Copyright (c) 2026, VRAI Labs and/or its affiliates. All rights reserved.
  *
  *    This software is licensed under the Apache License, Version 2.0 (the
  *    "License") as published by the Apache Software Foundation.
@@ -14,8 +14,13 @@
  *    under the License.
  */
 
-package io.supertokens.pluginInterface.webauthn.exceptions;
+package io.supertokens.pluginInterface.authRecipe.exceptions;
 
-public class UserIdNotFoundException extends Exception {
+public class InputUserIdIsNotAPrimaryUserException extends Exception {
+    public final String userId;
 
+    public InputUserIdIsNotAPrimaryUserException(String userId) {
+        super();
+        this.userId = userId;
+    }
 }

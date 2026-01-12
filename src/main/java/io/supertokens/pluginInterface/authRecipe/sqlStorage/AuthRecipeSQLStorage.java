@@ -18,14 +18,11 @@ package io.supertokens.pluginInterface.authRecipe.sqlStorage;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import io.supertokens.pluginInterface.authRecipe.AuthRecipeStorage;
 import io.supertokens.pluginInterface.authRecipe.AuthRecipeUserInfo;
 import io.supertokens.pluginInterface.authRecipe.CanBecomePrimaryResult;
 import io.supertokens.pluginInterface.authRecipe.CanLinkAccountsResult;
-import io.supertokens.pluginInterface.authRecipe.LoginMethod;
-import io.supertokens.pluginInterface.authRecipe.PrimaryUserIdByAccountInfo;
 import io.supertokens.pluginInterface.authRecipe.exceptions.*;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
@@ -82,8 +79,10 @@ public interface AuthRecipeSQLStorage extends AuthRecipeStorage, SQLStorage {
     void makePrimaryUsers_Transaction(AppIdentifier appIdentifier, TransactionConnection con, List<String> userIds)
             throws StorageQueryException;
 
-    void linkAccounts_Transaction(AppIdentifier appIdentifier, TransactionConnection con, String recipeUserId,
-                                  String primaryUserId) throws StorageQueryException;
+    boolean linkAccounts_Transaction(AppIdentifier appIdentifier, TransactionConnection con, String recipeUserId,
+                                  String primaryUserId) throws StorageQueryException, UnknownUserIdException,
+            InputUserIdIsNotAPrimaryUserException, CannotLinkSinceRecipeUserIdAlreadyLinkedWithAnotherPrimaryUserIdException,
+            AccountInfoAlreadyAssociatedWithAnotherPrimaryUserIdException;
 
     void linkMultipleAccounts_Transaction(AppIdentifier appIdentifier, TransactionConnection con,
                                           Map<String, String> recipeUserIdByPrimaryUserId) throws StorageQueryException;
@@ -98,11 +97,9 @@ public interface AuthRecipeSQLStorage extends AuthRecipeStorage, SQLStorage {
     CanBecomePrimaryResult checkIfLoginMethodCanBecomePrimary(AppIdentifier appIdentifier, String recipeUserId) throws
             StorageQueryException, UnknownUserIdException; // TODO move this to regular storage, not SQLStorage
 
-    CanLinkAccountsResult checkIfLoginMethodsCanBeLinked_Transaction(TransactionConnection con, AppIdentifier appIdentifier,
-                                                                    Set<String> tenantIds, Set<String> emails,
-                                                                    Set<String> phoneNumbers,
-                                                                    Set<LoginMethod.ThirdParty> thirdParties,
-                                                                    String primaryUserId) throws StorageQueryException;
+    CanLinkAccountsResult checkIfLoginMethodsCanBeLinked(AppIdentifier appIdentifier,
+                                                         String primaryUserId, String recipeUserId) throws
+            StorageQueryException, UnknownUserIdException; // TODO move this to regular storage, not SQLStorage
 
     void addTenantIdToPrimaryUser_Transaction(TenantIdentifier tenantIdentifier, TransactionConnection con, String supertokensUserId)
             throws AnotherPrimaryUserWithPhoneNumberAlreadyExistsException,
@@ -110,11 +107,4 @@ public interface AuthRecipeSQLStorage extends AuthRecipeStorage, SQLStorage {
             AnotherPrimaryUserWithThirdPartyInfoAlreadyExistsException, StorageQueryException;
 
     void deleteAccountInfoReservations_Transaction(TransactionConnection con, AppIdentifier appIdentifier, String userId) throws StorageQueryException;
-
-    List<PrimaryUserIdByAccountInfo> getPrimaryUserIdsByAccountInfo_Transaction(AppIdentifier appIdentifier,
-                                                                                TransactionConnection con,
-                                                                                List<String> emails,
-                                                                                List<String> phoneNumbers,
-                                                                                Map<String, String> thirdPartyIdToThirdPartyUserId)
-            throws StorageQueryException;
 }

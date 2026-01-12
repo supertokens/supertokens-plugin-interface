@@ -21,9 +21,8 @@ import io.supertokens.pluginInterface.authRecipe.AuthRecipeUserInfo;
 public class CannotLinkSinceRecipeUserIdAlreadyLinkedWithAnotherPrimaryUserIdException extends Exception {
     public final AuthRecipeUserInfo recipeUser;
 
-    public CannotLinkSinceRecipeUserIdAlreadyLinkedWithAnotherPrimaryUserIdException(AuthRecipeUserInfo recipeUser,
-                                                                                     String description) {
-        super(description);
+    public CannotLinkSinceRecipeUserIdAlreadyLinkedWithAnotherPrimaryUserIdException(AuthRecipeUserInfo recipeUser) {
+        super("The input recipe user ID is already linked to another user ID");
         this.recipeUser = recipeUser;
     }
 }

@@ -17,21 +17,36 @@
 package io.supertokens.pluginInterface.authRecipe;
 
 public class CanLinkAccountsResult {
-    public final boolean ok;
+    public static enum RESULT {
+        OK, WAS_ALREADY_LINKED_TO_PRIMARY_USER, INPUT_USER_IS_NOT_PRIMARY_USER, RECIPE_USER_LINKED_TO_ANOTHER_PRIMARY_USER, ACCOUNT_INFO_ASSOCIATED_WITH_ANOTHER_PRIMARY_USER
+    }
+    public final RESULT status;
     public final String conflictingPrimaryUserId;
     public final String message;
 
-    private CanLinkAccountsResult(boolean ok, String conflictingPrimaryUserId, String message) {
-        this.ok = ok;
+    private CanLinkAccountsResult(RESULT status, String conflictingPrimaryUserId, String message) {
+        this.status = status;
         this.conflictingPrimaryUserId = conflictingPrimaryUserId;
         this.message = message;
     }
 
     public static CanLinkAccountsResult okResult() {
-        return new CanLinkAccountsResult(true, null, null);
+        return new CanLinkAccountsResult(RESULT.OK, null, null);
+    }
+
+    public static CanLinkAccountsResult wasAlreadyLinkedToPrimaryUserResult() {
+        return new CanLinkAccountsResult(RESULT.WAS_ALREADY_LINKED_TO_PRIMARY_USER, null, null);
+    }
+
+    public static CanLinkAccountsResult inputUserIsNotPrimaryUserResult() {
+        return new CanLinkAccountsResult(RESULT.INPUT_USER_IS_NOT_PRIMARY_USER, null, null);
+    }
+
+    public static CanLinkAccountsResult recipeUserLinkedToAnotherPrimaryUserResult(String primaryUserId) {
+        return new CanLinkAccountsResult(RESULT.RECIPE_USER_LINKED_TO_ANOTHER_PRIMARY_USER, primaryUserId, "The input recipe user ID is already linked to another user ID");
     }
 
     public static CanLinkAccountsResult notOkResult(String conflictingPrimaryUserId, String message) {
-        return new CanLinkAccountsResult(false, conflictingPrimaryUserId, message);
+        return new CanLinkAccountsResult(RESULT.ACCOUNT_INFO_ASSOCIATED_WITH_ANOTHER_PRIMARY_USER, conflictingPrimaryUserId, message);
     }
 }

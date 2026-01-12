@@ -17,6 +17,7 @@
 package io.supertokens.pluginInterface.webauthn;
 
 import io.supertokens.pluginInterface.authRecipe.AuthRecipeStorage;
+import io.supertokens.pluginInterface.authRecipe.exceptions.UnknownUserIdException;
 import io.supertokens.pluginInterface.emailpassword.exceptions.DuplicateEmailException;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
@@ -28,7 +29,7 @@ import java.util.List;
 public interface WebAuthNStorage extends AuthRecipeStorage {
 
     WebAuthNStoredCredential saveCredentials(TenantIdentifier tenantIdentifier, WebAuthNStoredCredential credential)
-            throws StorageQueryException, DuplicateCredentialException, UserIdNotFoundException,
+            throws StorageQueryException, DuplicateCredentialException, UnknownUserIdException,
             TenantOrAppNotFoundException;
 
     WebAuthNOptions saveGeneratedOptions(TenantIdentifier tenantIdentifier, WebAuthNOptions optionsToSave)
@@ -50,7 +51,7 @@ public interface WebAuthNStorage extends AuthRecipeStorage {
     List<WebAuthNStoredCredential> listCredentialsForUser(TenantIdentifier tenantIdentifier, String userId) throws StorageQueryException;
 
     void updateUserEmail(TenantIdentifier tenantIdentifier, String userId, String newEmail)
-            throws StorageQueryException, UserIdNotFoundException, DuplicateEmailException;
+            throws StorageQueryException, UnknownUserIdException, DuplicateEmailException;
 
     void deleteExpiredAccountRecoveryTokens() throws StorageQueryException;
 

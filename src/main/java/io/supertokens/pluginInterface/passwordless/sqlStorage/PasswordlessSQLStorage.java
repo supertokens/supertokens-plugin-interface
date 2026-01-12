@@ -79,20 +79,14 @@ public interface PasswordlessSQLStorage extends PasswordlessStorage, SQLStorage 
     void deleteCode_Transaction(TenantIdentifier tenantIdentifier, TransactionConnection con, String codeId)
             throws StorageQueryException;
 
-    void updateUserEmail_Transaction(AppIdentifier appIdentifier, TransactionConnection con, @Nonnull String userId,
-                                     @Nullable String email)
-            throws StorageQueryException, UnknownUserIdException, DuplicateEmailException, EmailChangeNotAllowedException;
-
-    void updateUserPhoneNumber_Transaction(AppIdentifier appIdentifier, TransactionConnection con,
-                                           @Nonnull String userId,
-                                           @Nullable String phoneNumber)
-            throws StorageQueryException, UnknownUserIdException, DuplicatePhoneNumberException,
-            PhoneNumberChangeNotAllowedException;
-
     void deletePasswordlessUser_Transaction(TransactionConnection con, AppIdentifier appIdentifier, String userId,
                                             boolean deleteUserIdMappingToo)
             throws StorageQueryException;
 
     void importPasswordlessUsers_Transaction(TransactionConnection con, List<PasswordlessImportUser> users)
             throws StorageQueryException, TenantOrAppNotFoundException, BulkImportTransactionRolledBackException;
+
+    void updateUserEmailAndPhone_Transaction(AppIdentifier appIdentifier, TransactionConnection con, String recipeUserId, String newEmail, boolean shouldUpdateEmail, String newPhoneNumber, boolean shouldUpdatePhoneNumber)
+            throws StorageQueryException, TenantOrAppNotFoundException, UnknownUserIdException,
+            DuplicateEmailException, EmailChangeNotAllowedException, DuplicatePhoneNumberException, PhoneNumberChangeNotAllowedException;
 }

@@ -18,6 +18,7 @@ package io.supertokens.pluginInterface.emailpassword.sqlStorage;
 
 import io.supertokens.pluginInterface.authRecipe.exceptions.EmailChangeNotAllowedException;
 import io.supertokens.pluginInterface.authRecipe.exceptions.PhoneNumberChangeNotAllowedException;
+import io.supertokens.pluginInterface.authRecipe.exceptions.UnknownUserIdException;
 import io.supertokens.pluginInterface.emailpassword.EmailPasswordImportUser;
 import io.supertokens.pluginInterface.emailpassword.EmailPasswordStorage;
 import io.supertokens.pluginInterface.emailpassword.PasswordResetTokenInfo;
@@ -49,7 +50,8 @@ public interface EmailPasswordSQLStorage extends EmailPasswordStorage, SQLStorag
 
     void updateUsersEmail_Transaction(AppIdentifier appIdentifier, TransactionConnection conn, String userId,
                                       String email)
-            throws StorageQueryException, DuplicateEmailException, EmailChangeNotAllowedException;
+            throws StorageQueryException, DuplicateEmailException, EmailChangeNotAllowedException,
+            UnknownUserIdException;
 
     // this deletion of a user is app wide since the same user ID can be shared across tenants
     void deleteEmailPasswordUser_Transaction(TransactionConnection con, AppIdentifier appIdentifier, String userId,
