@@ -42,31 +42,6 @@ public interface AuthRecipeSQLStorage extends AuthRecipeStorage, SQLStorage {
                                                                         String credentialId)
             throws StorageQueryException;
 
-    List<AuthRecipeUserInfo> getPrimaryUsersByIds_Transaction(AppIdentifier appIdentifier, TransactionConnection con,
-                                                              List<String> userIds)
-            throws StorageQueryException;
-
-    // lock order:
-    // - emailpassword table
-    // - thirdparty table
-    // - passwordless table
-    AuthRecipeUserInfo[] listPrimaryUsersByEmail_Transaction(AppIdentifier appIdentifier,
-                                                             TransactionConnection con,
-                                                             String email)
-            throws StorageQueryException;
-
-    //helper method for bulk import
-    AuthRecipeUserInfo[] listPrimaryUsersByMultipleEmailsOrPhoneNumbersOrThirdparty_Transaction(AppIdentifier appIdentifier,
-                                                             TransactionConnection con,
-                                                             List<String> emails, List<String> phones,
-                                                             Map<String, String> thirdpartyIdToThirdpartyUserId)
-            throws StorageQueryException;
-
-    // locks only passwordless table
-    AuthRecipeUserInfo[] listPrimaryUsersByPhoneNumber_Transaction(AppIdentifier appIdentifier,
-                                                                   TransactionConnection con, String phoneNumber)
-            throws StorageQueryException;
-
     // locks on thirdparty table
     AuthRecipeUserInfo[] listPrimaryUsersByThirdPartyInfo_Transaction(AppIdentifier appIdentifier,
                                                                       TransactionConnection con, String thirdPartyId,
