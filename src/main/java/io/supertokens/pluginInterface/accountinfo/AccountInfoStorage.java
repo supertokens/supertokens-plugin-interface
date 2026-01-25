@@ -19,6 +19,7 @@ package io.supertokens.pluginInterface.accountinfo;
 import io.supertokens.pluginInterface.Storage;
 import io.supertokens.pluginInterface.authRecipe.ACCOUNT_INFO_TYPE;
 import io.supertokens.pluginInterface.authRecipe.exceptions.AccountInfoAlreadyAssociatedWithAnotherPrimaryUserIdException;
+import io.supertokens.pluginInterface.authRecipe.exceptions.CannotBecomePrimarySinceRecipeUserIdAlreadyLinkedWithPrimaryUserIdException;
 import io.supertokens.pluginInterface.authRecipe.exceptions.CannotLinkSinceRecipeUserIdAlreadyLinkedWithAnotherPrimaryUserIdException;
 import io.supertokens.pluginInterface.authRecipe.exceptions.EmailChangeNotAllowedException;
 import io.supertokens.pluginInterface.authRecipe.exceptions.InputUserIdIsNotAPrimaryUserException;
@@ -103,4 +104,31 @@ public interface AccountInfoStorage extends Storage {
             throws StorageQueryException, UnknownUserIdException,
             EmailChangeNotAllowedException, PhoneNumberChangeNotAllowedException,
             DuplicateEmailException, DuplicatePhoneNumberException, DuplicateThirdPartyUserException;
+
+    /**
+     * Adds account info entries to primary_user_tenants when a user becomes a primary user.
+     * This method requires a LockedUser parameter to ensure proper locking has been acquired,
+     * preventing race conditions during concurrent makePrimary operations.
+     *
+     * This method:
+     * 1. Verifies the user is not already linked to another primary user
+     * 2. Inserts the user's account info into primary_user_tenants table
+     * 3. Updates recipe_user_account_infos to mark this user as a primary user
+     *
+     * @param appIdentifier The app context
+     * @param con The transaction connection
+     * @param primaryUser The locked user who is becoming a primary user
+     * @return true if the user newly became primary, false if already was primary
+     * @throws StorageQueryException on database errors
+     * @throws UnknownUserIdException if the user does not exist
+     * @throws AccountInfoAlreadyAssociatedWithAnotherPrimaryUserIdException if account info conflicts with another primary user
+     * @throws CannotBecomePrimarySinceRecipeUserIdAlreadyLinkedWithPrimaryUserIdException if user is already linked to another primary
+     */
+    boolean addPrimaryUserAccountInfo_Transaction(
+            AppIdentifier appIdentifier,
+            TransactionConnection con,
+            LockedUser primaryUser)
+            throws StorageQueryException, UnknownUserIdException,
+            AccountInfoAlreadyAssociatedWithAnotherPrimaryUserIdException,
+            CannotBecomePrimarySinceRecipeUserIdAlreadyLinkedWithPrimaryUserIdException;
 }
