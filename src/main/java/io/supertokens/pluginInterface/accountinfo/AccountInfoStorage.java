@@ -28,6 +28,7 @@ import io.supertokens.pluginInterface.authRecipe.exceptions.UnknownUserIdExcepti
 import io.supertokens.pluginInterface.emailpassword.exceptions.DuplicateEmailException;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
+import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
 import io.supertokens.pluginInterface.passwordless.exception.DuplicatePhoneNumberException;
 import io.supertokens.pluginInterface.sqlStorage.TransactionConnection;
 import io.supertokens.pluginInterface.thirdparty.exception.DuplicateThirdPartyUserException;
@@ -159,4 +160,28 @@ public interface AccountInfoStorage extends Storage {
             LockedUser recipeUser,
             LockedUser primaryUser)
             throws StorageQueryException;
+
+    /**
+     * Adds a tenant to a recipe user's tenant associations.
+     * This method requires a LockedUser parameter to ensure proper locking has been acquired,
+     * preventing race conditions during concurrent tenant association and linking operations.
+     *
+     * This method:
+     * 1. Inserts the user's account info into recipe_user_tenants table for the specified tenant
+     * 2. Handles duplicate account info conflicts appropriately
+     *
+     * @param tenantIdentifier The tenant to associate the user with (also provides app context)
+     * @param con The transaction connection
+     * @param user The locked user to associate with the tenant
+     * @throws StorageQueryException on database errors
+     * @throws DuplicateEmailException if the user's email conflicts with another user in the tenant
+     * @throws DuplicateThirdPartyUserException if the user's third-party info conflicts with another user in the tenant
+     * @throws DuplicatePhoneNumberException if the user's phone number conflicts with another user in the tenant
+     */
+    void addTenantIdToRecipeUser_Transaction(
+            TenantIdentifier tenantIdentifier,
+            TransactionConnection con,
+            LockedUser user)
+            throws StorageQueryException, DuplicateEmailException,
+            DuplicateThirdPartyUserException, DuplicatePhoneNumberException;
 }
