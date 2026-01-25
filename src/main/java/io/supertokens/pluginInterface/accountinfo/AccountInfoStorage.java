@@ -17,13 +17,19 @@
 package io.supertokens.pluginInterface.accountinfo;
 
 import io.supertokens.pluginInterface.Storage;
+import io.supertokens.pluginInterface.authRecipe.ACCOUNT_INFO_TYPE;
 import io.supertokens.pluginInterface.authRecipe.exceptions.AccountInfoAlreadyAssociatedWithAnotherPrimaryUserIdException;
 import io.supertokens.pluginInterface.authRecipe.exceptions.CannotLinkSinceRecipeUserIdAlreadyLinkedWithAnotherPrimaryUserIdException;
+import io.supertokens.pluginInterface.authRecipe.exceptions.EmailChangeNotAllowedException;
 import io.supertokens.pluginInterface.authRecipe.exceptions.InputUserIdIsNotAPrimaryUserException;
+import io.supertokens.pluginInterface.authRecipe.exceptions.PhoneNumberChangeNotAllowedException;
 import io.supertokens.pluginInterface.authRecipe.exceptions.UnknownUserIdException;
+import io.supertokens.pluginInterface.emailpassword.exceptions.DuplicateEmailException;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
+import io.supertokens.pluginInterface.passwordless.exception.DuplicatePhoneNumberException;
 import io.supertokens.pluginInterface.sqlStorage.TransactionConnection;
+import io.supertokens.pluginInterface.thirdparty.exception.DuplicateThirdPartyUserException;
 import io.supertokens.pluginInterface.useridmapping.LockedUser;
 
 /**
@@ -65,4 +71,36 @@ public interface AccountInfoStorage extends Storage {
             InputUserIdIsNotAPrimaryUserException,
             CannotLinkSinceRecipeUserIdAlreadyLinkedWithAnotherPrimaryUserIdException,
             AccountInfoAlreadyAssociatedWithAnotherPrimaryUserIdException;
+
+    /**
+     * Updates account info (email or phone number) for a user.
+     * This method requires a LockedUser parameter to ensure proper locking has been acquired.
+     *
+     * When updating a linked user's account info, this method updates:
+     * 1. The recipe_user_account_infos table
+     * 2. The recipe_user_tenants table
+     * 3. The primary_user_tenants table (if the user is linked to a primary)
+     *
+     * @param appIdentifier The app context
+     * @param con The transaction connection
+     * @param user The locked user whose account info is being updated
+     * @param accountInfoType The type of account info to update (EMAIL or PHONE_NUMBER only)
+     * @param newAccountInfoValue The new value for the account info (null to remove)
+     * @throws StorageQueryException on database errors
+     * @throws UnknownUserIdException if the user does not exist
+     * @throws EmailChangeNotAllowedException if email change would conflict with another primary user
+     * @throws PhoneNumberChangeNotAllowedException if phone change would conflict with another primary user
+     * @throws DuplicateEmailException if the email is already used by another user in the same tenant
+     * @throws DuplicatePhoneNumberException if the phone number is already used by another user in the same tenant
+     * @throws DuplicateThirdPartyUserException should never be thrown for EMAIL/PHONE_NUMBER types
+     */
+    void updateAccountInfo_Transaction(
+            AppIdentifier appIdentifier,
+            TransactionConnection con,
+            LockedUser user,
+            ACCOUNT_INFO_TYPE accountInfoType,
+            String newAccountInfoValue)
+            throws StorageQueryException, UnknownUserIdException,
+            EmailChangeNotAllowedException, PhoneNumberChangeNotAllowedException,
+            DuplicateEmailException, DuplicatePhoneNumberException, DuplicateThirdPartyUserException;
 }
