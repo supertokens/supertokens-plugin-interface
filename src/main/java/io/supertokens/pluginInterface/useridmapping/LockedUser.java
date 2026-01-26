@@ -38,6 +38,14 @@ public interface LockedUser {
     String getRecipeUserId();
 
     /**
+     * Gets the recipe ID for this user.
+     * The recipe ID identifies which authentication recipe was used
+     * (e.g., "emailpassword", "thirdparty", "passwordless").
+     */
+    @Nonnull
+    String getRecipeId();
+
+    /**
      * Gets the primary user ID if this user is linked, null otherwise.
      * If this user IS a primary user, returns the same as getRecipeUserId().
      */
