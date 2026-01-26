@@ -19,6 +19,9 @@ package io.supertokens.pluginInterface.accountinfo;
 import io.supertokens.pluginInterface.Storage;
 import io.supertokens.pluginInterface.authRecipe.ACCOUNT_INFO_TYPE;
 import io.supertokens.pluginInterface.authRecipe.exceptions.AccountInfoAlreadyAssociatedWithAnotherPrimaryUserIdException;
+import io.supertokens.pluginInterface.authRecipe.exceptions.AnotherPrimaryUserWithEmailAlreadyExistsException;
+import io.supertokens.pluginInterface.authRecipe.exceptions.AnotherPrimaryUserWithPhoneNumberAlreadyExistsException;
+import io.supertokens.pluginInterface.authRecipe.exceptions.AnotherPrimaryUserWithThirdPartyInfoAlreadyExistsException;
 import io.supertokens.pluginInterface.authRecipe.exceptions.CannotBecomePrimarySinceRecipeUserIdAlreadyLinkedWithPrimaryUserIdException;
 import io.supertokens.pluginInterface.authRecipe.exceptions.CannotLinkSinceRecipeUserIdAlreadyLinkedWithAnotherPrimaryUserIdException;
 import io.supertokens.pluginInterface.authRecipe.exceptions.EmailChangeNotAllowedException;
@@ -184,4 +187,35 @@ public interface AccountInfoStorage extends Storage {
             LockedUser user)
             throws StorageQueryException, DuplicateEmailException,
             DuplicateThirdPartyUserException, DuplicatePhoneNumberException;
+
+    /**
+     * Adds account info entries to primary_user_tenants when adding a tenant to a primary user.
+     * This method is called when associating a user with a new tenant to ensure that primary user
+     * reservations are properly updated.
+     *
+     * This method requires a LockedUser parameter to ensure proper locking has been acquired,
+     * preventing race conditions during concurrent tenant association and linking operations.
+     *
+     * This method:
+     * 1. Verifies the user is a primary user
+     * 2. Inserts the user's account info into primary_user_tenants table for the specified tenant
+     * 3. Handles conflicts with other primary users appropriately
+     *
+     * @param tenantIdentifier The tenant to associate the primary user's account info with (also provides app context)
+     * @param con The transaction connection
+     * @param primaryUser The locked primary user whose account info should be reserved for this tenant
+     * @throws StorageQueryException on database errors
+     * @throws AnotherPrimaryUserWithEmailAlreadyExistsException if the primary user's email conflicts with another primary user in the tenant
+     * @throws AnotherPrimaryUserWithPhoneNumberAlreadyExistsException if the primary user's phone conflicts with another primary user in the tenant
+     * @throws AnotherPrimaryUserWithThirdPartyInfoAlreadyExistsException if the primary user's third-party info conflicts with another primary user in the tenant
+     * @throws IllegalStateException if the user is not a primary user
+     */
+    void addTenantIdToPrimaryUser_Transaction(
+            TenantIdentifier tenantIdentifier,
+            TransactionConnection con,
+            LockedUser primaryUser)
+            throws StorageQueryException,
+            AnotherPrimaryUserWithEmailAlreadyExistsException,
+            AnotherPrimaryUserWithPhoneNumberAlreadyExistsException,
+            AnotherPrimaryUserWithThirdPartyInfoAlreadyExistsException;
 }
