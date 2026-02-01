@@ -65,7 +65,7 @@ public interface LockedUser {
      */
     default boolean isPrimary() {
         String primaryId = getPrimaryUserId();
-        return primaryId != null && primaryId.equals(getRecipeUserId());
+        return primaryId != null;
     }
 
     /**
