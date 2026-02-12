@@ -8,6 +8,9 @@ import io.supertokens.pluginInterface.nonAuthRecipe.NonAuthRecipeStorage;
 import io.supertokens.pluginInterface.totp.exception.DeviceAlreadyExistsException;
 import io.supertokens.pluginInterface.totp.exception.UnknownDeviceException;
 
+import java.util.List;
+import java.util.Map;
+
 public interface TOTPStorage extends NonAuthRecipeStorage {
     /**
      * Create a new device and a new user if the user does not exist:
@@ -32,6 +35,14 @@ public interface TOTPStorage extends NonAuthRecipeStorage {
      * Get the devices for a user
      */
     TOTPDevice[] getDevices(AppIdentifier appIdentifier, String userId)
+            throws StorageQueryException;
+
+    /**
+     * Get devices for multiple users in a single query.
+     * Returns a map of userId to their TOTP devices array.
+     * Users without any devices will have an empty array.
+     */
+    Map<String, TOTPDevice[]> getDevicesForMultipleUsers(AppIdentifier appIdentifier, List<String> userIds)
             throws StorageQueryException;
 
     /**

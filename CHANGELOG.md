@@ -7,6 +7,10 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [8.4.0]
+
+- Adds support for bulk query APIs for usermetadata and TOTP
+
 ## [8.3.0]
 
 - Adds SAML support
