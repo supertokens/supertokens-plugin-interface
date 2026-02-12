@@ -2,7 +2,7 @@ plugins {
     id 'java-library'
 }
 
-version = "feat/bulk-mfa-query-apis"
+version = "8.4.0"
 
 repositories {
     mavenCentral()
