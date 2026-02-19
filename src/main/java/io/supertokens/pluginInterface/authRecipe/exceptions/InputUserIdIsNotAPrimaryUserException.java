@@ -20,7 +20,7 @@ public class InputUserIdIsNotAPrimaryUserException extends Exception {
     public final String userId;
 
     public InputUserIdIsNotAPrimaryUserException(String userId) {
-        super();
+        super("Input user id " + userId + " is not primary user");
         this.userId = userId;
     }
 }
