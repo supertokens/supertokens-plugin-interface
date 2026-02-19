@@ -16,8 +16,10 @@
 
 package io.supertokens.pluginInterface.thirdparty;
 
+import java.util.List;
+
 import io.supertokens.pluginInterface.bulkimport.ImportUserBase;
-import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
+import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
 
 public class ThirdPartyImportUser extends ImportUserBase {
 
@@ -25,8 +27,8 @@ public class ThirdPartyImportUser extends ImportUserBase {
     public String thirdpartyUserId;
 
     public ThirdPartyImportUser(String email, String userId, String thirdpartyId, String thirdpartyUserId,
-                                TenantIdentifier tenantIdentifier, long timeJoinedInMSSinceEpoch) {
-        super(userId, email, tenantIdentifier, timeJoinedInMSSinceEpoch);
+                                AppIdentifier appIdentifier, long timeJoinedInMSSinceEpoch, String primaryUserId, List<String> recipeUserTenantIds) {
+        super(userId, email, appIdentifier, timeJoinedInMSSinceEpoch, primaryUserId, recipeUserTenantIds);
         this.thirdpartyId = thirdpartyId;
         this.thirdpartyUserId = thirdpartyUserId;
     }

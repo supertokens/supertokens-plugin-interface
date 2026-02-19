@@ -14,7 +14,10 @@
  *    under the License.
  */
 
-package io.supertokens.pluginInterface.webauthn.exceptions;
+package io.supertokens.pluginInterface.authRecipe.exceptions;
 
-public class DuplicateUserEmailException extends Exception {
+public class AnotherPrimaryUserWithEmailAlreadyExistsException extends Exception {
+    public AnotherPrimaryUserWithEmailAlreadyExistsException(String primaryUserId) {
+        super("Another primary user with email already exists: " + primaryUserId);
+    }
 }

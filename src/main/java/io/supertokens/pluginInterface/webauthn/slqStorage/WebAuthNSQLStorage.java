@@ -17,6 +17,9 @@
 package io.supertokens.pluginInterface.webauthn.slqStorage;
 
 import io.supertokens.pluginInterface.authRecipe.AuthRecipeUserInfo;
+import io.supertokens.pluginInterface.authRecipe.exceptions.EmailChangeNotAllowedException;
+import io.supertokens.pluginInterface.authRecipe.exceptions.UnknownUserIdException;
+import io.supertokens.pluginInterface.emailpassword.exceptions.DuplicateEmailException;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
 import io.supertokens.pluginInterface.multitenancy.exceptions.TenantOrAppNotFoundException;
@@ -26,9 +29,7 @@ import io.supertokens.pluginInterface.webauthn.AccountRecoveryTokenInfo;
 import io.supertokens.pluginInterface.webauthn.WebAuthNOptions;
 import io.supertokens.pluginInterface.webauthn.WebAuthNStorage;
 import io.supertokens.pluginInterface.webauthn.WebAuthNStoredCredential;
-import io.supertokens.pluginInterface.webauthn.exceptions.DuplicateUserEmailException;
 import io.supertokens.pluginInterface.webauthn.exceptions.DuplicateUserIdException;
-import io.supertokens.pluginInterface.webauthn.exceptions.UserIdNotFoundException;
 
 public interface WebAuthNSQLStorage extends WebAuthNStorage, SQLStorage {
 
@@ -39,12 +40,12 @@ public interface WebAuthNSQLStorage extends WebAuthNStorage, SQLStorage {
     AuthRecipeUserInfo signUp_Transaction(TenantIdentifier tenantIdentifier,  TransactionConnection con, String userId,
                                           String email, String relyingPartyId)
             throws StorageQueryException, DuplicateUserIdException, TenantOrAppNotFoundException,
-            DuplicateUserEmailException;
+            DuplicateEmailException;
 
     AuthRecipeUserInfo signUpWithCredentialsRegister_Transaction(TenantIdentifier tenantIdentifier, TransactionConnection con,
                                                                         String userId, String email, String relyingPartyId, WebAuthNStoredCredential credential)
             throws StorageQueryException, DuplicateUserIdException, TenantOrAppNotFoundException,
-            DuplicateUserEmailException;
+            DuplicateEmailException;
 
     AuthRecipeUserInfo getUserInfoByCredentialId_Transaction(TenantIdentifier tenantIdentifier,  TransactionConnection con, String credentialId)
         throws StorageQueryException;
@@ -56,5 +57,6 @@ public interface WebAuthNSQLStorage extends WebAuthNStorage, SQLStorage {
     void deleteAccountRecoveryTokenByEmail_Transaction(TenantIdentifier tenantIdentifier, TransactionConnection con, String email) throws StorageQueryException;
 
     void updateUserEmail_Transaction(TenantIdentifier tenantIdentifier, TransactionConnection con, String userId, String newEmail)
-            throws StorageQueryException, UserIdNotFoundException, DuplicateUserEmailException;
+            throws StorageQueryException, DuplicateEmailException,
+            EmailChangeNotAllowedException, UnknownUserIdException;
 }

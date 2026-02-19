@@ -16,6 +16,11 @@
 
 package io.supertokens.pluginInterface.thirdparty.sqlStorage;
 
+import java.util.List;
+
+import io.supertokens.pluginInterface.authRecipe.exceptions.EmailChangeNotAllowedException;
+import io.supertokens.pluginInterface.authRecipe.exceptions.UnknownUserIdException;
+import io.supertokens.pluginInterface.emailpassword.exceptions.DuplicateEmailException;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.exceptions.StorageTransactionLogicException;
 import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
@@ -25,13 +30,13 @@ import io.supertokens.pluginInterface.sqlStorage.TransactionConnection;
 import io.supertokens.pluginInterface.thirdparty.ThirdPartyImportUser;
 import io.supertokens.pluginInterface.thirdparty.ThirdPartyStorage;
 
-import java.util.List;
-
 public interface ThirdPartySQLStorage extends ThirdPartyStorage, SQLStorage {
 
     void updateUserEmail_Transaction(AppIdentifier appIdentifier, TransactionConnection con, String thirdPartyId,
-                                     String thirdPartyUserId,
-                                     String newEmail) throws StorageQueryException;
+                                     String userId, String thirdPartyUserId,
+                                     String newEmail)
+            throws StorageQueryException, EmailChangeNotAllowedException, DuplicateEmailException,
+            UnknownUserIdException;
 
     void deleteThirdPartyUser_Transaction(TransactionConnection con, AppIdentifier appIdentifier, String userId,
                                           boolean deleteUserIdMappingToo)

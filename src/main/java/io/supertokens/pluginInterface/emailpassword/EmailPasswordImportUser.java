@@ -16,15 +16,17 @@
 
 package io.supertokens.pluginInterface.emailpassword;
 
+import java.util.List;
+
 import io.supertokens.pluginInterface.bulkimport.ImportUserBase;
-import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
+import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
 
 public class EmailPasswordImportUser  extends ImportUserBase {
 
     public String passwordHash;
 
-    public EmailPasswordImportUser(String userId, String email, String passwordHash, TenantIdentifier tenantId, long timeJoinedInMSSinceEpoch) {
-        super(userId, email, tenantId, timeJoinedInMSSinceEpoch);
+    public EmailPasswordImportUser(String userId, String email, String passwordHash, AppIdentifier appIdentifier, long timeJoinedInMSSinceEpoch, String primaryUserId, List<String> recipeUserTenantIds) {
+        super(userId, email, appIdentifier, timeJoinedInMSSinceEpoch, primaryUserId, recipeUserTenantIds);
         this.passwordHash = passwordHash;
     }
 }
