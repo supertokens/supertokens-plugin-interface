@@ -138,11 +138,14 @@ public interface AccountInfoStorage extends Storage {
 
     /**
      * Removes account info reservations from primary_user_tenants when unlinking a recipe user from a primary user.
-     * This method requires LockedUser parameters for both users to ensure proper locking has been acquired,
+     * This method requires a LockedUser parameter to ensure proper locking has been acquired,
      * preventing race conditions during concurrent unlink operations.
      *
+     * The primary user ID is derived from recipeUser.getPrimaryUserId(), since lockUser()
+     * acquires locks on both the recipe user and their primary user.
+     *
      * This method:
-     * 1. Verifies the recipe user is actually linked to the specified primary user
+     * 1. Verifies the recipe user is linked or is itself a primary user
      * 2. Removes entries from primary_user_tenants that are no longer needed after unlinking
      * 3. Updates recipe_user_account_infos to clear the primary_user_id reference
      *
@@ -152,16 +155,14 @@ public interface AccountInfoStorage extends Storage {
      *
      * @param appIdentifier The app context
      * @param con The transaction connection
-     * @param recipeUser The locked recipe user being unlinked
-     * @param primaryUser The locked primary user from which the recipe user is being unlinked
+     * @param recipeUser The locked recipe user being unlinked (must be linked or primary)
      * @throws StorageQueryException on database errors
-     * @throws IllegalStateException if the recipe user is not linked to the specified primary user
+     * @throws IllegalStateException if the recipe user is not linked to any primary user
      */
     void removeAccountInfoReservationForPrimaryUserForUnlinking_Transaction(
             AppIdentifier appIdentifier,
             TransactionConnection con,
-            LockedUser recipeUser,
-            LockedUser primaryUser)
+            LockedUser recipeUser)
             throws StorageQueryException;
 
     /**
