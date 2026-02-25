@@ -180,5 +180,10 @@ public class BulkImportUser {
             this.phoneNumber = phoneNumber;
             this.superTokensUserId = superTokensUserId;
         }
+
+        @Override
+        public String toString() {
+            return new Gson().toJsonTree(this).toString();
+        }
     }
 }
