@@ -7,6 +7,10 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [8.2.1]
+
+- Backport: overrides toString in BulkImportUser
+
 ## [8.2.0]
 
 - Adds OpenTelemetry javaagent support
