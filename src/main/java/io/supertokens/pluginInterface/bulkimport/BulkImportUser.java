@@ -146,5 +146,10 @@ public class BulkImportUser {
             this.thirdPartyUserId = thirdPartyUserId;
             this.phoneNumber = phoneNumber;
         }
+
+        @Override
+        public String toString() {
+            return new Gson().toJsonTree(this).toString();
+        }
     }
 }
