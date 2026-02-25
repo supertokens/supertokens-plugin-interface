@@ -7,6 +7,10 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [8.3.1]
+
+- Backport: override toString of BulkImportUser
+
 ## [8.3.0]
 
 - Adds SAML support
