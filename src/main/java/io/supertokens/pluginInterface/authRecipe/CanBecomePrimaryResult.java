@@ -35,7 +35,7 @@ public class CanBecomePrimaryResult {
         return new CanBecomePrimaryResult(RESULT.OK, null, null);
     }
 
-    public static CanBecomePrimaryResult wasAlreadyAPrimeryUserResult() {
+    public static CanBecomePrimaryResult wasAlreadyAPrimaryUserResult() {
         return new CanBecomePrimaryResult(RESULT.WAS_ALREADY_A_PRIMARY_USER, null, null);
     }
 
