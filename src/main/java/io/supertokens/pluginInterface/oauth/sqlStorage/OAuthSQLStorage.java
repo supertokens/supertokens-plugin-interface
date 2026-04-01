@@ -42,7 +42,7 @@ public interface OAuthSQLStorage extends OAuthStorage, SQLStorage {
      */
     void updateOAuthSessionInternal_Transaction(AppIdentifier appIdentifier,
                                                 TransactionConnection con,
-                                                String externalRefreshToken,
+                                                String gid,
                                                 String newInternalRefreshToken,
                                                 String sessionHandle,
                                                 String jti,
