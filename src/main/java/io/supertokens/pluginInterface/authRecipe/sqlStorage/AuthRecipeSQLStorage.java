@@ -16,16 +16,25 @@
 
 package io.supertokens.pluginInterface.authRecipe.sqlStorage;
 
+import java.util.List;
+
 import io.supertokens.pluginInterface.authRecipe.AuthRecipeStorage;
 import io.supertokens.pluginInterface.authRecipe.AuthRecipeUserInfo;
+import io.supertokens.pluginInterface.authRecipe.exceptions.AccountInfoAlreadyAssociatedWithAnotherPrimaryUserIdException;
+import io.supertokens.pluginInterface.authRecipe.exceptions.AnotherPrimaryUserWithEmailAlreadyExistsException;
+import io.supertokens.pluginInterface.authRecipe.exceptions.AnotherPrimaryUserWithPhoneNumberAlreadyExistsException;
+import io.supertokens.pluginInterface.authRecipe.exceptions.AnotherPrimaryUserWithThirdPartyInfoAlreadyExistsException;
+import io.supertokens.pluginInterface.authRecipe.exceptions.CannotBecomePrimarySinceRecipeUserIdAlreadyLinkedWithPrimaryUserIdException;
+import io.supertokens.pluginInterface.authRecipe.exceptions.CannotLinkSinceRecipeUserIdAlreadyLinkedWithAnotherPrimaryUserIdException;
+import io.supertokens.pluginInterface.authRecipe.exceptions.InputUserIdIsNotAPrimaryUserException;
+import io.supertokens.pluginInterface.authRecipe.exceptions.UnknownUserIdException;
+import io.supertokens.pluginInterface.bulkimport.PrimaryUser;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
+import io.supertokens.pluginInterface.exceptions.StorageTransactionLogicException;
 import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
 import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
 import io.supertokens.pluginInterface.sqlStorage.SQLStorage;
 import io.supertokens.pluginInterface.sqlStorage.TransactionConnection;
-
-import java.util.List;
-import java.util.Map;
 
 public interface AuthRecipeSQLStorage extends AuthRecipeStorage, SQLStorage {
 
@@ -37,48 +46,21 @@ public interface AuthRecipeSQLStorage extends AuthRecipeStorage, SQLStorage {
                                                                         String credentialId)
             throws StorageQueryException;
 
-    List<AuthRecipeUserInfo> getPrimaryUsersByIds_Transaction(AppIdentifier appIdentifier, TransactionConnection con,
-                                                              List<String> userIds)
-            throws StorageQueryException;
-
-    // lock order:
-    // - emailpassword table
-    // - thirdparty table
-    // - passwordless table
-    AuthRecipeUserInfo[] listPrimaryUsersByEmail_Transaction(AppIdentifier appIdentifier,
-                                                             TransactionConnection con,
-                                                             String email)
-            throws StorageQueryException;
-
-    //helper method for bulk import
-    AuthRecipeUserInfo[] listPrimaryUsersByMultipleEmailsOrPhoneNumbersOrThirdparty_Transaction(AppIdentifier appIdentifier,
-                                                             TransactionConnection con,
-                                                             List<String> emails, List<String> phones,
-                                                             Map<String, String> thirdpartyIdToThirdpartyUserId)
-            throws StorageQueryException;
-
-    // locks only passwordless table
-    AuthRecipeUserInfo[] listPrimaryUsersByPhoneNumber_Transaction(AppIdentifier appIdentifier,
-                                                                   TransactionConnection con, String phoneNumber)
-            throws StorageQueryException;
-
     // locks on thirdparty table
     AuthRecipeUserInfo[] listPrimaryUsersByThirdPartyInfo_Transaction(AppIdentifier appIdentifier,
                                                                       TransactionConnection con, String thirdPartyId,
                                                                       String thirdPartyUserId)
             throws StorageQueryException;
 
-    void makePrimaryUser_Transaction(AppIdentifier appIdentifier, TransactionConnection con, String userId)
-            throws StorageQueryException;
+    boolean makePrimaryUser_Transaction(AppIdentifier appIdentifier, TransactionConnection con, String userId)
+            throws StorageQueryException, UnknownUserIdException,
+            AccountInfoAlreadyAssociatedWithAnotherPrimaryUserIdException,
+            CannotBecomePrimarySinceRecipeUserIdAlreadyLinkedWithPrimaryUserIdException;
 
-    void makePrimaryUsers_Transaction(AppIdentifier appIdentifier, TransactionConnection con, List<String> userIds)
-            throws StorageQueryException;
-
-    void linkAccounts_Transaction(AppIdentifier appIdentifier, TransactionConnection con, String recipeUserId,
-                                  String primaryUserId) throws StorageQueryException;
-
-    void linkMultipleAccounts_Transaction(AppIdentifier appIdentifier, TransactionConnection con,
-                                          Map<String, String> recipeUserIdByPrimaryUserId) throws StorageQueryException;
+    boolean linkAccounts_Transaction(AppIdentifier appIdentifier, TransactionConnection con, String recipeUserId,
+                                  String primaryUserId) throws StorageQueryException, UnknownUserIdException,
+            InputUserIdIsNotAPrimaryUserException, CannotLinkSinceRecipeUserIdAlreadyLinkedWithAnotherPrimaryUserIdException,
+            AccountInfoAlreadyAssociatedWithAnotherPrimaryUserIdException;
 
     void unlinkAccounts_Transaction(AppIdentifier appIdentifier, TransactionConnection con, String primaryUserId,
                                     String recipeUserId)
@@ -86,4 +68,14 @@ public interface AuthRecipeSQLStorage extends AuthRecipeStorage, SQLStorage {
 
     boolean doesUserIdExist_Transaction(TransactionConnection con, AppIdentifier appIdentifier, String externalUserId)
             throws StorageQueryException;
+
+    void addTenantIdToPrimaryUser_Transaction(TenantIdentifier tenantIdentifier, TransactionConnection con, String supertokensUserId)
+            throws AnotherPrimaryUserWithPhoneNumberAlreadyExistsException,
+            AnotherPrimaryUserWithEmailAlreadyExistsException,
+            AnotherPrimaryUserWithThirdPartyInfoAlreadyExistsException, StorageQueryException;
+
+    void deleteAccountInfoReservations_Transaction(TransactionConnection con, AppIdentifier appIdentifier, String userId) throws StorageQueryException;
+
+    void reservePrimaryUserAccountInfos_Transaction(TransactionConnection con, List<PrimaryUser> primaryUsers)
+            throws StorageQueryException, StorageTransactionLogicException;
 }
