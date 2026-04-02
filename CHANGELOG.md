@@ -7,6 +7,10 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [7.0.1]
+
+- Backport: overrides BulkImportUser's LoginMethod toString
+
 ## [7.0.0] 
 
 - Adds support for Bulk Import
