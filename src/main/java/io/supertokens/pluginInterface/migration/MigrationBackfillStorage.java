@@ -38,6 +38,11 @@ public interface MigrationBackfillStorage extends Storage {
     MigrationMode getMigrationMode();
 
     /**
+     * Persists a new migration mode for this storage (CUD).
+     */
+    void setMigrationMode(MigrationMode mode) throws StorageQueryException;
+
+    /**
      * Returns the count of users that still need backfilling.
      * A user needs backfilling when their time_joined is 0 in app_id_to_user_id,
      * which indicates they were created before the migration columns were added.
