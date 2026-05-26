@@ -43,18 +43,7 @@ public interface BulkImportStorage extends NonAuthRecipeStorage {
     * Delete users by id from the bulk_import_users table
     */
     List<String> deleteBulkImportUsers(AppIdentifier appIdentifier, @Nonnull String[] bulkImportUserIds) throws StorageQueryException;
-
-    /**
-    * Returns the users from the bulk_import_users table for processing
-    */
-    List<BulkImportUser> getBulkImportUsersAndChangeStatusToProcessing(AppIdentifier appIdentifier, @Nonnull Integer limit) throws StorageQueryException;
-
-
-    /**
-    * Update the bulk_import_user's primary_user_id by bulk_import_user_id
-    */
-    void updateBulkImportUserPrimaryUserId(AppIdentifier appIdentifier, @Nonnull String bulkImportUserId, @Nonnull String primaryUserId) throws StorageQueryException;
-
+    
     /**
     * Returns the count of users from the bulk_import_users table
     */

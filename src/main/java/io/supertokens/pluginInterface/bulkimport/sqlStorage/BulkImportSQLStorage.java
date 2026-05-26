@@ -17,6 +17,7 @@
 package io.supertokens.pluginInterface.bulkimport.sqlStorage;
 
 import io.supertokens.pluginInterface.bulkimport.BulkImportStorage;
+import io.supertokens.pluginInterface.bulkimport.BulkImportUser;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
 import io.supertokens.pluginInterface.sqlStorage.SQLStorage;
@@ -24,6 +25,7 @@ import io.supertokens.pluginInterface.sqlStorage.TransactionConnection;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.List;
 import java.util.Map;
 
 public interface BulkImportSQLStorage extends BulkImportStorage, SQLStorage {
@@ -36,4 +38,17 @@ public interface BulkImportSQLStorage extends BulkImportStorage, SQLStorage {
 
     void updateMultipleBulkImportUsersStatusToError_Transaction(AppIdentifier appIdentifier,
             TransactionConnection con, @Nonnull Map<String, String> bulkImportUserIdToErrorMessage) throws StorageQueryException;
+
+    /**
+     * Selects and marks users as PROCESSING within an already-open transaction, so the FOR UPDATE row locks
+     * are held by the caller's transaction for the full duration of processing.
+     */
+    List<BulkImportUser> getBulkImportUsersAndChangeStatusToProcessing_Transaction(
+            AppIdentifier appIdentifier, @Nonnull Integer limit, TransactionConnection con) throws StorageQueryException;
+
+    /**
+     * Deletes bulk-import users within an already-open transaction, keeping the row locks alive until commit.
+     */
+    void deleteBulkImportUsers_Transaction(
+            AppIdentifier appIdentifier, @Nonnull String[] bulkImportUserIds, TransactionConnection con) throws StorageQueryException;
 }
