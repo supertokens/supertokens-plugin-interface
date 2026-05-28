@@ -34,13 +34,14 @@ public interface MigrationBackfillStorage extends Storage {
 
     /**
      * Returns the current migration mode from the storage's configuration.
+     *
+     * To change the migration mode at runtime, update the storage's core_config via the
+     * existing multitenancy CRUD endpoint (e.g. PUT /recipe/multitenancy/connectionuridomain/v2
+     * with { "coreConfig": { "migration_mode": "..." } }). That path persists through
+     * overwriteTenantConfig and triggers a config refresh, after which this method returns
+     * the new value.
      */
     MigrationMode getMigrationMode();
-
-    /**
-     * Persists a new migration mode for this storage (CUD).
-     */
-    void setMigrationMode(MigrationMode mode) throws StorageQueryException;
 
     /**
      * Returns the count of users that still need backfilling.
