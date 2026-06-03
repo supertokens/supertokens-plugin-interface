@@ -60,6 +60,21 @@ public interface BulkImportStorage extends NonAuthRecipeStorage {
     */
     long getBulkImportUsersCount(AppIdentifier appIdentifier, @Nullable BULK_IMPORT_USER_STATUS status) throws StorageQueryException;
 
+    /**
+    * Returns NEW-status bulk import users that have at least one emailpassword login method
+    * whose plainTextPassword field is set (password not yet hashed).
+    * Used by HashPlaintextPasswordsInBulkImportUsers cron to pre-hash passwords before import.
+    */
+    List<BulkImportUser> getBulkImportUsersWithPlaintextPasswords(AppIdentifier appIdentifier, int limit)
+            throws StorageQueryException;
+
+    /**
+    * Replaces the raw_data column for the given bulk import user.
+    * Used by the password-hashing cron to persist hashed passwords.
+    */
+    void updateBulkImportUserRawData(AppIdentifier appIdentifier, @Nonnull String bulkImportUserId,
+            @Nonnull String rawData) throws StorageQueryException;
+
     public enum BULK_IMPORT_USER_STATUS {
         NEW, PROCESSING, FAILED
     }
