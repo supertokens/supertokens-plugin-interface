@@ -166,6 +166,10 @@ public class LoginMethod {
         public int hashCode() {
             return (id + "|" + userId).hashCode();
         }
+
+        public String getAccountInfoValue() {
+            return this.id + "::" + this.userId;
+        }
     }
 
     public static class WebAuthN {

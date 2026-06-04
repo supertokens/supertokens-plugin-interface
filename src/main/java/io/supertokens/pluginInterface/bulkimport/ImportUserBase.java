@@ -16,19 +16,25 @@
 
 package io.supertokens.pluginInterface.bulkimport;
 
-import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
+import java.util.List;
+
+import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
 
 public class ImportUserBase {
 
-    public String userId;
-    public String email;
-    public TenantIdentifier tenantIdentifier;
-    public long timeJoinedMSSinceEpoch;
+    public final String userId;
+    public final String email;
+    public final AppIdentifier appIdentifier;
+    public final long timeJoinedMSSinceEpoch;
+    public final String primaryUserId;
+    public final List<String> recipeUserTenantIds;
 
-    public ImportUserBase(String userId, String email, TenantIdentifier tenantIdentifier, long timeJoinedMSSinceEpoch) {
+    public ImportUserBase(String userId, String email, AppIdentifier appIdentifier, long timeJoinedMSSinceEpoch, String primaryUserId, List<String> recipeUserTenantIds) {
         this.userId = userId; //this will be the supertokens userId.
         this.email = email;
-        this.tenantIdentifier = tenantIdentifier;
+        this.appIdentifier = appIdentifier;
         this.timeJoinedMSSinceEpoch = timeJoinedMSSinceEpoch;
+        this.primaryUserId = primaryUserId;
+        this.recipeUserTenantIds = recipeUserTenantIds;
     }
 }

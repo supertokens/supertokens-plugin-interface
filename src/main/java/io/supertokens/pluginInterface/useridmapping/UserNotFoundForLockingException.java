@@ -14,19 +14,27 @@
  *    under the License.
  */
 
-package io.supertokens.pluginInterface.emailpassword;
+package io.supertokens.pluginInterface.useridmapping;
 
-import java.util.List;
+/**
+ * Thrown when attempting to lock a user that does not exist.
+ */
+public class UserNotFoundForLockingException extends Exception {
+    private static final long serialVersionUID = 1L;
 
-import io.supertokens.pluginInterface.bulkimport.ImportUserBase;
-import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
+    private final String userId;
 
-public class EmailPasswordImportUser  extends ImportUserBase {
+    public UserNotFoundForLockingException(String userId) {
+        super("User not found: " + userId);
+        this.userId = userId;
+    }
 
-    public String passwordHash;
+    public UserNotFoundForLockingException() {
+        super("User not found");
+        this.userId = null;
+    }
 
-    public EmailPasswordImportUser(String userId, String email, String passwordHash, AppIdentifier appIdentifier, long timeJoinedInMSSinceEpoch, String primaryUserId, List<String> recipeUserTenantIds) {
-        super(userId, email, appIdentifier, timeJoinedInMSSinceEpoch, primaryUserId, recipeUserTenantIds);
-        this.passwordHash = passwordHash;
+    public String getUserId() {
+        return userId;
     }
 }

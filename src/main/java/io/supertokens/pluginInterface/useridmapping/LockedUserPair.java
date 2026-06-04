@@ -14,19 +14,32 @@
  *    under the License.
  */
 
-package io.supertokens.pluginInterface.emailpassword;
+package io.supertokens.pluginInterface.useridmapping;
 
-import java.util.List;
+import javax.annotation.Nonnull;
 
-import io.supertokens.pluginInterface.bulkimport.ImportUserBase;
-import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
+/**
+ * Holds two locked users for linking operations.
+ * Ensures both users are locked before linking can proceed.
+ */
+public class LockedUserPair {
+    @Nonnull
+    private final LockedUser recipeUser;
+    @Nonnull
+    private final LockedUser primaryUser;
 
-public class EmailPasswordImportUser  extends ImportUserBase {
+    public LockedUserPair(@Nonnull LockedUser recipeUser, @Nonnull LockedUser primaryUser) {
+        this.recipeUser = recipeUser;
+        this.primaryUser = primaryUser;
+    }
 
-    public String passwordHash;
+    @Nonnull
+    public LockedUser getRecipeUser() {
+        return recipeUser;
+    }
 
-    public EmailPasswordImportUser(String userId, String email, String passwordHash, AppIdentifier appIdentifier, long timeJoinedInMSSinceEpoch, String primaryUserId, List<String> recipeUserTenantIds) {
-        super(userId, email, appIdentifier, timeJoinedInMSSinceEpoch, primaryUserId, recipeUserTenantIds);
-        this.passwordHash = passwordHash;
+    @Nonnull
+    public LockedUser getPrimaryUser() {
+        return primaryUser;
     }
 }

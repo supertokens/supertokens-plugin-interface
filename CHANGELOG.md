@@ -7,6 +7,15 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [8.6.0]
+
+- Adds `MigrationMode` enum for staged schema migration
+- Adds `AccountInfoStorage` interface for reservation-table conflict detection
+- Adds `MigrationBackfillStorage` interface for online backfill
+- Adds `UserLockingStorage` interface and `LockedUser` / `LockedUserPair` token types
+- Adds `ACCOUNT_INFO_TYPE`, `CanBecomePrimaryResult`, `CanLinkAccountsResult` and related exceptions
+- Adds `StorageUtils.getAuthRecipeReadOnlyStorage` read-only narrowing helper
+
 ## [8.5.0]
 
 - Adds `OAuthSQLStorage` for transactional access

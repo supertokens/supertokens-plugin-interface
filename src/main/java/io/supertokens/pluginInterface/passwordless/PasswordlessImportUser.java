@@ -16,15 +16,17 @@
 
 package io.supertokens.pluginInterface.passwordless;
 
+import java.util.List;
+
 import io.supertokens.pluginInterface.bulkimport.ImportUserBase;
-import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
+import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
 
 public class PasswordlessImportUser extends ImportUserBase {
 
     public String phoneNumber;
 
-    public PasswordlessImportUser(String userId, String phoneNumber, String email, TenantIdentifier tenantIdentifier, long timeJoinedInMSSinceEpoch) {
-        super(userId, email, tenantIdentifier, timeJoinedInMSSinceEpoch);
+    public PasswordlessImportUser(String userId, String phoneNumber, String email, AppIdentifier appIdentifier, long timeJoinedInMSSinceEpoch, String primaryUserId, List<String> recipeUserTenantIds) {
+        super(userId, email, appIdentifier, timeJoinedInMSSinceEpoch, primaryUserId, recipeUserTenantIds);
         this.phoneNumber = phoneNumber;
     }
 }
