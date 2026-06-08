@@ -62,10 +62,12 @@ public interface LockedUser {
 
     /**
      * Returns true if this user is a primary user.
+     * A primary user's getPrimaryUserId() returns its own ID.
+     * A linked recipe user's getPrimaryUserId() returns a different (non-null) ID — isPrimary() is false for them.
      */
     default boolean isPrimary() {
         String primaryId = getPrimaryUserId();
-        return primaryId != null;
+        return primaryId != null && primaryId.equals(getRecipeUserId());
     }
 
     /**

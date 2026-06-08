@@ -182,7 +182,7 @@ public interface AccountInfoStorage extends Storage {
      * @throws DuplicateThirdPartyUserException if the user's third-party info conflicts with another user in the tenant
      * @throws DuplicatePhoneNumberException if the user's phone number conflicts with another user in the tenant
      */
-    void addTenantIdToRecipeUser_Transaction(
+    boolean addTenantIdToRecipeUser_Transaction(
             TenantIdentifier tenantIdentifier,
             TransactionConnection con,
             LockedUser user)
@@ -198,18 +198,18 @@ public interface AccountInfoStorage extends Storage {
      * preventing race conditions during concurrent tenant association and linking operations.
      *
      * This method:
-     * 1. Verifies the user is a primary user
-     * 2. Inserts the user's account info into primary_user_tenants table for the specified tenant
+     * 1. Verifies the user belongs to a primary user group (is primary or linked)
+     * 2. Inserts ALL account info for the entire primary user group into primary_user_tenants for the specified tenant
      * 3. Handles conflicts with other primary users appropriately
      *
      * @param tenantIdentifier The tenant to associate the primary user's account info with (also provides app context)
      * @param con The transaction connection
-     * @param primaryUser The locked primary user whose account info should be reserved for this tenant
+     * @param primaryUser The locked user (either a primary user or a linked recipe user) whose primary group's account info should be reserved for this tenant
      * @throws StorageQueryException on database errors
-     * @throws AnotherPrimaryUserWithEmailAlreadyExistsException if the primary user's email conflicts with another primary user in the tenant
-     * @throws AnotherPrimaryUserWithPhoneNumberAlreadyExistsException if the primary user's phone conflicts with another primary user in the tenant
-     * @throws AnotherPrimaryUserWithThirdPartyInfoAlreadyExistsException if the primary user's third-party info conflicts with another primary user in the tenant
-     * @throws IllegalStateException if the user is not a primary user
+     * @throws AnotherPrimaryUserWithEmailAlreadyExistsException if the group's email conflicts with another primary user in the tenant
+     * @throws AnotherPrimaryUserWithPhoneNumberAlreadyExistsException if the group's phone conflicts with another primary user in the tenant
+     * @throws AnotherPrimaryUserWithThirdPartyInfoAlreadyExistsException if the group's third-party info conflicts with another primary user in the tenant
+     * @throws IllegalStateException if the user is not part of a primary user group (getPrimaryUserId() == null)
      */
     void addTenantIdToPrimaryUser_Transaction(
             TenantIdentifier tenantIdentifier,
