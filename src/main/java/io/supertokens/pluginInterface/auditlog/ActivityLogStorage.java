@@ -25,7 +25,7 @@ public interface ActivityLogStorage extends Storage {
 
     /**
      * Maintains the time-based partitioning of the activity_log table: pre-creates the partitions for
-     * upcoming days (so inserts always have a partition to land in) and drops partitions whose data is
+     * upcoming months (so inserts always have a partition to land in) and drops partitions whose data is
      * entirely older than the retention window. Storages that do not support partitioning (e.g. the
      * in-memory store) implement this as a no-op.
      */
