@@ -7,6 +7,10 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [8.6.1]
+
+- Adds `ActivityLogStorage` interface and `AuditLogEvent` class to support activity logging in the plugin interface.
+
 ## [8.6.0]
 
 - Adds `MigrationMode` enum for staged schema migration
