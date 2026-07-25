@@ -52,8 +52,11 @@ public interface SessionSQLStorage extends SessionStorage, SQLStorage {
                                            String sessionHandle)
             throws StorageQueryException;
 
+    // prevRefreshTokenHash2 and refreshTokenRotatedAt record refresh-token rotation state; both null means
+    // "no rotation recorded" (no backfill semantics required).
     void updateSessionInfo_Transaction(TenantIdentifier tenantIdentifier, TransactionConnection con,
                                        String sessionHandle, String refreshTokenHash2,
+                                       String prevRefreshTokenHash2, Long refreshTokenRotatedAt,
                                        long expiry, boolean useStaticKey) throws StorageQueryException;
 
     void deleteSessionsOfUser_Transaction(TransactionConnection con, AppIdentifier appIdentifier, String userId)
