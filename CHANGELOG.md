@@ -7,8 +7,11 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [8.7.0]
+
 - Adds `countUsersActiveSinceGroupedByDay` function to `ActiveUsersStorage` to count active users bucketed by
   whole days since last activity in a single query
+- Adds support for webauthn sign-in options to be single-use, consumed atomically on successful sign in.
 
 ## [8.6.1]
 
