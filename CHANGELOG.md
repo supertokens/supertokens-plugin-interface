@@ -7,6 +7,9 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Adds `countUsersActiveSinceGroupedByDay` function to `ActiveUsersStorage` to count active users bucketed by
+  whole days since last activity in a single query
+
 ## [8.6.1]
 
 - Adds `ActivityLogStorage` interface and `AuditLogEvent` class to support activity logging in the plugin interface.

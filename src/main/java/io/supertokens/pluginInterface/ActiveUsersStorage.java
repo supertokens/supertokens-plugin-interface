@@ -18,6 +18,10 @@ public interface ActiveUsersStorage extends NonAuthRecipeStorage {
      * after sinceTime. Key = days ago (0 = within the last 24h), value = number of users in that
      * bucket. Callers that need "active since N days ago" series values take the running total of
      * buckets 0..N-1 - one query instead of one per threshold.
+     *
+     * Rows with last_active_time > now (clock skew) are not expected to occur; implementations may
+     * return them under negative keys rather than clamping to bucket 0, and callers must ignore any
+     * keys outside the 0..N-1 range they consume.
      */
     Map<Integer, Integer> countUsersActiveSinceGroupedByDay(AppIdentifier appIdentifier, long sinceTime, long now)
             throws StorageQueryException;
