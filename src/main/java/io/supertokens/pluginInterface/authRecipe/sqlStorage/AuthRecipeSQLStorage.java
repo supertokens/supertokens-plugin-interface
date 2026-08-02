@@ -70,4 +70,31 @@ public interface AuthRecipeSQLStorage extends AuthRecipeStorage, SQLStorage {
 
     void reservePrimaryUserAccountInfos_Transaction(TransactionConnection con, List<PrimaryUser> primaryUsers)
             throws StorageQueryException, StorageTransactionLogicException;
+
+    /**
+     * Batch-normalizes {@code primary_or_recipe_user_time_joined} for the given primary users so that,
+     * within each linked group, every row shares a single value equal to the group's minimum
+     * {@code time_joined}.
+     * <p>
+     * For each id in {@code primaryUserIds} this sets
+     * {@code primary_or_recipe_user_time_joined = MIN(time_joined)} across all rows of that linked group,
+     * in every table the storage maintains that carries the column (respecting the storage's
+     * migration-mode branching), all inside the provided transaction.
+     * <p>
+     * This maintains the invariant that within a linked group every row shares
+     * {@code primary_or_recipe_user_time_joined = group MIN}. User-list pagination orders and cursors on
+     * that column while the next-page token is derived from the group's minimum {@code time_joined}; the
+     * two agree only while this invariant holds, so a violation breaks pagination (early termination when
+     * walking newest-first, an infinite token cycle when walking oldest-first). Live account linking
+     * normalizes as part of its own storage update; this method exposes the same normalization for callers
+     * that insert linked members without it — notably bulk import, which is expected to call this once per
+     * batch after all login methods (across all recipes) have been inserted.
+     *
+     * @param appIdentifier  the app the primary users belong to
+     * @param con            the transaction to run the updates in
+     * @param primaryUserIds the primary user ids whose linked groups should be normalized
+     */
+    void updateTimeJoinedForPrimaryUsers_Transaction(AppIdentifier appIdentifier, TransactionConnection con,
+                                                     List<String> primaryUserIds)
+            throws StorageQueryException;
 }
