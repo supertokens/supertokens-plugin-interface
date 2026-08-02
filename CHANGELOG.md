@@ -7,6 +7,13 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [8.7.1]
+
+- Adds `updateTimeJoinedForPrimaryUsers_Transaction` to `AuthRecipeSQLStorage` to batch-normalize
+  `primary_or_recipe_user_time_joined` to the linked-group minimum for a set of primary users within a
+  transaction, so callers that insert linked members without normalizing (notably bulk import) can restore
+  the invariant that user-list pagination relies on.
+
 ## [8.7.0]
 
 - Adds `countUsersActiveSinceGroupedByDay` function to `ActiveUsersStorage` to count active users bucketed by
