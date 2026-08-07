@@ -7,6 +7,11 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Adds `countTenantUsersJoinedSince` and `computeTenantUserCountAnchor` to `AuthRecipeSQLStorage` to support
+  the opt-in approximate tenant user-count fast path: a snapshot anchor (`C - d0` computed in one read-only
+  repeatable-read transaction) served together with a live "joined since" delta, exact for creations and
+  lagging only on deletions/link-merges/unlinks.
+
 ## [8.7.1]
 
 - Adds `updateTimeJoinedForPrimaryUsers_Transaction` to `AuthRecipeSQLStorage` to batch-normalize
