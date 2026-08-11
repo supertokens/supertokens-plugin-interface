@@ -52,8 +52,18 @@ public interface SessionSQLStorage extends SessionStorage, SQLStorage {
                                            String sessionHandle)
             throws StorageQueryException;
 
+    // prevRefreshTokenHash2 and refreshTokenRotatedAt record refresh-token rotation state. Like
+    // refreshTokenHash2 and expiry, these are WRITE-VERBATIM params: the implementation sets each column to
+    // the exact value passed and does NOT treat null as "leave the column unchanged". A caller performing a
+    // rotation passes the pre-rotation hash and the rotation time (both non-null); passing both null writes
+    // null, i.e. "no rotation recorded" (there is no backfill/merge semantics).
+    // Therefore non-rotation callers (e.g. child->parent promotion, or the static-key-only update that
+    // re-passes the session's existing refreshTokenHash2/expiry) MUST likewise re-pass the session's EXISTING
+    // prevRefreshTokenHash2/refreshTokenRotatedAt to preserve them. Passing null on such an update would erase
+    // previously-recorded rotation state and silently disarm rotation-event theft detection.
     void updateSessionInfo_Transaction(TenantIdentifier tenantIdentifier, TransactionConnection con,
                                        String sessionHandle, String refreshTokenHash2,
+                                       String prevRefreshTokenHash2, Long refreshTokenRotatedAt,
                                        long expiry, boolean useStaticKey) throws StorageQueryException;
 
     void deleteSessionsOfUser_Transaction(TransactionConnection con, AppIdentifier appIdentifier, String userId)
