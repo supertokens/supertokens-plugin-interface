@@ -20,6 +20,10 @@ import com.google.gson.JsonObject;
 
 public class SessionInfo {
     transient public String refreshTokenHash2;
+    // Rotation state (nullable): hash of the refresh token that was current before the last rotation,
+    // and the ms-epoch time of that rotation. null on both means "no rotation recorded".
+    transient public String prevRefreshTokenHash2;
+    transient public Long refreshTokenRotatedAt;
     public String sessionHandle;
     public String userId;
     public String recipeUserId;
@@ -32,10 +36,19 @@ public class SessionInfo {
     public SessionInfo(String sessionHandle, String userId, String recipeUserId, String refreshTokenHash2,
                        JsonObject userDataInDatabase,
                        long expiry, JsonObject userDataInJWT, long timeCreated, boolean useStaticKey) {
+        this(sessionHandle, userId, recipeUserId, refreshTokenHash2, null, null, userDataInDatabase, expiry,
+                userDataInJWT, timeCreated, useStaticKey);
+    }
+
+    public SessionInfo(String sessionHandle, String userId, String recipeUserId, String refreshTokenHash2,
+                       String prevRefreshTokenHash2, Long refreshTokenRotatedAt, JsonObject userDataInDatabase,
+                       long expiry, JsonObject userDataInJWT, long timeCreated, boolean useStaticKey) {
         this.sessionHandle = sessionHandle;
         this.userId = userId == null ? recipeUserId : userId;
         this.recipeUserId = recipeUserId;
         this.refreshTokenHash2 = refreshTokenHash2;
+        this.prevRefreshTokenHash2 = prevRefreshTokenHash2;
+        this.refreshTokenRotatedAt = refreshTokenRotatedAt;
         this.userDataInDatabase = userDataInDatabase;
         this.expiry = expiry;
         this.userDataInJWT = userDataInJWT;
