@@ -7,9 +7,12 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+
 ## [9.0.0]
 
 - Adds nullable `prevRefreshTokenHash2` and `refreshTokenRotatedAt` fields to `SessionInfo` to record refresh-token rotation state (`null` on both means no rotation recorded)
+- Adds `countTenantUsersJoinedSince` and `computeTenantUserCountAnchor` to `AuthRecipeSQLStorage` to support
+  the opt-in approximate tenant user-count fast path
 - **Breaking change:** `SessionSQLStorage.updateSessionInfo_Transaction` now takes `prevRefreshTokenHash2` (String) and `refreshTokenRotatedAt` (Long) parameters
 
 ## [8.7.1]

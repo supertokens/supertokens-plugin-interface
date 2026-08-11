@@ -97,4 +97,67 @@ public interface AuthRecipeSQLStorage extends AuthRecipeStorage, SQLStorage {
     void updateTimeJoinedForPrimaryUsers_Transaction(AppIdentifier appIdentifier, TransactionConnection con,
                                                      List<String> primaryUserIds)
             throws StorageQueryException;
+
+    /**
+     * Counts the distinct primary users present in the tenant whose
+     * {@code primary_or_recipe_user_time_joined} is strictly greater than {@code sinceMs} — the "joined
+     * since" delta over the exact count.
+     * <p>
+     * A linked group's {@code primary_or_recipe_user_time_joined} is the {@code MIN} of {@code time_joined}
+     * over its members (the invariant maintained by
+     * {@link #updateTimeJoinedForPrimaryUsers_Transaction}). A user linked into a pre-existing group therefore
+     * inherits a time {@code <= sinceMs} and correctly drops out of this delta — the group was already
+     * counted in the anchor, so counting it here would double-count it. This is the same min-time adjacency
+     * that user-list pagination relies on.
+     * <p>
+     * This method makes no promise about deletions, link-merges or unlinks: it counts what is present now
+     * whose group-minimum join time falls after {@code sinceMs}. It is the live half of the approximate
+     * user-count serving path, paired with an anchor from {@link #computeTenantUserCountAnchor} that was
+     * taken with the same {@code sinceMs}.
+     *
+     * @param tenantIdentifier the tenant whose users to count
+     * @param sinceMs          the exclusive lower bound on the group-minimum join time, in epoch
+     *                         milliseconds
+     * @return the number of distinct primary users in the tenant with group-minimum join time
+     *         {@code > sinceMs}
+     */
+    long countTenantUsersJoinedSince(TenantIdentifier tenantIdentifier, long sinceMs)
+            throws StorageQueryException;
+
+    /**
+     * Computes the anchor for the approximate tenant user count: the exact user count as of a single
+     * snapshot, rebased onto {@code sinceMs} so it can be served together with a live
+     * {@link #countTenantUsersJoinedSince} delta taken at any later moment.
+     * <p>
+     * The computation runs inside ONE read-only {@code REPEATABLE READ} transaction and, at that single
+     * snapshot, evaluates:
+     * <ul>
+     *   <li>{@code C}  = the storage's exact tenant user count (as returned by
+     *       {@link AuthRecipeStorage#getUsersCount}); and</li>
+     *   <li>{@code d0} = {@link #countTenantUsersJoinedSince}{@code (tenantIdentifier, sinceMs)} evaluated at
+     *       that same snapshot,</li>
+     * </ul>
+     * and returns {@code C - d0}.
+     * <p>
+     * Taking both counts at one snapshot is the exactness mechanism. It converts the snapshot-relative count
+     * {@code C} into the timestamp-relative anchor {@code C - d0}: every user partitions exactly on whether
+     * its group-minimum join time is {@code <= sinceMs} (in the anchor) or {@code > sinceMs} (in the delta),
+     * with no dependence on how commit order interleaves with the snapshot. Consequently, serving
+     * {@code anchor + countTenantUsersJoinedSince(tenantIdentifier, sinceMs)} at any later moment counts every
+     * user exactly once for creations, regardless of clock-vs-commit ordering around the snapshot.
+     * <p>
+     * The caller is expected to supply {@code sinceMs} slightly in the past (a clock-skew margin so that the
+     * delta window comfortably covers every not-yet-visible in-flight insert); the contract does not depend
+     * on how far in the past it is. As with {@link #countTenantUsersJoinedSince}, this method promises nothing
+     * about deletions, link-merges or unlinks that happen after the snapshot — that lag is the documented
+     * approximation of the fast path.
+     *
+     * @param tenantIdentifier the tenant whose anchor to compute
+     * @param sinceMs          the same epoch-millisecond boundary that will be passed to
+     *                         {@link #countTenantUsersJoinedSince} when serving the live delta
+     * @return {@code C - d0}: the exact count as of the snapshot minus the users that joined after
+     *         {@code sinceMs}
+     */
+    long computeTenantUserCountAnchor(TenantIdentifier tenantIdentifier, long sinceMs)
+            throws StorageQueryException;
 }
