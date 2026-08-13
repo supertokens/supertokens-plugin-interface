@@ -25,4 +25,14 @@ public interface ActiveUsersSQLStorage extends ActiveUsersStorage, SQLStorage {
     /* Delete a user from active users table */
     void deleteUserActive_Transaction(TransactionConnection con, AppIdentifier appIdentifier, String userId)
             throws StorageQueryException;
+
+    /**
+     * Derives {@code user_last_active} from the activity log for the window {@code [windowStartMillis, now]},
+     * on the caller's transaction connection. Folds each user's most recent {@code user_last_active} activity
+     * into the projection (monotonically: an existing later timestamp is never lowered), then reconciles rows
+     * for users linked away within the same window. Storage-wide: no app identifier — one pass over the whole
+     * storage.
+     */
+    void rollupLastActiveFromActivityLog_Transaction(TransactionConnection con, long windowStartMillis)
+            throws StorageQueryException;
 }

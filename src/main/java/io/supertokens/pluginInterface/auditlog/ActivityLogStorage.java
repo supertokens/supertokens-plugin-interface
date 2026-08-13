@@ -26,8 +26,17 @@ public interface ActivityLogStorage extends Storage {
     /**
      * Maintains the time-based partitioning of the activity_log table: pre-creates the partitions for
      * upcoming months (so inserts always have a partition to land in) and drops partitions whose data is
-     * entirely older than the retention window. Storages that do not support partitioning (e.g. the
+     * entirely older than {@code retentionDays}. Retention is supplied by the caller (from configuration)
+     * rather than hardcoded in the storage layer. Storages that do not support partitioning (e.g. the
      * in-memory store) implement this as a no-op.
      */
-    void maintainActivityLogPartitions() throws StorageQueryException;
+    void maintainActivityLogPartitions(int retentionDays) throws StorageQueryException;
+
+    /**
+     * Cheap existence check for rollup-relevant activity-log rows newer than {@code sinceMillis}
+     * (i.e. rows the last-active rollup would fold or reconcile). Lets the rollup cron skip work — and
+     * avoid touching the connection pool — when there is nothing new to fold. Storage-wide: no app
+     * predicate.
+     */
+    boolean hasUnfoldedActivitySince(long sinceMillis) throws StorageQueryException;
 }

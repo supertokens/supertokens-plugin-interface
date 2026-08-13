@@ -8,6 +8,13 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ## [Unreleased]
 
 
+## [10.0.0]
+
+- Adds `ActivityLogSQLStorage` (transactional audit-entry writes and the `startAuditedTransaction` combinator) plus `AuditedResult` and `AuditableTransactionLogic` for atomic audit logging
+- Adds `hasUnfoldedActivitySince` to `ActivityLogStorage` — a cheap, auto-committed existence check the last-active rollup uses to skip work when nothing is new
+- Adds `rollupLastActiveFromActivityLog_Transaction` to `ActiveUsersSQLStorage` to derive `user_last_active` from the activity log
+- **Breaking change:** `ActivityLogStorage.maintainActivityLogPartitions()` now takes a `retentionDays` (int) parameter
+
 ## [9.0.0]
 
 - Adds nullable `prevRefreshTokenHash2` and `refreshTokenRotatedAt` fields to `SessionInfo` to record refresh-token rotation state (`null` on both means no rotation recorded)
