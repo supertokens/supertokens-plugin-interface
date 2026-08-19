@@ -7,6 +7,11 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [9.0.1]
+
+- Adds `BulkImportProxyStoragePool` and `BulkImportSQLStorage.openBulkImportProxyStoragePool(int)`: a dedicated, bounded connection pool for bulk import
+- Adds `BulkImportProxySQLStorage` with savepoint support for the single-connection bulk import proxy storages
+- Deprecates `Storage.createBulkImportProxyStorageInstance()`
 
 ## [9.0.0]
 

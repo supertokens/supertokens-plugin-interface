@@ -35,6 +35,12 @@ public interface Storage {
     // if silent is true, do not log anything out on the console
     void constructor(String processId, boolean silent, boolean isTesting);
 
+    /**
+     * @deprecated proxy storages are now created from a dedicated pool, see
+     * {@code BulkImportSQLStorage#openBulkImportProxyStoragePool(int)}. Implementations may throw
+     * {@link UnsupportedOperationException}.
+     */
+    @Deprecated
     Storage createBulkImportProxyStorageInstance();
 
     void loadConfig(JsonObject jsonConfig, Set<LOG_LEVEL> logLevels, TenantIdentifier tenantIdentifier)
