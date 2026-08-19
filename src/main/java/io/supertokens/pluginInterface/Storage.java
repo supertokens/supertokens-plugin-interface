@@ -20,6 +20,7 @@ package io.supertokens.pluginInterface;
 import com.google.gson.JsonObject;
 import io.supertokens.pluginInterface.exceptions.DbInitException;
 import io.supertokens.pluginInterface.exceptions.InvalidConfigException;
+import io.supertokens.pluginInterface.exceptions.SchemaMismatchException;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
 import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
@@ -65,6 +66,22 @@ public interface Storage {
 
     // load tables and create connection pools
     void initStorage(boolean shouldWait, List<TenantIdentifier> tenantIdentifiers) throws DbInitException;
+
+    /**
+     * Verifies that the database behind this storage has every table and column this version of the storage reads
+     * or writes. The core calls this once per storage after its first successful {@link #initStorage}: at process
+     * startup for the base storage (a mismatch aborts startup) and when a tenant storage is first loaded (a
+     * mismatch is logged and that storage is left unusable). It is deliberately NOT part of {@link #initStorage},
+     * which is re-entered on every tenant refresh and on lazy pool re-creation.
+     *
+     * <p>Implementations may cache a successful verification for the lifetime of the instance. After a failed
+     * verification the implementation should refuse queries (surfacing the mismatch message) until a later call
+     * succeeds, so that a half-migrated database fails consistently rather than per query.
+     *
+     * @throws SchemaMismatchException if tables or columns are missing; its message is operator-facing
+     * @throws StorageQueryException   if the schema could not be inspected
+     */
+    void verifySchema() throws SchemaMismatchException, StorageQueryException;
 
     // used by the core to do transactions the right way.
     STORAGE_TYPE getType();
