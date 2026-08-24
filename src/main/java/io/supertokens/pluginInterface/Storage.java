@@ -69,14 +69,14 @@ public interface Storage {
 
     /**
      * Verifies that the database behind this storage has every table and column this version of the storage reads
-     * or writes. The core calls this once per storage after its first successful {@link #initStorage}: at process
-     * startup for the base storage (a mismatch aborts startup) and when a tenant storage is first loaded (a
-     * mismatch is logged and that storage is left unusable). It is deliberately NOT part of {@link #initStorage},
-     * which is re-entered on every tenant refresh and on lazy pool re-creation.
+     * or writes. The core calls this once per storage after its first successful {@link #initStorage} - at process
+     * startup for the base storage and when a tenant storage is first loaded - and only LOGS a mismatch (with the
+     * operator-facing message below): booting continues and the storage stays in use, so everything not touching
+     * the missing schema keeps working. Implementations should make the queries that DO hit the missing schema
+     * fail with a message that points the operator at the core logs. It is deliberately NOT part of
+     * {@link #initStorage}, which is re-entered on every tenant refresh and on lazy pool re-creation.
      *
-     * <p>Implementations may cache a successful verification for the lifetime of the instance. After a failed
-     * verification the implementation should refuse queries (surfacing the mismatch message) until a later call
-     * succeeds, so that a half-migrated database fails consistently rather than per query.
+     * <p>Implementations may cache a successful verification for the lifetime of the instance.
      *
      * @throws SchemaMismatchException if tables or columns are missing; its message is operator-facing
      * @throws StorageQueryException   if the schema could not be inspected
