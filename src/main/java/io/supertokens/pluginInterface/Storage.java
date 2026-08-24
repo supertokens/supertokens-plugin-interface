@@ -70,18 +70,23 @@ public interface Storage {
     /**
      * Verifies that the database behind this storage has every table and column this version of the storage reads
      * or writes. The core calls this once per storage after its first successful {@link #initStorage} - at process
-     * startup for the base storage and when a tenant storage is first loaded - and only LOGS a mismatch (with the
-     * operator-facing message below): booting continues and the storage stays in use, so everything not touching
-     * the missing schema keeps working. Implementations should make the queries that DO hit the missing schema
-     * fail with a message that points the operator at the core logs. It is deliberately NOT part of
+     * startup for the base storage and when a tenant storage is first loaded. It is deliberately NOT part of
      * {@link #initStorage}, which is re-entered on every tenant refresh and on lazy pool re-creation.
+     *
+     * <p>{@code strictMode} mirrors the core's {@code schema_check_strict_mode} config. When {@code true}, a
+     * mismatched storage must refuse ALL queries (surfacing the mismatch message) until a later verification
+     * succeeds - the core additionally refuses to start when the base storage is affected. When {@code false},
+     * a mismatch is only logged by the core: the storage stays fully in use, and implementations should make
+     * just the queries that DO hit the missing schema fail with a message pointing the operator at the core
+     * logs.
      *
      * <p>Implementations may cache a successful verification for the lifetime of the instance.
      *
+     * @param strictMode whether a mismatch should make this storage refuse all queries
      * @throws SchemaMismatchException if tables or columns are missing; its message is operator-facing
      * @throws StorageQueryException   if the schema could not be inspected
      */
-    void verifySchema() throws SchemaMismatchException, StorageQueryException;
+    void verifySchema(boolean strictMode) throws SchemaMismatchException, StorageQueryException;
 
     // used by the core to do transactions the right way.
     STORAGE_TYPE getType();
