@@ -75,7 +75,10 @@ public interface Storage {
      *
      * <p>{@code strictMode} mirrors the core's {@code schema_check_strict_mode} config. When {@code true}, a
      * mismatched storage must refuse ALL queries (surfacing the mismatch message) until a later verification
-     * succeeds - the core additionally refuses to start when the base storage is affected. When {@code false},
+     * succeeds - the core re-invokes this method every minute (its config-sync cron) and on tenant refresh,
+     * so the storage resumes within a minute of the migration being applied; implementations must therefore
+     * allow re-verification of a refusing storage. The core additionally refuses to start when the base
+     * storage is affected in strict mode. When {@code false},
      * a mismatch is only logged by the core: the storage stays fully in use, and implementations should make
      * just the queries that DO hit the missing schema fail with a message pointing the operator at the core
      * logs.
