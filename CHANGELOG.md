@@ -12,6 +12,7 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 - Adds `ActivityLogSQLStorage` (transactional audit-entry writes and the `startAuditedTransaction` combinator) plus `AuditedResult` and `AuditableTransactionLogic` for atomic audit logging
 - Adds `hasUnfoldedActivitySince` to `ActivityLogStorage` — a cheap, auto-committed existence check the last-active rollup uses to skip work when nothing is new
+- Adds `getActivityLogEntriesForApp` to `ActivityLogStorage` — a plain auto-committed read of a bounded, app-scoped window of activity-log events (ordered by `createdAt` ascending, storage-applied `limit`), so callers can fold lifecycle events in Java
 - Adds `rollupLastActiveFromActivityLog_Transaction` to `ActiveUsersSQLStorage` to derive `user_last_active` from the activity log
 - **Breaking change:** `ActivityLogStorage.maintainActivityLogPartitions()` now takes a `retentionDays` (int) parameter
 
