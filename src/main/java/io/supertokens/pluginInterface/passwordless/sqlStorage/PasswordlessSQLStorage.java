@@ -95,7 +95,7 @@ public interface PasswordlessSQLStorage extends PasswordlessStorage, SQLStorage 
     // Connection-taking variant of createUser: same writes (and the userId <-> tenantId mapping) and the same
     // duplicate-detection exceptions as the auto-commit version, but performed on the caller's connection so the
     // user creation and its lifecycle audit event can be committed (or rolled back) together by the caller.
-    AuthRecipeUserInfo createUser_Transaction(TransactionConnection con, TenantIdentifier tenantIdentifier, String id,
+    AuthRecipeUserInfo createUser_Transaction(TenantIdentifier tenantIdentifier, TransactionConnection con, String id,
                                               @Nullable String email, @Nullable String phoneNumber, long timeJoined)
             throws StorageQueryException, DuplicateEmailException, DuplicatePhoneNumberException,
             DuplicateUserIdException, TenantOrAppNotFoundException;

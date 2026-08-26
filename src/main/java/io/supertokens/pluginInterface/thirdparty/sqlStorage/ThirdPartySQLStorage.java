@@ -53,7 +53,7 @@ public interface ThirdPartySQLStorage extends ThirdPartyStorage, SQLStorage {
     // Connection-taking variant of signUp: same writes (and the userId <-> tenantId mapping) and the same
     // duplicate-detection exceptions as the auto-commit version, but performed on the caller's connection so the
     // sign-up and its lifecycle audit event can be committed (or rolled back) together by the caller.
-    AuthRecipeUserInfo signUp_Transaction(TransactionConnection con, TenantIdentifier tenantIdentifier, String id,
+    AuthRecipeUserInfo signUp_Transaction(TenantIdentifier tenantIdentifier, TransactionConnection con, String id,
                                           String email, LoginMethod.ThirdParty thirdParty, long timeJoined)
             throws StorageQueryException, DuplicateUserIdException, DuplicateThirdPartyUserException,
             TenantOrAppNotFoundException;
