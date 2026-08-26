@@ -14,6 +14,7 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Adds `hasUnfoldedActivitySince` to `ActivityLogStorage` — a cheap, auto-committed existence check the last-active rollup uses to skip work when nothing is new
 - Adds `rollupLastActiveFromActivityLog_Transaction` to `ActiveUsersSQLStorage` to derive `user_last_active` from the activity log
 - **Breaking change:** `ActivityLogStorage.maintainActivityLogPartitions()` now takes a `retentionDays` (int) parameter
+- Adds connection-taking variants of the count-affecting writes so callers can commit the mutation and its lifecycle audit event on one connection: `signUp_Transaction` on `EmailPasswordSQLStorage` and `ThirdPartySQLStorage`, `createUser_Transaction` on `PasswordlessSQLStorage`, and `removeUserIdFromTenant_Transaction` on `MultitenancySQLStorage` (counterpart of `addUserIdToTenant_Transaction`)
 
 ## [9.0.0]
 
