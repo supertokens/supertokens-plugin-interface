@@ -16,6 +16,7 @@
 
 package io.supertokens.pluginInterface.emailpassword.sqlStorage;
 
+import io.supertokens.pluginInterface.authRecipe.AuthRecipeUserInfo;
 import io.supertokens.pluginInterface.authRecipe.exceptions.EmailChangeNotAllowedException;
 import io.supertokens.pluginInterface.authRecipe.exceptions.PhoneNumberChangeNotAllowedException;
 import io.supertokens.pluginInterface.authRecipe.exceptions.UnknownUserIdException;
@@ -23,9 +24,12 @@ import io.supertokens.pluginInterface.emailpassword.EmailPasswordImportUser;
 import io.supertokens.pluginInterface.emailpassword.EmailPasswordStorage;
 import io.supertokens.pluginInterface.emailpassword.PasswordResetTokenInfo;
 import io.supertokens.pluginInterface.emailpassword.exceptions.DuplicateEmailException;
+import io.supertokens.pluginInterface.emailpassword.exceptions.DuplicateUserIdException;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.exceptions.StorageTransactionLogicException;
 import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
+import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
+import io.supertokens.pluginInterface.multitenancy.exceptions.TenantOrAppNotFoundException;
 import io.supertokens.pluginInterface.sqlStorage.SQLStorage;
 import io.supertokens.pluginInterface.sqlStorage.TransactionConnection;
 
@@ -60,4 +64,12 @@ public interface EmailPasswordSQLStorage extends EmailPasswordStorage, SQLStorag
 
     void signUpMultipleViaBulkImport_Transaction(TransactionConnection connection, List<EmailPasswordImportUser> users)
             throws StorageQueryException, StorageTransactionLogicException;
+
+    // Connection-taking variant of signUp: same writes (and the userId <-> tenantId mapping) and the same
+    // duplicate-detection exceptions as the auto-commit version, but performed on the caller's connection so the
+    // sign-up and its lifecycle audit event can be committed (or rolled back) together by the caller.
+    AuthRecipeUserInfo signUp_Transaction(TenantIdentifier tenantIdentifier, TransactionConnection con, String id,
+                                          String email, String passwordHash, long timeJoined)
+            throws StorageQueryException, DuplicateUserIdException, DuplicateEmailException,
+            TenantOrAppNotFoundException;
 }
