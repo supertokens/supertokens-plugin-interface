@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Thrown by {@link io.supertokens.pluginInterface.Storage#verifySchema()} when the database is missing tables or
+ * Thrown by {@link io.supertokens.pluginInterface.Storage#verifySchema(boolean)} when the database is missing tables or
  * columns that this version of the storage reads or writes. This typically means a release's manual migration
  * (the {@code ### Migration} section of the CHANGELOG) was not applied before upgrading.
  *
