@@ -12,6 +12,7 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Adds `BulkImportProxyStoragePool` and `BulkImportSQLStorage.openBulkImportProxyStoragePool(int)`: a dedicated, bounded connection pool for bulk import
 - Adds `BulkImportProxySQLStorage` with savepoint support for the single-connection bulk import proxy storages
 - Deprecates `Storage.createBulkImportProxyStorageInstance()`
+- Adds `Storage.verifySchema(boolean strictMode)` and `SchemaMismatchException` so the core can verify at startup that the database has every table and column the storage needs (strictness mirrors the core's `schema_check_strict_mode` config)
 
 ## [9.0.0]
 
