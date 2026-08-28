@@ -50,11 +50,18 @@ public interface SQLStorage extends Storage {
         SERIALIZABLE, REPEATABLE_READ, READ_COMMITTED, READ_UNCOMMITTED, NONE
     }
 
-    /* BulkImportProxyStorage methods */
+    /*
+     * BulkImportProxyStorage methods. Only meaningful on the single-connection proxy storages handed out by
+     * io.supertokens.pluginInterface.bulkimport.sqlStorage.BulkImportProxyStoragePool; regular storages
+     * throw UnsupportedOperationException.
+     */
 
+    /** Returns the proxy storage's connection to its pool, rolling back anything left uncommitted. */
     void closeConnectionForBulkImportProxyStorage() throws StorageQueryException;
 
+    /** Commits the proxy storage's open transaction; a new one starts with the next statement. */
     void commitTransactionForBulkImportProxyStorage() throws StorageQueryException;
 
+    /** Rolls back the proxy storage's open transaction (releasing every lock it holds). */
     void rollbackTransactionForBulkImportProxyStorage() throws StorageQueryException;
 }

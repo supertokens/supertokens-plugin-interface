@@ -18,6 +18,7 @@ package io.supertokens.pluginInterface.bulkimport.sqlStorage;
 
 import io.supertokens.pluginInterface.bulkimport.BulkImportStorage;
 import io.supertokens.pluginInterface.bulkimport.BulkImportUser;
+import io.supertokens.pluginInterface.exceptions.DbInitException;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
 import io.supertokens.pluginInterface.sqlStorage.SQLStorage;
@@ -51,4 +52,11 @@ public interface BulkImportSQLStorage extends BulkImportStorage, SQLStorage {
      */
     void deleteBulkImportUsers_Transaction(
             AppIdentifier appIdentifier, @Nonnull String[] bulkImportUserIds, TransactionConnection con) throws StorageQueryException;
+
+    /**
+     * Opens a dedicated connection pool of at most {@code maxConnections} connections against this storage's
+     * database, for use by bulk import only. See {@link BulkImportProxyStoragePool} for the rationale.
+     * The caller owns the returned pool and must {@link BulkImportProxyStoragePool#close() close} it.
+     */
+    BulkImportProxyStoragePool openBulkImportProxyStoragePool(int maxConnections) throws DbInitException;
 }
