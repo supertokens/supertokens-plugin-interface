@@ -36,7 +36,13 @@ public interface ActiveUsersSQLStorage extends ActiveUsersStorage, SQLStorage {
      * matches nothing). Then reconciles rows for users linked away within the same window: an {@code
      * account_linking} event credits the surviving primary, and the linked-away recipe user's stale row is
      * dropped. Storage-wide: no app identifier — one pass over the whole storage.
+     *
+     * @return {@code true} if the fold ran on this connection; {@code false} if it was skipped because a
+     * concurrent pass holds the storage's rollup lock (that pass owns the fold — the work is redundant
+     * here, not lost). A caller must not advance its fold watermark on a {@code false} return, since this
+     * pass folded nothing: advancing past an unfolded window would strand it (a later window only reaches
+     * back a bounded margin). Single-instance stores that never skip always return {@code true}.
      */
-    void rollupLastActiveFromActivityLog_Transaction(TransactionConnection con, long windowStartMillis)
+    boolean rollupLastActiveFromActivityLog_Transaction(TransactionConnection con, long windowStartMillis)
             throws StorageQueryException;
 }
