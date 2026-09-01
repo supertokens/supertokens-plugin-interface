@@ -39,7 +39,8 @@ import java.util.stream.Collectors;
  *
  * <p>Everything else is excluded, deliberately:
  * <ul>
- *   <li>{@code user_import} — an imported user is not thereby active (decided on supertokens-core#1403).</li>
+ *   <li>{@link LifecycleEventType#USER_IMPORT user_import} — an imported user is not thereby active
+ *       (decided on supertokens-core#1403).</li>
  *   <li>every other {@link LifecycleEventType lifecycle event} — {@code account_unlinking}, {@code
  *       user_deletion}, {@code user_group_deletion}, {@code tenant_association}, {@code tenant_disassociation}
  *       are count-affecting bookkeeping, not activity.</li>

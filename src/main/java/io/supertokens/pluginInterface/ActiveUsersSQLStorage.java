@@ -28,10 +28,14 @@ public interface ActiveUsersSQLStorage extends ActiveUsersStorage, SQLStorage {
 
     /**
      * Derives {@code user_last_active} from the activity log for the window {@code [windowStartMillis, now]},
-     * on the caller's transaction connection. Folds each user's most recent {@code user_last_active} activity
-     * into the projection (monotonically: an existing later timestamp is never lowered), then reconciles rows
-     * for users linked away within the same window. Storage-wide: no app identifier — one pass over the whole
-     * storage.
+     * on the caller's transaction connection. Folds each user's most recent activity-log entry whose {@code
+     * event_type} is in {@link io.supertokens.pluginInterface.auditlog.RollupEventTypes#FOLD_SET} into the
+     * projection (monotonically: an existing later timestamp is never lowered) — the synthetic {@code
+     * user_last_active} event type this method once folded has been retired, so an implementation must fold
+     * the concrete event types in {@code FOLD_SET}, not {@code event_type = 'user_last_active'} (which now
+     * matches nothing). Then reconciles rows for users linked away within the same window: an {@code
+     * account_linking} event credits the surviving primary, and the linked-away recipe user's stale row is
+     * dropped. Storage-wide: no app identifier — one pass over the whole storage.
      */
     void rollupLastActiveFromActivityLog_Transaction(TransactionConnection con, long windowStartMillis)
             throws StorageQueryException;
