@@ -16,10 +16,12 @@
 
 package io.supertokens.pluginInterface.passwordless.sqlStorage;
 
+import io.supertokens.pluginInterface.authRecipe.AuthRecipeUserInfo;
 import io.supertokens.pluginInterface.authRecipe.exceptions.EmailChangeNotAllowedException;
 import io.supertokens.pluginInterface.authRecipe.exceptions.PhoneNumberChangeNotAllowedException;
 import io.supertokens.pluginInterface.bulkimport.exceptions.BulkImportTransactionRolledBackException;
 import io.supertokens.pluginInterface.emailpassword.exceptions.DuplicateEmailException;
+import io.supertokens.pluginInterface.emailpassword.exceptions.DuplicateUserIdException;
 import io.supertokens.pluginInterface.authRecipe.exceptions.UnknownUserIdException;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
@@ -89,4 +91,12 @@ public interface PasswordlessSQLStorage extends PasswordlessStorage, SQLStorage 
     void updateUserEmailAndPhone_Transaction(AppIdentifier appIdentifier, TransactionConnection con, String recipeUserId, String newEmail, boolean shouldUpdateEmail, String newPhoneNumber, boolean shouldUpdatePhoneNumber)
             throws StorageQueryException, TenantOrAppNotFoundException, UnknownUserIdException,
             DuplicateEmailException, EmailChangeNotAllowedException, DuplicatePhoneNumberException, PhoneNumberChangeNotAllowedException;
+
+    // Connection-taking variant of createUser: same writes (and the userId <-> tenantId mapping) and the same
+    // duplicate-detection exceptions as the auto-commit version, but performed on the caller's connection so the
+    // user creation and its lifecycle audit event can be committed (or rolled back) together by the caller.
+    AuthRecipeUserInfo createUser_Transaction(TenantIdentifier tenantIdentifier, TransactionConnection con, String id,
+                                              @Nullable String email, @Nullable String phoneNumber, long timeJoined)
+            throws StorageQueryException, DuplicateEmailException, DuplicatePhoneNumberException,
+            DuplicateUserIdException, TenantOrAppNotFoundException;
 }

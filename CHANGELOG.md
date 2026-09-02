@@ -13,6 +13,13 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Adds `BulkImportProxySQLStorage` with savepoint support for the single-connection bulk import proxy storages
 - Deprecates `Storage.createBulkImportProxyStorageInstance()`
 - Adds `Storage.verifySchema(boolean strictMode)` and `SchemaMismatchException` so the core can verify at startup that the database has every table and column the storage needs (strictness mirrors the core's `schema_check_strict_mode` config)
+- Adds `ActivityLogSQLStorage` (transactional audit-entry writes and the `startAuditedTransaction` combinator) plus `AuditedResult` and `AuditableTransactionLogic` for atomic audit logging
+- Adds `hasUnfoldedActivitySince` to `ActivityLogStorage` — a cheap, auto-committed existence check the last-active rollup uses to skip work when nothing is new
+- Adds `getActivityLogEntriesForApp` to `ActivityLogStorage` — a plain auto-committed read of a bounded, app-scoped window of activity-log events (ordered by `createdAt` ascending, storage-applied `limit`), so callers can fold lifecycle events in Java
+- Adds `rollupLastActiveFromActivityLog_Transaction` to `ActiveUsersSQLStorage` to derive `user_last_active` from the activity log; it returns whether the fold ran (`false` when skipped because a concurrent instance holds the storage's rollup lock) so the caller does not advance its watermark past an unfolded window
+- **Breaking change:** `ActivityLogStorage.maintainActivityLogPartitions()` now takes a `retentionDays` (int) parameter
+- Adds connection-taking variants of the count-affecting writes so callers can commit the mutation and its lifecycle audit event on one connection: `signUp_Transaction` on `EmailPasswordSQLStorage` and `ThirdPartySQLStorage`, `createUser_Transaction` on `PasswordlessSQLStorage`, and `removeUserIdFromTenant_Transaction` on `MultitenancySQLStorage` (counterpart of `addUserIdToTenant_Transaction`)
+- Adds the shared activity-log event-type vocabulary in `io.supertokens.pluginInterface.auditlog`: the `LifecycleEventType` and `ActivityEventType` enums and the `RollupEventTypes.FOLD_SET` fold set
 
 ## [9.0.0]
 
