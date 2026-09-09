@@ -25,4 +25,24 @@ public interface ActiveUsersSQLStorage extends ActiveUsersStorage, SQLStorage {
     /* Delete a user from active users table */
     void deleteUserActive_Transaction(TransactionConnection con, AppIdentifier appIdentifier, String userId)
             throws StorageQueryException;
+
+    /**
+     * Derives {@code user_last_active} from the activity log for the window {@code [windowStartMillis, now]},
+     * on the caller's transaction connection. Folds each user's most recent activity-log entry whose {@code
+     * event_type} is in {@link io.supertokens.pluginInterface.auditlog.RollupEventTypes#FOLD_SET} into the
+     * projection (monotonically: an existing later timestamp is never lowered) — the synthetic {@code
+     * user_last_active} event type this method once folded has been retired, so an implementation must fold
+     * the concrete event types in {@code FOLD_SET}, not {@code event_type = 'user_last_active'} (which now
+     * matches nothing). Then reconciles rows for users linked away within the same window: an {@code
+     * account_linking} event credits the surviving primary, and the linked-away recipe user's stale row is
+     * dropped. Storage-wide: no app identifier — one pass over the whole storage.
+     *
+     * @return {@code true} if the fold ran on this connection; {@code false} if it was skipped because a
+     * concurrent pass holds the storage's rollup lock (that pass owns the fold — the work is redundant
+     * here, not lost). A caller must not advance its fold watermark on a {@code false} return, since this
+     * pass folded nothing: advancing past an unfolded window would strand it (a later window only reaches
+     * back a bounded margin). Single-instance stores that never skip always return {@code true}.
+     */
+    boolean rollupLastActiveFromActivityLog_Transaction(TransactionConnection con, long windowStartMillis)
+            throws StorageQueryException;
 }

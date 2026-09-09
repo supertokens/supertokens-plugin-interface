@@ -31,4 +31,12 @@ public interface MultitenancySQLStorage extends MultitenancyStorage, SQLStorage 
     boolean addUserIdToTenant_Transaction(TenantIdentifier tenantIdentifier, TransactionConnection con, String userId)
             throws StorageQueryException, TenantOrAppNotFoundException, DuplicateEmailException,
             DuplicateThirdPartyUserException, DuplicatePhoneNumberException, UnknownUserIdException;
+
+    // Connection-taking counterpart of removeUserIdFromTenant: same writes and the same row locking as the
+    // auto-commit version, but performed on the caller's connection so the tenant disassociation and its
+    // lifecycle audit event can be committed (or rolled back) together by the caller. Returns whether a row
+    // was actually removed.
+    boolean removeUserIdFromTenant_Transaction(TenantIdentifier tenantIdentifier, TransactionConnection con,
+                                               String userId)
+            throws StorageQueryException;
 }
