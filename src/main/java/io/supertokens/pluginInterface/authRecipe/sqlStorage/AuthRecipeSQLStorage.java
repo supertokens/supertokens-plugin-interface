@@ -33,6 +33,13 @@ public interface AuthRecipeSQLStorage extends AuthRecipeStorage, SQLStorage {
                                                       String userId)
             throws StorageQueryException;
 
+    // GHSA-2pc4-vw9j-454c: locks the user's row in app_id_to_user_id (SELECT ... FOR UPDATE) and returns its
+    // primary_or_recipe_user_id, or null if the user is absent. Session creation and account unlink both take
+    // this lock on the same row, so a session created concurrently with an unlink is serialized against it and
+    // cannot survive the unlink's revocation.
+    String lockUserAndGetPrimaryId_Transaction(AppIdentifier appIdentifier, TransactionConnection con, String userId)
+            throws StorageQueryException;
+
     AuthRecipeUserInfo getPrimaryUserByWebauthNCredentialId_Transaction(TenantIdentifier tenantIdentifier, TransactionConnection con,
                                                                         String credentialId)
             throws StorageQueryException;
