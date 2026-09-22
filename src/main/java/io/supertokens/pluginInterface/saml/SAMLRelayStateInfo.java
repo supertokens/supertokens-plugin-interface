@@ -21,11 +21,22 @@ public class SAMLRelayStateInfo {
     public final String clientId;
     public final String state;
     public final String redirectURI;
+    // The ID of the AuthnRequest issued for this login. The IdP echoes it back in the
+    // SAML Response as InResponseTo; the callback binds the response to this login by
+    // requiring the two to match. Null only for rows written before this column existed.
+    public final String inResponseTo;
+    // The AssertionConsumerService URL this login was started with. The callback pins the
+    // response Destination / SubjectConfirmationData Recipient to it, so an assertion minted
+    // for a different endpoint cannot be redirected here. Null for pre-existing rows.
+    public final String acsURL;
 
-    public SAMLRelayStateInfo(String relayState, String clientId, String state, String redirectURI) {
+    public SAMLRelayStateInfo(String relayState, String clientId, String state, String redirectURI,
+                              String inResponseTo, String acsURL) {
         this.relayState = relayState;
         this.clientId = clientId;
         this.state = state;
         this.redirectURI = redirectURI;
+        this.inResponseTo = inResponseTo;
+        this.acsURL = acsURL;
     }
 }
