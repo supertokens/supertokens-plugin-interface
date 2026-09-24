@@ -48,4 +48,19 @@ public interface OAuthSQLStorage extends OAuthStorage, SQLStorage {
                                                 String jti,
                                                 long exp)
             throws StorageQueryException;
+
+    /**
+     * Transaction-aware twin of {@link OAuthStorage#isOAuthTokenRevokedByGID}: performs the
+     * same revoked-by-GID existence check, but executes it on the caller's already-open
+     * {@code con} instead of borrowing a second connection from the pool.
+     *
+     * <p>The non-rotating refresh exchange holds a single pooled connection for the whole
+     * Hydra round-trip; running the revocation read on that same connection avoids the
+     * hold-and-wait pool exhaustion that a nested borrow causes under load.  This is a plain
+     * existence check — no row-level lock is taken.
+     */
+    boolean isOAuthTokenRevokedByGID_Transaction(AppIdentifier appIdentifier,
+                                                 TransactionConnection con,
+                                                 String gid)
+            throws StorageQueryException;
 }
