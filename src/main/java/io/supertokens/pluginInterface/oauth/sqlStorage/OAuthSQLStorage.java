@@ -12,7 +12,7 @@ import io.supertokens.pluginInterface.sqlStorage.TransactionConnection;
  *
  * <p>Most methods here implement the DB-level mutex for non-rotating refresh
  * token exchange: a {@code SELECT ... FOR UPDATE} on the oauth_sessions row keeps
- * all other instances waiting until the Hydra round-trip and the subsequent
+ * all other instances waiting until the OAuth2 provider round-trip and the subsequent
  * mapping update are committed together. Others simply run an existing read on the
  * caller's already-open connection (see {@link #isOAuthTokenRevokedByGID_Transaction},
  * which takes no lock) to avoid a nested pool borrow inside that same transaction.
@@ -57,7 +57,7 @@ public interface OAuthSQLStorage extends OAuthStorage, SQLStorage {
      * {@code con} instead of borrowing a second connection from the pool.
      *
      * <p>The non-rotating refresh exchange holds a single pooled connection for the whole
-     * Hydra round-trip; running the revocation read on that same connection avoids the
+     * OAuth2 provider round-trip; running the revocation read on that same connection avoids the
      * hold-and-wait pool exhaustion that a nested borrow causes under load.  This is a plain
      * existence check — no row-level lock is taken.
      */
