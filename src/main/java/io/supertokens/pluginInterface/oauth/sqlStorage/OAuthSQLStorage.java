@@ -10,10 +10,12 @@ import io.supertokens.pluginInterface.sqlStorage.TransactionConnection;
 /**
  * SQL-specific OAuth storage methods that require transactional access.
  *
- * <p>These methods are used to implement the DB-level mutex for non-rotating
- * refresh token exchange: a {@code SELECT ... FOR UPDATE} on the oauth_sessions
- * row keeps all other instances waiting until the Hydra round-trip and the
- * subsequent mapping update are committed together.
+ * <p>Most methods here implement the DB-level mutex for non-rotating refresh
+ * token exchange: a {@code SELECT ... FOR UPDATE} on the oauth_sessions row keeps
+ * all other instances waiting until the Hydra round-trip and the subsequent
+ * mapping update are committed together. Others simply run an existing read on the
+ * caller's already-open connection (see {@link #isOAuthTokenRevokedByGID_Transaction},
+ * which takes no lock) to avoid a nested pool borrow inside that same transaction.
  */
 public interface OAuthSQLStorage extends OAuthStorage, SQLStorage {
 
