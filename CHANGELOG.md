@@ -5,12 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres
 to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [unreleased]
-
-- Add isOAuthTokenRevokedByGID_Transaction to OAuthSQLStorage.
-
 ## [10.1.0]
 
+- Adds `isOAuthTokenRevokedByGID_Transaction` to `OAuthSQLStorage`, the connection-taking twin of
+  `OAuthStorage#isOAuthTokenRevokedByGID`, so the non-rotating refresh exchange can run the revocation
+  read on the connection it already holds instead of a nested pool borrow. Additive to the interface.
 - Adds the activity-log ledger / last-active rollup storage contract on top of the base audit-log
   interface shipped in 10.0.0: `ActivityLogSQLStorage` (the audited-transaction combinator via
   `AuditableTransactionLogic` / `AuditedResult`, the connection-taking activity-log insert, the last-active
