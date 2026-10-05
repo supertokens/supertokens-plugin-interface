@@ -30,8 +30,11 @@ public class SAMLClient {
     public final String idpSigningCertificate;
     public final boolean allowIDPInitiatedLogin;
     public final boolean enableRequestSigning;
+    // Nullable allow-list of ACS URLs. null = not configured (IdP-initiated Recipient pinning and
+    // SP-initiated acsURL validation are skipped, preserving legacy behaviour). See GHSA-3r7x follow-up.
+    public final JsonArray acsURLs;
 
-    public SAMLClient(String clientId, String clientSecret, String ssoLoginURL, JsonArray redirectURIs, String defaultRedirectURI, String idpEntityId, String idpSigningCertificate, boolean allowIDPInitiatedLogin, boolean enableRequestSigning) {
+    public SAMLClient(String clientId, String clientSecret, String ssoLoginURL, JsonArray redirectURIs, String defaultRedirectURI, String idpEntityId, String idpSigningCertificate, boolean allowIDPInitiatedLogin, boolean enableRequestSigning, JsonArray acsURLs) {
         this.clientId = clientId;
         this.clientSecret = clientSecret;
         this.ssoLoginURL = ssoLoginURL;
@@ -41,6 +44,7 @@ public class SAMLClient {
         this.idpSigningCertificate = idpSigningCertificate;
         this.allowIDPInitiatedLogin = allowIDPInitiatedLogin;
         this.enableRequestSigning = enableRequestSigning;
+        this.acsURLs = acsURLs;
     }
 
     public JsonObject toJson() {
@@ -58,6 +62,9 @@ public class SAMLClient {
         }
         res.addProperty("allowIDPInitiatedLogin", this.allowIDPInitiatedLogin);
         res.addProperty("enableRequestSigning", this.enableRequestSigning);
+        if (this.acsURLs != null) {
+            res.add("acsURLs", this.acsURLs);
+        }
 
         return res;
     }
