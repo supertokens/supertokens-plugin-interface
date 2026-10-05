@@ -16,6 +16,7 @@
 
 package io.supertokens.pluginInterface.session.sqlStorage;
 
+import com.google.gson.JsonObject;
 import io.supertokens.pluginInterface.KeyValueInfo;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
@@ -68,4 +69,19 @@ public interface SessionSQLStorage extends SessionStorage, SQLStorage {
 
     void deleteSessionsOfUser_Transaction(TransactionConnection con, AppIdentifier appIdentifier, String userId)
             throws StorageQueryException;
+
+    // Inserts a session inside the caller's transaction so the insert can be serialized with account
+    // link/unlink under the same user lock. Used by session creation to close the race where a session
+    // created concurrently with unlinkAccounts survived the unlink's revocation (GHSA-2pc4-vw9j-454c).
+    // Default implementation falls back to the non-transactional insert (no participation in the caller's
+    // lock, so no extra serialization); storages that implement account linking override this to insert
+    // within the transaction. The default keeps other storages compiling and working unchanged.
+    default void createNewSession_Transaction(TransactionConnection con, TenantIdentifier tenantIdentifier,
+                                              String sessionHandle, String userId, String refreshTokenHash2,
+                                              JsonObject userDataInDatabase, long expiry, JsonObject userDataInJWT,
+                                              long createdAtTime, boolean useStaticKey)
+            throws StorageQueryException, TenantOrAppNotFoundException {
+        createNewSession(tenantIdentifier, sessionHandle, userId, refreshTokenHash2, userDataInDatabase, expiry,
+                userDataInJWT, createdAtTime, useStaticKey);
+    }
 }
