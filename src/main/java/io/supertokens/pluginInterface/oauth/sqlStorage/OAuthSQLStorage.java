@@ -10,10 +10,12 @@ import io.supertokens.pluginInterface.sqlStorage.TransactionConnection;
 /**
  * SQL-specific OAuth storage methods that require transactional access.
  *
- * <p>These methods are used to implement the DB-level mutex for non-rotating
- * refresh token exchange: a {@code SELECT ... FOR UPDATE} on the oauth_sessions
- * row keeps all other instances waiting until the Hydra round-trip and the
- * subsequent mapping update are committed together.
+ * <p>Most methods here implement the DB-level mutex for non-rotating refresh
+ * token exchange: a {@code SELECT ... FOR UPDATE} on the oauth_sessions row keeps
+ * all other instances waiting until the OAuth2 provider round-trip and the subsequent
+ * mapping update are committed together. Others simply run an existing read on the
+ * caller's already-open connection (see {@link #isOAuthTokenRevokedByGID_Transaction},
+ * which takes no lock) to avoid a nested pool borrow inside that same transaction.
  */
 public interface OAuthSQLStorage extends OAuthStorage, SQLStorage {
 
@@ -47,5 +49,20 @@ public interface OAuthSQLStorage extends OAuthStorage, SQLStorage {
                                                 String sessionHandle,
                                                 String jti,
                                                 long exp)
+            throws StorageQueryException;
+
+    /**
+     * Transaction-aware twin of {@link OAuthStorage#isOAuthTokenRevokedByGID}: performs the
+     * same revoked-by-GID existence check, but executes it on the caller's already-open
+     * {@code con} instead of borrowing a second connection from the pool.
+     *
+     * <p>The non-rotating refresh exchange holds a single pooled connection for the whole
+     * OAuth2 provider round-trip; running the revocation read on that same connection avoids the
+     * hold-and-wait pool exhaustion that a nested borrow causes under load.  This is a plain
+     * existence check — no row-level lock is taken.
+     */
+    boolean isOAuthTokenRevokedByGID_Transaction(AppIdentifier appIdentifier,
+                                                 TransactionConnection con,
+                                                 String gid)
             throws StorageQueryException;
 }
