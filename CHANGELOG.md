@@ -8,6 +8,9 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Adds `UserIdMappingStorage.hasUserIdMappings(AppIdentifier)`, an exists check for whether an app has any user
+  id mappings. It is abstract, so every storage implementing `UserIdMappingStorage` must implement it.
+
 
 ## [10.1.1]
 
@@ -20,9 +23,6 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [10.1.0]
 
-- Adds `UserIdMappingStorage.hasUserIdMappings(AppIdentifier)`, an exists check for whether an app has any user
-  id mappings. It is a default method returning `true`, so storages that don't implement it stay compatible and
-  are treated as having mappings.
 - Adds the activity-log ledger / last-active rollup storage contract on top of the base audit-log
   interface shipped in 10.0.0: `ActivityLogSQLStorage` (the audited-transaction combinator via
   `AuditableTransactionLogic` / `AuditedResult`, the connection-taking activity-log insert, the last-active

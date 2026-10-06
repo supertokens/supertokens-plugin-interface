@@ -58,13 +58,7 @@ public interface UserIdMappingStorage extends Storage {
     HashMap<String, String> getUserIdMappingForSuperTokensIds(AppIdentifier appIdentifier,
                                                               ArrayList<String> userIds) throws StorageQueryException;
 
-    /**
-     * True if the app has at least one user id mapping. Plugins that do not
-     * implement this report true, which keeps features that require "no mappings"
-     * (supertokens/supertokens-core#1475) from being enabled on them.
-     */
-    default boolean hasUserIdMappings(AppIdentifier appIdentifier) throws StorageQueryException {
-        return true;
-    }
+    // Returns true if the app has at least one user id mapping
+    boolean hasUserIdMappings(AppIdentifier appIdentifier) throws StorageQueryException;
 
 }
