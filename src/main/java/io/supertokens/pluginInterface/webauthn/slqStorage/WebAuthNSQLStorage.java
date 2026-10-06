@@ -35,7 +35,7 @@ public interface WebAuthNSQLStorage extends WebAuthNStorage, SQLStorage {
 
     WebAuthNOptions loadOptionsById_Transaction(TenantIdentifier tenantIdentifier,  TransactionConnection con, String optionsId) throws  StorageQueryException;
 
-    WebAuthNStoredCredential loadCredentialById_Transaction(TenantIdentifier tenantIdentifier, TransactionConnection con, String credentialId) throws StorageQueryException;
+    WebAuthNStoredCredential loadCredentialById_Transaction(TenantIdentifier tenantIdentifier, TransactionConnection con, String rpId, String credentialId) throws StorageQueryException;
 
     AuthRecipeUserInfo signUp_Transaction(TenantIdentifier tenantIdentifier,  TransactionConnection con, String userId,
                                           String email, String relyingPartyId)
@@ -50,7 +50,7 @@ public interface WebAuthNSQLStorage extends WebAuthNStorage, SQLStorage {
     AuthRecipeUserInfo getUserInfoByCredentialId_Transaction(TenantIdentifier tenantIdentifier,  TransactionConnection con, String credentialId)
         throws StorageQueryException;
 
-    void updateCounter_Transaction(TenantIdentifier tenantIdentifier,  TransactionConnection con, String credentialId, long counter) throws StorageQueryException;
+    void updateCounter_Transaction(TenantIdentifier tenantIdentifier,  TransactionConnection con, String rpId, String credentialId, long counter) throws StorageQueryException;
 
     void removeOptions_Transaction(TenantIdentifier tenantIdentifier, TransactionConnection con, String optionsId) throws StorageQueryException;
 

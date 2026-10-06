@@ -5,11 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres
 to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+
+## [Unreleased]
+
+
 ## [10.1.1]
 
+- `WebAuthNSQLStorage.loadCredentialById_Transaction` and `updateCounter_Transaction` now take the relying
+  party id, so a storage can find the credential by its full key instead of reading every credential of the app.
 - Adds `isOAuthTokenRevokedByGID_Transaction` to `OAuthSQLStorage`, the connection-taking twin of
   `OAuthStorage#isOAuthTokenRevokedByGID`, so the non-rotating refresh exchange can run the revocation
   read on the connection it already holds instead of a nested pool borrow. Additive to the interface.
+
 
 ## [10.1.0]
 
