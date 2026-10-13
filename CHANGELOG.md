@@ -8,6 +8,9 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Breaking: removes `SQLStorage.startTransaction(TransactionLogic, TransactionIsolationLevel)` and the
+  `TransactionIsolationLevel` enum. Every transaction now runs at the storage's default isolation level.
+
 
 ## [10.1.1]
 
