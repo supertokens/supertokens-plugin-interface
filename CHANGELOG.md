@@ -12,6 +12,7 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   id mappings. It is abstract, so every storage implementing `UserIdMappingStorage` must implement it.
 - Breaking: removes `SQLStorage.startTransaction(TransactionLogic, TransactionIsolationLevel)` and the
   `TransactionIsolationLevel` enum. Every transaction now runs at the storage's default isolation level.
+- Add transaction-aware listPrimaryUsersByEmail/ByPhoneNumber reads for single-connection recipe lookups.
 
 
 ## [10.1.1]
