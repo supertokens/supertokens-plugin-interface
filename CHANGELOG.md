@@ -13,6 +13,8 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Breaking: removes `SQLStorage.startTransaction(TransactionLogic, TransactionIsolationLevel)` and the
   `TransactionIsolationLevel` enum. Every transaction now runs at the storage's default isolation level.
 - Add transaction-aware listPrimaryUsersByEmail/ByPhoneNumber reads for single-connection recipe lookups.
+- Adds `OAuthSQLStorage.getOAuthClientById_Transaction`, the connection-taking twin of `getOAuthClientById`. It is
+  abstract, so every storage implementing `OAuthSQLStorage` must implement it.
 
 
 ## [10.1.1]
