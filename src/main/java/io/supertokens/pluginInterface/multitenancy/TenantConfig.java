@@ -193,6 +193,18 @@ public class TenantConfig {
                     firstFactors.add("link-phone");
                 }
             }
+        } else {
+            // This output has no per-recipe enabled flags, so a recipe that is disabled must not be listed as a
+            // first factor (same result as the <= 4.0 and 5.0 outputs, which apply the flag on top of firstFactors)
+            if (!this.emailPasswordConfig.enabled) {
+                firstFactors.removeAll(List.of("emailpassword"));
+            }
+            if (!this.thirdPartyConfig.enabled) {
+                firstFactors.removeAll(List.of("thirdparty"));
+            }
+            if (!this.passwordlessConfig.enabled) {
+                firstFactors.removeAll(List.of("otp-email", "otp-phone", "link-email", "link-phone"));
+            }
         }
 
         if (firstFactors != null) {

@@ -12,6 +12,11 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   must take a per-(app, user) lock before reading, so concurrent verifications of the same user are serialised.
   Storage implementations must implement it. The tenant-scoped overload is deprecated.
 - Documents that `getDevices_Transaction` locks the returned device rows for the rest of the transaction.
+- `TenantConfig.toJson_v2_5_1` no longer lists the factor ids of a disabled login method in `firstFactors`
+  (`emailpassword`, `thirdparty`, `otp-email`, `otp-phone`, `link-email`, `link-phone`) when an explicit
+  `firstFactors` list is stored, matching the `<= 4.0` and `5.0` outputs, which already treat those recipes as
+  disabled. Tenants written by current cores are unaffected; it changes the output only for tenant rows stored
+  with a disabled recipe whose factors are still in `firstFactors` (possible with data written by core 9.0.x).
 
 ## [10.1.0]
 
