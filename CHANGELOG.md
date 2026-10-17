@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres
 to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+- Adds `TOTPSQLStorage.getAllUsedCodesDescOrder_Transaction(TransactionConnection, AppIdentifier, String)`, which
+  returns a user's used TOTP codes across all tenants of the app (matching the app-wide scope of TOTP devices) and
+  must take a per-(app, user) lock before reading, so concurrent verifications of the same user are serialised.
+  Storage implementations must implement it. The tenant-scoped overload is deprecated.
+- Documents that `getDevices_Transaction` locks the returned device rows for the rest of the transaction.
+
 ## [10.1.0]
 
 - Adds the activity-log ledger / last-active rollup storage contract on top of the base audit-log
