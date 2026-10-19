@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres
 to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+
+## [Unreleased]
+
+## [11.0.0]
+
+- Breaking: removes `SQLStorage.startTransaction(TransactionLogic, TransactionIsolationLevel)` and the
+  `TransactionIsolationLevel` enum. Every transaction now runs at the storage's default isolation level.
+- Breaking: `WebAuthNSQLStorage.loadCredentialById_Transaction` and `updateCounter_Transaction` now take the relying
+  party id, so a storage can find the credential by its full key instead of reading every credential of the app.
+- Adds `UserIdMappingStorage.hasUserIdMappings(AppIdentifier)`, an exists check for whether an app has any user
+  id mappings. It is abstract, so every storage implementing `UserIdMappingStorage` must implement it.
+- Add transaction-aware listPrimaryUsersByEmail/ByPhoneNumber reads for single-connection recipe lookups.
+- Adds `OAuthSQLStorage.getOAuthClientById_Transaction`, the connection-taking twin of `getOAuthClientById`. It is
+  abstract, so every storage implementing `OAuthSQLStorage` must implement it.
+- Adds `isOAuthTokenRevokedByGID_Transaction` to `OAuthSQLStorage`, the connection-taking twin of
+  `OAuthStorage#isOAuthTokenRevokedByGID`, so the non-rotating refresh exchange can run the revocation
+  read on the connection it already holds instead of a nested pool borrow. Additive to the interface.
+
 ## [10.1.0]
 
 - Adds the activity-log ledger / last-active rollup storage contract on top of the base audit-log
