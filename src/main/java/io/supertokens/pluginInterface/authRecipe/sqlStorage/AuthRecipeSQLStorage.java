@@ -49,6 +49,14 @@ public interface AuthRecipeSQLStorage extends AuthRecipeStorage, SQLStorage {
                                                                       String thirdPartyUserId)
             throws StorageQueryException;
 
+    AuthRecipeUserInfo[] listPrimaryUsersByEmail_Transaction(TenantIdentifier tenantIdentifier,
+                                                             TransactionConnection con, String email)
+            throws StorageQueryException;
+
+    AuthRecipeUserInfo[] listPrimaryUsersByPhoneNumber_Transaction(TenantIdentifier tenantIdentifier,
+                                                                   TransactionConnection con, String phoneNumber)
+            throws StorageQueryException;
+
     boolean makePrimaryUser_Transaction(AppIdentifier appIdentifier, TransactionConnection con, String userId)
             throws StorageQueryException, UnknownUserIdException,
             AccountInfoAlreadyAssociatedWithAnotherPrimaryUserIdException,
