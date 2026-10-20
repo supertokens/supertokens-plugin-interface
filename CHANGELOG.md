@@ -16,6 +16,9 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   party id, so a storage can find the credential by its full key instead of reading every credential of the app.
 - Adds `UserIdMappingStorage.hasUserIdMappings(AppIdentifier)`, an exists check for whether an app has any user
   id mappings. It is abstract, so every storage implementing `UserIdMappingStorage` must implement it.
+- Adds `UserIdMappingStorage.setAppsWithUserIdMappingDisabled(Set<AppIdentifier>)`. The storage skips its own user
+  id mapping reads for those apps. It is abstract, so every storage implementing `UserIdMappingStorage` must
+  implement it.
 - Add transaction-aware listPrimaryUsersByEmail/ByPhoneNumber reads for single-connection recipe lookups.
 - Adds `OAuthSQLStorage.getOAuthClientById_Transaction`, the connection-taking twin of `getOAuthClientById`. It is
   abstract, so every storage implementing `OAuthSQLStorage` must implement it.
