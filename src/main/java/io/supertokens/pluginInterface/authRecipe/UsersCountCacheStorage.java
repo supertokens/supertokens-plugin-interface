@@ -20,20 +20,27 @@ package io.supertokens.pluginInterface.authRecipe;
 import io.supertokens.pluginInterface.Storage;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
 import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
+import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
 
 /**
- * Optional storage capability: an app's user count that is computed once and shared by every core using this
- * database, instead of each core running its own full count.
+ * Optional storage capability: user counts that are computed once and shared by every core using this database,
+ * instead of each core running its own full count.
+ * <p>
+ * A count stored by an earlier call is returned if it was computed less than {@code maxAgeMs} ago. Otherwise the
+ * count is computed and stored. Computing is coordinated through the database, so concurrent callers, including
+ * ones on other cores, wait for a single count and then return its stored value.
  */
-public interface AppUsersCountCacheStorage extends Storage {
+public interface UsersCountCacheStorage extends Storage {
 
     /**
-     * Returns the same value as {@link AuthRecipeStorage#getUsersCount(AppIdentifier, io.supertokens.pluginInterface.RECIPE_ID[])}
+     * The same value as {@link AuthRecipeStorage#getUsersCount(AppIdentifier, io.supertokens.pluginInterface.RECIPE_ID[])}
      * with no recipe filter: the number of distinct users in the app on this storage.
-     * <p>
-     * A value stored by an earlier call is returned if it was computed less than {@code maxAgeMs} ago. Otherwise
-     * the count is computed and stored. Computing is coordinated through the database, so concurrent callers,
-     * including ones on other cores, wait for a single count and then return its stored value.
      */
     long getOrComputeAppUsersCount(AppIdentifier appIdentifier, long maxAgeMs) throws StorageQueryException;
+
+    /**
+     * The same value as {@link AuthRecipeStorage#getUsersCount(TenantIdentifier, io.supertokens.pluginInterface.RECIPE_ID[])}
+     * with no recipe filter: the number of distinct users in the tenant.
+     */
+    long getOrComputeTenantUsersCount(TenantIdentifier tenantIdentifier, long maxAgeMs) throws StorageQueryException;
 }
