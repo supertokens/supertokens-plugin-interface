@@ -10,7 +10,7 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [11.1.0]
 
-- Adds `UsersCountCacheStorage` with `getOrComputeAppUsersCount(AppIdentifier, long maxAgeMs)` and `getOrComputeTenantUsersCount(TenantIdentifier, long maxAgeMs)`: user counts stored and reused while younger than `maxAgeMs`, and computed once for all cores that ask at the same time.
+- Adds `UsersCountCacheStorage` with `getOrComputeAppUsersCount(AppIdentifier, long maxAgeMs)` and `getOrComputeTenantUsersCount(TenantIdentifier, long maxAgeMs)`: user counts stored and reused while younger than `maxAgeMs`, and computed once for all cores that ask at the same time. They return a `UsersCountSnapshot`: the count, when it was counted, and whether this call counted it.
 
 ## [11.0.0]
 

@@ -28,7 +28,8 @@ import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
  * <p>
  * A count stored by an earlier call is returned if it was computed less than {@code maxAgeMs} ago. Otherwise the
  * count is computed and stored. Computing is coordinated through the database, so concurrent callers, including
- * ones on other cores, wait for a single count and then return its stored value.
+ * ones on other cores, wait for a single count and then return its stored value. The result carries the time the
+ * count started and whether this call ran it.
  */
 public interface UsersCountCacheStorage extends Storage {
 
@@ -36,11 +37,13 @@ public interface UsersCountCacheStorage extends Storage {
      * The same value as {@link AuthRecipeStorage#getUsersCount(AppIdentifier, io.supertokens.pluginInterface.RECIPE_ID[])}
      * with no recipe filter: the number of distinct users in the app on this storage.
      */
-    long getOrComputeAppUsersCount(AppIdentifier appIdentifier, long maxAgeMs) throws StorageQueryException;
+    UsersCountSnapshot getOrComputeAppUsersCount(AppIdentifier appIdentifier, long maxAgeMs)
+            throws StorageQueryException;
 
     /**
      * The same value as {@link AuthRecipeStorage#getUsersCount(TenantIdentifier, io.supertokens.pluginInterface.RECIPE_ID[])}
      * with no recipe filter: the number of distinct users in the tenant.
      */
-    long getOrComputeTenantUsersCount(TenantIdentifier tenantIdentifier, long maxAgeMs) throws StorageQueryException;
+    UsersCountSnapshot getOrComputeTenantUsersCount(TenantIdentifier tenantIdentifier, long maxAgeMs)
+            throws StorageQueryException;
 }
