@@ -8,6 +8,10 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [11.1.0]
+
+- Adds `AppUsersCountCacheStorage.getOrComputeAppUsersCount(AppIdentifier, long maxAgeMs)`: an app's user count, stored and reused while younger than `maxAgeMs`, and computed once for all cores that ask at the same time.
+
 ## [11.0.0]
 
 - Breaking: removes `SQLStorage.startTransaction(TransactionLogic, TransactionIsolationLevel)` and the
