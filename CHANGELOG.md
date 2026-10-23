@@ -10,7 +10,7 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [11.1.0]
 
-- Adds `UsersCountCacheStorage`: `getOrComputeAppUsersCount` / `getOrComputeTenantUsersCount(scope, includeRecipeIds, maxAgeMs)` return a stored user count reused while younger than `maxAgeMs`, computed once for all cores that ask at the same time, as a `UsersCountSnapshot` (count, when it was counted, whether this call counted it); `getStoredAppUsersCount` / `getStoredTenantUsersCount` return the last stored count whatever its age. After a failed count, counts of that scope are refused for a while with `UsersCountBackoffException` as the cause.
+- Adds `UsersCountCacheStorage`: a user count stored in the database and shared by all cores.
 
 ## [11.0.0]
 
