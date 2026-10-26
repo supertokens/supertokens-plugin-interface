@@ -8,6 +8,8 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Adds `WebAuthNSQLStorage.loadCredentialByIdInApp_Transaction`, an app-wide credential lookup by id (any relying party).
+
 ## [11.1.0]
 
 - Adds `UsersCountCacheStorage`: a user count stored in the database and shared by all cores.
