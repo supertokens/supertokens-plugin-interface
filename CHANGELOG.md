@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres
 to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+
 ## [Unreleased]
 
 - Adds `TOTPSQLStorage.getAllUsedCodesDescOrder_Transaction(TransactionConnection, AppIdentifier, String)`, which
@@ -17,6 +18,25 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   `firstFactors` list is stored, matching the `<= 4.0` and `5.0` outputs, which already treat those recipes as
   disabled. Tenants written by current cores are unaffected; it changes the output only for tenant rows stored
   with a disabled recipe whose factors are still in `firstFactors` (possible with data written by core 9.0.x).
+
+## [11.1.0]
+
+- Adds `UsersCountCacheStorage`: a user count stored in the database and shared by all cores.
+
+## [11.0.0]
+
+- Breaking: removes `SQLStorage.startTransaction(TransactionLogic, TransactionIsolationLevel)` and the
+  `TransactionIsolationLevel` enum. Every transaction now runs at the storage's default isolation level.
+- Breaking: `WebAuthNSQLStorage.loadCredentialById_Transaction` and `updateCounter_Transaction` now take the relying
+  party id, so a storage can find the credential by its full key instead of reading every credential of the app.
+- Adds `UserIdMappingStorage.hasUserIdMappings(AppIdentifier)`, an exists check for whether an app has any user
+  id mappings. It is abstract, so every storage implementing `UserIdMappingStorage` must implement it.
+- Add transaction-aware listPrimaryUsersByEmail/ByPhoneNumber reads for single-connection recipe lookups.
+- Adds `OAuthSQLStorage.getOAuthClientById_Transaction`, the connection-taking twin of `getOAuthClientById`. It is
+  abstract, so every storage implementing `OAuthSQLStorage` must implement it.
+- Adds `isOAuthTokenRevokedByGID_Transaction` to `OAuthSQLStorage`, the connection-taking twin of
+  `OAuthStorage#isOAuthTokenRevokedByGID`, so the non-rotating refresh exchange can run the revocation
+  read on the connection it already holds instead of a nested pool borrow. Additive to the interface.
 
 ## [10.1.0]
 

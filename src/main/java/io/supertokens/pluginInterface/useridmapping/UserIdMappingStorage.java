@@ -58,4 +58,7 @@ public interface UserIdMappingStorage extends Storage {
     HashMap<String, String> getUserIdMappingForSuperTokensIds(AppIdentifier appIdentifier,
                                                               ArrayList<String> userIds) throws StorageQueryException;
 
+    // Returns true if the app has at least one user id mapping
+    boolean hasUserIdMappings(AppIdentifier appIdentifier) throws StorageQueryException;
+
 }
