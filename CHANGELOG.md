@@ -18,6 +18,7 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   `firstFactors` list is stored, matching the `<= 4.0` and `5.0` outputs, which already treat those recipes as
   disabled. Tenants written by current cores are unaffected; it changes the output only for tenant rows stored
   with a disabled recipe whose factors are still in `firstFactors` (possible with data written by core 9.0.x).
+- Adds `WebAuthNSQLStorage.loadCredentialByIdInApp_Transaction`, an app-wide credential lookup by id (any relying party).
 
 ## [11.1.0]
 
