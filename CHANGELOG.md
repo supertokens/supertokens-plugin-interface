@@ -8,6 +8,13 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [11.2.0]
+
+- Adds a nullable `attributeMapping` to `SAMLClient`, with a constructor that takes it as the last parameter (the
+  existing constructor delegates with `null`). `toJson()` includes it only when set. The constructor now reads an
+  empty `acsURLs` array or an empty `attributeMapping` object back as `null`, so `toJson()` leaves out an empty
+  `acsURLs` instead of returning `[]`.
+
 ## [11.1.0]
 
 - Adds `UsersCountCacheStorage`: a user count stored in the database and shared by all cores.
