@@ -2,7 +2,7 @@ plugins {
     id 'java-library'
 }
 
-version = "11.1.0"
+version = "11.2.0"
 
 repositories {
     mavenCentral()
@@ -17,6 +17,9 @@ dependencies {
 
     // https://mvnrepository.com/artifact/junit/junit
     testImplementation group: 'junit', name: 'junit', version: '4.13.2'
+
+    // gson is compileOnly above, which the test classpath does not inherit
+    testImplementation group: 'com.google.code.gson', name: 'gson', version: '2.13.1'
 }
 
 jar {
