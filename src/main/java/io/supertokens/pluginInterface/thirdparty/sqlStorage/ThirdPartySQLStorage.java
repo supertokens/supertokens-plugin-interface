@@ -17,6 +17,7 @@
 package io.supertokens.pluginInterface.thirdparty.sqlStorage;
 
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
+import io.supertokens.pluginInterface.emailpassword.exceptions.UnknownUserIdException;
 import io.supertokens.pluginInterface.exceptions.StorageTransactionLogicException;
 import io.supertokens.pluginInterface.multitenancy.AppIdentifier;
 import io.supertokens.pluginInterface.multitenancy.exceptions.TenantOrAppNotFoundException;
@@ -29,9 +30,25 @@ import java.util.List;
 
 public interface ThirdPartySQLStorage extends ThirdPartyStorage, SQLStorage {
 
+    /**
+     * @deprecated updates the email of every user of the app that has this third party identity, also in other
+     * tenants. Use {@link #updateUserEmail_Transaction(AppIdentifier, TransactionConnection, String, String, String,
+     * String)}.
+     */
+    @Deprecated
     void updateUserEmail_Transaction(AppIdentifier appIdentifier, TransactionConnection con, String thirdPartyId,
                                      String thirdPartyUserId,
                                      String newEmail) throws StorageQueryException;
+
+    /**
+     * Updates the email of the third party login method of the recipe user {@code userId} only. The same
+     * (thirdPartyId, thirdPartyUserId) can belong to different recipe users in different tenants of the app, and
+     * their emails must not change. If {@code userId} does not hold this third party identity, nothing is changed
+     * and {@link UnknownUserIdException} is thrown.
+     */
+    void updateUserEmail_Transaction(AppIdentifier appIdentifier, TransactionConnection con, String thirdPartyId,
+                                     String userId, String thirdPartyUserId, String newEmail)
+            throws StorageQueryException, UnknownUserIdException;
 
     void deleteThirdPartyUser_Transaction(TransactionConnection con, AppIdentifier appIdentifier, String userId,
                                           boolean deleteUserIdMappingToo)
