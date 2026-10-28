@@ -7,6 +7,11 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [10.0.2]
+
+- Adds `TOTPSQLStorage.getAllUsedCodesDescOrder_Transaction(TransactionConnection, AppIdentifier, String)`, an app-wide used-code read that locks the user; storage plugins must implement it
+- `TenantConfig.toJson_v2_5_1` no longer lists a disabled recipe's factor ids in `firstFactors`
+
 ## [10.0.0]
 
 - Adds `BulkImportProxyStoragePool` / `openBulkImportProxyStoragePool(int)` and savepoint-capable `BulkImportProxySQLStorage`; deprecates `createBulkImportProxyStorageInstance()`
