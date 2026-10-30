@@ -8,6 +8,11 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ## [Unreleased]
 
 
+## [9.0.2]
+
+- Adds `TOTPSQLStorage.getAllUsedCodesDescOrder_Transaction(TransactionConnection, AppIdentifier, String)`, an app-wide used-code read that locks the user; storage plugins must implement it
+- `TenantConfig.toJson_v2_5_1` no longer lists a disabled recipe's factor ids in `firstFactors`
+
 ## [9.0.0]
 
 - Adds nullable `prevRefreshTokenHash2` and `refreshTokenRotatedAt` fields to `SessionInfo` to record refresh-token rotation state (`null` on both means no rotation recorded)
