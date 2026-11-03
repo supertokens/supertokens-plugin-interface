@@ -8,7 +8,7 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
-## [11.2.0]
+## [11.3.0]
 
 - Adds a nullable `attributeMapping` to `SAMLClient`, with a constructor that takes it as the last parameter (the
   existing constructor delegates with `null`). `toJson()` includes it only when set. The constructor now reads an
