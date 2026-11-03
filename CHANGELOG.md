@@ -19,6 +19,12 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Adds `UserIdMappingStorage.setAppsWithUserIdMappingDisabled(Set<AppIdentifier>)`. The storage skips its own user
   id mapping reads for those apps. It is abstract, so every storage implementing `UserIdMappingStorage` must
   implement it.
+- Adds to `UserIdMappingSQLStorage`: `lockAppForUserIdMappingCreation_Transaction` (shared) and
+  `lockAppForDisablingUserIdMapping_Transaction` (exclusive), transaction-scoped locks that serialise creating user
+  id mappings against turning `disable_user_id_mapping` on; `hasUserIdMappings_Transaction`; and
+  `createUserIdMapping_Transaction` / `createBulkUserIdMapping_Transaction`. All abstract.
+- Adds to `MultitenancySQLStorage`: `getTenantCoreConfig_Transaction` (one tenant's stored core config, no
+  inheritance) and `overwriteTenantConfig_Transaction`. Both abstract.
 - Add transaction-aware listPrimaryUsersByEmail/ByPhoneNumber reads for single-connection recipe lookups.
 - Adds `OAuthSQLStorage.getOAuthClientById_Transaction`, the connection-taking twin of `getOAuthClientById`. It is
   abstract, so every storage implementing `OAuthSQLStorage` must implement it.
