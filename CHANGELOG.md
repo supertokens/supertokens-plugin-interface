@@ -8,6 +8,22 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [11.3.0]
+
+- Adds a nullable `attributeMapping` to `SAMLClient`, with a constructor that takes it as the last parameter (the
+  existing constructor delegates with `null`). `toJson()` includes it only when set. The constructor now reads an
+  empty `acsURLs` array or an empty `attributeMapping` object back as `null`, so `toJson()` leaves out an empty
+  `acsURLs` instead of returning `[]`.
+- Adds `UserIdMappingStorage.setAppsWithUserIdMappingDisabled(Set<AppIdentifier>)`. The storage skips its own user
+  id mapping reads for those apps. It is abstract, so every storage implementing `UserIdMappingStorage` must
+  implement it.
+- Adds to `UserIdMappingSQLStorage`: `lockAppForUserIdMappingCreation_Transaction` (shared) and
+  `lockAppForDisablingUserIdMapping_Transaction` (exclusive), transaction-scoped locks that serialise creating user
+  id mappings against turning `disable_user_id_mapping` on; `hasUserIdMappings_Transaction`; and
+  `createUserIdMapping_Transaction` / `createBulkUserIdMapping_Transaction`. All abstract.
+- Adds to `MultitenancySQLStorage`: `getTenantCoreConfig_Transaction` (one tenant's stored core config, no
+  inheritance) and `overwriteTenantConfig_Transaction`. Both abstract.
+
 ## [11.1.0]
 
 - Adds `UsersCountCacheStorage`: a user count stored in the database and shared by all cores.
@@ -20,15 +36,6 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   party id, so a storage can find the credential by its full key instead of reading every credential of the app.
 - Adds `UserIdMappingStorage.hasUserIdMappings(AppIdentifier)`, an exists check for whether an app has any user
   id mappings. It is abstract, so every storage implementing `UserIdMappingStorage` must implement it.
-- Adds `UserIdMappingStorage.setAppsWithUserIdMappingDisabled(Set<AppIdentifier>)`. The storage skips its own user
-  id mapping reads for those apps. It is abstract, so every storage implementing `UserIdMappingStorage` must
-  implement it.
-- Adds to `UserIdMappingSQLStorage`: `lockAppForUserIdMappingCreation_Transaction` (shared) and
-  `lockAppForDisablingUserIdMapping_Transaction` (exclusive), transaction-scoped locks that serialise creating user
-  id mappings against turning `disable_user_id_mapping` on; `hasUserIdMappings_Transaction`; and
-  `createUserIdMapping_Transaction` / `createBulkUserIdMapping_Transaction`. All abstract.
-- Adds to `MultitenancySQLStorage`: `getTenantCoreConfig_Transaction` (one tenant's stored core config, no
-  inheritance) and `overwriteTenantConfig_Transaction`. Both abstract.
 - Add transaction-aware listPrimaryUsersByEmail/ByPhoneNumber reads for single-connection recipe lookups.
 - Adds `OAuthSQLStorage.getOAuthClientById_Transaction`, the connection-taking twin of `getOAuthClientById`. It is
   abstract, so every storage implementing `OAuthSQLStorage` must implement it.
