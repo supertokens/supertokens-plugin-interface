@@ -33,8 +33,19 @@ public class SAMLClient {
     // Nullable allow-list of ACS URLs. null = not configured (IdP-initiated Recipient pinning and
     // SP-initiated acsURL validation are skipped, preserving legacy behaviour). See GHSA-3r7x follow-up.
     public final JsonArray acsURLs;
+    // Nullable mapping from userId / email / firstName / lastName to ordered lists of assertion claim names.
+    // null = not configured.
+    public final JsonObject attributeMapping;
 
     public SAMLClient(String clientId, String clientSecret, String ssoLoginURL, JsonArray redirectURIs, String defaultRedirectURI, String idpEntityId, String idpSigningCertificate, boolean allowIDPInitiatedLogin, boolean enableRequestSigning, JsonArray acsURLs) {
+        this(clientId, clientSecret, ssoLoginURL, redirectURIs, defaultRedirectURI, idpEntityId,
+                idpSigningCertificate, allowIDPInitiatedLogin, enableRequestSigning, acsURLs, null);
+    }
+
+    public SAMLClient(String clientId, String clientSecret, String ssoLoginURL, JsonArray redirectURIs,
+                      String defaultRedirectURI, String idpEntityId, String idpSigningCertificate,
+                      boolean allowIDPInitiatedLogin, boolean enableRequestSigning, JsonArray acsURLs,
+                      JsonObject attributeMapping) {
         this.clientId = clientId;
         this.clientSecret = clientSecret;
         this.ssoLoginURL = ssoLoginURL;
@@ -44,7 +55,9 @@ public class SAMLClient {
         this.idpSigningCertificate = idpSigningCertificate;
         this.allowIDPInitiatedLogin = allowIDPInitiatedLogin;
         this.enableRequestSigning = enableRequestSigning;
-        this.acsURLs = acsURLs;
+        // An empty stored value means "not configured", so it reads back as null and is left out of toJson().
+        this.acsURLs = acsURLs == null || acsURLs.isEmpty() ? null : acsURLs;
+        this.attributeMapping = attributeMapping == null || attributeMapping.isEmpty() ? null : attributeMapping;
     }
 
     public JsonObject toJson() {
@@ -64,6 +77,9 @@ public class SAMLClient {
         res.addProperty("enableRequestSigning", this.enableRequestSigning);
         if (this.acsURLs != null) {
             res.add("acsURLs", this.acsURLs);
+        }
+        if (this.attributeMapping != null) {
+            res.add("attributeMapping", this.attributeMapping);
         }
 
         return res;
