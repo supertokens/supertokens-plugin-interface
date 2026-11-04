@@ -8,6 +8,10 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [11.1.0]
+
+- Adds `UsersCountCacheStorage`: a user count stored in the database and shared by all cores.
+
 ## [11.0.0]
 
 - Breaking: removes `SQLStorage.startTransaction(TransactionLogic, TransactionIsolationLevel)` and the
