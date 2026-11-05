@@ -31,7 +31,8 @@ import io.supertokens.pluginInterface.sqlStorage.SQLStorage;
 import io.supertokens.pluginInterface.sqlStorage.TransactionConnection;
 import io.supertokens.pluginInterface.thirdparty.exception.DuplicateThirdPartyUserException;
 
-import javax.annotation.Nullable;
+import java.util.Collection;
+import java.util.Map;
 
 public interface MultitenancySQLStorage extends MultitenancyStorage, SQLStorage {
     boolean addUserIdToTenant_Transaction(TenantIdentifier tenantIdentifier, TransactionConnection con, String userId)
@@ -46,10 +47,15 @@ public interface MultitenancySQLStorage extends MultitenancyStorage, SQLStorage 
                                                String userId)
             throws StorageQueryException;
 
-    // The stored core config of exactly this tenant (no inheritance), or null if the tenant has no row. Reads the
-    // committed row on the caller's connection, so a caller holding a lock reads the value that lock protects.
-    @Nullable
-    JsonObject getTenantCoreConfig_Transaction(TransactionConnection con, TenantIdentifier tenantIdentifier)
+    // The stored core configs of exactly these tenants (no inheritance), keyed by tenant. Tenants without a row are
+    // left out. Reads the committed rows on the caller's connection. With lockAgainstConfigWrites, it first takes,
+    // until the caller's transaction ends, the lock a config write of each of those tenants takes
+    // (overwriteTenantConfig_Transaction), so no write of them is in progress while the caller reads and decides,
+    // and none starts before the caller commits. If one is in progress, the storage may fail the call with a lock
+    // failure that its startTransaction retries, like a deadlock.
+    Map<TenantIdentifier, JsonObject> getTenantCoreConfigs_Transaction(TransactionConnection con,
+                                                                       Collection<TenantIdentifier> tenantIdentifiers,
+                                                                       boolean lockAgainstConfigWrites)
             throws StorageQueryException;
 
     // Connection-taking counterpart of overwriteTenantConfig: same writes and errors, committed (or rolled back)

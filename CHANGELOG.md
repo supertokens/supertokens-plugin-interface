@@ -21,8 +21,9 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   `lockAppForDisablingUserIdMapping_Transaction` (exclusive), transaction-scoped locks that serialise creating user
   id mappings against turning `disable_user_id_mapping` on; `hasUserIdMappings_Transaction`; and
   `createUserIdMapping_Transaction` / `createBulkUserIdMapping_Transaction`. All abstract.
-- Adds to `MultitenancySQLStorage`: `getTenantCoreConfig_Transaction` (one tenant's stored core config, no
-  inheritance) and `overwriteTenantConfig_Transaction`. Both abstract.
+- Adds to `MultitenancySQLStorage`: `getTenantCoreConfigs_Transaction` (the stored core configs of the given
+  tenants, no inheritance, optionally first taking the locks their config writes take) and
+  `overwriteTenantConfig_Transaction`. Both abstract.
 
 ## [11.1.0]
 
