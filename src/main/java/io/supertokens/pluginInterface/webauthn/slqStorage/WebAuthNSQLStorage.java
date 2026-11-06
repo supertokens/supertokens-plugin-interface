@@ -37,6 +37,15 @@ public interface WebAuthNSQLStorage extends WebAuthNStorage, SQLStorage {
 
     WebAuthNStoredCredential loadCredentialById_Transaction(TenantIdentifier tenantIdentifier, TransactionConnection con, String rpId, String credentialId) throws StorageQueryException;
 
+    /**
+     * Returns a credential with this id in the tenant's app, whatever its relying party, or null if there is none.
+     * Credential ids are only unique per (app, rp_id) in storage; the core uses this lookup to keep a credential id
+     * unique across the whole app. If several rows share the id, any one of them is returned.
+     */
+    WebAuthNStoredCredential loadCredentialByIdInApp_Transaction(TenantIdentifier tenantIdentifier,
+                                                                 TransactionConnection con, String credentialId)
+            throws StorageQueryException;
+
     AuthRecipeUserInfo signUp_Transaction(TenantIdentifier tenantIdentifier,  TransactionConnection con, String userId,
                                           String email, String relyingPartyId)
             throws StorageQueryException, DuplicateUserIdException, TenantOrAppNotFoundException,

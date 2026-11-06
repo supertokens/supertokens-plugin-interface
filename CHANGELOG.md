@@ -25,6 +25,12 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   tenants, no inheritance, optionally first taking the locks their config writes take) and
   `overwriteTenantConfig_Transaction`. Both abstract.
 
+## [11.2.0]
+
+- Adds `TOTPSQLStorage.getAllUsedCodesDescOrder_Transaction`, an app-wide used-code read that locks the user; the tenant-scoped overload is deprecated.
+- Adds `WebAuthNSQLStorage.loadCredentialByIdInApp_Transaction`, an app-wide credential lookup by id.
+- `TenantConfig.toJson_v2_5_1` no longer lists a disabled login method's factor ids in `firstFactors`.
+
 ## [11.1.0]
 
 - Adds `UsersCountCacheStorage`: a user count stored in the database and shared by all cores.
