@@ -14,8 +14,10 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   existing constructor delegates with `null`). `toJson()` includes it only when set. The constructor now reads an
   empty `acsURLs` array or an empty `attributeMapping` object back as `null`, so `toJson()` leaves out an empty
   `acsURLs` instead of returning `[]`.
-- Adds `UserIdMappingStorage.setAppsWithUserIdMappingDisabled(Set<AppIdentifier>)`. The storage skips its own user
-  id mapping reads for those apps. It is abstract, so every storage implementing `UserIdMappingStorage` must
+- Adds `UserIdMappingStorage.setAppsWithUserIdMappingDisabled(Set<AppIdentifier>, Set<AppIdentifier>)`. The storage
+  skips its own user id mapping reads for the first set's apps. The second set has those with
+  `disable_user_id_mapping_force` on, for which refreshing a session created under an external id before force
+  still resolves it through the mapping. It is abstract, so every storage implementing `UserIdMappingStorage` must
   implement it.
 - Adds to `UserIdMappingSQLStorage`: `lockAppForUserIdMappingCreation_Transaction` (shared) and
   `lockAppForDisablingUserIdMapping_Transaction` (exclusive), transaction-scoped locks that serialise creating user

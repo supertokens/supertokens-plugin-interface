@@ -64,7 +64,10 @@ public interface UserIdMappingStorage extends Storage {
 
     // The apps served by this storage that have disable_user_id_mapping on. For them the storage skips the user id
     // mapping reads it makes on its own (e.g. while loading users or sessions), so it never reads userid_mapping
-    // for them. Each call replaces the previous set; until the first call the storage reads mappings for every app.
-    void setAppsWithUserIdMappingDisabled(Set<AppIdentifier> appIdentifiers);
+    // for them. forcedAppIdentifiers: those of them with disable_user_id_mapping_force on, whose database can still
+    // have mappings and sessions created under external ids before force: refreshing such a session resolves its
+    // external id through the mapping, as before force. Each call replaces the previous sets; until the first call
+    // the storage reads mappings for every app.
+    void setAppsWithUserIdMappingDisabled(Set<AppIdentifier> appIdentifiers, Set<AppIdentifier> forcedAppIdentifiers);
 
 }
