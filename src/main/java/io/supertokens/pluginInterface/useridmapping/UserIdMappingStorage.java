@@ -26,6 +26,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public interface UserIdMappingStorage extends Storage {
 
@@ -60,5 +61,10 @@ public interface UserIdMappingStorage extends Storage {
 
     // Returns true if the app has at least one user id mapping
     boolean hasUserIdMappings(AppIdentifier appIdentifier) throws StorageQueryException;
+
+    // The apps served by this storage that have disable_user_id_mapping on. For them the storage skips the user id
+    // mapping reads it makes on its own (e.g. while loading users or sessions), so it never reads userid_mapping
+    // for them. Each call replaces the previous set; until the first call the storage reads mappings for every app.
+    void setAppsWithUserIdMappingDisabled(Set<AppIdentifier> appIdentifiers);
 
 }

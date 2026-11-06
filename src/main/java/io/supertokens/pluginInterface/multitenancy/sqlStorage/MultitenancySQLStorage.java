@@ -19,13 +19,20 @@ package io.supertokens.pluginInterface.multitenancy.sqlStorage;
 import io.supertokens.pluginInterface.emailpassword.exceptions.DuplicateEmailException;
 import io.supertokens.pluginInterface.authRecipe.exceptions.UnknownUserIdException;
 import io.supertokens.pluginInterface.exceptions.StorageQueryException;
+import com.google.gson.JsonObject;
 import io.supertokens.pluginInterface.multitenancy.MultitenancyStorage;
+import io.supertokens.pluginInterface.multitenancy.TenantConfig;
 import io.supertokens.pluginInterface.multitenancy.TenantIdentifier;
+import io.supertokens.pluginInterface.multitenancy.exceptions.DuplicateClientTypeException;
+import io.supertokens.pluginInterface.multitenancy.exceptions.DuplicateThirdPartyIdException;
 import io.supertokens.pluginInterface.multitenancy.exceptions.TenantOrAppNotFoundException;
 import io.supertokens.pluginInterface.passwordless.exception.DuplicatePhoneNumberException;
 import io.supertokens.pluginInterface.sqlStorage.SQLStorage;
 import io.supertokens.pluginInterface.sqlStorage.TransactionConnection;
 import io.supertokens.pluginInterface.thirdparty.exception.DuplicateThirdPartyUserException;
+
+import java.util.Collection;
+import java.util.Map;
 
 public interface MultitenancySQLStorage extends MultitenancyStorage, SQLStorage {
     boolean addUserIdToTenant_Transaction(TenantIdentifier tenantIdentifier, TransactionConnection con, String userId)
@@ -39,4 +46,21 @@ public interface MultitenancySQLStorage extends MultitenancyStorage, SQLStorage 
     boolean removeUserIdFromTenant_Transaction(TenantIdentifier tenantIdentifier, TransactionConnection con,
                                                String userId)
             throws StorageQueryException;
+
+    // The stored core configs of exactly these tenants (no inheritance), keyed by tenant. Tenants without a row are
+    // left out. Reads the committed rows on the caller's connection. With lockAgainstConfigWrites, it first takes,
+    // until the caller's transaction ends, the lock a config write of each of those tenants takes
+    // (overwriteTenantConfig_Transaction), so no write of them is in progress while the caller reads and decides,
+    // and none starts before the caller commits. If one is in progress, the storage may fail the call with a lock
+    // failure that its startTransaction retries, like a deadlock.
+    Map<TenantIdentifier, JsonObject> getTenantCoreConfigs_Transaction(TransactionConnection con,
+                                                                       Collection<TenantIdentifier> tenantIdentifiers,
+                                                                       boolean lockAgainstConfigWrites)
+            throws StorageQueryException;
+
+    // Connection-taking counterpart of overwriteTenantConfig: same writes and errors, committed (or rolled back)
+    // with the caller's transaction.
+    void overwriteTenantConfig_Transaction(TransactionConnection con, TenantConfig config)
+            throws TenantOrAppNotFoundException, DuplicateThirdPartyIdException, DuplicateClientTypeException,
+            StorageQueryException;
 }
