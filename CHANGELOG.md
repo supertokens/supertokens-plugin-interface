@@ -8,6 +8,25 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [11.3.0]
+
+- Adds a nullable `attributeMapping` to `SAMLClient`, with a constructor that takes it as the last parameter (the
+  existing constructor delegates with `null`). `toJson()` includes it only when set. The constructor now reads an
+  empty `acsURLs` array or an empty `attributeMapping` object back as `null`, so `toJson()` leaves out an empty
+  `acsURLs` instead of returning `[]`.
+- Adds `UserIdMappingStorage.setAppsWithUserIdMappingDisabled(Set<AppIdentifier>, Set<AppIdentifier>)`. The storage
+  skips its own user id mapping reads for the first set's apps. The second set has those with
+  `disable_user_id_mapping_force` on, for which refreshing a session created under an external id before force
+  still resolves it through the mapping. It is abstract, so every storage implementing `UserIdMappingStorage` must
+  implement it.
+- Adds to `UserIdMappingSQLStorage`: `lockAppForUserIdMappingCreation_Transaction` (shared) and
+  `lockAppForDisablingUserIdMapping_Transaction` (exclusive), transaction-scoped locks that serialise creating user
+  id mappings against turning `disable_user_id_mapping` on; `hasUserIdMappings_Transaction`; and
+  `createUserIdMapping_Transaction` / `createBulkUserIdMapping_Transaction`. All abstract.
+- Adds to `MultitenancySQLStorage`: `getTenantCoreConfigs_Transaction` (the stored core configs of the given
+  tenants, no inheritance, optionally first taking the locks their config writes take) and
+  `overwriteTenantConfig_Transaction`. Both abstract.
+
 ## [11.2.0]
 
 - Adds `TOTPSQLStorage.getAllUsedCodesDescOrder_Transaction`, an app-wide used-code read that locks the user; the tenant-scoped overload is deprecated.

@@ -22,8 +22,12 @@ import io.supertokens.pluginInterface.sqlStorage.SQLStorage;
 import io.supertokens.pluginInterface.sqlStorage.TransactionConnection;
 import io.supertokens.pluginInterface.useridmapping.UserIdMapping;
 import io.supertokens.pluginInterface.useridmapping.UserIdMappingStorage;
+import io.supertokens.pluginInterface.useridmapping.exception.UnknownSuperTokensUserIdException;
+import io.supertokens.pluginInterface.useridmapping.exception.UserIdMappingAlreadyExistsException;
 
+import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Map;
 
 public interface UserIdMappingSQLStorage extends UserIdMappingStorage, SQLStorage {
     UserIdMapping getUserIdMapping_Transaction(TransactionConnection con, AppIdentifier appIdentifier, String userId,
@@ -36,4 +40,30 @@ public interface UserIdMappingSQLStorage extends UserIdMappingStorage, SQLStorag
     List<UserIdMapping> getMultipleUserIdMapping_Transaction(TransactionConnection connection, AppIdentifier appIdentifier,
                                                              List<String> userIds, boolean isSupertokensIds)
         throws StorageQueryException;
+
+    // Serialises creating user id mappings against turning disable_user_id_mapping on for an app. Both are
+    // transaction-scoped locks in this storage's database, held until the transaction ends, and they wait for each
+    // other instead of failing. Mapping creators take the shared lock, so they don't block each other; turning the
+    // flag on takes the exclusive one. A storage without such locks may implement both as no-ops only if it runs
+    // its transactions one at a time.
+    void lockAppForUserIdMappingCreation_Transaction(TransactionConnection con, AppIdentifier appIdentifier)
+            throws StorageQueryException;
+
+    void lockAppForDisablingUserIdMapping_Transaction(TransactionConnection con, AppIdentifier appIdentifier)
+            throws StorageQueryException;
+
+    // Connection-taking counterpart of hasUserIdMappings.
+    boolean hasUserIdMappings_Transaction(TransactionConnection con, AppIdentifier appIdentifier)
+            throws StorageQueryException;
+
+    // Connection-taking counterparts of createUserIdMapping and createBulkUserIdMapping: same writes and errors,
+    // committed (or rolled back) with the caller's transaction.
+    void createUserIdMapping_Transaction(TransactionConnection con, AppIdentifier appIdentifier,
+                                         String superTokensUserId, String externalUserId,
+                                         @Nullable String externalUserIdInfo)
+            throws StorageQueryException, UnknownSuperTokensUserIdException, UserIdMappingAlreadyExistsException;
+
+    void createBulkUserIdMapping_Transaction(TransactionConnection con, AppIdentifier appIdentifier,
+                                             Map<String, String> superTokensUserIdToExternalUserId)
+            throws StorageQueryException;
 }
