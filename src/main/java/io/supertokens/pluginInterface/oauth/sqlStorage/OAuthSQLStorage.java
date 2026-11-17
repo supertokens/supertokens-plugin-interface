@@ -18,7 +18,8 @@ import io.supertokens.pluginInterface.sqlStorage.TransactionConnection;
  * mapping update are committed together. Others simply run an existing read on the
  * caller's already-open connection (see {@link #isOAuthTokenRevokedByGID_Transaction} and
  * {@link #getOAuthClientById_Transaction}, which take no lock) to avoid a nested pool borrow inside
- * that same transaction.
+ * that same transaction, or an existing write so that it joins the caller's transaction (see
+ * {@link #createOrUpdateOAuthSession_Transaction} and {@link #addOAuthM2MTokenForStats_Transaction}).
  */
 public interface OAuthSQLStorage extends OAuthStorage, SQLStorage {
 
@@ -82,5 +83,43 @@ public interface OAuthSQLStorage extends OAuthStorage, SQLStorage {
     OAuthClient getOAuthClientById_Transaction(AppIdentifier appIdentifier,
                                                TransactionConnection con,
                                                String clientId)
+            throws StorageQueryException, OAuthClientNotFoundException;
+
+    /**
+     * Transaction-aware twin of {@link OAuthStorage#createOrUpdateOAuthSession}: performs the same
+     * insert-or-update of the oauth_sessions row, but executes it on the caller's already-open
+     * {@code con} instead of an autocommit connection.
+     *
+     * <p>Lets the OAuth token flows write the session in the same transaction as their activity
+     * event, so the request commits once.
+     *
+     * @throws OAuthClientNotFoundException if the app has no client with {@code clientId}
+     */
+    void createOrUpdateOAuthSession_Transaction(AppIdentifier appIdentifier,
+                                                TransactionConnection con,
+                                                String gid,
+                                                String clientId,
+                                                String externalRefreshToken,
+                                                String internalRefreshToken,
+                                                String sessionHandle,
+                                                String jti,
+                                                long exp)
+            throws StorageQueryException, OAuthClientNotFoundException;
+
+    /**
+     * Transaction-aware twin of {@link OAuthStorage#addOAuthM2MTokenForStats}: records the same
+     * M2M token row, but executes it on the caller's already-open {@code con} instead of an
+     * autocommit connection.
+     *
+     * <p>Lets the {@code client_credentials} flow write the token row in the same transaction as
+     * its activity event, so the request commits once.
+     *
+     * @throws OAuthClientNotFoundException if the app has no client with {@code clientId}
+     */
+    void addOAuthM2MTokenForStats_Transaction(AppIdentifier appIdentifier,
+                                              TransactionConnection con,
+                                              String clientId,
+                                              long iat,
+                                              long exp)
             throws StorageQueryException, OAuthClientNotFoundException;
 }
