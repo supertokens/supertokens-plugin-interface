@@ -70,6 +70,18 @@ public interface SessionSQLStorage extends SessionStorage, SQLStorage {
     void deleteSessionsOfUser_Transaction(TransactionConnection con, AppIdentifier appIdentifier, String userId)
             throws StorageQueryException;
 
+    // Twins of deleteSession / getAllNonExpiredSessionHandlesForUser that run on the caller's open transaction
+    // instead of an autocommit connection, so revoking sessions (by handle or for a user) can delete them in the
+    // same transaction as their sign-out events and the request commits once. Abstract: every storage
+    // implementing SessionSQLStorage must implement them.
+    int deleteSession_Transaction(TransactionConnection con, TenantIdentifier tenantIdentifier,
+                                  String[] sessionHandles)
+            throws StorageQueryException;
+
+    String[] getAllNonExpiredSessionHandlesForUser_Transaction(TransactionConnection con,
+                                                               TenantIdentifier tenantIdentifier, String userId)
+            throws StorageQueryException;
+
     // Inserts a session inside the caller's transaction so the insert can be serialized with account
     // link/unlink under the same user lock. Used by session creation to close the race where a session
     // created concurrently with unlinkAccounts survived the unlink's revocation (GHSA-2pc4-vw9j-454c).
