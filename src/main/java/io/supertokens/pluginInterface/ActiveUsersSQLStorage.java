@@ -45,4 +45,20 @@ public interface ActiveUsersSQLStorage extends ActiveUsersStorage, SQLStorage {
      */
     boolean rollupLastActiveFromActivityLog_Transaction(TransactionConnection con, long windowStartMillis)
             throws StorageQueryException;
+
+    /**
+     * Same as {@link #rollupLastActiveFromActivityLog_Transaction(TransactionConnection, long)}, but bounded to
+     * the window {@code [windowStartMillis, windowEndMillis)}, so a caller can fold a large backlog in slices
+     * that each fit in one transaction, advancing its watermark to {@code windowEndMillis} after each slice.
+     * <p>
+     * The default ignores {@code windowEndMillis} and folds up to now. That is still correct for a caller
+     * that then advances its watermark to {@code windowEndMillis}: the fold is idempotent and monotonic, so
+     * folding past the end is redundant work, never a wrong result, and the watermark under-advances (the
+     * next window re-reads the overlap). Storages that can run a large window should override it.
+     */
+    default boolean rollupLastActiveFromActivityLog_Transaction(TransactionConnection con, long windowStartMillis,
+                                                                long windowEndMillis)
+            throws StorageQueryException {
+        return rollupLastActiveFromActivityLog_Transaction(con, windowStartMillis);
+    }
 }
