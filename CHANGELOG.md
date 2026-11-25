@@ -8,7 +8,7 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
-## [11.4.0]
+## [11.3.1]
 
 - Adds `SessionSQLStorage.deleteSession_Transaction` and `SessionSQLStorage.getAllNonExpiredSessionHandlesForUser_Transaction`,
   twins of `deleteSession` and `getAllNonExpiredSessionHandlesForUser` that run on the caller's open
