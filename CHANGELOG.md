@@ -8,7 +8,7 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
-## [11.4.0]
+## [11.3.1]
 
 - Adds `OAuthSQLStorage.createOrUpdateOAuthSession_Transaction` and `OAuthSQLStorage.addOAuthM2MTokenForStats_Transaction`,
   twins of `createOrUpdateOAuthSession` and `addOAuthM2MTokenForStats` that run on the caller's open
