@@ -10,7 +10,9 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [11.3.1]
 
-- Adds a bounded `rollupLastActiveFromActivityLog_Transaction(con, windowStart, windowEnd)` overload so the last-active rollup can fold a backlog in slices.
+- Adds a bounded `ActiveUsersSQLStorage.rollupLastActiveFromActivityLog_Transaction(con, windowStart, windowEnd)`
+  overload so the last-active rollup can fold a backlog in slices. It is abstract, so every storage implementing
+  `ActiveUsersSQLStorage` must implement it.
 - Adds `OAuthSQLStorage.createOrUpdateOAuthSession_Transaction` and `OAuthSQLStorage.addOAuthM2MTokenForStats_Transaction`,
   twins of `createOrUpdateOAuthSession` and `addOAuthM2MTokenForStats` that run on the caller's open
   `TransactionConnection`. Both are abstract, so every storage implementing `OAuthSQLStorage` must implement them.
