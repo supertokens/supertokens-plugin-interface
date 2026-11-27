@@ -6,9 +6,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## [Unreleased]
+
 ## [11.3.1]
 
 - Adds a bounded `rollupLastActiveFromActivityLog_Transaction(con, windowStart, windowEnd)` overload so the last-active rollup can fold a backlog in slices.
+- Adds `OAuthSQLStorage.createOrUpdateOAuthSession_Transaction` and `OAuthSQLStorage.addOAuthM2MTokenForStats_Transaction`,
+  twins of `createOrUpdateOAuthSession` and `addOAuthM2MTokenForStats` that run on the caller's open
+  `TransactionConnection`. Both are abstract, so every storage implementing `OAuthSQLStorage` must implement them.
+- Adds `SessionSQLStorage.deleteSession_Transaction` and `SessionSQLStorage.getAllNonExpiredSessionHandlesForUser_Transaction`,
+  twins of `deleteSession` and `getAllNonExpiredSessionHandlesForUser` that run on the caller's open
+  `TransactionConnection`. Both are abstract, so every storage implementing `SessionSQLStorage` must implement them.
 
 ## [11.3.0]
 
