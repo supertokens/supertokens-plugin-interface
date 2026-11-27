@@ -45,4 +45,13 @@ public interface ActiveUsersSQLStorage extends ActiveUsersStorage, SQLStorage {
      */
     boolean rollupLastActiveFromActivityLog_Transaction(TransactionConnection con, long windowStartMillis)
             throws StorageQueryException;
+
+    /**
+     * Same as {@link #rollupLastActiveFromActivityLog_Transaction(TransactionConnection, long)}, but bounded to
+     * the window {@code [windowStartMillis, windowEndMillis)}, so a caller can fold a large backlog in slices
+     * that each fit in one transaction, advancing its watermark to {@code windowEndMillis} after each slice.
+     */
+    boolean rollupLastActiveFromActivityLog_Transaction(TransactionConnection con, long windowStartMillis,
+                                                        long windowEndMillis)
+            throws StorageQueryException;
 }
